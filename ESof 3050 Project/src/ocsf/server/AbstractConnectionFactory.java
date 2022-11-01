@@ -15,6 +15,7 @@ import java.io.*;
 * when required. The creation of such factory is however
 * optional.<p>
 *
+*
 * A factory and the corresponding client connections
 * should be defined when one to handle the received
 * messages inside each <code>ConnectionToClient</code>

@@ -12,6 +12,7 @@ package ocsf.server;
 * the orginator of the messages received. The originator
 * is null when the message sent concerns the server.
 *
+*
 * Project Name: OCSF (Object Client-Server Framework)<p>
 *
 * @author Dr Robert Lagani&egrave;re

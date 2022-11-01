@@ -16,6 +16,7 @@ import java.io.*;
 * server, the two programs can then exchange <code> Object </code>
 * instances.<p>
 *
+*
 * Method <code> handleMessageFromClient </code> must be defined by
 * a concrete subclass. Several other hook methods may also be
 * overriden.<p>

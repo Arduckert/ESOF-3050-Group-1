@@ -13,6 +13,7 @@ import java.net.*;
  * and is also an <code>Observable</code> class.
  * Each time a new message is received, observers are notified.
  *
+ *
  * @author Dr Robert Lagani&egrave;re
  * @author Dr Timothy C. Lethbridge
  * @author Fran&ccedil;ois B&eacute;lange

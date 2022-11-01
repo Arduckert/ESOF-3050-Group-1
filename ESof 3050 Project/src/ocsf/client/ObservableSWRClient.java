@@ -16,6 +16,7 @@ import java.net.*;
  * when a user wishes to send a message and then wait for a reply
  * from the server.
  *
+ *
  * @author Dr Robert Lagani&egrave;re
  * @version April 2002
  */
