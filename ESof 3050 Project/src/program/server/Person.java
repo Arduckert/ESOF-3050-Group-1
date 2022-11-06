@@ -1,3 +1,4 @@
+package program.server;
 import java.util.*;
 
 public class Person {
@@ -5,8 +6,8 @@ public class Person {
 	String lName;
 	int SIN;
 	String DOB;
-	List<Address> addresses;
-	List<personRole> roles;
+	List<Address> addresses = new ArrayList<Address>();
+	List<personRole> roles = new ArrayList<personRole>();
 	
 	//Constructor
 	public Person(String fName, String lName, int sin, String dob, Address address, personRole role) {
@@ -16,6 +17,7 @@ public class Person {
 		this.DOB = dob;
 		this.addresses.add(address);
 		this.roles.add(role);
+		//Either add this person to list of people in bankController or do it in GUI step
 	}
 	
 	//Setters
@@ -33,5 +35,24 @@ public class Person {
 	}
 	public void addAddress(Address x) {
 		this.addresses.add(x);
+	}
+	
+	//Getters
+	public String getFName() {
+		return this.fName;
+	}
+	public String getLName() {
+		return this.lName;
+	}
+	public String getDOB() {
+		return this.DOB;
+	}
+	public int getSIN() {
+		return this.SIN;
+	}
+	
+	//To string 
+	public String toString() {
+		return String.format("First Name: %s\nLast Name: %s\nSIN: %d\nDate of Birth: %s",fName,lName,SIN,DOB);
 	}
 }

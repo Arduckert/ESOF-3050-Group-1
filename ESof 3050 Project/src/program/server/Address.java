@@ -1,3 +1,4 @@
+package program.server;
 import java.lang.String;
 
 public class Address {
@@ -8,7 +9,7 @@ public class Address {
 	private String country;
 	
 	//Constructor
-	public Address(String sName, int sNum, String pCode, String prov, String country) {
+	public Address(int sNum, String sName, String pCode, String prov, String country) {
 		this.streetName = sName;
 		this.streetNum = sNum;
 		this.postalCode = pCode;

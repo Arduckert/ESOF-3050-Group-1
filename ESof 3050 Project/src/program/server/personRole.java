@@ -1,14 +1,15 @@
+package program.server;
 
 public class personRole {
-	boolean role;
+	int role;
 	
 	//Constructor
-	public personRole(boolean x) {
+	public personRole(int x) {
 		this.role = x;
 	}
 	
 	//Getter
-	public boolean getRole() {
+	public int getRole() {
 		return this.role;
 	}
 }
