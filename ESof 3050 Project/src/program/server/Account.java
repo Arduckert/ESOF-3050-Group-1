@@ -29,5 +29,8 @@ public class Account {
 	public String getDateOpened() {
 		return this.dateOpened;
 	}
+	public AccountHolder getAccountHolder() {
+		return this.accountHolder;
+	}
 	
 }
