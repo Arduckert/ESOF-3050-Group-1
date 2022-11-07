@@ -13,4 +13,7 @@ public class personRole {
 	public int getRole() {
 		return this.role;
 	}
+	public Person getPerson() {
+		return this.person;
+	}
 }

@@ -1,7 +1,7 @@
 package program.server;
 import java.util.*;
 
-public class AccountHolder extends Person {
+public class AccountHolder{
 	private int pin;
 	private int cardNum;
 	private String email;
@@ -9,8 +9,7 @@ public class AccountHolder extends Person {
 	LoginAttempt loginAttempt;
 	
 //Constructor
-	public AccountHolder(int pin, int card, String email,String fName, String lName, int sin, String dob, Address address, personRole role) {
-		super(fName,lName,sin,dob,address,role);
+	public AccountHolder(int pin, int card, String email) {
 		this.pin = pin;
 		this.cardNum = card;
 		this.email = email;
