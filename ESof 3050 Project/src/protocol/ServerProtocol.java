@@ -30,4 +30,25 @@ public class ServerProtocol
 	{
 		data.add(parameter1);
 	}
+	
+	public MessageStatus getMessageStatus()
+	{
+		return status;
+	}
+	
+	public Datatype getDataType()
+	{
+		return dataType;
+	}
+	
+	public int getSizePerObject()
+	{
+		return sizePerObject;
+	}
+	
+	public List<String> GetData()
+	{
+		return data;
+	}
+
 }
