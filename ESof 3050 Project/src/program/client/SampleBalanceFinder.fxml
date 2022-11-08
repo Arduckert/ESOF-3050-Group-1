@@ -26,22 +26,12 @@
             <Font size="18.0" />
          </font>
       </Button>
-      <Label text="Balance" GridPane.rowIndex="3">
+      <Label text="Test Connection Name" GridPane.rowIndex="1">
          <font>
             <Font size="18.0" />
          </font>
       </Label>
-      <Label text="Account Number" GridPane.rowIndex="1">
-         <font>
-            <Font size="18.0" />
-         </font>
-      </Label>
-      <TextField fx:id="AccountNumberField" GridPane.columnIndex="1" GridPane.rowIndex="1">
-         <font>
-            <Font size="18.0" />
-         </font>
-      </TextField>
-      <TextField fx:id="BalanceField" editable="false" focusTraversable="false" GridPane.columnIndex="1" GridPane.rowIndex="3">
+      <TextField fx:id="TestConnectionField" GridPane.columnIndex="1" GridPane.rowIndex="1">
          <font>
             <Font size="18.0" />
          </font>
