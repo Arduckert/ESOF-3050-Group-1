@@ -1,4 +1,4 @@
-package program.client;
+package src.program.client;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -18,6 +18,9 @@ public class BankingClientController extends Application {
 	private String startScreen="LoginChoice.fxml";
 	private String appTitle="Banking Client";
 	
+	//********************************************************************
+	//Common methods
+	
 	//Start function
 	@Override
 	public void start(Stage stage) throws Exception{
@@ -36,6 +39,8 @@ public class BankingClientController extends Application {
 		stage.setScene(scene);
 		stage.show();
 	}
+	
+	//***********************************************************************
 	
 	//**********************************************************************
 	//Common GUI components
@@ -121,8 +126,9 @@ public class BankingClientController extends Application {
     @FXML
     void BalanceFinderSubmitButtonPressed(ActionEvent event) {
     	String testConnectionString = TestConnectionField.getText();
+    	//BankingClient client = new BankingClient();
     	//send string to server and save it
-    	//sendFunction(testConnectionString);
+    	//client.sendFunction(testConnectionString);
     }
     void switchToSampleBalanceScreen(ActionEvent event) throws Exception{
     	changeScene(event,"SampleBalanceFinder.fxml");
