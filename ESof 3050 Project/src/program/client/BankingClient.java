@@ -1,6 +1,6 @@
-package program.client;
+package src.program.client;
 
-import ocsf.client.AbstractClient;
+import src.ocsf.client.AbstractClient;
 
 public class BankingClient extends AbstractClient
 {

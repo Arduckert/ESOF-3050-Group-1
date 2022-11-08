@@ -1,4 +1,4 @@
-package program.server;
+package src.program.server;
 import java.lang.String;
 
 public class Address {

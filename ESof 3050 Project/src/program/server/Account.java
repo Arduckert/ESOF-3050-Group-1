@@ -1,4 +1,4 @@
-package program.server;
+package src.program.server;
 
 public class Account {
 	private double balance;

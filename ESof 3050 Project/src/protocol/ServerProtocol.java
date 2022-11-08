@@ -1,4 +1,4 @@
-package protocol;
+package src.protocol;
 
 public class ServerProtocol
 {

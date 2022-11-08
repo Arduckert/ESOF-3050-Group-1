@@ -1,8 +1,8 @@
-package protocol;
+package src.protocol;
 
 import java.util.ArrayList;
 import java.util.List;
-import protocol.*;
+import src.protocol.*;
 
 public class ClientProtocol
 {

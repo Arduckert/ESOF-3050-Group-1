@@ -1,4 +1,4 @@
-package program.server;
+package src.program.server;
 import java.util.*;
 
 public class BankController
