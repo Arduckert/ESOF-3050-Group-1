@@ -15,15 +15,20 @@ public class BankingClientController extends Application {
 	private Scene scene;
 	private Stage stage;
 	private Parent root;
+	private String startScreen="LoginChoice.fxml";
+	private String appTitle="Banking Client";
 	
+	//Start function
 	@Override
 	public void start(Stage stage) throws Exception{
-		root = FXMLLoader.load(getClass().getResource("LoginChoice.fxml"));
+		root = FXMLLoader.load(getClass().getResource(startScreen));
 		scene = new Scene(root);
-		stage.setTitle("Banking Client");
+		stage.setTitle(appTitle);
 		stage.setScene(scene);
 		stage.show();
 	}
+	
+	//Changes scene to fxml file passed in "file"
 	public void changeScene(ActionEvent event,String file) throws Exception{
 		root = FXMLLoader.load(getClass().getResource(file));
 		stage = (Stage)((Node)event.getSource()).getScene().getWindow();
@@ -31,25 +36,71 @@ public class BankingClientController extends Application {
 		stage.setScene(scene);
 		stage.show();
 	}
-	public void switchToTellerMainMenu(ActionEvent event) throws Exception{
-		changeScene(event,"TellerMainMenu.fxml");
-	}
-	public void switchToLoginChoiceScreen(ActionEvent event) throws Exception{
-		changeScene(event,"LoginChoice.fxml");
-	}
+	
+	//**********************************************************************
+	//Common GUI components
 	
 	@FXML
 	void LogoutButtonPressed(ActionEvent event) throws Exception{
 		switchToLoginChoiceScreen(event);
 	}
+	
+	@FXML
+    void CancelButtonPressed(ActionEvent event) throws Exception{
+    	switchToPreviousScreen(event);
+    }
+	
+	//********************************************************************
+	
+	//**********************************************************************
+	//Functions to change GUI page
+	
+	//Changes to previous screen
+	public void switchToPreviousScreen(ActionEvent event) throws Exception{
+		//Fix this!
+		switchToTellerMainMenu(event);
+		//root
+		//scene = new Scene();
+		//stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+		//stage.setScene(scene);
+		//stage.show();
+	}
+	
+	//Changes scene to teller main menu
+	public void switchToTellerMainMenu(ActionEvent event) throws Exception{
+		changeScene(event,"TellerMainMenu.fxml");
+	}
+	
+	//Changes scene to login choice screen
+	public void switchToLoginChoiceScreen(ActionEvent event) throws Exception{
+		changeScene(event,"LoginChoice.fxml");
+	}
+	
+	//************************************************************************
+	
+	//************************************************************************
+	//GUI components for login choice screen
+	
 	@FXML
     void AccountHolderLoginButtonPressed(ActionEvent event) {
     	//change root to AccountHolderMainMenu.fxml
     }
-    @FXML
+	
+	@FXML
     void EndSessionButtonPressed(ActionEvent event) {
     	Platform.exit();
     }
+	
+	@FXML
+	void TellerLoginButtonPressed(ActionEvent event) throws Exception {
+		switchToTellerMainMenu(event);
+	}
+	
+	//***************************************************************************
+	
+	//***************************************************************************
+	//GUI components for teller main menu
+	
     @FXML
     void SearchExistingAccountHolderButtonPressed(ActionEvent event) throws Exception {
     	//temporary for testing OCSF
@@ -60,29 +111,26 @@ public class BankingClientController extends Application {
 
     }
     
-    //Test for OCSF functionality
+    //**************************************************************************
+    
     //**************************************
+    //Test for OCSF functionality
+    
     @FXML
-    private TextField AccountNumberField;
-    @FXML
-    private TextField BalanceField;
+    private TextField TestConnectionField;
     @FXML
     void BalanceFinderSubmitButtonPressed(ActionEvent event) {
-    	int cardNumber = Integer.parseInt(AccountNumberField.getText());
-    	//send cardNumber to server and receive balance
-    	//double balance = sendFunction(cardNumber);
-    	double balance = 800.35;
-    	BalanceField.setText(Double.toString(balance));
+    	String testConnectionString = TestConnectionField.getText();
+    	//send string to server and save it
+    	//sendFunction(testConnectionString);
     }
     void switchToSampleBalanceScreen(ActionEvent event) throws Exception{
     	changeScene(event,"SampleBalanceFinder.fxml");
     }
-    @FXML
-    void CancelButtonPressed(ActionEvent event) throws Exception{
-    	switchToTellerMainMenu(event);
-    }
+    
     //*********************************************
     
+    //Start function
 	public static void main(String[] args) {
 		launch(args);
 	}
