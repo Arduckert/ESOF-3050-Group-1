@@ -26,7 +26,7 @@ public class ServerProtocol
 		data = new ArrayList<String>();
 	}
 	
-	public void AddData(String parameter1)
+	public void AddData(String parameter1) 
 	{
 		data.add(parameter1);
 	}

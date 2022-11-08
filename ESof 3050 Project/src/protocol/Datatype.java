@@ -3,5 +3,6 @@ package src.protocol;
 public enum Datatype
 {
 	TEST,
-	NONE
+	NONE,
+	ACCOUNT_INFO
 }

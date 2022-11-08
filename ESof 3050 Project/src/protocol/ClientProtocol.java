@@ -105,7 +105,7 @@ public class ClientProtocol
 	}
 	
 	/**
-	 * Returns a list of parameters 
+	 * Returns a list of parameters
 	 * @return - a list of parameters of type string list
 	 */
 	public List<String> GetParameters()
