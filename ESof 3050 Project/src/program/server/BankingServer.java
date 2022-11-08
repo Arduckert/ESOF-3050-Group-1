@@ -1,11 +1,10 @@
 package src.program.server;
-
 import src.ocsf.server.AbstractServer;
 import src.ocsf.server.ConnectionToClient;
 
 public class BankingServer extends AbstractServer
 {
-	
+	private BankController bankController;
 	public BankingServer(int port)
 	{
 		super(port);

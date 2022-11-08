@@ -1,13 +1,11 @@
 package src.protocol;
-
-import protocol.*;
-
+import java.util.*;
 public class ServerProtocol
 {
 	private MessageStatus status;
 	private Datatype dataType;
 	
-	private int sizePerObject
+	private int sizePerObject;
 	private List<String> data;
 	
 	public ServerProtocol(MessageStatus _status)

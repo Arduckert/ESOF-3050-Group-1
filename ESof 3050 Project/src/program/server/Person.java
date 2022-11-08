@@ -1,6 +1,8 @@
 package src.program.server;
 import java.util.*;
 
+import src.program.server.personRole;
+
 public class Person {
 	String fName;
 	String lName;
