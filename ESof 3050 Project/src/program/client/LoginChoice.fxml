@@ -25,7 +25,7 @@
             <Font size="18.0" />
          </font>
       </Button>
-      <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#switchToTellerMainMenu" text="Teller Login" GridPane.columnSpan="2147483647" GridPane.rowIndex="3">
+      <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#TellerLoginButtonPressed" text="Teller Login" GridPane.columnSpan="2147483647" GridPane.rowIndex="3">
          <font>
             <Font size="18.0" />
          </font>

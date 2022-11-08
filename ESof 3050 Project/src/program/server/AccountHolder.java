@@ -1,7 +1,7 @@
 package program.server;
 import java.util.*;
 
-public class AccountHolder{
+public class AccountHolder extends personRole{
 	private int pin;
 	private int cardNum;
 	private String email;
@@ -9,7 +9,8 @@ public class AccountHolder{
 	LoginAttempt loginAttempt;
 	
 //Constructor
-	public AccountHolder(int pin, int card, String email) {
+	public AccountHolder(int pin, int card, String email, Person person) {
+		super(0,person); //0 for role = 0;
 		this.pin = pin;
 		this.cardNum = card;
 		this.email = email;

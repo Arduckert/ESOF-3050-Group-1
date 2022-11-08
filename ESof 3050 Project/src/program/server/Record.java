@@ -19,7 +19,7 @@ public abstract class Record {
 	public String getRecordDate() {
 		return this.recordDate;
 	}
-	//@Override
+	
 	//public String toString() {
 		//return String.format("Date: %s\nTeller: %s %s\n", getRecordDate(),getTeller().getFName(),getTeller().getLName());
 	//}

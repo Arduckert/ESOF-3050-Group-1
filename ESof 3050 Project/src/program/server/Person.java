@@ -10,13 +10,13 @@ public class Person {
 	List<personRole> roles = new ArrayList<personRole>();
 	
 	//Constructor
-	public Person(String fName, String lName, int sin, String dob, Address address, personRole role) {
+	public Person(String fName, String lName, int sin, String dob, Address address) {
 		this.fName = fName;
 		this.lName = lName;
 		this.SIN = sin;
 		this.DOB = dob;
 		this.addresses.add(address);
-		this.roles.add(role);
+		//this.roles.add(role);
 		//Either add this person to list of people in bankController or do it in GUI step
 	}
 	
@@ -35,6 +35,10 @@ public class Person {
 	}
 	public void addAddress(Address x) {
 		this.addresses.add(x);
+	}
+	public void setPersonRole(personRole x) {
+		this.roles.add(x);
+		//add if size less than 2
 	}
 	
 	//Getters
