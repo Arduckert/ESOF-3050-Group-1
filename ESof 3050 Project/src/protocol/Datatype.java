@@ -2,5 +2,6 @@ package protocol;
 
 public enum Datatype
 {
-	Test
+	TEST,
+	NONE
 }
