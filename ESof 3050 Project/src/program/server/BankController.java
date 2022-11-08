@@ -36,12 +36,13 @@ public class BankController
 		return null; //throw error maybe
 	}
 	
-	
+	//function for accepting from server
 	
 	
 	public static void main(String args[])
 	{
-		System.out.println("testing the server...");
+		//System.out.println("testing the server...");
+		
 	}
 	
 }
