@@ -1,4 +1,5 @@
 package src.protocol;
+import java.io.Serializable;
 import java.util.*;
 
 /**
@@ -29,8 +30,10 @@ import java.util.*;
  * be set to 3 and the data list should be as follows: { obj1_par1, obj1_par2, obj1_par3, obj2_par1,
  * obj2_par2, obj2_par3, obj3_par1, obj3_par2, obj3_par3, ... }
  */
-public class ServerProtocol
+public class ServerProtocol implements Serializable
 {
+	private static final long serialVersionUID = 6813136696707215035L;
+
 	/**
 	 * status is a MessageStatus enum type that denotes the status of the communication,
 	 * whether it succeeded or failed. See the comments in MessageStatus.java for more info.

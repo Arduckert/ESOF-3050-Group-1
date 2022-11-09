@@ -1,5 +1,6 @@
 package src.protocol;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,8 +24,10 @@ import java.util.List;
  * action to DEPOSIT_TO_ACCOUNT and provide string values of an account number, a
  * pin, and the amount to be deposited in that account.
  */
-public class ClientProtocol
+public class ClientProtocol implements Serializable
 {
+	private static final long serialVersionUID = -8540095402407952086L;
+
 	/**
 	 * serverAction is an enum type that contains all the different types
 	 * of actions that the server can do on behalf of the client
