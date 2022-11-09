@@ -3,6 +3,26 @@ package src.protocol;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Client Protocol
+ * @author Written by Connor McNally on 11/08/2022
+ * 
+ * @apiNote The client protocol class is the "language" that the client will use to communicate
+ * with the server on what actions the server should do on a specific set of data.
+ * Whenever you want the client to send a message to the server, an instance of this
+ * class is passed with the specific server action and data as an object to the server.
+ * The server will then cast this object back to a client protocol to be read and to
+ * perform an action based on the information given in the class.
+ * 
+ * @VAR serverAction: serverAction is an enum type that contains all the different types
+ * of actions that the server can do on behalf of the client
+ * 
+ * @VAR parameters: These parameters contain the data that the client sends to the server
+ * that will allow the server to perform the specific action. For instance,
+ * If you want the server to deposit money, the client would want to set the server
+ * action to DEPOSIT_TO_ACCOUNT and provide string values of an account number, a
+ * pin, and the amount to be deposited in that account.
+ */
 public class ClientProtocol
 {
 	/**
