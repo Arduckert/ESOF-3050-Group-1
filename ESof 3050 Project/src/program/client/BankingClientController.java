@@ -14,7 +14,7 @@ import javafx.application.Platform;
 public class BankingClientController extends Application {
 	//create instance of BankingClient to pass messages to server
 	//ip4v and port of server
-	String ipAdd = "10.100.149.206";
+	String ipAdd = "192.168.1.16";
 	int port = 9950;
 	BankingClient bc = new BankingClient(ipAdd,port);
 	
@@ -31,6 +31,7 @@ public class BankingClientController extends Application {
 	@Override
 	public void start(Stage stage) throws Exception{
 		bc.openConnection();
+		System.out.println("Connection active: " + bc.isConnected());
 		root = FXMLLoader.load(getClass().getResource(startScreen));
 		scene = new Scene(root);
 		stage.setTitle(appTitle);

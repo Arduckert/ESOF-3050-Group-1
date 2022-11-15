@@ -20,8 +20,10 @@ public class BankingClient extends AbstractClient
 	
 	@Override
 	public void sendToServer(Object msg) throws IOException {
+		System.out.println("Trying to send: " + msg);
 		super.sendToServer(msg);
-		System.out.println(msg + "sent to server");
+		System.out.println("Success");
+		
 	}
 	
 }
