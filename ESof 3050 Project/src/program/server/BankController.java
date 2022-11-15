@@ -3,6 +3,7 @@ import java.util.*;
 
 public class BankController
 {
+	
 	List<Person> personList = new ArrayList<Person>();
 	List<Record> recordList = new ArrayList<Record>(); //potential problem with Record name
 	List<Account> accountList = new ArrayList<Account>();
@@ -41,8 +42,16 @@ public class BankController
 	
 	public static void main(String args[])
 	{
-		//System.out.println("testing the server...");
-		
+		int port = 9950;
+		BankingServer bs = new BankingServer(port);
+		System.out.println("testing the server...");
+		while(true) {
+			System.out.println(bs.getMessage());
+			try {
+				Thread.sleep(1000);
+			}
+			catch (Exception ex) {System.err.println(ex);}
+		}
 	}
 	
 }
