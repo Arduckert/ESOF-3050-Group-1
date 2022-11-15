@@ -12,6 +12,12 @@ import javafx.application.Application;
 import javafx.application.Platform;
 
 public class BankingClientController extends Application {
+	//create instance of BankingClient to pass messages to server
+	//ip4v and port of server
+	String ipAdd = "10.100.132.64";
+	int port = 9950;
+	BankingClient bc = new BankingClient(ipAdd,port);
+	
 	private Scene scene;
 	private Stage stage;
 	private Parent root;
@@ -93,6 +99,10 @@ public class BankingClientController extends Application {
 	
 	@FXML
     void EndSessionButtonPressed(ActionEvent event) {
+		try{
+			bc.closeConnection();
+		}
+		catch (Exception ex) {System.err.println(ex);}
     	Platform.exit();
     }
 	
@@ -124,11 +134,10 @@ public class BankingClientController extends Application {
     @FXML
     private TextField TestConnectionField;
     @FXML
-    void BalanceFinderSubmitButtonPressed(ActionEvent event) {
+    void BalanceFinderSubmitButtonPressed(ActionEvent event) throws Exception {
     	String testConnectionString = TestConnectionField.getText();
-    	//BankingClient client = new BankingClient();
     	//send string to server and save it
-    	//client.sendFunction(testConnectionString);
+    	sendToServer(testConnectionString);
     }
     void switchToSampleBalanceScreen(ActionEvent event) throws Exception{
     	changeScene(event,"SampleBalanceFinder.fxml");
@@ -136,8 +145,17 @@ public class BankingClientController extends Application {
     
     //*********************************************
     
+    //************************************************
+    //Send message to server
+    
+    public void sendToServer(Object msg) throws Exception{
+    	bc.sendToServer(msg);
+    }
+    
+    //**************************************************
+    
     //Start function
-	public static void main(String[] args) {
+	public static void main(String[] args) throws Exception{
 		launch(args);
 	}
 }

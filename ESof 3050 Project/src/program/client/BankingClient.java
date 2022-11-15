@@ -1,5 +1,8 @@
 package src.program.client;
 
+import java.io.IOException;
+import java.net.SocketException;
+
 import src.ocsf.client.AbstractClient;
 
 public class BankingClient extends AbstractClient
@@ -12,5 +15,13 @@ public class BankingClient extends AbstractClient
 	@Override
 	protected void handleMessageFromServer(Object msg) {
 		// TODO Auto-generated method stub
+		System.out.println(msg);
 	}
+	
+	@Override
+	public void sendToServer(Object msg) throws IOException {
+		super.sendToServer(msg);
+		System.out.println(msg + "sent to server");
+	}
+	
 }
