@@ -44,9 +44,14 @@ public class BankController
 	{
 		int port = 9950;
 		BankingServer bs = new BankingServer(port);
+		try {
+			bs.listen();
+		}
+		catch (Exception ex) {System.err.println(ex);}
 		System.out.println("testing the server...");
 		while(true) {
-			System.out.println(bs.getMessage());
+			//System.out.println(bs.getMessage());
+			System.out.println(bs.isListening());
 			try {
 				Thread.sleep(1000);
 			}
