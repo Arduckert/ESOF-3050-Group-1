@@ -38,12 +38,5 @@ public class BankController
 	
 	//function for accepting from server
 	
-	
-	public static void main(String args[])
-	{
-		//System.out.println("testing the server...");
-		
-	}
-	
 }
 
