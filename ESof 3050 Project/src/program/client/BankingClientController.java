@@ -140,7 +140,7 @@ public class BankingClientController extends Application {
     {
     	String testConnectionString = TestConnectionField.getText();
     	//send string to server and save it
-    	sendToServer(testConnectionString);
+    	bc.SendTestMessageToServer(testConnectionString);
     }
     
     void switchToSampleBalanceScreen(ActionEvent event) throws Exception{
