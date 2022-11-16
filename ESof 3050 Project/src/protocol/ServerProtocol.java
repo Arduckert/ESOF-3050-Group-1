@@ -35,17 +35,17 @@ public class ServerProtocol implements Serializable
 	private static final long serialVersionUID = 6813136696707215035L;
 
 	/**
-	 * status is a MessageStatus enum type that denotes the status of the communication,
-	 * whether it succeeded or failed. See the comments in MessageStatus.java for more info.
+	 * Determines if the action requested by the client succeeded denoted by SUCCESS or failed denoted
+	 * by FAIL. This variable is a string representation of a MessageStatus enum
 	 */
-	private MessageStatus status;
+	private String status;
 	
 	/**
-	 * dataType is a Datatype enum that identifies what data the server sent to the client.
+	 * dataType is a string representation of the Datatype enum that identifies what data the server sent to the client.
 	 * The client needs to know this in order to know how to process the data. See Datatype.java for more
 	 * info on what data to send and what object size to use for each type.
 	 */
-	private Datatype dataType;
+	private String dataType;
 	
 	/**
 	 * this denotes how many parameters are required for each object in the data list.
@@ -68,8 +68,8 @@ public class ServerProtocol implements Serializable
 	 */
 	public ServerProtocol(MessageStatus _status)
 	{
-		status = _status;
-		dataType = Datatype.NONE;
+		status = _status.name();
+		dataType = Datatype.NONE.name();
 		sizePerObject = 0;
 		data = new ArrayList<String>();
 	}
@@ -81,8 +81,8 @@ public class ServerProtocol implements Serializable
 	 */
 	public ServerProtocol(MessageStatus _status, Datatype _dataType)
 	{
-		status = _status;
-		dataType = _dataType;
+		status = _status.name();
+		dataType = _dataType.name();
 		sizePerObject = GetSizePerObjectForDataType(_dataType);
 		data = new ArrayList<String>();
 	}
@@ -191,7 +191,7 @@ public class ServerProtocol implements Serializable
 	 */
 	public MessageStatus getMessageStatus()
 	{
-		return status;
+		return MessageStatus.valueOf(status);
 	}
 	
 	/**
@@ -200,7 +200,7 @@ public class ServerProtocol implements Serializable
 	 */
 	public Datatype getDataType()
 	{
-		return dataType;
+		return Datatype.valueOf(dataType);
 	}
 	
 	/**

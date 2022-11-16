@@ -29,10 +29,10 @@ public class ClientProtocol implements Serializable
 	private static final long serialVersionUID = -8540095402407952086L;
 
 	/**
-	 * serverAction is an enum type that contains all the different types
-	 * of actions that the server can do on behalf of the client
+	 * serverAction is a string representation of the ServerAction enum type. This represents
+	 * what action the server should do.
 	 */
-	private ServerAction serverAction;
+	private String serverAction;
 	
 	/**
 	 * These parameters contain the data that the client sends to the server
@@ -49,7 +49,7 @@ public class ClientProtocol implements Serializable
 	 */
 	public ClientProtocol(ServerAction _serverAction, List<String> _parameters)
 	{
-		serverAction = _serverAction;
+		serverAction = _serverAction.name();
 		parameters = _parameters;
 	}
 	
@@ -60,7 +60,7 @@ public class ClientProtocol implements Serializable
 	 */
 	public ClientProtocol(ServerAction _serverAction, String parameter1)
 	{
-		serverAction = _serverAction;
+		serverAction = _serverAction.name();
 		
 		parameters = new ArrayList<String>();
 		parameters.add(parameter1);
@@ -74,7 +74,7 @@ public class ClientProtocol implements Serializable
 	 */
 	public ClientProtocol(ServerAction _serverAction, String parameter1, String parameter2)
 	{
-		serverAction = _serverAction;
+		serverAction = _serverAction.name();
 		
 		parameters = new ArrayList<String>();
 		parameters.add(parameter1);
@@ -90,7 +90,7 @@ public class ClientProtocol implements Serializable
 	 */
 	public ClientProtocol(ServerAction _serverAction, String parameter1, String parameter2, String parameter3)
 	{
-		serverAction = _serverAction;
+		serverAction = _serverAction.name();
 		
 		parameters = new ArrayList<String>();
 		parameters.add(parameter1);
@@ -108,7 +108,7 @@ public class ClientProtocol implements Serializable
 	 */
 	public ClientProtocol(ServerAction _serverAction, String parameter1, String parameter2, String parameter3, String parameter4)
 	{
-		serverAction = _serverAction;
+		serverAction = _serverAction.name();
 		
 		parameters = new ArrayList<String>();
 		parameters.add(parameter1);
@@ -123,7 +123,7 @@ public class ClientProtocol implements Serializable
 	 */
 	public ServerAction GetServerAction()
 	{
-		return serverAction;
+		return ServerAction.valueOf(serverAction);
 	}
 	
 	/**
