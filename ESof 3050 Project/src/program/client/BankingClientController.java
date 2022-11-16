@@ -14,7 +14,7 @@ import javafx.application.Platform;
 public class BankingClientController extends Application {
 	//create instance of BankingClient to pass messages to server
 	//ip4v and port of server
-	static String ipAdd = "10.100.144.55";
+	static String ipAdd = "192.168.1.16";
 	static int port = 9950;
 	public static BankingClient bc = new BankingClient(ipAdd,port);
 	
@@ -59,25 +59,19 @@ public class BankingClientController extends Application {
 	}
 	
 	@FXML
-    void CancelButtonPressed(ActionEvent event) throws Exception{
-    	switchToPreviousScreen(event);
+    void TellerCancelButtonPressed(ActionEvent event) throws Exception{
+    	switchToTellerMainMenu(event);
     }
+	
+	@FXML
+	void AccountHolderCancelButtonPressed(ActionEvent event) throws Exception{
+		//switchToAccountHolderMainMenu(event);
+	}
 	
 	//********************************************************************
 	
 	//**********************************************************************
 	//Functions to change GUI page
-	
-	//Changes to previous screen
-	public void switchToPreviousScreen(ActionEvent event) throws Exception{
-		//Fix this!
-		switchToTellerMainMenu(event);
-		//root
-		//scene = new Scene();
-		//stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-		//stage.setScene(scene);
-		//stage.show();
-	}
 	
 	//Changes scene to teller main menu
 	public void switchToTellerMainMenu(ActionEvent event) throws Exception{
@@ -87,6 +81,10 @@ public class BankingClientController extends Application {
 	//Changes scene to login choice screen
 	public void switchToLoginChoiceScreen(ActionEvent event) throws Exception{
 		changeScene(event,"LoginChoice.fxml");
+	}
+	
+	public void switchToNewAccountHolderScreen(ActionEvent event) throws Exception{
+		changeScene(event,"NewAccountHolder.fxml");
 	}
 	
 	//************************************************************************
@@ -124,9 +122,41 @@ public class BankingClientController extends Application {
     	switchToSampleBalanceScreen(event);
     }
     @FXML
-    void CreateNewAccountHolderButtonPressed(ActionEvent event) {
-
+    void CreateNewAccountHolderButtonPressed(ActionEvent event) throws Exception{
+    	switchToNewAccountHolderScreen(event);
     }
+    
+    //**************************************************************************
+    
+    //**************************************************************************
+    //GUI components for new account holder screen
+    
+    @FXML
+    private TextField sinTextField;
+    
+    @FXML
+    private TextField FirstNameTextField;
+    
+    @FXML
+    private TextField LastNameTextField;
+    
+    @FXML
+    private TextField emailTextField;
+    
+    @FXML
+    private TextField dayTextField;
+    
+    @FXML
+    private TextField monthTextField;
+    
+    @FXML
+    private TextField yearTextField;
+    
+    @FXML
+    void NewAccountNextButtonPressed(ActionEvent event) throws Exception{
+    	
+    }
+    
     
     //**************************************************************************
     
