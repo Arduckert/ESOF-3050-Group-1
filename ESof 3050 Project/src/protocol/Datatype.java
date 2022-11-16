@@ -93,7 +93,7 @@ public enum Datatype
 	BASIC_MESSAGE,
 	
 	/**
-	 * No data is passed (this is the default value of the status only constructor)
+	 * No data is passed.
 	 * @object_size 0
 	 */
 	NONE

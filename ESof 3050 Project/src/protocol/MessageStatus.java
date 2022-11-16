@@ -17,7 +17,7 @@ public enum MessageStatus
 	
 	/**
 	 * Action failed to perform successfully. For instance, entering the wrong pin
-	 * for an account will make the server send a FAIL status. 
+	 * number for an account will make the server send a FAIL status. 
 	 */
 	FAIL
 }

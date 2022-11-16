@@ -180,7 +180,7 @@ public enum ServerAction
 	/**
 	 * This is used as a way to test the client-server communication. This takes one
 	 * parameter that can be any string message. The server returns SUCCESS if the
-	 * message was received
+	 * message was received.
 	 */
 	TEST
 }
