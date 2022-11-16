@@ -28,6 +28,7 @@ public class BankingClient extends AbstractClient
 		super.sendToServer(msg);
 	}
 	
+	//sends a test message
 	public void SendTestMessageToServer(String message) throws IOException
 	{
 		ClientProtocol cp = new ClientProtocol(ServerAction.TEST, message);

@@ -17,6 +17,7 @@ public class BankingServer extends AbstractServer
 	protected void handleMessageFromClient(Object msg, ConnectionToClient client)
 	{
 		ClientProtocol cp = (ClientProtocol)msg;
+		
 		System.out.println(cp.GetParameters().get(0));
 
 		ServerProtocol sp = new ServerProtocol(MessageStatus.SUCCESS, Datatype.BASIC_MESSAGE);

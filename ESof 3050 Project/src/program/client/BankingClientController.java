@@ -139,6 +139,7 @@ public class BankingClientController extends Application {
     void BalanceFinderSubmitButtonPressed(ActionEvent event) throws Exception
     {
     	String testConnectionString = TestConnectionField.getText();
+    	
     	//send string to server and save it
     	bc.SendTestMessageToServer(testConnectionString);
     }
