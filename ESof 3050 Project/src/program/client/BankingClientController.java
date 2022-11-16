@@ -99,11 +99,9 @@ public class BankingClientController extends Application {
     }
 	
 	@FXML
-    void EndSessionButtonPressed(ActionEvent event) {
-		try{
-			bc.closeConnection();
-		}
-		catch (Exception ex) {System.err.println(ex);}
+    void EndSessionButtonPressed(ActionEvent event) throws Exception {
+		sendToServer("Terminated");
+		bc.closeConnection();
     	Platform.exit();
     }
 	
