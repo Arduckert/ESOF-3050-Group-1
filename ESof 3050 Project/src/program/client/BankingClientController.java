@@ -12,6 +12,7 @@ import javafx.application.Application;
 import javafx.application.Platform;
 
 public class BankingClientController extends Application {
+	//test to allow push
 	//create instance of BankingClient to pass messages to server
 	//ip4v and port of server
 	static String ipAdd = "192.168.1.16";
