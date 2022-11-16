@@ -11,13 +11,90 @@ package src.protocol;
  * some data corruption could occur. Find the type you want to use below and follow
  * the instructions given for what data to send and what object size you need for
  * proper use.
- * 
- * @TYPE TEST: this is used as a way to test the client-server communication. This type
- * of data needs one parameter which can contain a message and an object size of 1.
- * @TYPE NONE: no data is passed (this is the default value of the status only constructor).
  */
 public enum Datatype
 {
-	TEST,
-	NONE,
+	/**
+	 * 
+	 */
+	PERSON,
+	
+	/**
+	 * 
+	 */
+	TELLER,
+	
+	/**
+	 * 
+	 */
+	ACCOUNT_HOLDER,
+	
+	/**
+	 * 
+	 */
+	ACCOUNT,
+	
+	/**
+	 * 
+	 */
+	CHEQUING_ACCOUNT,
+	
+	/**
+	 * 
+	 */
+	SAVINGS_ACCOUNT,
+	
+	/**
+	 * 
+	 */
+	MORTGAGE_ACCOUNT,
+	
+	/**
+	 * 
+	 */
+	LINE_OF_CREDIT_ACCOUNT,
+	
+	/**
+	 * 
+	 */
+	TRANSACTION,
+	
+	/**
+	 * 
+	 */
+	ADDRESS,
+	
+	/**
+	 * 
+	 */
+	BILL,
+	
+	/**
+	 * 
+	 */
+	CUSTOMER_RECORD,
+	
+	/**
+	 * 
+	 */
+	ACCOUNT_RECORD,
+	
+	/**
+	 * 
+	 */
+	LOGIN_ATTEMPT,
+	
+	/**
+	 * This sends a string message back to the client. This is used as a way to test
+	 * the client-server communication and can also be used to send a message back to
+	 * the client if the message has a FAIL status.
+	 * @object_size 1
+	 */
+	BASIC_MESSAGE,
+	
+	/**
+	 * No data is passed (this is the default value of the status only constructor)
+	 * @object_size 0
+	 */
+	NONE
 }

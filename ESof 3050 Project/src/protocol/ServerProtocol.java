@@ -98,7 +98,7 @@ public class ServerProtocol implements Serializable
 		{
 		case NONE:
 			return 0;
-		case TEST:
+		case BASIC_MESSAGE:
 			return 1;
 		default:
 			return 0;
