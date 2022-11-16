@@ -98,7 +98,7 @@ public class ServerProtocol implements Serializable
 		{
 		case NONE:
 			return 0;
-		case TEST:
+		case BASIC_MESSAGE:
 			return 1;
 		default:
 			return 0;
@@ -106,7 +106,7 @@ public class ServerProtocol implements Serializable
 	}
 	
 	/**
-	 * Adds a new object with one parameter to the data list
+	 * Adds a new object with one parameter to the data list.
 	 * @param parameter1
 	 */
 	public void AddData(String parameter1) throws ParameterException
@@ -122,7 +122,7 @@ public class ServerProtocol implements Serializable
 	}
 	
 	/**
-	 * Adds a new object with two parameters to the data list
+	 * Adds a new object with two parameters to the data list.
 	 * @param parameter1
 	 * @param parameter2
 	 */
@@ -140,7 +140,7 @@ public class ServerProtocol implements Serializable
 	}
 	
 	/**
-	 * Adds a new object with three parameters to the data list
+	 * Adds a new object with three parameters to the data list.
 	 * @param parameter1
 	 * @param parameter2
 	 * @param parameter3
@@ -160,7 +160,7 @@ public class ServerProtocol implements Serializable
 	}
 	
 	/**
-	 * Adds a new object with four parameters to the data list
+	 * Adds a new object with four parameters to the data list.
 	 * @param parameter1
 	 * @param parameter2
 	 * @param parameter3
