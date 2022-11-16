@@ -129,6 +129,7 @@ public class BankingClientController extends Application {
     
     //**************************************************************************
     //GUI components for new account holder screen
+    //This disappeared earlier
     
     @FXML
     private TextField sinTextField;
