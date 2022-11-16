@@ -15,7 +15,7 @@ public class BankingClientController extends Application {
 	//test to allow push
 	//create instance of BankingClient to pass messages to server
 	//ip4v and port of server
-	static String ipAdd = "192.168.1.16";
+	static String ipAdd = "192.168.1.10";
 	static int port = 9950;
 	public static BankingClient bc = new BankingClient(ipAdd,port);
 	
