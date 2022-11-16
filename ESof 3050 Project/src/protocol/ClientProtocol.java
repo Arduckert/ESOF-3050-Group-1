@@ -40,14 +40,14 @@ public class ClientProtocol implements Serializable
 	 * to deposit money, the client would need to provide an account number, a
 	 * pin, and the amount to be deposited in that account.
 	 */
-	private List<String> parameters;
+	private ArrayList<String> parameters;
 	
 	/**
 	 * Constructor that takes a server action and any number of parameters
 	 * @param _serverAction - the action the server will do on the data
 	 * @param _parameters - the data to be sent to the server
 	 */
-	public ClientProtocol(ServerAction _serverAction, List<String> _parameters)
+	public ClientProtocol(ServerAction _serverAction, ArrayList<String> _parameters)
 	{
 		serverAction = _serverAction.name();
 		parameters = _parameters;

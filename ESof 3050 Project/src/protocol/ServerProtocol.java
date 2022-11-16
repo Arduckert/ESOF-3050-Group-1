@@ -60,7 +60,7 @@ public class ServerProtocol implements Serializable
 	 * be set to 3 and the data list should be as follows: { obj1_par1, obj1_par2, obj1_par3, obj2_par1,
 	 * obj2_par2, obj2_par3, obj3_par1, obj3_par2, obj3_par3, ... }
 	 */
-	private List<String> data;
+	private ArrayList<String> data;
 	
 	/**
 	 * Constructor that just sends the message status, use this as a way to just communicate a success or failure
