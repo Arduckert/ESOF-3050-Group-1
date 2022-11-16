@@ -4,7 +4,6 @@ import src.ocsf.server.ConnectionToClient;
 
 public class BankingServer extends AbstractServer
 {
-	Object msg="baseValue";
 	public BankingServer(int port)
 	{
 		super(port);
@@ -14,10 +13,6 @@ public class BankingServer extends AbstractServer
 	@Override
 	protected void handleMessageFromClient(Object msg, ConnectionToClient client)
 	{
-		this.msg=msg;
-	}
-	
-	public Object getMessage() {
-		return msg;
+		System.out.println(msg);
 	}
 }
