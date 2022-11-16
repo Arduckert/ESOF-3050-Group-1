@@ -136,11 +136,13 @@ public class BankingClientController extends Application {
     @FXML
     private TextField TestConnectionField;
     @FXML
-    void BalanceFinderSubmitButtonPressed(ActionEvent event) throws Exception {
+    void BalanceFinderSubmitButtonPressed(ActionEvent event) throws Exception
+    {
     	String testConnectionString = TestConnectionField.getText();
     	//send string to server and save it
     	sendToServer(testConnectionString);
     }
+    
     void switchToSampleBalanceScreen(ActionEvent event) throws Exception{
     	changeScene(event,"SampleBalanceFinder.fxml");
     }
@@ -150,7 +152,8 @@ public class BankingClientController extends Application {
     //************************************************
     //Send message to server
     
-    public void sendToServer(Object msg) throws Exception{
+    public void sendToServer(String msg) throws Exception
+    {
     	bc.sendToServer(msg);
     }
     

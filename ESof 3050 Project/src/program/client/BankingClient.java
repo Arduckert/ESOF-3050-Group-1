@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.net.SocketException;
 
 import src.ocsf.client.AbstractClient;
+import src.protocol.*;
 
 public class BankingClient extends AbstractClient
 {
@@ -13,9 +14,10 @@ public class BankingClient extends AbstractClient
 	}
 
 	@Override
-	protected void handleMessageFromServer(Object msg) {
-		// TODO Auto-generated method stub
-		System.out.println(msg);
+	protected void handleMessageFromServer(Object msg)
+	{
+		ServerProtocol sp = (ServerProtocol)msg;
+		System.out.println(sp.GetData().get(0));
 	}
 	
 	@Override
@@ -24,8 +26,12 @@ public class BankingClient extends AbstractClient
 		System.out.println("Host: "+super.getHost());
 		System.out.println("Port: "+super.getPort());
 		super.sendToServer(msg);
-		System.out.println("Success");
-		
+	}
+	
+	public void SendTestMessageToServer(String message) throws IOException
+	{
+		ClientProtocol cp = new ClientProtocol(ServerAction.TEST, message);
+		sendToServer(cp);
 	}
 	
 }

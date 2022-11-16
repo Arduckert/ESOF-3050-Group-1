@@ -108,6 +108,7 @@ public class ServerProtocol implements Serializable
 	/**
 	 * Adds a new object with one parameter to the data list.
 	 * @param parameter1
+	 * @throws ParameterException 
 	 */
 	public void AddData(String parameter1) throws ParameterException
 	{
@@ -125,6 +126,7 @@ public class ServerProtocol implements Serializable
 	 * Adds a new object with two parameters to the data list.
 	 * @param parameter1
 	 * @param parameter2
+	 * @throws ParameterException
 	 */
 	public void AddData(String parameter1, String parameter2) throws ParameterException
 	{
@@ -144,6 +146,7 @@ public class ServerProtocol implements Serializable
 	 * @param parameter1
 	 * @param parameter2
 	 * @param parameter3
+	 * @throws ParameterException
 	 */
 	public void AddData(String parameter1, String parameter2, String parameter3) throws ParameterException
 	{
@@ -165,6 +168,7 @@ public class ServerProtocol implements Serializable
 	 * @param parameter2
 	 * @param parameter3
 	 * @param parameter4
+	 * @throws ParameterException
 	 */
 	public void AddData(String parameter1, String parameter2, String parameter3, String parameter4) throws ParameterException
 	{
