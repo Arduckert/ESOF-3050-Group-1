@@ -49,14 +49,14 @@ public class BankController
 		}
 		catch (Exception ex) {System.err.println(ex);}
 		System.out.println("testing the server...");
+		/*
 		while(true) {
-			//System.out.println(bs.getMessage());
-			System.out.println(bs.isListening());
+			System.out.println(bs.getMessage());
 			try {
 				Thread.sleep(1000);
 			}
 			catch (Exception ex) {System.err.println(ex);}
-		}
+		}*/
 	}
 	
 }

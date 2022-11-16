@@ -154,6 +154,7 @@ public abstract class AbstractClient implements Runnable
     clientReader = new Thread(this);  //Create the data reader thread
     readyToStop = false;
     clientReader.start();  //Start the thread
+    
   }
 
   /**
@@ -169,8 +170,6 @@ public abstract class AbstractClient implements Runnable
    */
   public void sendToServer(Object msg) throws IOException
   {
-	  System.out.println(clientSocket);
-	  System.out.println(output);
 	  
     if (clientSocket == null || output == null) {
       throw new SocketException("socket does not exist");
