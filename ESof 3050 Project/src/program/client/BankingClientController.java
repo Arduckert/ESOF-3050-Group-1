@@ -12,7 +12,6 @@ import javafx.application.Application;
 import javafx.application.Platform;
 
 public class BankingClientController extends Application {
-	//test to allow push
 	//create instance of BankingClient to pass messages to server
 	//ip4v and port of server
 	static String ipAdd = "192.168.1.10";
@@ -64,11 +63,6 @@ public class BankingClientController extends Application {
     	switchToTellerMainMenu(event);
     }
 	
-	@FXML
-	void AccountHolderCancelButtonPressed(ActionEvent event) throws Exception{
-		//switchToAccountHolderMainMenu(event);
-	}
-	
 	//********************************************************************
 	
 	//**********************************************************************
@@ -84,8 +78,14 @@ public class BankingClientController extends Application {
 		changeScene(event,"LoginChoice.fxml");
 	}
 	
+	//Change scene to account holder creation screen
 	public void switchToNewAccountHolderScreen(ActionEvent event) throws Exception{
 		changeScene(event,"NewAccountHolder.fxml");
+	}
+	
+	//Change scene to account holder creation address screen
+	public void switchToNewAccountHolderAddressScreen(ActionEvent event) throws Exception{
+		changeScene(event,"NewAccountHolderAddress.fxml");
 	}
 	
 	//************************************************************************
@@ -99,9 +99,11 @@ public class BankingClientController extends Application {
     }
 	
 	@FXML
-    void EndSessionButtonPressed(ActionEvent event) throws Exception {
-		sendToServer("Terminated");
-		bc.closeConnection();
+    void EndSessionButtonPressed(ActionEvent event) {
+		try{
+			bc.closeConnection();
+		}
+		catch (Exception ex) {System.err.println(ex);}
     	Platform.exit();
     }
 	
@@ -121,12 +123,13 @@ public class BankingClientController extends Application {
     	switchToSampleBalanceScreen(event);
     }
     @FXML
-    void CreateNewAccountHolderButtonPressed(ActionEvent event) throws Exception{
+    void CreateNewAccountHolderButtonPressed(ActionEvent event) throws Exception {
     	switchToNewAccountHolderScreen(event);
     }
     
     //**************************************************************************
     
+
     //**************************************************************************
     //GUI components for new account holder screen
     //This disappeared earlier
@@ -154,7 +157,7 @@ public class BankingClientController extends Application {
     
     @FXML
     void NewAccountNextButtonPressed(ActionEvent event) throws Exception{
-    	
+    	switchToNewAccountHolderAddressScreen(event);
     }
     
     
@@ -166,11 +169,14 @@ public class BankingClientController extends Application {
     @FXML
     private TextField TestConnectionField;
     @FXML
-    void BalanceFinderSubmitButtonPressed(ActionEvent event) throws Exception {
+    void BalanceFinderSubmitButtonPressed(ActionEvent event) throws Exception
+    {
     	String testConnectionString = TestConnectionField.getText();
+    	
     	//send string to server and save it
-    	sendToServer(testConnectionString);
+    	bc.SendTestMessageToServer(testConnectionString);
     }
+    
     void switchToSampleBalanceScreen(ActionEvent event) throws Exception{
     	changeScene(event,"SampleBalanceFinder.fxml");
     }
@@ -180,7 +186,8 @@ public class BankingClientController extends Application {
     //************************************************
     //Send message to server
     
-    public void sendToServer(Object msg) throws Exception{
+    public void sendToServer(String msg) throws Exception
+    {
     	bc.sendToServer(msg);
     }
     
