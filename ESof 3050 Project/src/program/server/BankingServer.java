@@ -18,12 +18,22 @@ public class BankingServer extends AbstractServer
 	{
 		ClientProtocol cp = (ClientProtocol)msg;
 		System.out.println(cp.GetParameters().get(0));
-
+		SendTestMessageToClient(client, "Message received by the server");
+	}
+	
+	@Override
+	protected void clientConnected(ConnectionToClient client)
+	{
+		SendTestMessageToClient(client, "Welcome to the ACM banking system.");
+	}
+	
+	public void SendTestMessageToClient(ConnectionToClient client, String message)
+	{
 		ServerProtocol sp = new ServerProtocol(MessageStatus.SUCCESS, Datatype.BASIC_MESSAGE);
 		
 		try
 		{
-			sp.AddData("message successfully received");
+			sp.AddData(message);
 		} 
 		catch (ParameterException e) 
 		{
