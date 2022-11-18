@@ -17,13 +17,14 @@ public class BankingServer extends AbstractServer
 	protected void handleMessageFromClient(Object msg, ConnectionToClient client)
 	{
 		ClientProtocol cp = (ClientProtocol)msg;
-		System.out.println(cp.GetParameters().get(0));
+		System.out.println("Client" + client.getInetAddress()  + " sent message: " + cp.GetParameters().get(0));
 		SendTestMessageToClient(client, "Message received by the server");
 	}
 	
 	@Override
 	protected void clientConnected(ConnectionToClient client)
 	{
+		System.out.println("Client " + client.getInetAddress() + " connected to the system");
 		SendTestMessageToClient(client, "Welcome to the ACM banking system.");
 	}
 	
