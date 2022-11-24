@@ -18,8 +18,7 @@ public class BankingClient extends AbstractClient
 	@Override
 	protected void handleMessageFromServer(Object msg)
 	{
-		ServerProtocol sp = (ServerProtocol)msg.getClass().cast(msg); //BLAH BLAH BLAH branch test
-		System.out.println(sp.GetData().get(0));
+		ServerProtocol sp = (ServerProtocol)msg;
 	}
 	
 	@Override
