@@ -18,8 +18,17 @@ public class BankingClient extends AbstractClient
 	@Override
 	protected void handleMessageFromServer(Object msg)
 	{
-		ServerProtocol sp = (ServerProtocol)msg.getClass().cast(msg);
-		System.out.println(sp.GetData().get(0));
+		ServerProtocol sp = (ServerProtocol)msg;
+		switch(sp.getDataType()) {
+		case LOGIN_ATTEMPT:
+			if(sp.getMessageStatus() == MessageStatus.SUCCESS) {
+				//switch scene
+			}
+			else {
+				//pop up
+			} break;
+		
+		}
 	}
 	
 	@Override
