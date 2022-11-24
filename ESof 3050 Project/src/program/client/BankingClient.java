@@ -8,16 +8,24 @@ import src.protocol.*;
 
 public class BankingClient extends AbstractClient
 {
-	public BankingClient(String host, int port) {
+	BankingClientController clientController;
+	public BankingClient(String host, int port, BankingClientController b) {
 		super(host, port);
+		this.clientController = b;
 		// TODO Auto-generated constructor stub
 	}
 
 	@Override
 	protected void handleMessageFromServer(Object msg)
 	{
-		ServerProtocol sp = (ServerProtocol)msg.getClass().cast(msg);
-		System.out.println(sp.GetData().get(0));
+		ServerProtocol sp = (ServerProtocol)msg;
+		switch(sp.getDataType()) {
+		
+		case LOGIN_ATTEMPT:
+			
+		
+		
+		}
 	}
 	
 	@Override
@@ -48,9 +56,9 @@ public class BankingClient extends AbstractClient
 	 * the account holder's pin
 	 * @throws IOException
 	 */
-	public void LoginAsAccountHolder(String accountNumber, String pin) throws IOException
+	public void LoginAsAccountHolder(String cardNumber, String pin) throws IOException
 	{
-		ClientProtocol cp = new ClientProtocol(ServerAction.LOGIN_ACCOUNTHOLDER, accountNumber, pin);
+		ClientProtocol cp = new ClientProtocol(ServerAction.LOGIN_ACCOUNTHOLDER, cardNumber, pin);
 		sendToServer(cp);
 	}
 	

@@ -14,7 +14,7 @@ import javafx.application.Platform;
 public class BankingClientController extends Application {
 	//create instance of BankingClient to pass messages to server
 	//ip4v and port of server
-	static String ipAdd = "192.168.1.10";
+	static String ipAdd = "192.168.250.19";
 	static int port = 9950;
 	public static BankingClient bc = new BankingClient(ipAdd,port);
 	
@@ -174,7 +174,15 @@ public class BankingClientController extends Application {
     	String testConnectionString = TestConnectionField.getText();
     	
     	//send string to server and save it
-    	bc.SendTestMessageToServer(testConnectionString);
+    	//bc.SendTestMessageToServer(testConnectionString);
+    	
+    	//testing login function
+    	bc.LoginAsAccountHolder("1234567",testConnectionString);
+    	
+    	//if good > change page
+    	
+    	//if bad > pop up
+    	
     }
     
     void switchToSampleBalanceScreen(ActionEvent event) throws Exception{
