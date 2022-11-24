@@ -16,7 +16,7 @@ public class BankingClientController extends Application {
 	//ip4v and port of server
 	static String ipAdd = "192.168.1.10";
 	static int port = 9950;
-	public static BankingClient bc = new BankingClient(ipAdd,port);
+	public static BankingClient bc;
 	
 	private Scene scene;
 	private Stage stage;
@@ -30,6 +30,7 @@ public class BankingClientController extends Application {
 	//Start function
 	@Override
 	public void start(Stage stage) throws Exception{
+		bc=new BankingClient(ipAdd,port,this);
 		bc.openConnection();
 		System.out.println("Connection active: " + bc.isConnected());
 		root = FXMLLoader.load(getClass().getResource(startScreen));

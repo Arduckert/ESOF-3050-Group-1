@@ -8,8 +8,10 @@ import src.protocol.*;
 
 public class BankingClient extends AbstractClient
 {
-	public BankingClient(String host, int port) {
+	private BankingClientController bcc;
+	public BankingClient(String host, int port,BankingClientController bcc) {
 		super(host, port);
+		this.bcc=bcc;
 		// TODO Auto-generated constructor stub
 	}
 
