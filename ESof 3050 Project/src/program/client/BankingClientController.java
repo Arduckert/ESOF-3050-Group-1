@@ -14,7 +14,7 @@ import javafx.application.Platform;
 public class BankingClientController extends Application {
 	//create instance of BankingClient to pass messages to server
 	//ip4v and port of server
-	static String ipAdd = "192.168.250.19";
+	static String ipAdd = "192.168.1.10";
 	static int port = 9950;
 	public static BankingClient bc;
 	
@@ -133,7 +133,6 @@ public class BankingClientController extends Application {
 
     //**************************************************************************
     //GUI components for new account holder screen
-    //This disappeared earlier
     
     @FXML
     private TextField sinTextField;
@@ -161,6 +160,20 @@ public class BankingClientController extends Application {
     	switchToNewAccountHolderAddressScreen(event);
     }
     
+    
+    //**************************************************************************
+    
+    //************************************************************************
+    //GUI components for new account holder address addition
+    
+    @FXML
+    void AddressBackButtonPressed(ActionEvent event) throws Exception{
+    	switchToNewAccountHolderScreen(event);
+    }
+    @FXML
+    void AddAddressButtonPressed(ActionEvent event) throws Exception{
+    	//open secondary window for address entry
+    }
     
     //**************************************************************************
     
