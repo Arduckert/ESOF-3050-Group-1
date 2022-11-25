@@ -170,12 +170,29 @@ public class BankingClientController extends Application {
     void AddressBackButtonPressed(ActionEvent event) throws Exception{
     	switchToNewAccountHolderScreen(event);
     }
+    
     @FXML
     void AddAddressButtonPressed(ActionEvent event) throws Exception{
     	//open secondary window for address entry
     }
     
     //**************************************************************************
+    
+    //***************************************************************************
+    //GUI components for address fill out screen
+    @FXML
+    void AddressSubmitButtonPressed(ActionEvent event) throws Exception{
+    	//increment address total
+    	//add new address on server side
+    }
+    
+    @FXML
+    void AddressCancelButtonPressed(ActionEvent event) throws Exception{
+    	//close window
+    }
+    
+    //**************************************************************************
+  
     
     //**************************************
     //Test for OCSF functionality
