@@ -1,7 +1,7 @@
 package src.program.server;
 import java.util.*;
 
-public class BankController
+public class BankController implements IBankController
 {
 	
 	List<Person> personList = new ArrayList<Person>();

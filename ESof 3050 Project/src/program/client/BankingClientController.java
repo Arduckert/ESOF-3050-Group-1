@@ -11,10 +11,10 @@ import javafx.event.ActionEvent;
 import javafx.application.Application;
 import javafx.application.Platform;
 
-public class BankingClientController extends Application {
+public class BankingClientController extends Application implements IBankingClientController {
 	//create instance of BankingClient to pass messages to server
 	//ip4v and port of server
-	static String ipAdd = "192.168.1.10";
+	static String ipAdd = "10.100.131.6";
 	static int port = 9950;
 	public static BankingClient bc;
 	
@@ -30,7 +30,7 @@ public class BankingClientController extends Application {
 	//Start function
 	@Override
 	public void start(Stage stage) throws Exception{
-		bc=new BankingClient(ipAdd,port,this);
+		bc = new BankingClient(ipAdd,port,this);
 		bc.openConnection();
 		System.out.println("Connection active: " + bc.isConnected());
 		root = FXMLLoader.load(getClass().getResource(startScreen));

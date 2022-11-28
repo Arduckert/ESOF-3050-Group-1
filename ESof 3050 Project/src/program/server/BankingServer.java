@@ -7,9 +7,9 @@ import src.protocol.*;
 
 public class BankingServer extends AbstractServer
 {
-	BankController bankController;
+	IBankController bankController;
 	
-	public BankingServer(int port, BankController b)
+	public BankingServer(int port, IBankController b)
 	{
 		super(port);
 		this.bankController = b;
@@ -21,39 +21,16 @@ public class BankingServer extends AbstractServer
 	{
 		ClientProtocol cp = (ClientProtocol)msg;
 		
-		switch(cp.GetServerAction()) {
-		case LOGIN_ACCOUNTHOLDER:
-			if(bankController.authenticateAccountHolderLogin(cp.GetParameters().get(0),cp.GetParameters().get(1))) {
-				ServerProtocol sp = new ServerProtocol(MessageStatus.SUCCESS, Datatype.LOGIN_ATTEMPT);
-				//System.out.println("LOGIN SUCCESSFUL");
-				try
-				{
-					client.sendToClient(sp);
-				}
-				catch (IOException e)
-				{
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				
-			}
-			else {
-				ServerProtocol sp = new ServerProtocol(MessageStatus.FAIL, Datatype.LOGIN_ATTEMPT);
-				//System.out.println("LOGIN FAILED");
-				try
-				{
-					client.sendToClient(sp);
-				}
-				catch (IOException e)
-				{
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			} break;//END OF LOGIN ACCOUNT HOLDER CASE
-		
-		default:
-		System.out.println("Client" + client.getInetAddress()  + " sent message: " + cp.GetParameters().get(0));
-		SendTestMessageToClient(client, "Message received by the server");
+		switch(cp.GetServerAction())
+		{
+			case LOGIN_ACCOUNTHOLDER:
+				HandleAccountHolderLogin(cp, client);
+				break;
+			case TEST:
+				HandleTestMessage(cp, client);
+				break;
+			default:
+				break;
 		}
 	}
 	
@@ -87,5 +64,42 @@ public class BankingServer extends AbstractServer
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+	
+	private void HandleAccountHolderLogin(ClientProtocol cp, ConnectionToClient client)
+	{
+		if(bankController.authenticateAccountHolderLogin(cp.GetParameters().get(0),cp.GetParameters().get(1))) {
+			ServerProtocol sp = new ServerProtocol(MessageStatus.SUCCESS, Datatype.LOGIN_ATTEMPT);
+			//System.out.println("LOGIN SUCCESSFUL");
+			try
+			{
+				client.sendToClient(sp);
+			}
+			catch (IOException e)
+			{
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+		}
+		else {
+			ServerProtocol sp = new ServerProtocol(MessageStatus.FAIL, Datatype.LOGIN_ATTEMPT);
+			//System.out.println("LOGIN FAILED");
+			try
+			{
+				client.sendToClient(sp);
+			}
+			catch (IOException e)
+			{
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		} //END OF LOGIN ACCOUNT HOLDER CASE
+	}
+	
+	private void HandleTestMessage(ClientProtocol cp, ConnectionToClient client)
+	{
+		System.out.println("Client" + client.getInetAddress()  + " sent message: " + cp.GetParameters().get(0));
+		SendTestMessageToClient(client, "Message received by the server");
 	}
 }
