@@ -14,6 +14,7 @@ public class Account {
 		this.dateOpened = date;
 		this.accountHolder = holder;
 		//add to list in banking controller or do it in createAccount method
+		//adding comment for git test
 	}
 //Setters
 	public void setBalance(double x) {
