@@ -15,6 +15,18 @@ public class ServerTestDriver implements IBankController
 	public ServerTestDriver()
 	{
 		bs = new BankingServer(port, this);
+		
+		try
+		{
+			bs.listen();
+			System.out.println("LISTENING...");
+		}
+		catch (IOException e)
+		{
+			System.out.println("LISTEN TEST FAILED: IO EXCEPTION");
+			e.printStackTrace();
+			assert false;
+		}
 	}
 	
 	@Override
@@ -26,15 +38,7 @@ public class ServerTestDriver implements IBankController
 	
 	public void RunTests()
 	{
-		try
-		{
-			bs.listen();
-		}
-		catch (IOException e)
-		{
-			System.out.println("LISTEN TEST FAILED: IO EXCEPTION");
-			assert false;
-		}
+		
 	}
 	
 	//echos the message sent by the client back to the client

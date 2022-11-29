@@ -8,7 +8,7 @@ import src.program.client.IBankingClientController;
 public class ClientTestDriver implements IBankingClientController
 {
 	private static final int port = 9950;
-	private static final String ipAdd = "10.100.131.6";
+	private static final String ipAdd = "10.100.150.217";
 	private BankingClient bc;
 	
 	public ClientTestDriver()
@@ -39,6 +39,7 @@ public class ClientTestDriver implements IBankingClientController
 		catch (IOException e)
 		{
 			System.out.println("TEST MESSAGE FAILED: IO EXCEPTION");
+			e.printStackTrace();
 			assert false;
 		}
 	}
