@@ -14,7 +14,7 @@ import javafx.application.Platform;
 public class BankingClientController extends Application implements IBankingClientController {
 	//create instance of BankingClient to pass messages to server
 	//ip4v and port of server
-	static String ipAdd = "10.100.149.3";
+	static String ipAdd = "10.100.150.1";
 	static int port = 9950;
 	public static BankingClient bc;
 	
