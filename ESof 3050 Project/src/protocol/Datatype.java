@@ -2,7 +2,7 @@ package src.protocol;
 
 /**
  * Data Type
- * @author Written by Connor McNally on 11/08/2022
+ * @author Written by Connor McNally on 11/08/2022 (Last Modified 11/29/2022)
  * 
  * @apiNote The Datatype enum contains the different types of data the server can
  * send to the client. This can vary from just sending a test message to sending
@@ -16,10 +16,18 @@ public enum Datatype
 {
 	/**
 	 * This sends information about a person back to the client. The information included
-	 * in this data type is the person's first name, last name, and date of birth.
-	 * @object_size 3
+	 * in this data type is the person's first name, last name, date of birth, and social
+	 * insurance number.
+	 * @object_size 4
 	 */
 	PERSON,
+	
+	/**
+	 * This sends information about a teller back to the client. The information included
+	 * in this data type is the teller's employee number, and password.
+	 * @object_size 2
+	 */
+	TELLER,
 	
 	/**
 	 * This sends information about an account holder back to the client. The information
@@ -36,6 +44,13 @@ public enum Datatype
 	 * @object_size 4
 	 */
 	ACCOUNT,
+	
+	/**
+	 * This sends a balance of a specific account back to the client. The information
+	 * included in this data type is a balance.
+	 * @object_size 1
+	 */
+	BALANCE,
 	
 	/**
 	 * This sends information about a chequing account back to the client. The information
