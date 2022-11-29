@@ -15,72 +15,103 @@ package src.protocol;
 public enum Datatype
 {
 	/**
-	 * 
+	 * This sends information about a person back to the client. The information included
+	 * in this data type is the person's first name, last name, and date of birth.
+	 * @object_size 3
 	 */
 	PERSON,
 	
 	/**
-	 * 
-	 */
-	TELLER,
-	
-	/**
-	 * 
+	 * This sends information about an account holder back to the client. The information
+	 * included in this data type is the card number, pin number, and email
+	 * address.
+	 * @object_size 3
 	 */
 	ACCOUNT_HOLDER,
 	
 	/**
-	 * 
+	 * This sends information about an account back to the client. The information
+	 * included in this data type is the account type (cheqing, savings, etc.), 
+	 * account number, balance, and date opened.
+	 * @object_size 4
 	 */
 	ACCOUNT,
 	
 	/**
-	 * 
+	 * This sends information about a chequing account back to the client. The information
+	 * included in this data type is the account number, and balance.
+	 * @object_size 2
 	 */
 	CHEQUING_ACCOUNT,
 	
 	/**
-	 * 
+	 * This sends information about a savings account back to the client. The information
+	 * included in this data type is the account number, balance, and interest rate.
+	 * @object_size 3
 	 */
 	SAVINGS_ACCOUNT,
 	
 	/**
-	 * 
+	 * This sends information about a mortgage account back to the client. The information
+	 * included in this data type is the account number, balance, principle amount, and
+	 * interest amount.
+	 * @object_size 4
 	 */
 	MORTGAGE_ACCOUNT,
 	
 	/**
-	 * 
+	 * This sends information about a LOC account back to the client. The information
+	 * included in this data type is the account number, balance, interest rate, and credit
+	 * limit.
+	 * @object_size 4
 	 */
 	LINE_OF_CREDIT_ACCOUNT,
 	
 	/**
-	 * 
+	 * This sends information about a transaction back to the client. The information
+	 * included in this data type is the recipiant, date, transaction type, and amount
+	 * @object_size 4
 	 */
 	TRANSACTION,
 	
 	/**
-	 * 
+	 * This sends information about an address back to the client. The information
+	 * included in this data type is the full address name (streetNumber streetName),
+	 * postal code, provice, and country
+	 * @object_size 4
 	 */
 	ADDRESS,
 	
 	/**
-	 * 
+	 * This sends information about a bill back to the client. The information
+	 * included in this data type is the receiving party, the account number
+	 * of the line of credit account that pays the bill, and the amount
+	 * @object_size 3
 	 */
 	BILL,
 	
 	/**
-	 * 
+	 * This sends information about a customer record back to the client.
+	 * The information included in this data type is the teller name, the
+	 * card number of the account holder, the record date, and record type
+	 * @object_size 4
 	 */
 	CUSTOMER_RECORD,
 	
 	/**
-	 * 
+	 * This sends information about an account record back to the client.
+	 * The information included in this data type is the teller name, the
+	 * account number of the account, the record date, and record type
+	 * @object_size 4
 	 */
 	ACCOUNT_RECORD,
 	
 	/**
-	 * 
+	 * This sends information about a login attempt back to the client.
+	 * The information included in this data type is the fail count,
+	 * the card number of the account holder doing the login, and
+	 * a boolean "y" or "n" whether or not the login was successful 
+	 * @object_size 3
 	 */
 	LOGIN_ATTEMPT,
 	
