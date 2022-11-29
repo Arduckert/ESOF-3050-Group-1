@@ -11,6 +11,7 @@ import javafx.event.ActionEvent;
 import javafx.application.Application;
 import javafx.application.Platform;
 
+// *** TODO: IMPLEMENT INTERFACE *** //
 public class BankingClientController extends Application implements IBankingClientController {
 	//create instance of BankingClient to pass messages to server
 	//ip4v and port of server

@@ -7,12 +7,12 @@ import src.protocol.*;
 
 public class BankingServer extends AbstractServer
 {
-	IBankController bankController;
+	IBankController bc;
 	
 	public BankingServer(int port, IBankController b)
 	{
 		super(port);
-		this.bankController = b;
+		this.bc = b;
 		// TODO Auto-generated constructor stub
 	}
 
@@ -27,7 +27,7 @@ public class BankingServer extends AbstractServer
 				HandleAccountHolderLogin(cp, client);
 				break;
 			case TEST:
-				HandleTestMessage(cp, client);
+				ProcessTestMessage(cp, client);
 				break;
 			default:
 				break;
@@ -68,7 +68,7 @@ public class BankingServer extends AbstractServer
 	
 	private void HandleAccountHolderLogin(ClientProtocol cp, ConnectionToClient client)
 	{
-		if(bankController.authenticateAccountHolderLogin(cp.GetParameters().get(0),cp.GetParameters().get(1))) {
+		if(bc.authenticateAccountHolderLogin(cp.GetParameters().get(0),cp.GetParameters().get(1))) {
 			ServerProtocol sp = new ServerProtocol(MessageStatus.SUCCESS, Datatype.LOGIN_ATTEMPT);
 			//System.out.println("LOGIN SUCCESSFUL");
 			try
@@ -97,9 +97,10 @@ public class BankingServer extends AbstractServer
 		} //END OF LOGIN ACCOUNT HOLDER CASE
 	}
 	
-	private void HandleTestMessage(ClientProtocol cp, ConnectionToClient client)
+	//extracts the test message from the client protocol and sends it to the bank
+	//controller for further processing
+	private void ProcessTestMessage(ClientProtocol cp, ConnectionToClient client)
 	{
-		System.out.println("Client" + client.getInetAddress()  + " sent message: " + cp.GetParameters().get(0));
-		SendTestMessageToClient(client, "Message received by the server");
+		bc.HandleTestMessage(cp.GetParameters().get(0), client);
 	}
 }

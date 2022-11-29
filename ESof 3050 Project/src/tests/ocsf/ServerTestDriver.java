@@ -2,6 +2,7 @@ package src.tests.ocsf;
 
 import src.program.server.BankingServer;
 import src.program.server.IBankController;
+import src.ocsf.server.ConnectionToClient;
 
 public class ServerTestDriver implements IBankController
 {
@@ -23,5 +24,12 @@ public class ServerTestDriver implements IBankController
 	public void RunTests()
 	{
 		
+	}
+	
+	//echos the message sent by the client back to the client
+	@Override
+	public void HandleTestMessage(String message, ConnectionToClient client)
+	{
+		bs.SendTestMessageToClient(client, message);
 	}
 }

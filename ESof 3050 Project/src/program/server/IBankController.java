@@ -1,5 +1,7 @@
 package src.program.server;
 
+import src.ocsf.server.*;
+
 /**
  * @author Connor
  * This is the IBankController interface. This is used by the BankingServer class as an
@@ -19,4 +21,10 @@ public interface IBankController
 	 * @return a boolean value that determines if the authentication was successful
 	 */
 	public boolean authenticateAccountHolderLogin(String cardNumber, String pin);
+	
+	/**
+	 * handles test message from the client
+	 * @param message
+	 */
+	public void HandleTestMessage(String message, ConnectionToClient client);
 }

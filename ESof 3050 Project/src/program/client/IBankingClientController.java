@@ -12,5 +12,9 @@ package src.program.client;
  */
 public interface IBankingClientController
 {
-
+	/**
+	 * Handles a basic message sent by the server
+	 * @param message
+	 */
+	void HandleBasicMessage(String message);
 }
