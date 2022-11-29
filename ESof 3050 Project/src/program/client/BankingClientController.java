@@ -14,13 +14,8 @@ import javafx.application.Platform;
 public class BankingClientController extends Application implements IBankingClientController {
 	//create instance of BankingClient to pass messages to server
 	//ip4v and port of server
-<<<<<<< HEAD
-	static String ipAdd = "192.168.250.44";
-	static int port = 99511;
-=======
-	static String ipAdd = "10.100.150.1";
+	static String ipAdd = "10.100.149.3";
 	static int port = 9950;
->>>>>>> branch 'master' of https://github.com/Arduckert/ESOF-3050-Group-1
 	public static BankingClient bc;
 	
 	private Scene scene;

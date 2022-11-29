@@ -8,10 +8,11 @@ import src.protocol.*;
 
 public class BankingClient extends AbstractClient
 {
-	private BankingClientController bcc;
-	public BankingClient(String host, int port,BankingClientController bcc) {
+	private IBankingClientController bcc;
+	
+	public BankingClient(String host, int port, IBankingClientController bcc) {
 		super(host, port);
-		this.bcc=bcc;
+		this.bcc = bcc;
 		// TODO Auto-generated constructor stub
 	}
 
@@ -19,15 +20,16 @@ public class BankingClient extends AbstractClient
 	protected void handleMessageFromServer(Object msg)
 	{
 		ServerProtocol sp = (ServerProtocol)msg;
-		switch(sp.getDataType()) {
-		case LOGIN_ATTEMPT:
-			if(sp.getMessageStatus() == MessageStatus.SUCCESS) {
-				//switch scene
-			}
-			else {
-				//pop up
-			} break;
 		
+		switch(sp.getDataType())
+		{
+			case LOGIN_ATTEMPT:
+				ProcessLoginAttempt(sp);
+				break;
+			case BASIC_MESSAGE:
+				ProcessBasicMessage(sp);
+			default:
+				break;
 		}
 	}
 	
@@ -78,5 +80,21 @@ public class BankingClient extends AbstractClient
 	{
 		ClientProtocol cp = new ClientProtocol(ServerAction.LOGIN_TELLER, empID, password);
 		sendToServer(cp);
+	}
+	
+	private void ProcessBasicMessage(ServerProtocol sp)
+	{
+		System.out.println(sp.GetData().get(0));
+	}
+	
+	// TODO: setup code for login attempt
+	private void ProcessLoginAttempt(ServerProtocol sp)
+	{
+		if(sp.getMessageStatus() == MessageStatus.SUCCESS) {
+			//switch scene
+		}
+		else {
+			//pop up
+		}
 	}
 }
