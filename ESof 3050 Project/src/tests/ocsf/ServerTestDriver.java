@@ -2,6 +2,9 @@ package src.tests.ocsf;
 
 import src.program.server.BankingServer;
 import src.program.server.IBankController;
+
+import java.io.IOException;
+
 import src.ocsf.server.ConnectionToClient;
 
 public class ServerTestDriver implements IBankController
@@ -23,7 +26,15 @@ public class ServerTestDriver implements IBankController
 	
 	public void RunTests()
 	{
-		
+		try
+		{
+			bs.listen();
+		}
+		catch (IOException e)
+		{
+			System.out.println("LISTEN TEST FAILED: IO EXCEPTION");
+			assert false;
+		}
 	}
 	
 	//echos the message sent by the client back to the client
