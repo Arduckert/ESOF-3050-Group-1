@@ -11,11 +11,16 @@ import javafx.event.ActionEvent;
 import javafx.application.Application;
 import javafx.application.Platform;
 
-public class BankingClientController extends Application {
+public class BankingClientController extends Application implements IBankingClientController {
 	//create instance of BankingClient to pass messages to server
 	//ip4v and port of server
+<<<<<<< HEAD
 	static String ipAdd = "192.168.250.44";
-	static int port = 9951;
+	static int port = 99511;
+=======
+	static String ipAdd = "10.100.150.1";
+	static int port = 9950;
+>>>>>>> branch 'master' of https://github.com/Arduckert/ESOF-3050-Group-1
 	public static BankingClient bc;
 	
 	private Scene scene;
@@ -30,7 +35,7 @@ public class BankingClientController extends Application {
 	//Start function
 	@Override
 	public void start(Stage stage) throws Exception{
-		bc=new BankingClient(ipAdd,port,this);
+		bc = new BankingClient(ipAdd,port,this);
 		bc.openConnection();
 		System.out.println("Connection active: " + bc.isConnected());
 		root = FXMLLoader.load(getClass().getResource(startScreen));
