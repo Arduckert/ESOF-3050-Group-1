@@ -19,12 +19,30 @@ public class ClientTestDriver implements IBankingClientController
 	public void RunTests()
 	{
 		OpenServerConnection();
+		Sleep(1000); //wait for connection to open
+		
 		RunBasicMessageTest();
+		
+		Sleep(1000); //wait for connection to close
+		CloseServerConnection();
+		System.out.println("ALL TESTS PASSED!");
 	}
 	
-	////////////////////////////
-	//	OPEN CONNECTION TEST  //
-	////////////////////////////
+	private void Sleep(int ms)
+	{
+		try
+		{
+			Thread.sleep(ms);
+		}
+		catch (InterruptedException e)
+		{
+			e.printStackTrace();
+		}
+	}
+	
+	//////////////////////
+	// CONNECTION TESTS //
+	//////////////////////
 	
 	private void OpenServerConnection()
 	{
@@ -38,6 +56,22 @@ public class ClientTestDriver implements IBankingClientController
 			e.printStackTrace();
 			assert false;
 		}
+		System.out.println("OPEN CONNECTION PASSED");
+	}
+	
+	private void CloseServerConnection()
+	{
+		try
+		{
+			bc.closeConnection();
+		}
+		catch (IOException e)
+		{
+			System.out.println("CLOSE CONNECTION FAILED: IO EXCEPTION");
+			e.printStackTrace();
+			assert false;
+		}
+		System.out.println("CLOSE CONNECTION PASSED");
 	}
 	
 	//////////////////////////
@@ -54,8 +88,6 @@ public class ClientTestDriver implements IBankingClientController
 		try
 		{
 			bc.SendTestMessageToServer(testMessage_Expected);
-			System.out.println("OPEN CONNECTION PASSED");
-			assert true;
 		}
 		catch (IOException e)
 		{
@@ -72,10 +104,9 @@ public class ClientTestDriver implements IBankingClientController
 	@Override
 	public void HandleBasicMessage(String message)
 	{
-		if (message == testMessage_Expected)
+		if (message.equals(testMessage_Expected))
 		{
 			System.out.println("TEST MESSAGE PASSED");
-			assert true;
 		}
 		else
 		{
