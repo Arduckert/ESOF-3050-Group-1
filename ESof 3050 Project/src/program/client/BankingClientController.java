@@ -72,6 +72,11 @@ public class BankingClientController extends Application implements IBankingClie
     	Platform.exit();
     }
 	
+	@FXML
+	void LoginCancelButtonPressed(ActionEvent event) throws Exception{
+		switchToLoginChoiceScreen(event);
+	}
+	
 	//********************************************************************
 	
 	//**********************************************************************
@@ -97,6 +102,10 @@ public class BankingClientController extends Application implements IBankingClie
 		changeScene(event,"NewAccountHolderAddress.fxml");
 	}
 	
+	public void switchToTellerLoginScreen(ActionEvent event) throws Exception{
+		changeScene(event,"TellerLogin.fxml");
+	}
+	
 	//************************************************************************
 	
 	//*************************************************************************
@@ -109,7 +118,7 @@ public class BankingClientController extends Application implements IBankingClie
 	private TextField portTextField;
 	
 	@FXML 
-	public void ConnectButtonPressed(ActionEvent event) throws Exception{
+	void ConnectButtonPressed(ActionEvent event) throws Exception{
 		ipAdd=ipAddTextField.getText();
 		port=Integer.parseInt(portTextField.getText());
 		bc = new BankingClient(ipAdd,port,this);
@@ -119,7 +128,7 @@ public class BankingClientController extends Application implements IBankingClie
 	}
 	
 	@FXML
-	public void OfflineButtonPressed(ActionEvent event) throws Exception{
+	void OfflineButtonPressed(ActionEvent event) throws Exception{
 		switchToLoginChoiceScreen(event);
 	}
 	
@@ -135,10 +144,32 @@ public class BankingClientController extends Application implements IBankingClie
 	
 	@FXML
 	void TellerLoginButtonPressed(ActionEvent event) throws Exception {
-		switchToTellerMainMenu(event);
+		switchToTellerLoginScreen(event);
 	}
 	
 	//***************************************************************************
+	
+	//*************************************************************************
+	//GUI components for teller login screen
+	
+	@FXML
+	private TextField TellerNumberTextField;
+	
+	@FXML
+	private TextField TellerPasswordTextField;
+	
+	@FXML
+	void TellerLoginSubmitButtonPressed(ActionEvent event) throws Exception{
+		if(bc==null)
+			switchToTellerMainMenu(event);
+		else {
+			//verify
+			//if good switch to main menu
+			//else print error
+		}
+	}
+	
+	//**************************************************************************
 	
 	//***************************************************************************
 	//GUI components for teller main menu
