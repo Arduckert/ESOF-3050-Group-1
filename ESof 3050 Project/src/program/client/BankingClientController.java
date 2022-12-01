@@ -22,7 +22,7 @@ public class BankingClientController extends Application implements IBankingClie
 	private Scene scene;
 	private Stage stage;
 	private Parent root;
-	private String startScreen="LoginChoice.fxml";
+	private String startScreen="Connect.fxml";
 	private String appTitle="Banking Client";
 	
 	//********************************************************************
@@ -31,9 +31,6 @@ public class BankingClientController extends Application implements IBankingClie
 	//Start function
 	@Override
 	public void start(Stage stage) throws Exception{
-		bc = new BankingClient(ipAdd,port,this);
-		bc.openConnection();
-		System.out.println("Connection active: " + bc.isConnected());
 		root = FXMLLoader.load(getClass().getResource(startScreen));
 		scene = new Scene(root);
 		stage.setTitle(appTitle);
@@ -65,6 +62,16 @@ public class BankingClientController extends Application implements IBankingClie
     	switchToTellerMainMenu(event);
     }
 	
+	@FXML
+    void EndSessionButtonPressed(ActionEvent event) {
+		try{
+			if(bc!=null)
+				bc.closeConnection();
+		}
+		catch (Exception ex) {System.err.println(ex);}
+    	Platform.exit();
+    }
+	
 	//********************************************************************
 	
 	//**********************************************************************
@@ -92,21 +99,38 @@ public class BankingClientController extends Application implements IBankingClie
 	
 	//************************************************************************
 	
+	//*************************************************************************
+	//GUI components for initial connection screen
+	
+	@FXML
+	private TextField ipAddTextField;
+	
+	@FXML
+	private TextField portTextField;
+	
+	@FXML 
+	public void ConnectButtonPressed(ActionEvent event) throws Exception{
+		ipAdd=ipAddTextField.getText();
+		port=Integer.parseInt(portTextField.getText());
+		bc = new BankingClient(ipAdd,port,this);
+		bc.openConnection();
+		System.out.println("Connection active: " + bc.isConnected());
+		switchToLoginChoiceScreen(event);
+	}
+	
+	@FXML
+	public void OfflineButtonPressed(ActionEvent event) throws Exception{
+		switchToLoginChoiceScreen(event);
+	}
+	
+	//**********************************************************************
+	
 	//************************************************************************
 	//GUI components for login choice screen
 	
 	@FXML
     void AccountHolderLoginButtonPressed(ActionEvent event) {
     	//change root to AccountHolderMainMenu.fxml
-    }
-	
-	@FXML
-    void EndSessionButtonPressed(ActionEvent event) {
-		try{
-			bc.closeConnection();
-		}
-		catch (Exception ex) {System.err.println(ex);}
-    	Platform.exit();
     }
 	
 	@FXML
