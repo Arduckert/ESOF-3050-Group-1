@@ -164,16 +164,17 @@ public class ClientTestDriver implements IBankingClientController
 	{
 		if (accountHolderTestCount == 0 && isSuccessful)
 		{
-			System.out.println("LOGIN ACCOUNT HOLDER TEST " + (accountHolderTestCount + 1) + "PASSED");
+			System.out.println("LOGIN ACCOUNT HOLDER TEST " + (accountHolderTestCount + 1) + " PASSED");
 		}
 		else if (accountHolderTestCount > 0 && !isSuccessful)
 		{
-			System.out.println("LOGIN ACCOUNT HOLDER TEST " + (accountHolderTestCount + 1) + "PASSED");
+			System.out.println("LOGIN ACCOUNT HOLDER TEST " + (accountHolderTestCount + 1) + " PASSED");
 		}
 		else
 		{
-			System.err.println("LOGIN ACCOUNT HOLDER TEST " + (accountHolderTestCount + 1) + "FAILED");
+			System.err.println("LOGIN ACCOUNT HOLDER TEST " + (accountHolderTestCount + 1) + " FAILED");
 			assert false;
 		}
+		accountHolderTestCount++;
 	}	
 }
