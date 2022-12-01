@@ -40,6 +40,15 @@ public class BankingServer extends AbstractServer
 		System.out.println("Client " + client.getInetAddress() + " connected to the system");
 	}
 	
+	////////////////////
+	// TEST MESSAGES  //
+	////////////////////
+	
+	/**
+	 * sends a test message back to the client
+	 * @param client
+	 * @param message
+	 */
 	public void SendTestMessageToClient(ConnectionToClient client, String message)
 	{
 		ServerProtocol sp = new ServerProtocol(MessageStatus.SUCCESS, Datatype.BASIC_MESSAGE);
@@ -65,11 +74,17 @@ public class BankingServer extends AbstractServer
 		}
 	}
 	
+	/**
+	 * Handles an account holder login request
+	 * @param cp
+	 * @param client
+	 */
 	private void HandleAccountHolderLogin(ClientProtocol cp, ConnectionToClient client)
 	{
-		if(bc.authenticateAccountHolderLogin(cp.GetParameters().get(0),cp.GetParameters().get(1))) {
-			ServerProtocol sp = new ServerProtocol(MessageStatus.SUCCESS, Datatype.LOGIN_ATTEMPT);
-			//System.out.println("LOGIN SUCCESSFUL");
+		if (bc.authenticateAccountHolderLogin(cp.GetParameters().get(0),cp.GetParameters().get(1)))
+		{
+			ServerProtocol sp = new ServerProtocol(MessageStatus.SUCCESS, Datatype.LOGIN_RESULT);
+
 			try
 			{
 				client.sendToClient(sp);
@@ -78,12 +93,12 @@ public class BankingServer extends AbstractServer
 			{
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-			}
-			
+			}		
 		}
-		else {
-			ServerProtocol sp = new ServerProtocol(MessageStatus.FAIL, Datatype.LOGIN_ATTEMPT);
-			//System.out.println("LOGIN FAILED");
+		else
+		{
+			ServerProtocol sp = new ServerProtocol(MessageStatus.FAIL, Datatype.LOGIN_RESULT);
+
 			try
 			{
 				client.sendToClient(sp);
@@ -100,6 +115,6 @@ public class BankingServer extends AbstractServer
 	//controller for further processing
 	private void ProcessTestMessage(ClientProtocol cp, ConnectionToClient client)
 	{
-		bc.HandleTestMessage(cp.GetParameters().get(0), client);
+		bc.handleTestMessage(cp.GetParameters().get(0), client);
 	}
 }

@@ -42,11 +42,11 @@ public class BankingClient extends AbstractClient
 		//the banking client controller for analysis
 		switch(sp.getDataType())
 		{
-			case LOGIN_ATTEMPT:
-				ProcessLoginAttempt(sp);
+			case LOGIN_RESULT:
+				processLoginResult(sp);
 				break;
 			case BASIC_MESSAGE:
-				ProcessBasicMessage(sp);
+				processBasicMessage(sp);
 			default:
 				break;
 		}
@@ -63,6 +63,10 @@ public class BankingClient extends AbstractClient
 		super.sendToServer(msg);
 	}
 	
+	//////////////////////
+	//	BASIC MESSAGES  //
+	//////////////////////
+	
 	/**
 	 * Sends a test message to the server, the server will reply with a test
 	 * message if successful
@@ -77,6 +81,22 @@ public class BankingClient extends AbstractClient
 	}
 	
 	/**
+	 * If the message from the server is a basic message, the client will
+	 * print the message to the console
+	 * @param sp serverProtocol passed in by the server
+	 */
+	private void processBasicMessage(ServerProtocol sp)
+	{
+		//passes the string message from the server protocol to the
+		//banking client controller instance
+		bcc.handleBasicMessage(sp.GetData().get(0));
+	}
+	
+	///////////////////////////
+	//	LOGIN ACCOUNT HOLDER //
+	///////////////////////////
+	
+	/**
 	 * sends a login request to the server. The server will reply with a SUCCESS if
 	 * the login credentials match an account
 	 * @param accountNumber
@@ -85,11 +105,33 @@ public class BankingClient extends AbstractClient
 	 * the account holder's pin
 	 * @throws IOException
 	 */
-	public void LoginAsAccountHolder(String accountNumber, String pin) throws IOException
+	public void loginAsAccountHolder(String accountNumber, String pin) throws IOException
 	{
 		ClientProtocol cp = new ClientProtocol(ServerAction.LOGIN_ACCOUNTHOLDER, accountNumber, pin);
 		sendToServer(cp);
 	}
+	
+	/**
+	 * Processes the ServerProtocol to fetch the result of the login attempt
+	 * @param sp
+	 */
+	private void processLoginResult(ServerProtocol sp)
+	{
+		//sends true to the banking client controller handle method if the
+		//login result is successful
+		if (sp.getMessageStatus() == MessageStatus.SUCCESS)
+		{
+			bcc.handleAccountHolderLoginResult(true);
+		}
+		else
+		{
+			bcc.handleAccountHolderLoginResult(false);
+		}
+	}
+	
+	////////////////////
+	//	LOGIN TELLER  //
+	////////////////////
 	
 	/**
 	 * sends a login request as the teller to the server. The server will reply with a SUCCESS
@@ -100,32 +142,9 @@ public class BankingClient extends AbstractClient
 	 * the teller's password
 	 * @throws IOException
 	 */
-	public void LoginAsTeller(String empID, String password) throws IOException
+	public void loginAsTeller(String empID, String password) throws IOException
 	{
 		ClientProtocol cp = new ClientProtocol(ServerAction.LOGIN_TELLER, empID, password);
 		sendToServer(cp);
-	}
-	
-	/**
-	 * If the message from the server is a basic message, the client will
-	 * print the message to the console
-	 * @param sp serverProtocol passed in by the server
-	 */
-	private void ProcessBasicMessage(ServerProtocol sp)
-	{
-		//passes the string message from the server protocol to the
-		//banking client controller instance
-		bcc.HandleBasicMessage(sp.GetData().get(0));
-	}
-	
-	// TODO: setup code for login attempt
-	private void ProcessLoginAttempt(ServerProtocol sp)
-	{
-		if(sp.getMessageStatus() == MessageStatus.SUCCESS) {
-			//TODO: switch scene
-		}
-		else {
-			//TODO: pop up
-		}
 	}
 }

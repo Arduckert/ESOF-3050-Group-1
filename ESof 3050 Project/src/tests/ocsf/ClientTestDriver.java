@@ -11,6 +11,8 @@ public class ClientTestDriver implements IBankingClientController
 	private static final String ipAdd = "10.0.0.119";
 	private BankingClient bc;
 	
+	private static int accountHolderTestCount = 0;
+	
 	public ClientTestDriver()
 	{
 		bc = new BankingClient(ipAdd, port, this);
@@ -18,14 +20,30 @@ public class ClientTestDriver implements IBankingClientController
 	
 	public void RunTests()
 	{
-		OpenServerConnection();
-		Sleep(1000); //wait for connection to open
-		
-		RunBasicMessageTest();
-		
-		Sleep(1000); //wait for connection to close
-		CloseServerConnection();
-		System.out.println("ALL TESTS PASSED!");
+		try
+		{
+			OpenServerConnection();
+			Sleep(1000); //wait for connection to open
+			
+			//sends a basic message to the server. The server echoes the message back
+			//to the client. The test checks if the message is retained 
+			sendBasicMessage(TestVariables.testMessage_Expected);
+			
+			//account holder login request tests. 
+			sendAccountHolderLoginRequest(TestVariables.availableAccountHolderNumber, TestVariables.availableAccountHolderPin); //should return true
+			sendAccountHolderLoginRequest(TestVariables.availableAccountHolderNumber, TestVariables.unavailableAccountHolderPin); //should return false
+			sendAccountHolderLoginRequest(TestVariables.unavailableAccountHolderNumber, TestVariables.availableAccountHolderPin); //should return false
+			sendAccountHolderLoginRequest(TestVariables.unavailableAccountHolderNumber, TestVariables.unavailableAccountHolderPin); //should return false
+			
+			Sleep(1000); //wait for connection to close
+			CloseServerConnection();	
+		}
+		catch (Exception e)
+		{
+			System.err.println("TESTS FAILED");
+			e.printStackTrace();
+			assert false;
+		}
 	}
 	
 	private void Sleep(int ms)
@@ -50,9 +68,9 @@ public class ClientTestDriver implements IBankingClientController
 		{
 			bc.openConnection();
 		}
-		catch (IOException e)
+		catch (Exception e)
 		{
-			System.out.println("OPEN CONNECTION FAILED: IO EXCEPTION");
+			System.err.println("OPEN CONNECTION FAILED");
 			e.printStackTrace();
 			assert false;
 		}
@@ -67,7 +85,7 @@ public class ClientTestDriver implements IBankingClientController
 		}
 		catch (IOException e)
 		{
-			System.out.println("CLOSE CONNECTION FAILED: IO EXCEPTION");
+			System.err.println("CLOSE CONNECTION FAILED");
 			e.printStackTrace();
 			assert false;
 		}
@@ -78,16 +96,15 @@ public class ClientTestDriver implements IBankingClientController
 	//	BASIC MESSAGE TEST  //
 	//////////////////////////
 	
-	private static final String testMessage_Expected = "testing123";
-	
 	/**
 	 * sends a basic message to the server
 	 */
-	private void RunBasicMessageTest()
+	@Override
+	public void sendBasicMessage(String message)
 	{
 		try
 		{
-			bc.SendTestMessageToServer(testMessage_Expected);
+			bc.SendTestMessageToServer(message);
 		}
 		catch (IOException e)
 		{
@@ -102,18 +119,61 @@ public class ClientTestDriver implements IBankingClientController
 	 * same as the returned message
 	 */
 	@Override
-	public void HandleBasicMessage(String message)
+	public void handleBasicMessage(String message)
 	{
-		if (message.equals(testMessage_Expected))
+		if (message.equals(TestVariables.testMessage_Expected))
 		{
 			System.out.println("TEST MESSAGE PASSED");
 		}
 		else
 		{
 			System.err.println("TEST MESSAGE FAILED: MESSAGE NOT THE SAME");
-			System.err.println("EXPECTED: " + testMessage_Expected);
+			System.err.println("EXPECTED: " + TestVariables.testMessage_Expected);
 			System.err.println("ACTUAL: " + message);		
 			assert false;
 		}
 	}
+
+	/////////////////////////////////
+	//	LOGIN ACCOUNT HOLDER TEST  //
+	/////////////////////////////////
+	
+	/**
+	 * Sends a login request to the server
+	 */
+	@Override
+	public void sendAccountHolderLoginRequest(String cardNumber, String pin)
+	{
+		try
+		{
+			bc.loginAsAccountHolder(cardNumber, pin);
+		}
+		catch (Exception e)
+		{
+			System.err.println("LOGIN ACCOUNT HOLDER FAILED: EXCEPTION");
+			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * Handles the login results to ensure they
+	 * are the expected results given the information provided
+	 */
+	@Override
+	public void handleAccountHolderLoginResult(boolean isSuccessful)
+	{
+		if (accountHolderTestCount == 0 && isSuccessful)
+		{
+			System.out.println("LOGIN ACCOUNT HOLDER TEST " + (accountHolderTestCount + 1) + "PASSED");
+		}
+		else if (accountHolderTestCount > 0 && !isSuccessful)
+		{
+			System.out.println("LOGIN ACCOUNT HOLDER TEST " + (accountHolderTestCount + 1) + "PASSED");
+		}
+		else
+		{
+			System.err.println("LOGIN ACCOUNT HOLDER TEST " + (accountHolderTestCount + 1) + "FAILED");
+			assert false;
+		}
+	}	
 }

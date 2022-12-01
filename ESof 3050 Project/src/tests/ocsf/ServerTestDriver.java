@@ -32,18 +32,12 @@ public class ServerTestDriver implements IBankController
 	@Override
 	public boolean authenticateAccountHolderLogin(String cardNumber, String pin)
 	{
-		// TODO Auto-generated method stub
-		return false;
-	}
-	
-	public void RunTests()
-	{
-		
+		return cardNumber.equals(TestVariables.availableAccountHolderNumber) && pin.equals(TestVariables.availableAccountHolderPin);
 	}
 	
 	//echos the message sent by the client back to the client
 	@Override
-	public void HandleTestMessage(String message, ConnectionToClient client)
+	public void handleTestMessage(String message, ConnectionToClient client)
 	{
 		bs.SendTestMessageToClient(client, message);
 	}

@@ -209,7 +209,7 @@ public class BankingClientController extends Application implements IBankingClie
     	//bc.SendTestMessageToServer(testConnectionString);
     	
     	//testing login function
-    	bc.LoginAsAccountHolder("1234567",testConnectionString);
+    	bc.loginAsAccountHolder("1234567",testConnectionString);
     	
     	//if good > change page
     	

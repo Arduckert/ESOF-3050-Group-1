@@ -12,9 +12,37 @@ package src.program.client;
  */
 public interface IBankingClientController
 {
+	////////////////////
+	// BASIC MESSAGES //
+	////////////////////
+	
 	/**
 	 * Handles a basic message sent by the server
 	 * @param message
 	 */
-	void HandleBasicMessage(String message);
+	public void handleBasicMessage(String message);
+	
+	/**
+	 * sends a basic message to the server
+	 * @param message
+	 */
+	public void sendBasicMessage(String message);
+	
+	/////////////////////////////
+	// LOGIN AS ACCOUNT HOLDER //
+	/////////////////////////////
+	
+	/**
+	 * send a login request to the server as an account holder
+	 * @param accountNumber the account holder's card number
+	 * @param pin the account holder's pin
+	 */
+	public void sendAccountHolderLoginRequest(String cardNumber, String pin);
+	
+	/**
+	 * handles a login result received from the server
+	 * @param isSuccessful true for login was successful, false if
+	 * not successful
+	 */
+	public void handleAccountHolderLoginResult(boolean isSuccessful);
 }

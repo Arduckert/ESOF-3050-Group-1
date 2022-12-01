@@ -26,5 +26,5 @@ public interface IBankController
 	 * handles test message from the client
 	 * @param message
 	 */
-	public void HandleTestMessage(String message, ConnectionToClient client);
+	public void handleTestMessage(String message, ConnectionToClient client);
 }

@@ -131,6 +131,14 @@ public enum Datatype
 	LOGIN_ATTEMPT,
 	
 	/**
+	 * This sends information about a login result back to the client.
+	 * There is no information included in this data type as this result
+	 * is solely based on the value of the MessageStatus variable
+	 * @object_size 0
+	 */
+	LOGIN_RESULT,
+	
+	/**
 	 * This sends a string message back to the client. This is used as a way to test
 	 * the client-server communication and can also be used to send a message back to
 	 * the client if the message has a FAIL status.
