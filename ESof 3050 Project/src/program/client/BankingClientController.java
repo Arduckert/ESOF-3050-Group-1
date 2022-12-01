@@ -8,6 +8,9 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import javafx.event.ActionEvent;
+
+import java.net.Inet4Address;
+
 import javafx.application.Application;
 import javafx.application.Platform;
 
@@ -15,8 +18,8 @@ import javafx.application.Platform;
 public class BankingClientController extends Application implements IBankingClientController {
 	//create instance of BankingClient to pass messages to server
 	//ip4v and port of server
-	static String ipAdd = "10.100.149.3";
-	static int port = 9950;
+	static String ipAdd;
+	static int port;
 	public static BankingClient bc;
 	
 	private Scene scene;
@@ -119,8 +122,14 @@ public class BankingClientController extends Application implements IBankingClie
 	
 	@FXML 
 	void ConnectButtonPressed(ActionEvent event) throws Exception{
-		ipAdd=ipAddTextField.getText();
-		port=Integer.parseInt(portTextField.getText());
+		if(!ipAddTextField.getText().equals(""))
+			ipAdd=ipAddTextField.getText();
+		else
+			ipAdd = Inet4Address.getLocalHost().getHostAddress();
+		if(!portTextField.getText().equals(""))
+			port=Integer.parseInt(portTextField.getText());
+		else
+			port=9950;
 		bc = new BankingClient(ipAdd,port,this);
 		bc.openConnection();
 		System.out.println("Connection active: " + bc.isConnected());
@@ -159,13 +168,18 @@ public class BankingClientController extends Application implements IBankingClie
 	private TextField TellerPasswordTextField;
 	
 	@FXML
+	public Label TellerLoginErrorLabel; //needs to be public to be changed by 
+	
+	@FXML
 	void TellerLoginSubmitButtonPressed(ActionEvent event) throws Exception{
 		if(bc==null)
 			switchToTellerMainMenu(event);
 		else {
+			switchToTellerMainMenu(event);//remove later
+			//bc.loginAsTeller(TellerNumberTextField.getText(), TellerPasswordTextField.getText());
 			//verify
 			//if good switch to main menu
-			//else print error
+			//else change error label
 		}
 	}
 	
