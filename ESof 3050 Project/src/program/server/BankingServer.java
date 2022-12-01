@@ -38,7 +38,6 @@ public class BankingServer extends AbstractServer
 	protected void clientConnected(ConnectionToClient client)
 	{
 		System.out.println("Client " + client.getInetAddress() + " connected to the system");
-		SendTestMessageToClient(client, "Welcome to the ACM banking system.");
 	}
 	
 	public void SendTestMessageToClient(ConnectionToClient client, String message)

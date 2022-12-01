@@ -8,7 +8,7 @@ import src.program.client.IBankingClientController;
 public class ClientTestDriver implements IBankingClientController
 {
 	private static final int port = 9950;
-	private static final String ipAdd = "10.100.150.217";
+	private static final String ipAdd = "10.0.0.119";
 	private BankingClient bc;
 	
 	public ClientTestDriver()
@@ -18,7 +18,26 @@ public class ClientTestDriver implements IBankingClientController
 	
 	public void RunTests()
 	{
+		OpenServerConnection();
 		RunBasicMessageTest();
+	}
+	
+	////////////////////////////
+	//	OPEN CONNECTION TEST  //
+	////////////////////////////
+	
+	private void OpenServerConnection()
+	{
+		try
+		{
+			bc.openConnection();
+		}
+		catch (IOException e)
+		{
+			System.out.println("OPEN CONNECTION FAILED: IO EXCEPTION");
+			e.printStackTrace();
+			assert false;
+		}
 	}
 	
 	//////////////////////////
@@ -35,10 +54,12 @@ public class ClientTestDriver implements IBankingClientController
 		try
 		{
 			bc.SendTestMessageToServer(testMessage_Expected);
+			System.out.println("OPEN CONNECTION PASSED");
+			assert true;
 		}
 		catch (IOException e)
 		{
-			System.out.println("TEST MESSAGE FAILED: IO EXCEPTION");
+			System.err.println("TEST MESSAGE FAILED: IO EXCEPTION");
 			e.printStackTrace();
 			assert false;
 		}
@@ -58,9 +79,9 @@ public class ClientTestDriver implements IBankingClientController
 		}
 		else
 		{
-			System.out.println("TEST MESSAGE FAILED: MESSAGE NOT THE SAME");
-			System.out.println("EXPECTED: " + testMessage_Expected);
-			System.out.println("ACTUAL" + message);		
+			System.err.println("TEST MESSAGE FAILED: MESSAGE NOT THE SAME");
+			System.err.println("EXPECTED: " + testMessage_Expected);
+			System.err.println("ACTUAL: " + message);		
 			assert false;
 		}
 	}
