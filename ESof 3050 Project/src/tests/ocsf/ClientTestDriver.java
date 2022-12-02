@@ -218,11 +218,11 @@ public class ClientTestDriver implements IBankingClientController
 	@Override
 	public void handleTellerLoginResult(boolean isSuccessful)
 	{
-		if (accountHolderTestCount == 0 && isSuccessful)
+		if (tellerTestCount == 0 && isSuccessful)
 		{
 			System.out.println("LOGIN TELLER TEST " + (tellerTestCount + 1) + " PASSED");
 		}
-		else if (accountHolderTestCount > 0 && !isSuccessful)
+		else if (tellerTestCount > 0 && !isSuccessful)
 		{
 			System.out.println("LOGIN TELLER TEST " + (tellerTestCount + 1) + " PASSED");
 		}
