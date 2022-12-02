@@ -2,6 +2,7 @@ package src.tests.ocsf;
 
 import src.program.server.BankingServer;
 import src.program.server.IBankController;
+import src.program.structs.AccountHolderInfo;
 
 import java.io.IOException;
 
@@ -55,5 +56,32 @@ public class ServerTestDriver implements IBankController
 	public boolean authenticateTellerLogin(String empID, String password)
 	{
 		return empID.equals(TestVariables.availableTellerID) && password.equals(TestVariables.availableTellerPassword);
+	}
+
+	/**
+	 * returns an account holder info with information if the email matches the
+	 * available one, returns an account holder info with no information if
+	 * the email doesn't match
+	 */
+	@Override
+	public AccountHolderInfo findAccountHolder(String email)
+	{
+		//does the email match the available one?
+		if (email.equals(TestVariables.availableAccountHolderFindEmail))
+		{
+			//creates a new account holder info with the information about
+			//the account holder information
+			AccountHolderInfo info = new AccountHolderInfo(
+					TestVariables.availableAccountHolderFindName,
+					TestVariables.availableAccountHolderFindEmail,
+					TestVariables.availableAccountHolderNumber				
+					);
+			return info;
+		}
+		else
+		{
+			//returns an account holder info with no information
+			return new AccountHolderInfo();
+		}
 	}
 }

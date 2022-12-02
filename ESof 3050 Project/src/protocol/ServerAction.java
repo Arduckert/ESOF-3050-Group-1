@@ -19,22 +19,12 @@ public enum ServerAction
 	LOGIN_ACCOUNTHOLDER,
 	
 	/**
-	 * TODO
 	 * This tells the server that a teller wants to login to the system. This
 	 * takes two parameters, an employee number, and a password.
 	 * The server returns SUCEESS if the credentials are correct, FAIL if
 	 * the credentials do not match any account on the server.
 	 */
 	LOGIN_TELLER,
-	
-	/**
-	 * TODO
-	 * This tells the server to find an existing account on the server. This takes
-	 * the account number as a parameter. The server returns SUCCESS along with the
-	 * account number, email, and date creation. The server returns FAIL with no
-	 * information if the account was not found.
-	 */
-	FIND_ACCOUNTHOLDER_BY_NUMBER,
 	
 	/**
 	 * TODO

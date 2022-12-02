@@ -100,6 +100,40 @@ public class ServerProtocol implements Serializable
 			return 0;
 		case BASIC_MESSAGE:
 			return 1;
+		case PERSON:
+			return 4;
+		case TELLER:
+			return 2;
+		case ACCOUNT_HOLDER:
+			return 3;
+		case ACCOUNT:
+			return 4;
+		case BALANCE:
+			return 1;
+		case CHEQUING_ACCOUNT:
+			return 2;
+		case SAVINGS_ACCOUNT:
+			return 3;
+		case MORTGAGE_ACCOUNT:
+			return 4;
+		case LINE_OF_CREDIT_ACCOUNT:
+			return 4;
+		case ADDRESS:
+			return 4;
+		case BILL:
+			return 3;
+		case CUSTOMER_RECORD:
+			return 4;
+		case ACCOUNT_RECORD:
+			return 4;
+		case LOGIN_ATTEMPT:
+			return 3;
+		case LOGIN_RESULT_ACCOUNTHOLDER:
+			return 0;
+		case LOGIN_RESULT_TELLER:
+			return 0;
+		case ACCOUNT_HOLDER_FIND_RESULT:
+			return 3;
 		default:
 			return 0;
 		}

@@ -18,4 +18,12 @@ public final class TestVariables
 	
 	public static final String unavailableTellerID = "345678";
 	public static final String unavailableTellerPassword = "password234";
+	
+	//FIND ACCOUNT HOLDER BY EMAIL
+	public static final String availableAccountHolderFindEmail = "test123@example.com";
+	public static final String unavailableAccountHolderFindEmail = "tset123@example.com";
+	
+	public static final String availableAccountHolderFindName = "John Smith";
+	public static final String availableAccountHolderFindNumber = "1234567";
+	
 }

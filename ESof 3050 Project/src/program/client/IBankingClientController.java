@@ -1,5 +1,7 @@
 package src.program.client;
 
+import src.program.structs.*;
+
 /**
  * @author Connor
  * This is the IBankingClientController interface. This is used by the BankingClient class as an
@@ -63,4 +65,21 @@ public interface IBankingClientController
 	 * was successful
 	 */
 	public void handleTellerLoginResult(boolean isSuccessful);
+	
+	//////////////////////////////////
+	// FIND ACCOUNT HOLDER BY EMAIL //
+	//////////////////////////////////
+	
+	/**
+	 * Sends a request to the server to find an account holder by email address
+	 * @param email the email address of the account holder you want to find
+	 */
+	public void sendFindAccountHolderByEmailRequest(String email);
+	
+	/**
+	 * Handles the response to a find account holder by email request by the server
+	 * @param isSuccessful true if the account holder was found, false if the account holder was not found
+	 * @param ahi information about the account holder (this is null if it is not found)
+	 */
+	public void handleFindAccountHolderByEmailResult(AccountHolderInfo ahi);
 }

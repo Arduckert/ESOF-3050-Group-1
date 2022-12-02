@@ -5,6 +5,7 @@ import java.net.SocketException;
 
 import src.ocsf.client.AbstractClient;
 import src.protocol.*;
+import src.program.structs.*;
 
 public class BankingClient extends AbstractClient
 {
@@ -48,6 +49,9 @@ public class BankingClient extends AbstractClient
 			case LOGIN_RESULT_TELLER:
 				processTellerLoginResult(sp);
 				break;
+			case ACCOUNT_HOLDER_FIND_RESULT:
+				processFindAccountHolderByEmailRequest(sp);
+				break;
 			case BASIC_MESSAGE:
 				processBasicMessage(sp);
 				break;
@@ -63,7 +67,6 @@ public class BankingClient extends AbstractClient
 	@Override
 	public void sendToServer(Object msg) throws IOException
 	{
-		System.out.println("Sending message to " + super.getHost() + ":" + super.getPort());
 		super.sendToServer(msg);
 	}
 	
@@ -167,6 +170,49 @@ public class BankingClient extends AbstractClient
 		else
 		{
 			bcc.handleTellerLoginResult(false);
+		}
+	}
+	
+	////////////////////////////////////
+	//	FIND ACCOUNT HOLDER BY EMAIL  //
+	////////////////////////////////////
+	
+	/**
+	 * Sends a request to the server to find an account holder by email
+	 * @param email the email address of the account holder you want to find
+	 * @throws IOException
+	 */
+	public void findAccountHolderByEmail(String email) throws IOException
+	{
+		ClientProtocol cp = new ClientProtocol(ServerAction.FIND_ACCOUNTHOLDER_BY_EMAIL, email);
+		sendToServer(cp);
+	}
+	
+	/**
+	 * Processes the data sent by the server for a find account holder
+	 * by email address request
+	 * @param sp
+	 */
+	private void processFindAccountHolderByEmailRequest(ServerProtocol sp)
+	{
+		//sends information about the account holder if found
+		if (sp.getMessageStatus() == MessageStatus.SUCCESS)
+		{
+			//sends an account holder info with the information
+			//from the data sent by the server to the banking
+			//client controller
+			AccountHolderInfo info = new AccountHolderInfo(
+					sp.GetData().get(0),
+					sp.GetData().get(1),
+					sp.GetData().get(2)
+					);
+			
+			bcc.handleFindAccountHolderByEmailResult(info);
+		}
+		else
+		{
+			//return an account holder info with no information
+			bcc.handleFindAccountHolderByEmailResult(new AccountHolderInfo());
 		}
 	}
 }

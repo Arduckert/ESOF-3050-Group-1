@@ -6,6 +6,7 @@ import java.net.UnknownHostException;
 
 import src.program.client.BankingClient;
 import src.program.client.IBankingClientController;
+import src.program.structs.AccountHolderInfo;
 
 public class ClientTestDriver implements IBankingClientController
 {
@@ -13,8 +14,10 @@ public class ClientTestDriver implements IBankingClientController
 	private static String ipAdd = "10.0.0.119";
 	private BankingClient bc;
 	
+	//these are here for tests that require multiple runs
 	private static int accountHolderTestCount = 0;
 	private static int tellerTestCount = 0;
+	private static int findAccountHolderByEmailTestCount = 0;
 	
 	public ClientTestDriver()
 	{
@@ -232,5 +235,62 @@ public class ClientTestDriver implements IBankingClientController
 			assert false;
 		}
 		tellerTestCount++;
+	}
+
+	/////////////////////////////////////////
+	//	FIND ACCOUNT HOLDER BY EMAIL TEST  //
+	/////////////////////////////////////////
+	
+	/**
+	 * sends a request to the server to find an account holder given
+	 * the email address
+	 */
+	@Override
+	public void sendFindAccountHolderByEmailRequest(String email)
+	{
+		try
+		{
+			bc.findAccountHolderByEmail(email);
+		}
+		catch (Exception e)
+		{
+			System.err.println("FIND ACCOUNT HOLDER BY EMAIL FAILED: EXCEPTION");
+			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * handles the result of the find account holder by email request
+	 */
+	@Override
+	public void handleFindAccountHolderByEmailResult(AccountHolderInfo ahi)
+	{
+		//the first test involves seeing if the account holder was found
+		if (findAccountHolderByEmailTestCount == 0 && ahi.getHasInfo())
+		{
+			//is all the information the expected information?
+			if (ahi.accountHolderName.equals(TestVariables.availableAccountHolderFindName)
+				&& ahi.accountNumber.equals(TestVariables.availableAccountHolderFindNumber)
+				&& ahi.email.equals(TestVariables.availableAccountHolderFindEmail))
+			{
+				System.out.println("FIND ACCOUNT HOLDER BY EMAIL TEST " + (tellerTestCount + 1) + " PASSED");
+			}
+		}
+		else if (findAccountHolderByEmailTestCount > 0 && !ahi.getHasInfo())
+		{
+			//is all of the information not the expected information?
+			if (!(ahi.accountHolderName.equals(TestVariables.availableAccountHolderFindName)
+					&& ahi.accountNumber.equals(TestVariables.availableAccountHolderFindNumber)
+					&& ahi.email.equals(TestVariables.availableAccountHolderFindEmail)))
+				{
+					System.out.println("FIND ACCOUNT HOLDER BY EMAIL TEST " + (findAccountHolderByEmailTestCount + 1) + " PASSED");
+				}
+		}
+		else
+		{
+			System.err.println("LOGIN TELLER TEST " + (findAccountHolderByEmailTestCount + 1) + " FAILED");
+			assert false;
+		}
+		findAccountHolderByEmailTestCount++;
 	}
 }

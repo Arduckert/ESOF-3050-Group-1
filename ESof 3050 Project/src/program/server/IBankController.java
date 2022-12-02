@@ -1,6 +1,7 @@
 package src.program.server;
 
 import src.ocsf.server.*;
+import src.program.structs.*;
 
 /**
  * @author Connor
@@ -29,6 +30,14 @@ public interface IBankController
 	 * @return
 	 */
 	public boolean authenticateTellerLogin(String empID, String password);
+	
+	/**
+	 * Finds an account holder on the server, returns SUCCESS and the account holder's
+	 * information if successful, returns FAIL and null if no account holder is found
+	 * @param email
+	 * @return
+	 */
+	public AccountHolderInfo findAccountHolder(String email);
 	
 	/**
 	 * handles test message from the client

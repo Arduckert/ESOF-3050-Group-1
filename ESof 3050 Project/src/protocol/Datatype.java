@@ -147,6 +147,14 @@ public enum Datatype
 	LOGIN_RESULT_TELLER,
 	
 	/**
+	 * This sends information about a find result back to the client. The
+	 * information included in this data type is the account holder's full
+	 * name, email address, account holder
+	 * @object_size 3
+	 */
+	ACCOUNT_HOLDER_FIND_RESULT,
+	
+	/**
 	 * This sends a string message back to the client. This is used as a way to test
 	 * the client-server communication and can also be used to send a message back to
 	 * the client if the message has a FAIL status.
