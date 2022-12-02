@@ -29,6 +29,7 @@ public class MortgageAccount extends Account{
 	public void payMortgage(double x) {
 		if(x == this.getBalance()) {
 		principleAmount = principleAmount - monthlyPP;	
+		this.setBalance(0);
 	}
 	}
 
