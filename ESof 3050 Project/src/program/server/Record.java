@@ -1,21 +1,34 @@
 package src.program.server;
+import java.time.LocalDate;
 
 public abstract class Record {
-	private String recordDate;
+	private LocalDate recordDate;
 	private Teller teller;
+	private String type;
+	private String action;
 	
-	public Record(String date, Teller teller) {
-		this.recordDate = date;
+	public Record(Teller teller, String t, String a) {
+		this.recordDate = LocalDate.now();
 		this.teller = teller;
+		this.type = t;
+		this.action = a;
 	}
 	public Teller getTeller() {
 		return this.teller;
 	}
+	/*
 	public String getRecordDate() {
-		return this.recordDate;
+		return String.format("%s",recordDate);
 	}
 	
-	//public String toString() {
-		//return String.format("Date: %s\nTeller: %s %s\n", getRecordDate(),getTeller().getFName(),getTeller().getLName());
-	//}
+	public String toString() {
+		if(type == "account") {
+			switch(action) {
+			case "created":
+				return String.format("ACCOUNT CREATED\nTeller:%s %s", getRecordDate(),getTeller().getFName(),getTeller().getLName());
+			}
+		}
+		
+	}
+	*/
 }

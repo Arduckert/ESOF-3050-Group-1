@@ -5,8 +5,8 @@ import java.util.List;
 
 public class LineOfCreditAccount extends Account {
 
-	double interestRate;
-	double creditLimit; 
+	private double interestRate;
+	private double creditLimit; 
 	List<MonthlyBill> bills = new ArrayList<MonthlyBill>();
 	
 	public LineOfCreditAccount(int accountNum, String date, AccountHolder holder, double i, double c) {

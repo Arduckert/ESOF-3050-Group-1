@@ -2,7 +2,7 @@ package src.program.server;
 
 public class SavingsAccount extends Account {
 
-	double interestRate;
+	private double interestRate;
 	
 	public SavingsAccount(int accountNum, String date, AccountHolder holder, double i) {
 		super(accountNum, date, holder);

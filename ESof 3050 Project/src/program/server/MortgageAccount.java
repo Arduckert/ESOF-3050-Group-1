@@ -2,12 +2,12 @@ package src.program.server;
 
 public class MortgageAccount extends Account{
 
-	double mortgageValue; //value of the house
-	int mortgageLength; //years
-	double interestRate;
-	double principleAmount;
-	double monthlyIP;
-	double monthlyPP;
+	private double mortgageValue; //value of the house
+	private int mortgageLength; //years
+	private double interestRate;
+	private double principleAmount;
+	private double monthlyIP;
+	private double monthlyPP;
 	
 	public MortgageAccount(int accountNum, String date, AccountHolder holder, double m, int l, double p, double ir) {
 		super(accountNum, date, holder);

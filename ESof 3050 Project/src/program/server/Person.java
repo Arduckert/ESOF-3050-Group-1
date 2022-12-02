@@ -4,12 +4,12 @@ import java.util.*;
 import src.program.server.personRole;
 
 public class Person {
-	String fName;
-	String lName;
-	int SIN;
-	String DOB;
-	List<Address> addresses = new ArrayList<Address>();
-	List<personRole> roles = new ArrayList<personRole>();
+	private String fName;
+	private String lName;
+	private int SIN;
+	private String DOB;
+	private List<Address> addresses = new ArrayList<Address>();
+	private List<personRole> roles = new ArrayList<personRole>();
 	
 	//Constructor
 	public Person(String fName, String lName, int sin, String dob, Address address) {

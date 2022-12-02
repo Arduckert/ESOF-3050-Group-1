@@ -2,9 +2,9 @@ package src.program.server;
 
 public class MonthlyBill {
 
-	double amount;
-	String receivingParty;
-	LineOfCreditAccount account;
+	private double amount;
+	private String receivingParty;
+	private LineOfCreditAccount account;
 	
 	public MonthlyBill(double x, String r, LineOfCreditAccount a) {
 		this.amount = x;
