@@ -42,11 +42,15 @@ public class BankingClient extends AbstractClient
 		//the banking client controller for analysis
 		switch(sp.getDataType())
 		{
-			case LOGIN_RESULT:
-				processLoginResult(sp);
+			case LOGIN_RESULT_ACCOUNTHOLDER:
+				processAccountHolderLoginResult(sp);
+				break;
+			case LOGIN_RESULT_TELLER:
+				processTellerLoginResult(sp);
 				break;
 			case BASIC_MESSAGE:
 				processBasicMessage(sp);
+				break;
 			default:
 				break;
 		}
@@ -115,7 +119,7 @@ public class BankingClient extends AbstractClient
 	 * Processes the ServerProtocol to fetch the result of the login attempt
 	 * @param sp
 	 */
-	private void processLoginResult(ServerProtocol sp)
+	private void processAccountHolderLoginResult(ServerProtocol sp)
 	{
 		//sends true to the banking client controller handle method if the
 		//login result is successful
@@ -146,5 +150,23 @@ public class BankingClient extends AbstractClient
 	{
 		ClientProtocol cp = new ClientProtocol(ServerAction.LOGIN_TELLER, empID, password);
 		sendToServer(cp);
+	}
+	
+	/**
+	 * Processes the ServerProtocol to fetch the result of the login attempt
+	 * @param sp
+	 */
+	private void processTellerLoginResult(ServerProtocol sp)
+	{
+		//sends true to the banking client controller handle method if the
+		//login result is successful
+		if (sp.getMessageStatus() == MessageStatus.SUCCESS)
+		{
+			bcc.handleTellerLoginResult(true);
+		}
+		else
+		{
+			bcc.handleTellerLoginResult(false);
+		}
 	}
 }

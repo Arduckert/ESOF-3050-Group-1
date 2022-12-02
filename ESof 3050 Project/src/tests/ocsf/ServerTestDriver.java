@@ -12,6 +12,9 @@ public class ServerTestDriver implements IBankController
 	private static final int port = 9950;
 	private BankingServer bs;
 	
+	/**
+	 * starts the server
+	 */
 	public ServerTestDriver()
 	{
 		bs = new BankingServer(port, this);
@@ -29,6 +32,9 @@ public class ServerTestDriver implements IBankController
 		}
 	}
 	
+	/**
+	 * returns a boolean that represents if the account holder and pin match the available account
+	 */
 	@Override
 	public boolean authenticateAccountHolderLogin(String cardNumber, String pin)
 	{
@@ -40,5 +46,14 @@ public class ServerTestDriver implements IBankController
 	public void handleTestMessage(String message, ConnectionToClient client)
 	{
 		bs.SendTestMessageToClient(client, message);
+	}
+
+	/**
+	 * returns a boolean that represents if the teller id and password match the available account
+	 */
+	@Override
+	public boolean authenticateTellerLogin(String empID, String password)
+	{
+		return empID.equals(TestVariables.availableTellerID) && password.equals(TestVariables.availableTellerPassword);
 	}
 }

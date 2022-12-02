@@ -40,9 +40,27 @@ public interface IBankingClientController
 	public void sendAccountHolderLoginRequest(String cardNumber, String pin);
 	
 	/**
-	 * handles a login result received from the server
+	 * handles an account holder login result received from the server
 	 * @param isSuccessful true for login was successful, false if
 	 * not successful
 	 */
 	public void handleAccountHolderLoginResult(boolean isSuccessful);
+	
+	/////////////////////
+	// LOGIN AS TELLER //
+	/////////////////////
+	
+	/**
+	 * send a login request to the teller as a teller
+	 * @param empID employee ID of the teller
+	 * @param password the teller's password
+	 */
+	public void sendTellerLoginRequest(String empID, String password);
+	
+	/**
+	 * handles a teller login result received from the server
+	 * @param isSuccessful a boolean that represents if the login
+	 * was successful
+	 */
+	public void handleTellerLoginResult(boolean isSuccessful);
 }

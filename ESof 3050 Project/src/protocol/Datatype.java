@@ -131,12 +131,20 @@ public enum Datatype
 	LOGIN_ATTEMPT,
 	
 	/**
-	 * This sends information about a login result back to the client.
+	 * This sends information about an account holder login result back to the client.
 	 * There is no information included in this data type as this result
 	 * is solely based on the value of the MessageStatus variable
 	 * @object_size 0
 	 */
-	LOGIN_RESULT,
+	LOGIN_RESULT_ACCOUNTHOLDER,
+	
+	/**
+	 * This sends information about a teller login result back to the client.
+	 * There is no information included in this data type as this result
+	 * is solely based on the value of the MessageStatus variable
+	 * @object_size 0
+	 */
+	LOGIN_RESULT_TELLER,
 	
 	/**
 	 * This sends a string message back to the client. This is used as a way to test

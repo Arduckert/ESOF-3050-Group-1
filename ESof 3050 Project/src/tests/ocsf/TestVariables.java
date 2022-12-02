@@ -11,4 +11,11 @@ public final class TestVariables
 	
 	public static final String unavailableAccountHolderNumber = "2345678";
 	public static final String unavailableAccountHolderPin = "2345";
+	
+	//TELLER
+	public static final String availableTellerID = "987654";
+	public static final String availableTellerPassword = "password123";
+	
+	public static final String unavailableTellerID = "345678";
+	public static final String unavailableTellerPassword = "password234";
 }

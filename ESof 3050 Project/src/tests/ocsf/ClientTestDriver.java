@@ -1,6 +1,8 @@
 package src.tests.ocsf;
 
 import java.io.IOException;
+import java.net.Inet4Address;
+import java.net.UnknownHostException;
 
 import src.program.client.BankingClient;
 import src.program.client.IBankingClientController;
@@ -8,14 +10,25 @@ import src.program.client.IBankingClientController;
 public class ClientTestDriver implements IBankingClientController
 {
 	private static final int port = 9950;
-	private static final String ipAdd = "10.0.0.119";
+	private static String ipAdd = "10.0.0.119";
 	private BankingClient bc;
 	
 	private static int accountHolderTestCount = 0;
+	private static int tellerTestCount = 0;
 	
 	public ClientTestDriver()
 	{
 		bc = new BankingClient(ipAdd, port, this);
+		
+		try 
+		{
+			ipAdd = Inet4Address.getLocalHost().getHostAddress();
+		}
+		catch (UnknownHostException e) 
+		{
+			System.err.println("GETTING IP ADDRESS FAILED");
+			e.printStackTrace();
+		}
 	}
 	
 	public void RunTests()
@@ -35,8 +48,14 @@ public class ClientTestDriver implements IBankingClientController
 			sendAccountHolderLoginRequest(TestVariables.unavailableAccountHolderNumber, TestVariables.availableAccountHolderPin); //should return false
 			sendAccountHolderLoginRequest(TestVariables.unavailableAccountHolderNumber, TestVariables.unavailableAccountHolderPin); //should return false
 			
+			//teller login request tests. 
+			sendTellerLoginRequest(TestVariables.availableTellerID, TestVariables.availableTellerPassword); //should return true
+			sendTellerLoginRequest(TestVariables.availableTellerID, TestVariables.unavailableTellerPassword); //should return false
+			sendTellerLoginRequest(TestVariables.unavailableTellerID, TestVariables.availableTellerPassword); //should return false
+			sendTellerLoginRequest(TestVariables.unavailableTellerID, TestVariables.unavailableTellerPassword); //should return false
+			
 			Sleep(1000); //wait for connection to close
-			CloseServerConnection();	
+			CloseServerConnection();
 		}
 		catch (Exception e)
 		{
@@ -176,5 +195,42 @@ public class ClientTestDriver implements IBankingClientController
 			assert false;
 		}
 		accountHolderTestCount++;
-	}	
+	}
+	
+	/////////////////////////
+	//	LOGIN TELLER TEST  //
+	/////////////////////////
+	
+	@Override
+	public void sendTellerLoginRequest(String empID, String password)
+	{
+		try
+		{
+			bc.loginAsTeller(empID, password);
+		}
+		catch (Exception e)
+		{
+			System.err.println("LOGIN TELLER FAILED: EXCEPTION");
+			e.printStackTrace();
+		}
+	}
+
+	@Override
+	public void handleTellerLoginResult(boolean isSuccessful)
+	{
+		if (accountHolderTestCount == 0 && isSuccessful)
+		{
+			System.out.println("LOGIN TELLER TEST " + (tellerTestCount + 1) + " PASSED");
+		}
+		else if (accountHolderTestCount > 0 && !isSuccessful)
+		{
+			System.out.println("LOGIN TELLER TEST " + (tellerTestCount + 1) + " PASSED");
+		}
+		else
+		{
+			System.err.println("LOGIN TELLER TEST " + (tellerTestCount + 1) + " FAILED");
+			assert false;
+		}
+		tellerTestCount++;
+	}
 }

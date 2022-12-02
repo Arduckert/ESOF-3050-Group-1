@@ -23,6 +23,14 @@ public interface IBankController
 	public boolean authenticateAccountHolderLogin(String cardNumber, String pin);
 	
 	/**
+	 * Authenticates a teller if the employee id and password match a teller
+	 * @param empId the teller's employee id
+	 * @param password the teller's password
+	 * @return
+	 */
+	public boolean authenticateTellerLogin(String empID, String password);
+	
+	/**
 	 * handles test message from the client
 	 * @param message
 	 */

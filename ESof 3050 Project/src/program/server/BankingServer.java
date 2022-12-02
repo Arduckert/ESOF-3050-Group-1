@@ -26,6 +26,9 @@ public class BankingServer extends AbstractServer
 			case LOGIN_ACCOUNTHOLDER:
 				HandleAccountHolderLogin(cp, client);
 				break;
+			case LOGIN_TELLER:
+				handleTellerLogin(cp, client);
+				break;
 			case TEST:
 				ProcessTestMessage(cp, client);
 				break;
@@ -74,6 +77,13 @@ public class BankingServer extends AbstractServer
 		}
 	}
 	
+	//extracts the test message from the client protocol and sends it to the bank
+	//controller for further processing
+	private void ProcessTestMessage(ClientProtocol cp, ConnectionToClient client)
+	{
+		bc.handleTestMessage(cp.GetParameters().get(0), client);
+	}
+	
 	/**
 	 * Handles an account holder login request
 	 * @param cp
@@ -83,7 +93,7 @@ public class BankingServer extends AbstractServer
 	{
 		if (bc.authenticateAccountHolderLogin(cp.GetParameters().get(0),cp.GetParameters().get(1)))
 		{
-			ServerProtocol sp = new ServerProtocol(MessageStatus.SUCCESS, Datatype.LOGIN_RESULT);
+			ServerProtocol sp = new ServerProtocol(MessageStatus.SUCCESS, Datatype.LOGIN_RESULT_ACCOUNTHOLDER);
 
 			try
 			{
@@ -97,7 +107,7 @@ public class BankingServer extends AbstractServer
 		}
 		else
 		{
-			ServerProtocol sp = new ServerProtocol(MessageStatus.FAIL, Datatype.LOGIN_RESULT);
+			ServerProtocol sp = new ServerProtocol(MessageStatus.FAIL, Datatype.LOGIN_RESULT_ACCOUNTHOLDER);
 
 			try
 			{
@@ -111,10 +121,39 @@ public class BankingServer extends AbstractServer
 		} //END OF LOGIN ACCOUNT HOLDER CASE
 	}
 	
-	//extracts the test message from the client protocol and sends it to the bank
-	//controller for further processing
-	private void ProcessTestMessage(ClientProtocol cp, ConnectionToClient client)
+	/**
+	 * Handles an account holder login request
+	 * @param cp
+	 * @param client
+	 */
+	private void handleTellerLogin(ClientProtocol cp, ConnectionToClient client)
 	{
-		bc.handleTestMessage(cp.GetParameters().get(0), client);
+		if (bc.authenticateTellerLogin(cp.GetParameters().get(0),cp.GetParameters().get(1)))
+		{
+			ServerProtocol sp = new ServerProtocol(MessageStatus.SUCCESS, Datatype.LOGIN_RESULT_TELLER);
+
+			try
+			{
+				client.sendToClient(sp);
+			}
+			catch (IOException e)
+			{
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}		
+		}
+		else
+		{
+			ServerProtocol sp = new ServerProtocol(MessageStatus.FAIL, Datatype.LOGIN_RESULT_TELLER);
+
+			try
+			{
+				client.sendToClient(sp);
+			}
+			catch (IOException e)
+			{
+				e.printStackTrace();
+			}
+		} //END OF LOGIN TELLER CASE
 	}
 }
