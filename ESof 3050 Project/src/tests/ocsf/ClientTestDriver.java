@@ -268,7 +268,7 @@ public class ClientTestDriver implements IBankingClientController
 	 */
 	@Override
 	public void handleFindAccountHolderByEmailResult(AccountHolderInfo ahi)
-	{
+	{		
 		//the first test involves seeing if the account holder was found
 		if (findAccountHolderByEmailTestCount == 0 && ahi.getHasInfo())
 		{
@@ -277,20 +277,30 @@ public class ClientTestDriver implements IBankingClientController
 				&& ahi.accountNumber.equals(TestVariables.availableAccountHolderFindNumber)
 				&& ahi.email.equals(TestVariables.availableAccountHolderFindEmail))
 			{
-				System.out.println("FIND ACCOUNT HOLDER BY EMAIL TEST " + (tellerTestCount + 1) + " PASSED");
+				System.out.println("FIND ACCOUNT HOLDER BY EMAIL WITH INFO TEST " + (findAccountHolderByEmailTestCount + 1) + " PASSED");
+			}
+			else
+			{
+				System.err.println("FIND ACCOUNT HOLDER BY EMAIL WITH INFO TEST " + (findAccountHolderByEmailTestCount + 1) + " FAILED");
+				assert false;
 			}
 		}
 		else if (findAccountHolderByEmailTestCount > 0 && !ahi.getHasInfo())
 		{
 			//is all of the information not the expected information?
-			if (ahi.accountHolderName.equals(null) && ahi.accountNumber.equals(null) && ahi.email.equals(null))
+			if (ahi.accountHolderName == null && ahi.accountNumber == null && ahi.email == null)
 			{
-				System.out.println("FIND ACCOUNT HOLDER BY EMAIL TEST " + (findAccountHolderByEmailTestCount + 1) + " PASSED");
+				System.out.println("FIND ACCOUNT HOLDER BY EMAIL WITHOUT INFO TEST " + (findAccountHolderByEmailTestCount + 1) + " PASSED");
+			}
+			else
+			{
+				System.err.println("FIND ACCOUNT HOLDER BY EMAIL WITHOUT INFO TEST " + (findAccountHolderByEmailTestCount + 1) + " FAILED");
+				assert false;
 			}
 		}
 		else
 		{
-			System.err.println("LOGIN TELLER TEST " + (findAccountHolderByEmailTestCount + 1) + " FAILED");
+			System.err.println("FIND ACCOUNT HOLDER BY EMAIL TEST " + (findAccountHolderByEmailTestCount + 1) + " FAILED");
 			assert false;
 		}
 		findAccountHolderByEmailTestCount++;
