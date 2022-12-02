@@ -1,9 +1,10 @@
 package src.program.server;
-import java.io.IOException;
 
+import java.io.IOException;
 import src.ocsf.server.AbstractServer;
 import src.ocsf.server.ConnectionToClient;
 import src.protocol.*;
+import src.program.structs.*;
 
 public class BankingServer extends AbstractServer
 {
@@ -32,11 +33,13 @@ public class BankingServer extends AbstractServer
 			case TEST:
 				ProcessTestMessage(cp, client);
 				break;
+			case FIND_ACCOUNTHOLDER_BY_EMAIL:
+				handleFindAccountHolderByEmailRequest(cp, client);
 			default:
 				break;
 		}
 	}
-	
+
 	@Override
 	protected void clientConnected(ConnectionToClient client)
 	{
@@ -155,5 +158,39 @@ public class BankingServer extends AbstractServer
 				e.printStackTrace();
 			}
 		} //END OF LOGIN TELLER CASE
+	}
+	
+	/**
+	 * handles a find account holder by email request
+	 * @param cp
+	 * @param client
+	 */
+	private void handleFindAccountHolderByEmailRequest(ClientProtocol cp, ConnectionToClient client)
+	{
+		//sends a find account holder request to the bank controller
+		AccountHolderInfo info = bc.findAccountHolder(cp.GetParameters().get(0));
+		
+		MessageStatus status = info.getHasInfo() ? MessageStatus.SUCCESS : MessageStatus.FAIL;
+		ServerProtocol sp = new ServerProtocol(status, Datatype.ACCOUNT_HOLDER_FIND_RESULT);
+		
+		try
+		{
+			//adds the account holder information to the server protocol
+			sp.AddData(info.accountHolderName, info.email, info.accountNumber);
+			
+			try
+			{
+				//sends that data to the client
+				client.sendToClient(sp);
+			}
+			catch (IOException e)
+			{
+				e.printStackTrace();
+			}
+		}
+		catch (ParameterException e)
+		{
+			e.printStackTrace();
+		}
 	}
 }

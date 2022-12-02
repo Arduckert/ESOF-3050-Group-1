@@ -57,6 +57,10 @@ public class ClientTestDriver implements IBankingClientController
 			sendTellerLoginRequest(TestVariables.unavailableTellerID, TestVariables.availableTellerPassword); //should return false
 			sendTellerLoginRequest(TestVariables.unavailableTellerID, TestVariables.unavailableTellerPassword); //should return false
 			
+			//find account holder by email request tests
+			sendFindAccountHolderByEmailRequest(TestVariables.availableAccountHolderFindEmail); //should return true and the account holder information
+			sendFindAccountHolderByEmailRequest(TestVariables.unavailableAccountHolderFindEmail); //should return false and no information
+			
 			Sleep(1000); //wait for connection to close
 			CloseServerConnection();
 		}
@@ -279,12 +283,10 @@ public class ClientTestDriver implements IBankingClientController
 		else if (findAccountHolderByEmailTestCount > 0 && !ahi.getHasInfo())
 		{
 			//is all of the information not the expected information?
-			if (!(ahi.accountHolderName.equals(TestVariables.availableAccountHolderFindName)
-					&& ahi.accountNumber.equals(TestVariables.availableAccountHolderFindNumber)
-					&& ahi.email.equals(TestVariables.availableAccountHolderFindEmail)))
-				{
-					System.out.println("FIND ACCOUNT HOLDER BY EMAIL TEST " + (findAccountHolderByEmailTestCount + 1) + " PASSED");
-				}
+			if (ahi.accountHolderName.equals(null) && ahi.accountNumber.equals(null) && ahi.email.equals(null))
+			{
+				System.out.println("FIND ACCOUNT HOLDER BY EMAIL TEST " + (findAccountHolderByEmailTestCount + 1) + " PASSED");
+			}
 		}
 		else
 		{
