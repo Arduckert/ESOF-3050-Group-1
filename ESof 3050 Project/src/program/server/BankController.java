@@ -9,21 +9,13 @@ public class BankController implements IBankController
 	List<Record> recordList = new ArrayList<Record>(); //potential problem with Record name
 	List<Account> accountList = new ArrayList<Account>();
 	List<AccountHolder> accountHolderList = new ArrayList<AccountHolder>();
-	double generalInterestRate;
 	
 	public BankController() {
 		
 	}
-	//setter
-	public void setGeneralInterestRate(double x) {
-		this.generalInterestRate = x;
-	}
+	
 	public void addAccountHolder(AccountHolder x) {
 		this.accountHolderList.add(x);
-	}
-	//getter
-	public double getGeneralInterestRate() {
-		return this.generalInterestRate;
 	}
 	
 	

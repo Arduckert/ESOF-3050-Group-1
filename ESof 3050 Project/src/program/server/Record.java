@@ -2,16 +2,11 @@ package src.program.server;
 
 public abstract class Record {
 	private String recordDate;
-	private int recordType; //1 for account record 0 for person record
 	private Teller teller;
 	
-	public Record(String date, int type, Teller teller) {
+	public Record(String date, Teller teller) {
 		this.recordDate = date;
-		this.recordType = type;
 		this.teller = teller;
-	}
-	public int getRecordType() {
-		return this.recordType;
 	}
 	public Teller getTeller() {
 		return this.teller;
