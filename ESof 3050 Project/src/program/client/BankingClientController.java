@@ -126,6 +126,10 @@ public class BankingClientController extends Application implements IBankingClie
 		changeScene(event,"AccountHolderConfirmation.fxml");
 	}
 	
+	public void switchToAccountHolderLoginScreen(ActionEvent event) throws Exception{
+		changeScene(event,"AccountHolderLogin.fxml");
+	}
+	
 	//************************************************************************
 	
 	//*************************************************************************
@@ -172,8 +176,8 @@ public class BankingClientController extends Application implements IBankingClie
 	//GUI components for login choice screen
 	
 	@FXML
-    void AccountHolderLoginButtonPressed(ActionEvent event) {
-    	//change root to AccountHolderMainMenu.fxml
+    void AccountHolderLoginButtonPressed(ActionEvent event) throws Exception{
+		switchToAccountHolderLoginScreen(event);
     }
 	
 	@FXML
@@ -350,6 +354,35 @@ public class BankingClientController extends Application implements IBankingClie
   	
   	//*********************************************************************
     
+  //***********************************************************************
+  	//GUI components for account holder login
+  	
+  	@FXML
+  	private TextField AccountHolderCardNumberTextField;
+  	
+  	@FXML
+  	private TextField AccountHolderPinTextField;
+  	
+  	@FXML
+  	private TextArea AccountHolderLoginErrorTextArea;
+  	
+  	@FXML
+  	void AccountHolderLoginSubmitButtonPressed(ActionEvent event) throws Exception{
+  		if(bc==null)
+  			System.out.println();
+			//switchToAccountHolderMainMenu(event);
+		else {
+			//switchToAccountHolderMainMenu(event);//remove later
+			//bc.loginAsAccoutnHolder(TellerNumberTextField.getText(), TellerPasswordTextField.getText());
+			//verify
+			//if good switch to main menu
+			//else change error label
+			//if bc.ProccessTellerResult == true
+		}
+	}
+  	
+  	//************************************************************************
+  	
     //**************************************
     //Test for OCSF functionality
     
