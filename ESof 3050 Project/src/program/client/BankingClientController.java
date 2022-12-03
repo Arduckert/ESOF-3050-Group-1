@@ -182,6 +182,7 @@ public class BankingClientController extends Application implements IBankingClie
 			//verify
 			//if good switch to main menu
 			//else change error label
+			//if bc.ProccessTellerResult == true
 		}
 	}
 	
@@ -414,11 +415,11 @@ public class BankingClientController extends Application implements IBankingClie
 		
 		if (isSuccessful)
 		{
-			//login successful
+			//login successful change screen
 		}
 		else
 		{
-			//login failed
+			//login failed pop up message
 		}
 	}
 
