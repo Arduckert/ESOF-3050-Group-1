@@ -4,20 +4,19 @@ import java.util.*;
 import src.program.server.personRole;
 
 public class Person {
-	String fName;
-	String lName;
-	int SIN;
-	String DOB;
-	List<Address> addresses = new ArrayList<Address>();
-	List<personRole> roles = new ArrayList<personRole>();
+	private String fName;
+	private String lName;
+	private int SIN;
+	private String DOB;
+	private List<Address> addresses = new ArrayList<Address>();
+	private List<personRole> roles = new ArrayList<personRole>();
 	
 	//Constructor
-	public Person(String fName, String lName, int sin, String dob, Address address) {
+	public Person(String fName, String lName, int sin, String dob) {
 		this.fName = fName;
 		this.lName = lName;
 		this.SIN = sin;
 		this.DOB = dob;
-		this.addresses.add(address);
 		//this.roles.add(role);
 		//Either add this person to list of people in bankController or do it in GUI step
 	}

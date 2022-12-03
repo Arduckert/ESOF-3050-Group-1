@@ -28,14 +28,6 @@ public enum ServerAction
 	
 	/**
 	 * This tells the server to find an existing account on the server. This takes
-	 * the account number as a parameter. The server returns SUCCESS along with the
-	 * account number, email, and date creation. The server returns FAIL with no
-	 * information if the account was not found.
-	 */
-	FIND_ACCOUNTHOLDER_BY_NUMBER,
-	
-	/**
-	 * This tells the server to find an existing account on the server. This takes
 	 * an email as a parameter. The server returns SUCCESS along with the
 	 * account number, email, and person's name if the account is found. The server
 	 * returns FAIL with no information if the account was not found.
@@ -43,14 +35,7 @@ public enum ServerAction
 	FIND_ACCOUNTHOLDER_BY_EMAIL,
 	
 	/**
-	 * This tells the server to find an existing person on the server. This takes a
-	 * person's first name and last name as parameters. The server returns SUCCESS
-	 * along with the person's first name, last name, social insurance number, and
-	 * date of birth if the person is found.
-	 */
-	FIND_PERSON_BY_NAME,
-	
-	/**
+	 * TODO
 	 * This tells the server to find an existing person on the server. This takes a
 	 * person's social insurance number as a parameter. The server returns SUCCESS
 	 * along with the person's first name, last name, social insurance number, and
@@ -59,13 +44,7 @@ public enum ServerAction
 	FIND_PERSON_BY_SIN,
 	
 	/**
-	 * This tells the server to find an existing teller on the server. This takes the
-	 * teller's employee number as a parameter. The server returns SUCCESS
-	 * teller's employee number and password if the teller is found.
-	 */
-	FIND_TELLER_BY_NUMBER,
-	
-	/**
+	 * TODO
 	 * This tells the server to add money to an account. This takes the account number's
 	 * card number, account holder's pin, the account number of the account to deposit to,
 	 * and the amount to deposit to that account as parameters. The server returns SUCCESS
@@ -74,6 +53,7 @@ public enum ServerAction
 	DEPOSIT,
 	
 	/**
+	 * TODO
 	 * This tells the server to remove money from an account. This takes the account number's
 	 * card number, account holder's pin, the account number of the account to withdraw from,
 	 * and the amount to withdraw from that account as parameters. The server returns SUCCESS
@@ -82,6 +62,7 @@ public enum ServerAction
 	WITHDRAW,
 	
 	/**
+	 * TODO
 	 * The tells the server to transfer money from one account to another. This takes the recipient's
 	 * email address, the account holder's account number, the account holder's pin number, the account
 	 * number of the account to transfer from, and the amount to transfer. The server returns SUCCESS
@@ -91,109 +72,102 @@ public enum ServerAction
 	TRANSFER,
 	
 	/**
-	 * This tells the server to create a new account holder. This takes an email address, and the person's
-	 * social insurance number (the one who will own the account). The server returns SUCCESS and all of the
-	 * data relating to the account holder (see Datatype.ACCOUNT_HOLDER)
+	 * This tells the server to create a new account holder. This takes an email address, and a pin
+	 * The server returns SUCCESS and all of the data relating to the account holder
+	 * (see Datatype.ACCOUNT_HOLDER)
 	 */
 	CREATE_ACCOUNTHOLDER,
 	
 	/**
-	 * 
+	 * TODO
+	 * This tells the server to delete an existing account holder from the server. This takes an
+	 * card number, and a pin number. The server will return SUCCESS if the account holder was
+	 * successfully deleted.
 	 */
 	DELETE_ACCOUNTHOLDER,
 		
 	/**
-	 * 
+	 * TODO
 	 */
 	CREATE_ACCOUNT,
 	
 	/**
-	 * 
+	 * TODO
 	 */
 	DELETE_ACCOUNT,
 	
 	/**
-	 * 
+	 * TODO
 	 */
 	CREATE_TELLER,
 	
 	/**
-	 * 
+	 * TODO
 	 */
 	DELETE_TELLER,
 	
 	/**
-	 * 
+	 * TODO
 	 */
 	CREATE_PERSON,
 	
 	/**
-	 * 
+	 * TODO
 	 */
 	DELETE_PERSON,
 		
 	/**
-	 * 
+	 * TODO
 	 */
 	ADD_ACCOUNTHOLDER_ROLE_TO_PERSON,
 	
 	/**
-	 * 
+	 * TODO
 	 */
 	ADD_TELLER_ROLE_TO_PERSON,
 	
 	/**
-	 * 
+	 * TODO
 	 */
 	CREATE_BILL,
 	
 	/**
-	 * 
+	 * TODO
 	 */
 	PAY_BILL,
 	
 	/**
-	 * 
+	 * TODO
 	 */
 	DELETE_BILL,
 	
 	/**
-	 * 
+	 * TODO
 	 */
 	GET_ACCOUNT_TRANSACTIONS,
 	
 	/**
-	 * 
-	 */
-	GET_ACCOUNT_INFORMATION,
-	
-	/**
-	 * 
-	 */
-	GET_ACCOUNTHOLDER_INFORMATION,
-	
-	/**
-	 * 
+	 * TODO
 	 */
 	GET_ACCOUNT_RECORDS,
 	
 	/**
-	 * 
+	 * TODO
 	 */
 	GET_CUSTOMER_RECORDS,
 	
 	/**
-	 * 
+	 * TODO
 	 */
 	GET_LOGIN_ATTEMPTS_FOR_ACCOUNTHOLDER,
 	
 	/**
-	 * 
+	 * TODO
 	 */
 	ADD_ADDRESS_TO_PERSON,
 	
 	/**
-	 * 
+	 * TODO
 	 */
 	REMOVE_ADDRESS_FROM_PERSON,
 	

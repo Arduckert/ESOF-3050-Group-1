@@ -11,4 +11,32 @@ public final class TestVariables
 	
 	public static final String unavailableAccountHolderNumber = "2345678";
 	public static final String unavailableAccountHolderPin = "2345";
+	
+	//TELLER
+	public static final String availableTellerID = "987654";
+	public static final String availableTellerPassword = "password123";
+	
+	public static final String unavailableTellerID = "345678";
+	public static final String unavailableTellerPassword = "password234";
+	
+	//FIND ACCOUNT HOLDER BY EMAIL
+	public static final String availableAccountHolderFindEmail = "test123@example.com";
+	public static final String unavailableAccountHolderFindEmail = "tset123@example.com";
+	
+	public static final String availableAccountHolderFindName = "John Smith";
+	public static final String availableAccountHolderFindNumber = "1234567";
+	public static final String availableAccountHolderFindPin = "1234";
+	
+	//CREATE ACCOUNT HOLDER
+	public static final String availableCreateAccountHolderEmail = "tset321@example.com";
+	public static final String unavailableCreateAccountHolderEmail = "test321@example.com";
+	public static final String createAccountHolderTellerID = "123456";
+	public static final String createAccountHolderPin = "5678";
+	
+	//DELETE ACCOUNT HOLDER
+	public static final String availableDeleteAccountHolderNumber = "9876543";
+	public static final String unavailableDeleteAccountHolderNumber = "4567890";
+	public static final String deleteAccountHolderTellerID = "654321";
+	public static final String deleteAccountHolderPin = "7654";
+	
 }
