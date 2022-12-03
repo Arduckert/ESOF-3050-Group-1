@@ -25,5 +25,6 @@ public final class TestVariables
 	
 	public static final String availableAccountHolderFindName = "John Smith";
 	public static final String availableAccountHolderFindNumber = "1234567";
+	public static final String availableAccountHolderFindPin = "1234";
 	
 }

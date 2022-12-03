@@ -24,6 +24,11 @@ public class AccountHolderInfo
 	public String accountNumber;
 	
 	/**
+	 * the account holder's pin number
+	 */
+	public String pin;
+	
+	/**
 	 * this boolean is true if the values have information, false if all the values are null
 	 */
 	private boolean hasInfo;
@@ -34,11 +39,12 @@ public class AccountHolderInfo
 	 * @param _email
 	 * @param _accountNumber
 	 */
-	public AccountHolderInfo(String _accountHolderName, String _email, String _accountNumber)
+	public AccountHolderInfo(String _accountHolderName, String _email, String _accountNumber, String _pin)
 	{
 		accountHolderName = _accountHolderName;
 		email = _email;
 		accountNumber = _accountNumber;
+		pin = _pin;
 		hasInfo = true;
 	}
 	
@@ -50,6 +56,7 @@ public class AccountHolderInfo
 		accountHolderName = null;
 		email = null;
 		accountNumber = null;
+		pin = null;
 		hasInfo = false;
 	}
 	

@@ -275,7 +275,8 @@ public class ClientTestDriver implements IBankingClientController
 			//is all the information the expected information?
 			if (ahi.accountHolderName.equals(TestVariables.availableAccountHolderFindName)
 				&& ahi.accountNumber.equals(TestVariables.availableAccountHolderFindNumber)
-				&& ahi.email.equals(TestVariables.availableAccountHolderFindEmail))
+				&& ahi.email.equals(TestVariables.availableAccountHolderFindEmail)
+				&& ahi.pin.equals(TestVariables.availableAccountHolderFindPin))
 			{
 				System.out.println("FIND ACCOUNT HOLDER BY EMAIL WITH INFO TEST " + (findAccountHolderByEmailTestCount + 1) + " PASSED");
 			}
@@ -288,7 +289,7 @@ public class ClientTestDriver implements IBankingClientController
 		else if (findAccountHolderByEmailTestCount > 0 && !ahi.getHasInfo())
 		{
 			//is all of the information not the expected information?
-			if (ahi.accountHolderName == null && ahi.accountNumber == null && ahi.email == null)
+			if (ahi.accountHolderName == null && ahi.accountNumber == null && ahi.email == null && ahi.pin == null)
 			{
 				System.out.println("FIND ACCOUNT HOLDER BY EMAIL WITHOUT INFO TEST " + (findAccountHolderByEmailTestCount + 1) + " PASSED");
 			}

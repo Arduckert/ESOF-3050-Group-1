@@ -74,7 +74,8 @@ public class ServerTestDriver implements IBankController
 			AccountHolderInfo info = new AccountHolderInfo(
 					TestVariables.availableAccountHolderFindName,
 					TestVariables.availableAccountHolderFindEmail,
-					TestVariables.availableAccountHolderNumber				
+					TestVariables.availableAccountHolderNumber,
+					TestVariables.availableAccountHolderFindPin
 					);
 			return info;
 		}

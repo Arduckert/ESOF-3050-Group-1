@@ -1,6 +1,7 @@
 package src.program.server;
 
 import src.ocsf.server.*;
+import src.program.structs.*;
 
 /**
  * @author Connor
@@ -35,4 +36,11 @@ public interface IBankController
 	 * @param message
 	 */
 	public void handleTestMessage(String message, ConnectionToClient client);
+	
+	/**
+	 * finds an account holder on the server
+	 * @param email the account holder's email address
+	 * @return
+	 */
+	public AccountHolderInfo findAccountHolder(String email);
 }
