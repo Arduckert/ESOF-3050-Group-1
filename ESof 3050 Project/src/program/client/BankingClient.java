@@ -204,7 +204,8 @@ public class BankingClient extends AbstractClient
 			AccountHolderInfo info = new AccountHolderInfo(
 					sp.GetData().get(0),
 					sp.GetData().get(1),
-					sp.GetData().get(2)
+					sp.GetData().get(2),
+					sp.GetData().get(3)
 					);
 			
 			bcc.handleFindAccountHolderByEmailResult(info);
