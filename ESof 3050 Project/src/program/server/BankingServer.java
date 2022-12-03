@@ -88,7 +88,31 @@ public class BankingServer extends AbstractServer
 	//controller for further processing
 	private void ProcessTestMessage(ClientProtocol cp, ConnectionToClient client)
 	{
-		bc.handleTestMessage(cp.GetParameters().get(0), client);
+		//get response message from the banking server
+		String newMessage = bc.handleTestMessage(cp.GetParameters().get(0));
+		
+		
+		ServerProtocol sp = new ServerProtocol(MessageStatus.SUCCESS, Datatype.BASIC_MESSAGE);
+		
+		try
+		{
+			sp.AddData(newMessage);
+		}
+		catch (ParameterException e1)
+		{
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
+		try
+		{
+			client.sendToClient(sp);
+		}
+		catch (IOException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}	
 	}
 	
 	/**
@@ -205,10 +229,8 @@ public class BankingServer extends AbstractServer
 	 */
 	private void handleAccountHolderCreationRequest(ClientProtocol cp, ConnectionToClient client)
 	{
-		bc.createAccount(cp.GetParameters().get(0), cp.GetParameters().get(1));
-		
 		//success if the account creation was successful, fail if not
-		MessageStatus status = bc.createAccount(cp.GetParameters().get(0), cp.GetParameters().get(1)) ? MessageStatus.SUCCESS : MessageStatus.FAIL;	
+		MessageStatus status = bc.createAccountHolder(cp.GetParameters().get(0), cp.GetParameters().get(1)) ? MessageStatus.SUCCESS : MessageStatus.FAIL;	
 		ServerProtocol sp = new ServerProtocol(status, Datatype.ACCOUNT_HOLDER_CREATION_RESULT);
 		
 		try

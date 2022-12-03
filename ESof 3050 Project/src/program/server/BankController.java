@@ -1,7 +1,9 @@
 package src.program.server;
 import java.util.*;
 
-// *** TODO: Implement Interface *** //
+import src.program.structs.AccountHolderInfo;
+
+// *** TODO: IMPLEMENT INTERFACE METHODS (REFER TO BLUE MARKS ON THE SCROLL BAR) *** //
 public class BankController implements IBankController
 {
 	
@@ -90,6 +92,69 @@ public class BankController implements IBankController
 			System.err.println(ex);
 		}
 		System.out.println("testing the server...");
+	}
+
+	/******************************************
+	 * PROCESS METHODS FOR THE OCSF
+	 * FUNCTION WITH TODO NEED IMPLEMENTATION
+	 */
+	
+	/**
+	 * authenticate teller login request
+	 */
+	@Override
+	public boolean authenticateTellerLogin(String empID, String password)
+	{
+		// TODO add code here
+		return false;
+	}
+
+	
+	/**
+	 * echoes the message back to the client
+	 */
+	@Override
+	public String handleTestMessage(String message)
+	{
+		return message;
+	}
+
+	/**
+	 * finds an account holder on the server
+	 */
+	@Override
+	public AccountHolderInfo findAccountHolder(String email)
+	{
+		//TODO: call a find method that returns the index
+		//of the accountHolder (-1 if it doesn't find it)
+		int accountHolderIndex = -1;
+		
+		if (accountHolderIndex != -1)
+		{
+			//TODO: populate these fields (make a get at index method)
+			String accountHolderName = null;
+			String accountNumber = null;
+			String pin = null;	
+			
+			return new AccountHolderInfo(accountHolderName, email, accountNumber, pin);
+		}
+		else
+		{
+			return new AccountHolderInfo();
+		}
+	}
+
+	/**
+	 * create a new account holder
+	 */
+	@Override
+	public boolean createAccountHolder(String email, String pin)
+	{
+		//TODO: call a create method that returns a boolean where true means
+		//the account was created, false if not (if there's a duplicate email
+		//or something)
+		boolean accountCreated = false;
+		return accountCreated;
 	}
 	
 }

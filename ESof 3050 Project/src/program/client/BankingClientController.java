@@ -7,14 +7,16 @@ import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import src.program.structs.AccountHolderInfo;
 import javafx.event.ActionEvent;
 
+import java.io.IOException;
 import java.net.Inet4Address;
 
 import javafx.application.Application;
 import javafx.application.Platform;
 
-// *** TODO: IMPLEMENT INTERFACE *** //
+// *** TODO: ADD CODE TO INTERFACE METHODS (REFERENCE BLUE MARKS ON THE SCROLL BAR) *** //
 public class BankingClientController extends Application implements IBankingClientController {
 	//create instance of BankingClient to pass messages to server
 	//ip4v and port of server
@@ -305,5 +307,196 @@ public class BankingClientController extends Application implements IBankingClie
     //Start function
 	public static void main(String[] args) throws Exception{
 		launch(args);
+	}
+
+	/*****************************************************
+	 * REQUESTS AND HANDLE METHODS FOR THE OCSF
+	 * Note: Methods with TODO need additional implementation
+	 */
+	
+	////////////////////
+	// BASIC MESSAGES //
+	////////////////////
+	
+	/**
+	 * handle a basic message sent by the server
+	 */
+	@Override
+	public void handleBasicMessage(String message)
+	{
+		// TODO add handle code here
+	}
+
+	/**
+	 * sends a basic message to the server
+	 */
+	@Override
+	public void sendBasicMessage(String message)
+	{
+		try
+		{
+			bc.SendTestMessageToServer(message);
+		}
+		catch (IOException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	/////////////////////////////
+	// LOGIN AS ACCOUNT HOLDER //
+	/////////////////////////////
+	
+	/**
+	 * sends a login request to the server
+	 */
+	@Override
+	public void sendAccountHolderLoginRequest(String cardNumber, String pin)
+	{
+		try
+		{
+			bc.loginAsAccountHolder(cardNumber, pin);
+		}
+		catch (IOException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}	
+	}
+
+	/**
+	 * handle login result
+	 */
+	@Override
+	public void handleAccountHolderLoginResult(boolean isSuccessful)
+	{
+		// TODO handle login result
+		
+		if (isSuccessful)
+		{
+			//login successful
+		}
+		else
+		{
+			//login failed
+		}
+	}
+
+	/////////////////////
+	// LOGIN AS TELLER //
+	/////////////////////
+	
+	/**
+	 * login as teller request
+	 */
+	@Override
+	public void sendTellerLoginRequest(String empID, String password)
+	{
+		try
+		{
+			bc.loginAsTeller(empID, password);
+		}
+		catch (IOException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}		
+	}
+
+	/**
+	 * handle login as teller result from server
+	 */
+	@Override
+	public void handleTellerLoginResult(boolean isSuccessful)
+	{
+		// TODO add handle code here
+		
+		if (isSuccessful)
+		{
+			//login successful
+		}
+		else
+		{
+			//login failed
+		}
+	}
+
+	/////////////////////////
+	// FIND ACCOUNT HOLDER //
+	/////////////////////////
+	
+	/**
+	 * find account holder by email
+	 */
+	@Override
+	public void sendFindAccountHolderByEmailRequest(String email)
+	{
+		try
+		{
+			bc.findAccountHolderByEmail(email);
+		}
+		catch (IOException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}			
+	}
+
+	/**
+	 * handle find result of the account holder
+	 */
+	@Override
+	public void handleFindAccountHolderByEmailResult(AccountHolderInfo ahi)
+	{
+		// TODO add handle code here
+		
+		if (ahi.getHasInfo())
+		{
+			//show account holder information
+		}
+		else
+		{
+			//show not found message
+		}
+	}
+
+	///////////////////////////
+	// CREATE ACCOUNT HOLDER //
+	///////////////////////////
+	
+	/**
+	 * creates a new account holder
+	 */
+	@Override
+	public void createNewAccountHolder(String email, String pin)
+	{
+		try
+		{
+			bc.createAccountHolder(email, pin);
+		}
+		catch (IOException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * handles the result of an account holder creation
+	 */
+	@Override
+	public void handleCreateNewAccountHolderResult(boolean isSuccessful)
+	{
+		// TODO add handle code
+		
+		if (isSuccessful)
+		{
+			//account was created
+		}
+		else
+		{
+			//could not create new account
+		}
 	}
 }

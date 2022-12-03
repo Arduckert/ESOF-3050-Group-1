@@ -44,9 +44,9 @@ public class ServerTestDriver implements IBankController
 	
 	//echos the message sent by the client back to the client
 	@Override
-	public void handleTestMessage(String message, ConnectionToClient client)
+	public String handleTestMessage(String message)
 	{
-		bs.SendTestMessageToClient(client, message);
+		return message;
 	}
 
 	/**
@@ -87,7 +87,7 @@ public class ServerTestDriver implements IBankController
 	}
 
 	@Override
-	public boolean createAccount(String email, String pin)
+	public boolean createAccountHolder(String email, String pin)
 	{
 		return email.equals(TestVariables.availableCreateAccountHolderEmail);
 	}

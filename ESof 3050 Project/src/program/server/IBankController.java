@@ -35,7 +35,7 @@ public interface IBankController
 	 * handles test message from the client
 	 * @param message
 	 */
-	public void handleTestMessage(String message, ConnectionToClient client);
+	public String handleTestMessage(String message);
 	
 	/**
 	 * finds an account holder on the server
@@ -51,5 +51,5 @@ public interface IBankController
 	 * @return true if the account holder was created successfully,
 	 * false if not
 	 */
-	public boolean createAccount(String email, String pin);
+	public boolean createAccountHolder(String email, String pin);
 }
