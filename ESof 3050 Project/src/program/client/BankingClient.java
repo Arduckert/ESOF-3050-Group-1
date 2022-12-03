@@ -5,7 +5,6 @@ import java.net.SocketException;
 
 import src.ocsf.client.AbstractClient;
 import src.protocol.*;
-import src.program.structs.*;
 
 public class BankingClient extends AbstractClient
 {
@@ -43,24 +42,11 @@ public class BankingClient extends AbstractClient
 		//the banking client controller for analysis
 		switch(sp.getDataType())
 		{
-			case LOGIN_RESULT_ACCOUNTHOLDER:
-				processAccountHolderLoginResult(sp);
-				break;
-			case LOGIN_RESULT_TELLER:
-				processTellerLoginResult(sp);
-				break;
-			case ACCOUNT_HOLDER_FIND_RESULT:
-				processFindAccountHolderByEmailRequest(sp);
-				break;
-			case ACCOUNT_HOLDER_CREATION_RESULT:
-				processAccountHolderResult(sp);
-				break;
-			case ACCOUNT_HOLDER_DELETION_RESULT:
-				processAccountHolderDeletionResult(sp);
+			case LOGIN_RESULT:
+				processLoginResult(sp);
 				break;
 			case BASIC_MESSAGE:
 				processBasicMessage(sp);
-				break;
 			default:
 				break;
 		}
@@ -73,6 +59,7 @@ public class BankingClient extends AbstractClient
 	@Override
 	public void sendToServer(Object msg) throws IOException
 	{
+		System.out.println("Sending message to " + super.getHost() + ":" + super.getPort());
 		super.sendToServer(msg);
 	}
 	
@@ -128,7 +115,7 @@ public class BankingClient extends AbstractClient
 	 * Processes the ServerProtocol to fetch the result of the login attempt
 	 * @param sp
 	 */
-	private void processAccountHolderLoginResult(ServerProtocol sp)
+	private void processLoginResult(ServerProtocol sp)
 	{
 		//sends true to the banking client controller handle method if the
 		//login result is successful
@@ -159,135 +146,5 @@ public class BankingClient extends AbstractClient
 	{
 		ClientProtocol cp = new ClientProtocol(ServerAction.LOGIN_TELLER, empID, password);
 		sendToServer(cp);
-	}
-	
-	/**
-	 * Processes the ServerProtocol to fetch the result of the login attempt
-	 * @param sp
-	 */
-	private void processTellerLoginResult(ServerProtocol sp)
-	{
-		//sends true to the banking client controller handle method if the
-		//login result is successful
-		if (sp.getMessageStatus() == MessageStatus.SUCCESS)
-		{
-			bcc.handleTellerLoginResult(true);
-		}
-		else
-		{
-			bcc.handleTellerLoginResult(false);
-		}
-	}
-	
-	////////////////////////////////////
-	//	FIND ACCOUNT HOLDER BY EMAIL  //
-	////////////////////////////////////
-	
-	/**
-	 * Sends a request to the server to find an account holder by email
-	 * @param email the email address of the account holder you want to find
-	 * @throws IOException
-	 */
-	public void findAccountHolderByEmail(String email) throws IOException
-	{
-		ClientProtocol cp = new ClientProtocol(ServerAction.FIND_ACCOUNTHOLDER_BY_EMAIL, email);
-		sendToServer(cp);
-	}
-	
-	/**
-	 * Processes the data sent by the server for a find account holder
-	 * by email address request
-	 * @param sp
-	 */
-	private void processFindAccountHolderByEmailRequest(ServerProtocol sp)
-	{
-		//sends information about the account holder if found
-		if (sp.getMessageStatus() == MessageStatus.SUCCESS)
-		{
-			//sends an account holder info with the information
-			//from the data sent by the server to the banking
-			//client controller
-			AccountHolderInfo info = new AccountHolderInfo(
-					sp.GetData().get(0),
-					sp.GetData().get(1),
-					sp.GetData().get(2),
-					sp.GetData().get(3)
-					);
-			
-			bcc.handleFindAccountHolderByEmailResult(info);
-		}
-		else
-		{
-			//return an account holder info with no information
-			bcc.handleFindAccountHolderByEmailResult(new AccountHolderInfo());
-		}
-	}
-	
-	/////////////////////////////
-	//	CREATE ACCOUNT HOLDER  //
-	/////////////////////////////
-	
-	/**
-	 * sends a request to the server to create a new account holder
-	 * @param email the desired email address
-	 * @param pin the desired pin number
-	 * @throws IOException
-	 */
-	public void createAccountHolder(String email, String pin, String tellerEmpID) throws IOException
-	{
-		ClientProtocol cp = new ClientProtocol(ServerAction.CREATE_ACCOUNTHOLDER, email, pin, tellerEmpID);
-		sendToServer(cp);
-	}
-	
-	/**
-	 * processes an account holder creation result
-	 * @param sp
-	 */
-	private void processAccountHolderResult(ServerProtocol sp)
-	{
-		//sends true to the banking client controller handle method if the
-		//creation was successful
-		if (sp.getMessageStatus() == MessageStatus.SUCCESS)
-		{
-			bcc.handleCreateNewAccountHolderResult(true);
-		}
-		else
-		{
-			bcc.handleCreateNewAccountHolderResult(false);
-		}
-	}
-	
-	/////////////////////////////
-	//	DELETE ACCOUNT HOLDER  //
-	/////////////////////////////
-	
-	/**
-	 * sends a request to the server to create a new account holder
-	 * @param email the desired email address
-	 * @param pin the desired pin number
-	 * @throws IOException
-	 */
-	public void deleteAccountHolder(String accountNumber, String pin, String tellerEmpID) throws IOException
-	{
-		ClientProtocol cp = new ClientProtocol(ServerAction.DELETE_ACCOUNTHOLDER, accountNumber, pin, tellerEmpID);
-		sendToServer(cp);
-	}
-	
-	/**
-	 * processes an account holder creation result
-	 * @param sp
-	 */
-	private void processAccountHolderDeletionResult(ServerProtocol sp)
-	{
-		//sends true to the banking client controller handle method if the
-		//creation was successful
-		if (sp.getMessageStatus() == MessageStatus.SUCCESS)
-		{
-			bcc.handleAccountHolderDeletion(true);
-		}
-		else
-		{
-			bcc.handleAccountHolderDeletion(false);
-		}
 	}
 }

@@ -131,44 +131,12 @@ public enum Datatype
 	LOGIN_ATTEMPT,
 	
 	/**
-	 * This sends information about an account holder login result back to the client.
+	 * This sends information about a login result back to the client.
 	 * There is no information included in this data type as this result
 	 * is solely based on the value of the MessageStatus variable
 	 * @object_size 0
 	 */
-	LOGIN_RESULT_ACCOUNTHOLDER,
-	
-	/**
-	 * This sends information about a teller login result back to the client.
-	 * There is no information included in this data type as this result
-	 * is solely based on the value of the MessageStatus variable
-	 * @object_size 0
-	 */
-	LOGIN_RESULT_TELLER,
-	
-	/**
-	 * This sends information about a find result back to the client. The
-	 * information included in this data type is the account holder's full
-	 * name, email address, account holder
-	 * @object_size 4
-	 */
-	ACCOUNT_HOLDER_FIND_RESULT,
-	
-	/**
-	 * This sends information about a creation result back to the client. No information
-	 * is included in this data type since the information is required is within the
-	 * message status value.
-	 * @object_size 0
-	 */
-	ACCOUNT_HOLDER_CREATION_RESULT,
-	
-	/**
-	 * This sends information about an account holder deletion result back to the client.
-	 * No information is included in this data type since the information is required is
-	 * within the message status value.
-	 * @object_size 0
-	 */
-	ACCOUNT_HOLDER_DELETION_RESULT,
+	LOGIN_RESULT,
 	
 	/**
 	 * This sends a string message back to the client. This is used as a way to test

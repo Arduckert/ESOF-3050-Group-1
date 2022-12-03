@@ -33,6 +33,9 @@ public class Account {
 		return this.accountHolder;
 	}
 	
+	public void something() {
+		System.out.println("Something");
+	}
 	public void random() {
 		System.out.println("hello");
 	}

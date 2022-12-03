@@ -1,10 +1,9 @@
 package src.program.server;
-
 import java.io.IOException;
+
 import src.ocsf.server.AbstractServer;
 import src.ocsf.server.ConnectionToClient;
 import src.protocol.*;
-import src.program.structs.*;
 
 public class BankingServer extends AbstractServer
 {
@@ -27,26 +26,14 @@ public class BankingServer extends AbstractServer
 			case LOGIN_ACCOUNTHOLDER:
 				HandleAccountHolderLogin(cp, client);
 				break;
-			case LOGIN_TELLER:
-				handleTellerLogin(cp, client);
-				break;
 			case TEST:
 				ProcessTestMessage(cp, client);
-				break;
-			case FIND_ACCOUNTHOLDER_BY_EMAIL:
-				handleFindAccountHolderByEmailRequest(cp, client);
-				break;
-			case CREATE_ACCOUNTHOLDER:
-				handleAccountHolderCreationRequest(cp, client);
-				break;
-			case DELETE_ACCOUNTHOLDER:
-				handleAccountHolderDeletionRequest(cp, client);
 				break;
 			default:
 				break;
 		}
 	}
-
+	
 	@Override
 	protected void clientConnected(ConnectionToClient client)
 	{
@@ -87,37 +74,6 @@ public class BankingServer extends AbstractServer
 		}
 	}
 	
-	//extracts the test message from the client protocol and sends it to the bank
-	//controller for further processing
-	private void ProcessTestMessage(ClientProtocol cp, ConnectionToClient client)
-	{
-		//get response message from the banking server
-		String newMessage = bc.handleTestMessage(cp.GetParameters().get(0));
-		
-		
-		ServerProtocol sp = new ServerProtocol(MessageStatus.SUCCESS, Datatype.BASIC_MESSAGE);
-		
-		try
-		{
-			sp.AddData(newMessage);
-		}
-		catch (ParameterException e1)
-		{
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-		
-		try
-		{
-			client.sendToClient(sp);
-		}
-		catch (IOException e)
-		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}	
-	}
-	
 	/**
 	 * Handles an account holder login request
 	 * @param cp
@@ -127,7 +83,7 @@ public class BankingServer extends AbstractServer
 	{
 		if (bc.authenticateAccountHolderLogin(cp.GetParameters().get(0),cp.GetParameters().get(1)))
 		{
-			ServerProtocol sp = new ServerProtocol(MessageStatus.SUCCESS, Datatype.LOGIN_RESULT_ACCOUNTHOLDER);
+			ServerProtocol sp = new ServerProtocol(MessageStatus.SUCCESS, Datatype.LOGIN_RESULT);
 
 			try
 			{
@@ -141,7 +97,7 @@ public class BankingServer extends AbstractServer
 		}
 		else
 		{
-			ServerProtocol sp = new ServerProtocol(MessageStatus.FAIL, Datatype.LOGIN_RESULT_ACCOUNTHOLDER);
+			ServerProtocol sp = new ServerProtocol(MessageStatus.FAIL, Datatype.LOGIN_RESULT);
 
 			try
 			{
@@ -155,115 +111,10 @@ public class BankingServer extends AbstractServer
 		} //END OF LOGIN ACCOUNT HOLDER CASE
 	}
 	
-	/**
-	 * Handles an account holder login request
-	 * @param cp
-	 * @param client
-	 */
-	private void handleTellerLogin(ClientProtocol cp, ConnectionToClient client)
+	//extracts the test message from the client protocol and sends it to the bank
+	//controller for further processing
+	private void ProcessTestMessage(ClientProtocol cp, ConnectionToClient client)
 	{
-		if (bc.authenticateTellerLogin(cp.GetParameters().get(0),cp.GetParameters().get(1)))
-		{
-			ServerProtocol sp = new ServerProtocol(MessageStatus.SUCCESS, Datatype.LOGIN_RESULT_TELLER);
-
-			try
-			{
-				client.sendToClient(sp);
-			}
-			catch (IOException e)
-			{
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}		
-		}
-		else
-		{
-			ServerProtocol sp = new ServerProtocol(MessageStatus.FAIL, Datatype.LOGIN_RESULT_TELLER);
-
-			try
-			{
-				client.sendToClient(sp);
-			}
-			catch (IOException e)
-			{
-				e.printStackTrace();
-			}
-		} //END OF LOGIN TELLER CASE
-	}
-	
-	/**
-	 * handles a find account holder by email request
-	 * @param cp
-	 * @param client
-	 */
-	private void handleFindAccountHolderByEmailRequest(ClientProtocol cp, ConnectionToClient client)
-	{
-		//sends a find account holder request to the bank controller
-		AccountHolderInfo info = bc.findAccountHolder(cp.GetParameters().get(0));
-		
-		MessageStatus status = info.getHasInfo() ? MessageStatus.SUCCESS : MessageStatus.FAIL;
-		ServerProtocol sp = new ServerProtocol(status, Datatype.ACCOUNT_HOLDER_FIND_RESULT);
-		
-		try
-		{
-			//adds the account holder information to the server protocol
-			sp.AddData(info.accountHolderName, info.email, info.accountNumber, info.pin);
-			
-			try
-			{
-				//sends that data to the client
-				client.sendToClient(sp);
-			}
-			catch (IOException e)
-			{
-				e.printStackTrace();
-			}
-		}
-		catch (ParameterException e)
-		{
-			e.printStackTrace();
-		}
-	}
-	
-	/**
-	 * handles an account creation request and dispatches it to the rest of the server
-	 * @param cp
-	 * @param client
-	 */
-	private void handleAccountHolderCreationRequest(ClientProtocol cp, ConnectionToClient client)
-	{
-		//success if the account creation was successful, fail if not
-		MessageStatus status = bc.createAccountHolder(cp.GetParameters().get(0), cp.GetParameters().get(1), cp.GetParameters().get(2)) ? MessageStatus.SUCCESS : MessageStatus.FAIL;	
-		ServerProtocol sp = new ServerProtocol(status, Datatype.ACCOUNT_HOLDER_CREATION_RESULT);
-		
-		try
-		{
-			client.sendToClient(sp);
-		}
-		catch (IOException e)
-		{
-			e.printStackTrace();
-		}
-	}
-	
-	/**
-	 * handles an account holder deletion request and dispatches it to the rest of the server
-	 * @param cp
-	 * @param client
-	 */
-	private void handleAccountHolderDeletionRequest(ClientProtocol cp, ConnectionToClient client)
-	{
-		//success if the account creation was successful, fail if not
-		MessageStatus status = bc.deleteAccountHolder(cp.GetParameters().get(0), cp.GetParameters().get(1), cp.GetParameters().get(2)) ? MessageStatus.SUCCESS : MessageStatus.FAIL;	
-		ServerProtocol sp = new ServerProtocol(status, Datatype.ACCOUNT_HOLDER_DELETION_RESULT);
-		
-		try
-		{
-			client.sendToClient(sp);
-		}
-		catch (IOException e)
-		{
-			e.printStackTrace();
-		}
+		bc.handleTestMessage(cp.GetParameters().get(0), client);
 	}
 }
