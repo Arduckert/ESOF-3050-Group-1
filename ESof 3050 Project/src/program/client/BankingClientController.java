@@ -21,6 +21,10 @@ import javafx.application.Platform;
 
 // *** TODO: IMPLEMENT INTERFACE *** //
 public class BankingClientController extends Application implements IBankingClientController {
+	void test() {
+		System.out.println("test");
+	}
+	
 	//create instance of BankingClient to pass messages to server
 	//ip4v and port of server
 	static String ipAdd;
