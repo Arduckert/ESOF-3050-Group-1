@@ -72,7 +72,6 @@ public enum ServerAction
 	TRANSFER,
 	
 	/**
-	 * TODO
 	 * This tells the server to create a new account holder. This takes an email address, and a pin
 	 * The server returns SUCCESS and all of the data relating to the account holder
 	 * (see Datatype.ACCOUNT_HOLDER)
@@ -82,7 +81,7 @@ public enum ServerAction
 	/**
 	 * TODO
 	 * This tells the server to delete an existing account holder from the server. This takes an
-	 * account number, and a pin number. The server will return SUCCESS if the account holder was
+	 * card number, and a pin number. The server will return SUCCESS if the account holder was
 	 * successfully deleted.
 	 */
 	DELETE_ACCOUNTHOLDER,

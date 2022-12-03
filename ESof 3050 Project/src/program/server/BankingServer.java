@@ -39,6 +39,9 @@ public class BankingServer extends AbstractServer
 			case CREATE_ACCOUNTHOLDER:
 				handleAccountHolderCreationRequest(cp, client);
 				break;
+			case DELETE_ACCOUNTHOLDER:
+				handleAccountHolderDeletionRequest(cp, client);
+				break;
 			default:
 				break;
 		}
@@ -230,8 +233,29 @@ public class BankingServer extends AbstractServer
 	private void handleAccountHolderCreationRequest(ClientProtocol cp, ConnectionToClient client)
 	{
 		//success if the account creation was successful, fail if not
-		MessageStatus status = bc.createAccountHolder(cp.GetParameters().get(0), cp.GetParameters().get(1)) ? MessageStatus.SUCCESS : MessageStatus.FAIL;	
+		MessageStatus status = bc.createAccountHolder(cp.GetParameters().get(0), cp.GetParameters().get(1), cp.GetParameters().get(2)) ? MessageStatus.SUCCESS : MessageStatus.FAIL;	
 		ServerProtocol sp = new ServerProtocol(status, Datatype.ACCOUNT_HOLDER_CREATION_RESULT);
+		
+		try
+		{
+			client.sendToClient(sp);
+		}
+		catch (IOException e)
+		{
+			e.printStackTrace();
+		}
+	}
+	
+	/**
+	 * handles an account holder deletion request and dispatches it to the rest of the server
+	 * @param cp
+	 * @param client
+	 */
+	private void handleAccountHolderDeletionRequest(ClientProtocol cp, ConnectionToClient client)
+	{
+		//success if the account creation was successful, fail if not
+		MessageStatus status = bc.deleteAccountHolder(cp.GetParameters().get(0), cp.GetParameters().get(1), cp.GetParameters().get(2)) ? MessageStatus.SUCCESS : MessageStatus.FAIL;	
+		ServerProtocol sp = new ServerProtocol(status, Datatype.ACCOUNT_HOLDER_DELETION_RESULT);
 		
 		try
 		{

@@ -55,6 +55,9 @@ public class BankingClient extends AbstractClient
 			case ACCOUNT_HOLDER_CREATION_RESULT:
 				processAccountHolderResult(sp);
 				break;
+			case ACCOUNT_HOLDER_DELETION_RESULT:
+				processAccountHolderDeletionResult(sp);
+				break;
 			case BASIC_MESSAGE:
 				processBasicMessage(sp);
 				break;
@@ -230,9 +233,9 @@ public class BankingClient extends AbstractClient
 	 * @param pin the desired pin number
 	 * @throws IOException
 	 */
-	public void createAccountHolder(String email, String pin) throws IOException
+	public void createAccountHolder(String email, String pin, String tellerEmpID) throws IOException
 	{
-		ClientProtocol cp = new ClientProtocol(ServerAction.CREATE_ACCOUNTHOLDER, email, pin);
+		ClientProtocol cp = new ClientProtocol(ServerAction.CREATE_ACCOUNTHOLDER, email, pin, tellerEmpID);
 		sendToServer(cp);
 	}
 	
@@ -251,6 +254,40 @@ public class BankingClient extends AbstractClient
 		else
 		{
 			bcc.handleCreateNewAccountHolderResult(false);
+		}
+	}
+	
+	/////////////////////////////
+	//	DELETE ACCOUNT HOLDER  //
+	/////////////////////////////
+	
+	/**
+	 * sends a request to the server to create a new account holder
+	 * @param email the desired email address
+	 * @param pin the desired pin number
+	 * @throws IOException
+	 */
+	public void deleteAccountHolder(String accountNumber, String pin, String tellerEmpID) throws IOException
+	{
+		ClientProtocol cp = new ClientProtocol(ServerAction.DELETE_ACCOUNTHOLDER, accountNumber, pin, tellerEmpID);
+		sendToServer(cp);
+	}
+	
+	/**
+	 * processes an account holder creation result
+	 * @param sp
+	 */
+	private void processAccountHolderDeletionResult(ServerProtocol sp)
+	{
+		//sends true to the banking client controller handle method if the
+		//creation was successful
+		if (sp.getMessageStatus() == MessageStatus.SUCCESS)
+		{
+			bcc.handleAccountHolderDeletion(true);
+		}
+		else
+		{
+			bcc.handleAccountHolderDeletion(false);
 		}
 	}
 }

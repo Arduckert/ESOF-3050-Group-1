@@ -30,6 +30,13 @@ public final class TestVariables
 	//CREATE ACCOUNT HOLDER
 	public static final String availableCreateAccountHolderEmail = "tset321@example.com";
 	public static final String unavailableCreateAccountHolderEmail = "test321@example.com";
+	public static final String createAccountHolderTellerID = "123456";
 	public static final String createAccountHolderPin = "5678";
+	
+	//DELETE ACCOUNT HOLDER
+	public static final String availableDeleteAccountHolderNumber = "9876543";
+	public static final String unavailableDeleteAccountHolderNumber = "4567890";
+	public static final String deleteAccountHolderTellerID = "654321";
+	public static final String deleteAccountHolderPin = "7654";
 	
 }

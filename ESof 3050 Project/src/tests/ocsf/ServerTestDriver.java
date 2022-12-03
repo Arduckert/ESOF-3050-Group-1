@@ -86,9 +86,25 @@ public class ServerTestDriver implements IBankController
 		}
 	}
 
+	/**
+	 * returns the available email to test both true and false
+	 */
 	@Override
-	public boolean createAccountHolder(String email, String pin)
+	public boolean createAccountHolder(String email, String pin, String tellerEmpID)
 	{
-		return email.equals(TestVariables.availableCreateAccountHolderEmail);
+		return email.equals(TestVariables.availableCreateAccountHolderEmail)
+				&& pin.equals(TestVariables.createAccountHolderPin)
+				&& tellerEmpID.equals(TestVariables.createAccountHolderTellerID);
+	}
+
+	/**
+	 * returns the available email to test both true and false
+	 */
+	@Override
+	public boolean deleteAccountHolder(String accountNumber, String pin, String tellerEmpID)
+	{
+		return accountNumber.equals(TestVariables.availableDeleteAccountHolderNumber)
+				&& pin.equals(TestVariables.deleteAccountHolderPin)
+				&& tellerEmpID.equals(TestVariables.deleteAccountHolderTellerID);
 	}
 }

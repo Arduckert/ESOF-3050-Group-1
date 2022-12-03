@@ -19,6 +19,7 @@ public class ClientTestDriver implements IBankingClientController
 	private static int tellerTestCount = 0;
 	private static int findAccountHolderByEmailTestCount = 0;
 	private static int createAccountHolderTestCount = 0;
+	private static int deleteAccountHolderTestCount = 0;
 	
 	public ClientTestDriver()
 	{
@@ -62,8 +63,11 @@ public class ClientTestDriver implements IBankingClientController
 			sendFindAccountHolderByEmailRequest(TestVariables.availableAccountHolderFindEmail); //should return true and the account holder information
 			sendFindAccountHolderByEmailRequest(TestVariables.unavailableAccountHolderFindEmail); //should return false and no information
 			
-			createNewAccountHolder(TestVariables.availableCreateAccountHolderEmail, TestVariables.createAccountHolderPin); //handler should return true
-			createNewAccountHolder(TestVariables.unavailableCreateAccountHolderEmail, TestVariables.createAccountHolderPin); //handler should return false
+			createNewAccountHolder(TestVariables.availableCreateAccountHolderEmail, TestVariables.createAccountHolderPin, TestVariables.createAccountHolderTellerID); //handler should return true
+			createNewAccountHolder(TestVariables.unavailableCreateAccountHolderEmail, TestVariables.createAccountHolderPin, TestVariables.createAccountHolderTellerID); //handler should return false
+			
+			deleteAccountHolder(TestVariables.availableDeleteAccountHolderNumber, TestVariables.deleteAccountHolderPin, TestVariables.deleteAccountHolderTellerID); //handler should return true
+			deleteAccountHolder(TestVariables.unavailableDeleteAccountHolderNumber, TestVariables.deleteAccountHolderPin, TestVariables.deleteAccountHolderTellerID); //handler should return false		
 			
 			Sleep(1000); //wait for connection to close
 			CloseServerConnection();
@@ -319,11 +323,11 @@ public class ClientTestDriver implements IBankingClientController
 	 * sends a request to the server to create a new account holder
 	 */
 	@Override
-	public void createNewAccountHolder(String email, String pin)
+	public void createNewAccountHolder(String email, String pin, String tellerEmpID)
 	{
 		try
 		{
-			bc.createAccountHolder(email, pin);
+			bc.createAccountHolder(email, pin, tellerEmpID);
 		}
 		catch (IOException e)
 		{
@@ -352,5 +356,42 @@ public class ClientTestDriver implements IBankingClientController
 			assert false;
 		}
 		createAccountHolderTestCount++;
+	}
+
+	//////////////////////////////////
+	//	DELETE ACCOUNT HOLDER TEST  //
+	//////////////////////////////////
+	
+	@Override
+	public void deleteAccountHolder(String accountNumber, String pin, String tellerEmpID)
+	{
+		try
+		{
+			bc.deleteAccountHolder(accountNumber, pin, tellerEmpID);
+		}
+		catch (IOException e)
+		{
+			System.err.println("DELETE ACCOUNT HOLDER TEST FAILED: EXCEPTION");
+			e.printStackTrace();
+		}	
+	}
+
+	@Override
+	public void handleAccountHolderDeletion(boolean isSuccessful)
+	{
+		if (deleteAccountHolderTestCount == 0 && isSuccessful)
+		{
+			System.out.println("CREATE ACCOUNT HOLDER TRUE TEST PASSED");
+		}
+		else if (deleteAccountHolderTestCount == 1 && !isSuccessful)
+		{
+			System.out.println("CREATE ACCOUNT HOLDER FALSE TEST PASSED");
+		}
+		else
+		{
+			System.err.println("CREATE ACCOUNT HOLDER TEST " + (deleteAccountHolderTestCount + 1) + " FAILED");
+			assert false;
+		}
+		deleteAccountHolderTestCount++;
 	}
 }

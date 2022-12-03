@@ -148,11 +148,23 @@ public class BankController implements IBankController
 	 * create a new account holder
 	 */
 	@Override
-	public boolean createAccountHolder(String email, String pin)
+	public boolean createAccountHolder(String email, String pin, String tellerEmpID)
 	{
 		//TODO: call a create method that returns a boolean where true means
 		//the account was created, false if not (if there's a duplicate email
 		//or something)
+		boolean accountCreated = false;
+		return accountCreated;
+	}
+
+	/**
+	 * delete an existing account holder
+	 */
+	@Override
+	public boolean deleteAccountHolder(String accountNumber, String pin, String tellerEmpID)
+	{
+		//TODO: call a delete method that returns a boolean where true means
+		//the account was deleted, false if not
 		boolean accountCreated = false;
 		return accountCreated;
 	}

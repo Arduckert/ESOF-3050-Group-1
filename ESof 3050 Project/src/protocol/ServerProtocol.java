@@ -134,6 +134,10 @@ public class ServerProtocol implements Serializable
 			return 0;
 		case ACCOUNT_HOLDER_FIND_RESULT:
 			return 4;
+		case ACCOUNT_HOLDER_CREATION_RESULT:
+			return 0;
+		case ACCOUNT_HOLDER_DELETION_RESULT:
+			return 0;
 		default:
 			return 0;
 		}

@@ -469,11 +469,11 @@ public class BankingClientController extends Application implements IBankingClie
 	 * creates a new account holder
 	 */
 	@Override
-	public void createNewAccountHolder(String email, String pin)
+	public void createNewAccountHolder(String email, String pin, String tellerEmpID)
 	{
 		try
 		{
-			bc.createAccountHolder(email, pin);
+			bc.createAccountHolder(email, pin, tellerEmpID);
 		}
 		catch (IOException e)
 		{
@@ -497,6 +497,41 @@ public class BankingClientController extends Application implements IBankingClie
 		else
 		{
 			//could not create new account
+		}
+	}
+
+	/**
+	 * deletes an existing account holder
+	 */
+	@Override
+	public void deleteAccountHolder(String accountNumber, String pin, String tellerEmpID)
+	{
+		try
+		{
+			bc.deleteAccountHolder(accountNumber, pin, tellerEmpID);
+		}
+		catch (IOException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}		
+	}
+
+	/**
+	 * handles the result of an account holder deletion
+	 */
+	@Override
+	public void handleAccountHolderDeletion(boolean isSuccessful)
+	{
+		// TODO add handle code
+		
+		if (isSuccessful)
+		{
+			//account was deleted
+		}
+		else
+		{
+			//could not delete existing account
 		}
 	}
 }

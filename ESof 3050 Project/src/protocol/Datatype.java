@@ -163,6 +163,14 @@ public enum Datatype
 	ACCOUNT_HOLDER_CREATION_RESULT,
 	
 	/**
+	 * This sends information about an account holder deletion result back to the client.
+	 * No information is included in this data type since the information is required is
+	 * within the message status value.
+	 * @object_size 0
+	 */
+	ACCOUNT_HOLDER_DELETION_RESULT,
+	
+	/**
 	 * This sends a string message back to the client. This is used as a way to test
 	 * the client-server communication and can also be used to send a message back to
 	 * the client if the message has a FAIL status.

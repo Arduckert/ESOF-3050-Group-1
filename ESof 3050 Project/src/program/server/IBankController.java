@@ -27,7 +27,7 @@ public interface IBankController
 	 * Authenticates a teller if the employee id and password match a teller
 	 * @param empId the teller's employee id
 	 * @param password the teller's password
-	 * @return
+	 * @return true if the login was successful, false if not successful
 	 */
 	public boolean authenticateTellerLogin(String empID, String password);
 	
@@ -40,7 +40,8 @@ public interface IBankController
 	/**
 	 * finds an account holder on the server
 	 * @param email the account holder's email address
-	 * @return
+	 * @return a data structure containing all the information about the
+	 * account holder
 	 */
 	public AccountHolderInfo findAccountHolder(String email);
 	
@@ -51,5 +52,13 @@ public interface IBankController
 	 * @return true if the account holder was created successfully,
 	 * false if not
 	 */
-	public boolean createAccountHolder(String email, String pin);
+	public boolean createAccountHolder(String email, String pin, String tellerEmpID);
+	
+	/**
+	 * deletes an account holder on the server
+	 * @param accountNumber the account holder's card number
+	 * @param pin the account holder's pin
+	 * @return true if the deletion was successful, false if not successful
+	 */
+	public boolean deleteAccountHolder(String accountNumber, String pin, String tellerEmpID);
 }
