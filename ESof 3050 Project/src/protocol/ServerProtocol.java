@@ -133,7 +133,7 @@ public class ServerProtocol implements Serializable
 		case LOGIN_RESULT_TELLER:
 			return 0;
 		case ACCOUNT_HOLDER_FIND_RESULT:
-			return 3;
+			return 4;
 		default:
 			return 0;
 		}

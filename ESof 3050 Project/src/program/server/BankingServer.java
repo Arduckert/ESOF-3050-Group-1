@@ -176,7 +176,7 @@ public class BankingServer extends AbstractServer
 		try
 		{
 			//adds the account holder information to the server protocol
-			sp.AddData(info.accountHolderName, info.email, info.accountNumber);
+			sp.AddData(info.accountHolderName, info.email, info.accountNumber, info.pin);
 			
 			try
 			{

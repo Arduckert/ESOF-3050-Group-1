@@ -150,7 +150,7 @@ public enum Datatype
 	 * This sends information about a find result back to the client. The
 	 * information included in this data type is the account holder's full
 	 * name, email address, account holder
-	 * @object_size 3
+	 * @object_size 4
 	 */
 	ACCOUNT_HOLDER_FIND_RESULT,
 	
