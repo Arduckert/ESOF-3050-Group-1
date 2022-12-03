@@ -85,7 +85,7 @@ public class BankController implements IBankController
 	{
 		BankController b = new BankController();
 		Address a = new Address(111, "John", "Thunder Bay", "Ontario", "P7656");
-		Person p = new Person("James", "Doe", 7777,"2000-03-02", a);
+		Person p = new Person("James", "Doe", 7777,"2000-03-02");
 		AccountHolder testAccountHolder = new AccountHolder(1111,1234567,"test@email.com",p);
 		b.addAccountHolder(testAccountHolder);
 		
