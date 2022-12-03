@@ -8,8 +8,10 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import src.program.structs.AccountHolderInfo;
 import javafx.event.ActionEvent;
 
+import java.io.IOException;
 import java.net.Inet4Address;
 import java.util.ArrayList;
 import java.util.List;
@@ -390,7 +392,6 @@ public class BankingClientController extends Application implements IBankingClie
 	public static void main(String[] args) throws Exception{
 		launch(args);
 	}
-<<<<<<< HEAD
 
 	/*****************************************************
 	 * REQUESTS AND HANDLE METHODS FOR THE OCSF
@@ -617,6 +618,4 @@ public class BankingClientController extends Application implements IBankingClie
 			//could not delete existing account
 		}
 	}
-=======
->>>>>>> branch 'master' of https://github.com/Arduckert/ESOF-3050-Group-1
 }
