@@ -11,7 +11,7 @@ import src.program.structs.AccountHolderInfo;
 public class ClientTestDriver implements IBankingClientController
 {
 	private static final int port = 9950;
-	private static String ipAdd = "10.0.0.157";
+	private static String ipAdd = "10.0.0.119";
 	private BankingClient bc;
 	
 	//these are here for tests that require multiple runs

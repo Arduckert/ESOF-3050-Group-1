@@ -32,5 +32,4 @@ public class Account {
 	public AccountHolder getAccountHolder() {
 		return this.accountHolder;
 	}
-	
 }

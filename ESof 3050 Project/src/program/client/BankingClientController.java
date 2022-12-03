@@ -5,6 +5,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import src.program.structs.AccountHolderInfo;
@@ -12,11 +13,13 @@ import javafx.event.ActionEvent;
 
 import java.io.IOException;
 import java.net.Inet4Address;
+import java.util.ArrayList;
+import java.util.List;
 
 import javafx.application.Application;
 import javafx.application.Platform;
 
-// *** TODO: ADD CODE TO INTERFACE METHODS (REFERENCE BLUE MARKS ON THE SCROLL BAR) *** //
+// *** TODO: IMPLEMENT INTERFACE *** //
 public class BankingClientController extends Application implements IBankingClientController {
 	//create instance of BankingClient to pass messages to server
 	//ip4v and port of server
@@ -111,6 +114,18 @@ public class BankingClientController extends Application implements IBankingClie
 		changeScene(event,"TellerLogin.fxml");
 	}
 	
+	public void switchToNewAddressScreen(ActionEvent event) throws Exception{
+		changeScene(event,"NewAddress.fxml");
+	}
+	
+	public void switchToCardNumberAndPinScreen(ActionEvent event) throws Exception{
+		changeScene(event,"CardNumberAndPin.fxml");
+	}
+	
+	public void switchToNewAccountHolderConfirmationScreen(ActionEvent event) throws Exception{
+		changeScene(event,"AccountHolderConfirmation.fxml");
+	}
+	
 	//************************************************************************
 	
 	//*************************************************************************
@@ -122,20 +137,28 @@ public class BankingClientController extends Application implements IBankingClie
 	@FXML
 	private TextField portTextField;
 	
+	@FXML
+	private TextArea connectErrorTextArea;
+	
 	@FXML 
 	void ConnectButtonPressed(ActionEvent event) throws Exception{
+		try {
 		if(!ipAddTextField.getText().equals(""))
 			ipAdd=ipAddTextField.getText();
 		else
-			ipAdd = Inet4Address.getLocalHost().getHostAddress();
+			ipAdd = Inet4Address.getLocalHost().getHostAddress(); //default to local ip for testing
 		if(!portTextField.getText().equals(""))
 			port=Integer.parseInt(portTextField.getText());
 		else
-			port=9950;
+			port=9950; //default to 9950
 		bc = new BankingClient(ipAdd,port,this);
 		bc.openConnection();
 		System.out.println("Connection active: " + bc.isConnected());
 		switchToLoginChoiceScreen(event);
+		}
+		catch(Exception ex) {
+			connectErrorTextArea.setText("Connection Failed");
+		}
 	}
 	
 	@FXML
@@ -170,7 +193,7 @@ public class BankingClientController extends Application implements IBankingClie
 	private TextField TellerPasswordTextField;
 	
 	@FXML
-	public Label TellerLoginErrorLabel; //needs to be public to be changed by 
+	public  TextArea TellerLoginErrorTextArea; //needs to be public to be changed by 
 	
 	@FXML
 	void TellerLoginSubmitButtonPressed(ActionEvent event) throws Exception{
@@ -182,6 +205,7 @@ public class BankingClientController extends Application implements IBankingClie
 			//verify
 			//if good switch to main menu
 			//else change error label
+			//if bc.ProccessTellerResult == true
 		}
 	}
 	
@@ -229,6 +253,7 @@ public class BankingClientController extends Application implements IBankingClie
     
     @FXML
     void NewAccountNextButtonPressed(ActionEvent event) throws Exception{
+    	//List addressList = new ArrayList();
     	switchToNewAccountHolderAddressScreen(event);
     }
     
@@ -245,26 +270,85 @@ public class BankingClientController extends Application implements IBankingClie
     
     @FXML
     void AddAddressButtonPressed(ActionEvent event) throws Exception{
-    	//open secondary window for address entry
+    	switchToNewAddressScreen(event);
+    }
+    
+    @FXML
+    void AddressNextButtonPressed(ActionEvent event) throws Exception{
+    	switchToCardNumberAndPinScreen(event);
     }
     
     //**************************************************************************
     
-    //***************************************************************************
-    //GUI components for address fill out screen
-    @FXML
-    void AddressSubmitButtonPressed(ActionEvent event) throws Exception{
-    	//increment address total
-    	//add new address on server side
-    }
-    
-    @FXML
-    void AddressCancelButtonPressed(ActionEvent event) throws Exception{
-    	//close window
-    }
-    
-    //**************************************************************************
-  
+    //********************************************************************
+  	//GUI components for new address screen
+  	
+  	@FXML
+  	private TextField StreetNameTextField;
+  	
+  	@FXML
+  	private TextField StreetNumberTextField;
+  	
+  	@FXML
+  	private TextField PostalCodeTextField;
+  	
+  	@FXML
+  	private TextField ProvinceTextField;
+  	
+  	@FXML
+  	private TextField CountryTextField;
+  	
+  	@FXML
+  	void AddressCancelButtonPressed(ActionEvent event) throws Exception{
+  		switchToNewAccountHolderAddressScreen(event);
+  	}
+  	
+  	@FXML
+  	void AddressSubmitButtonPressed(ActionEvent event) throws Exception{
+  		//increment count
+  		//new address to list
+  		switchToNewAccountHolderAddressScreen(event);
+  	}
+  	
+  	//*******************************************************************
+  	
+  	//******************************************************************
+  	//GUI components for card number generation and PIN entry
+  	
+  	@FXML
+  	private TextField NewCardNumberTextField;
+  	
+  	@FXML
+  	private TextField NewPinTextField;
+  	
+  	@FXML
+  	void CardNumberAndPinBackButtonPressed(ActionEvent event) throws Exception{
+  		switchToNewAccountHolderAddressScreen(event);
+  	}
+  	
+  	@FXML
+  	void CardNumberAndPinDoneButtonPressed(ActionEvent event) throws Exception{
+  		switchToNewAccountHolderConfirmationScreen(event);
+  	}
+  	
+  	//*******************************************************************
+  	
+  	//********************************************************************
+  	//GUI components for new account holder confirmation
+  	
+  	@FXML
+  	private TextField ConfirmationFirstNameTextField;
+  	
+  	@FXML
+  	private TextField ConfirmationLastNameTextField;
+  	
+  	@FXML
+  	private TextField ConfirmationCardNumberTextField;
+  	
+  	@FXML
+  	private TextField ConfirmationPinTextField;
+  	
+  	//*********************************************************************
     
     //**************************************
     //Test for OCSF functionality
@@ -414,11 +498,11 @@ public class BankingClientController extends Application implements IBankingClie
 		
 		if (isSuccessful)
 		{
-			//login successful
+			//login successful change screen
 		}
 		else
 		{
-			//login failed
+			//login failed pop up message
 		}
 	}
 
