@@ -5,6 +5,10 @@ import java.util.*;
 public class BankController implements IBankController
 {
 	
+	void test() {
+		System.out.println("test");
+	}
+	
 	List<Person> personList = new ArrayList<Person>();
 	List<Record> recordList = new ArrayList<Record>(); //potential problem with Record name
 	List<Account> accountList = new ArrayList<Account>();
