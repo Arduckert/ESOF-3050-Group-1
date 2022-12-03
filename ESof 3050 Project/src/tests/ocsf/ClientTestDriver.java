@@ -18,6 +18,7 @@ public class ClientTestDriver implements IBankingClientController
 	private static int accountHolderTestCount = 0;
 	private static int tellerTestCount = 0;
 	private static int findAccountHolderByEmailTestCount = 0;
+	private static int createAccountHolderTestCount = 0;
 	
 	public ClientTestDriver()
 	{
@@ -60,6 +61,9 @@ public class ClientTestDriver implements IBankingClientController
 			//find account holder by email request tests
 			sendFindAccountHolderByEmailRequest(TestVariables.availableAccountHolderFindEmail); //should return true and the account holder information
 			sendFindAccountHolderByEmailRequest(TestVariables.unavailableAccountHolderFindEmail); //should return false and no information
+			
+			createNewAccountHolder(TestVariables.availableCreateAccountHolderEmail, TestVariables.createAccountHolderPin); //handler should return true
+			createNewAccountHolder(TestVariables.unavailableCreateAccountHolderEmail, TestVariables.createAccountHolderPin); //handler should return false
 			
 			Sleep(1000); //wait for connection to close
 			CloseServerConnection();
@@ -305,5 +309,48 @@ public class ClientTestDriver implements IBankingClientController
 			assert false;
 		}
 		findAccountHolderByEmailTestCount++;
+	}
+
+	//////////////////////////////////
+	//	CREATE ACCOUNT HOLDER TEST  //
+	//////////////////////////////////
+	
+	/**
+	 * sends a request to the server to create a new account holder
+	 */
+	@Override
+	public void createNewAccountHolder(String email, String pin)
+	{
+		try
+		{
+			bc.createAccountHolder(email, pin);
+		}
+		catch (IOException e)
+		{
+			System.err.println("CREATE ACCOUNT HOLDER TEST FAILED: EXCEPTION");
+			e.printStackTrace();
+		}	
+	}
+
+	/**
+	 * handles the result of the account holder creation
+	 */
+	@Override
+	public void handleCreateNewAccountHolderResult(boolean isSuccessful)
+	{
+		if (createAccountHolderTestCount == 0 && isSuccessful)
+		{
+			System.out.println("CREATE ACCOUNT HOLDER TRUE TEST PASSED");
+		}
+		else if (createAccountHolderTestCount == 1 && !isSuccessful)
+		{
+			System.out.println("CREATE ACCOUNT HOLDER FALSE TEST PASSED");
+		}
+		else
+		{
+			System.err.println("CREATE ACCOUNT HOLDER TEST " + (createAccountHolderTestCount + 1) + " FAILED");
+			assert false;
+		}
+		createAccountHolderTestCount++;
 	}
 }

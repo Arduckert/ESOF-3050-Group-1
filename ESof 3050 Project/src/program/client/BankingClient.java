@@ -52,6 +52,9 @@ public class BankingClient extends AbstractClient
 			case ACCOUNT_HOLDER_FIND_RESULT:
 				processFindAccountHolderByEmailRequest(sp);
 				break;
+			case ACCOUNT_HOLDER_CREATION_RESULT:
+				processAccountHolderResult(sp);
+				break;
 			case BASIC_MESSAGE:
 				processBasicMessage(sp);
 				break;
@@ -214,6 +217,40 @@ public class BankingClient extends AbstractClient
 		{
 			//return an account holder info with no information
 			bcc.handleFindAccountHolderByEmailResult(new AccountHolderInfo());
+		}
+	}
+	
+	/////////////////////////////
+	//	CREATE ACCOUNT HOLDER  //
+	/////////////////////////////
+	
+	/**
+	 * sends a request to the server to create a new account holder
+	 * @param email the desired email address
+	 * @param pin the desired pin number
+	 * @throws IOException
+	 */
+	public void createAccountHolder(String email, String pin) throws IOException
+	{
+		ClientProtocol cp = new ClientProtocol(ServerAction.CREATE_ACCOUNTHOLDER, email, pin);
+		sendToServer(cp);
+	}
+	
+	/**
+	 * processes an account holder creation result
+	 * @param sp
+	 */
+	private void processAccountHolderResult(ServerProtocol sp)
+	{
+		//sends true to the banking client controller handle method if the
+		//creation was successful
+		if (sp.getMessageStatus() == MessageStatus.SUCCESS)
+		{
+			bcc.handleCreateNewAccountHolderResult(true);
+		}
+		else
+		{
+			bcc.handleCreateNewAccountHolderResult(false);
 		}
 	}
 }

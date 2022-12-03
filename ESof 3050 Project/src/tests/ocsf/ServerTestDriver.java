@@ -85,4 +85,10 @@ public class ServerTestDriver implements IBankController
 			return new AccountHolderInfo();
 		}
 	}
+
+	@Override
+	public boolean createAccount(String email, String pin)
+	{
+		return email.equals(TestVariables.availableCreateAccountHolderEmail);
+	}
 }

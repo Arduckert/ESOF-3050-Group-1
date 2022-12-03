@@ -82,4 +82,22 @@ public interface IBankingClientController
 	 * @param ahi information about the account holder (this is null if it is not found)
 	 */
 	public void handleFindAccountHolderByEmailResult(AccountHolderInfo ahi);
+	
+	///////////////////////////
+	// CREATE ACCOUNT HOLDER //
+	///////////////////////////
+	
+	/**
+	 * Sends a request to the server to create a new account holder given an email
+	 * address and pin number
+	 * @param email the desired email address
+	 * @param pin the desired pin number
+	 */
+	public void createNewAccountHolder(String email, String pin);
+	
+	/**
+	 * Handles the result of the creation of an account holder
+	 * @param isSuccessful true if an account holder was made, false if not
+	 */
+	public void handleCreateNewAccountHolderResult(boolean isSuccessful);
 }

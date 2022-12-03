@@ -35,6 +35,10 @@ public class BankingServer extends AbstractServer
 				break;
 			case FIND_ACCOUNTHOLDER_BY_EMAIL:
 				handleFindAccountHolderByEmailRequest(cp, client);
+				break;
+			case CREATE_ACCOUNTHOLDER:
+				handleAccountHolderCreationRequest(cp, client);
+				break;
 			default:
 				break;
 		}
@@ -189,6 +193,29 @@ public class BankingServer extends AbstractServer
 			}
 		}
 		catch (ParameterException e)
+		{
+			e.printStackTrace();
+		}
+	}
+	
+	/**
+	 * handles an account creation request and dispatches it to the rest of the server
+	 * @param cp
+	 * @param client
+	 */
+	private void handleAccountHolderCreationRequest(ClientProtocol cp, ConnectionToClient client)
+	{
+		bc.createAccount(cp.GetParameters().get(0), cp.GetParameters().get(1));
+		
+		//success if the account creation was successful, fail if not
+		MessageStatus status = bc.createAccount(cp.GetParameters().get(0), cp.GetParameters().get(1)) ? MessageStatus.SUCCESS : MessageStatus.FAIL;	
+		ServerProtocol sp = new ServerProtocol(status, Datatype.ACCOUNT_HOLDER_CREATION_RESULT);
+		
+		try
+		{
+			client.sendToClient(sp);
+		}
+		catch (IOException e)
 		{
 			e.printStackTrace();
 		}

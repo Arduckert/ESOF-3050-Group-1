@@ -43,4 +43,13 @@ public interface IBankController
 	 * @return
 	 */
 	public AccountHolderInfo findAccountHolder(String email);
+	
+	/**
+	 * creates an account holder on the server
+	 * @param email the account holder's desired email address
+	 * @param pin the desired pin number
+	 * @return true if the account holder was created successfully,
+	 * false if not
+	 */
+	public boolean createAccount(String email, String pin);
 }

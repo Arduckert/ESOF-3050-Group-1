@@ -27,4 +27,9 @@ public final class TestVariables
 	public static final String availableAccountHolderFindNumber = "1234567";
 	public static final String availableAccountHolderFindPin = "1234";
 	
+	//CREATE ACCOUNT HOLDER
+	public static final String availableCreateAccountHolderEmail = "tset321@example.com";
+	public static final String unavailableCreateAccountHolderEmail = "test321@example.com";
+	public static final String createAccountHolderPin = "5678";
+	
 }

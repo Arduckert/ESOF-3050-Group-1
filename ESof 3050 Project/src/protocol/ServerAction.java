@@ -27,7 +27,6 @@ public enum ServerAction
 	LOGIN_TELLER,
 	
 	/**
-	 * TODO
 	 * This tells the server to find an existing account on the server. This takes
 	 * an email as a parameter. The server returns SUCCESS along with the
 	 * account number, email, and person's name if the account is found. The server
@@ -43,14 +42,6 @@ public enum ServerAction
 	 * date of birth if the person is found.
 	 */
 	FIND_PERSON_BY_SIN,
-	
-	/**
-	 * TODO
-	 * This tells the server to find an existing teller on the server. This takes the
-	 * teller's employee number as a parameter. The server returns SUCCESS
-	 * teller's employee number and password if the teller is found.
-	 */
-	FIND_TELLER_BY_NUMBER,
 	
 	/**
 	 * TODO
@@ -82,14 +73,17 @@ public enum ServerAction
 	
 	/**
 	 * TODO
-	 * This tells the server to create a new account holder. This takes an email address, and the person's
-	 * social insurance number (the one who will own the account). The server returns SUCCESS and all of the
-	 * data relating to the account holder (see Datatype.ACCOUNT_HOLDER)
+	 * This tells the server to create a new account holder. This takes an email address, and a pin
+	 * The server returns SUCCESS and all of the data relating to the account holder
+	 * (see Datatype.ACCOUNT_HOLDER)
 	 */
 	CREATE_ACCOUNTHOLDER,
 	
 	/**
 	 * TODO
+	 * This tells the server to delete an existing account holder from the server. This takes an
+	 * account number, and a pin number. The server will return SUCCESS if the account holder was
+	 * successfully deleted.
 	 */
 	DELETE_ACCOUNTHOLDER,
 		
@@ -152,16 +146,6 @@ public enum ServerAction
 	 * TODO
 	 */
 	GET_ACCOUNT_TRANSACTIONS,
-	
-	/**
-	 * TODO
-	 */
-	GET_ACCOUNT_INFORMATION,
-	
-	/**
-	 * TODO
-	 */
-	GET_ACCOUNTHOLDER_INFORMATION,
 	
 	/**
 	 * TODO
