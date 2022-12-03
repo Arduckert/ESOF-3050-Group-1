@@ -12,12 +12,11 @@ public class Person {
 	private List<personRole> roles = new ArrayList<personRole>();
 	
 	//Constructor
-	public Person(String fName, String lName, int sin, String dob, Address address) {
+	public Person(String fName, String lName, int sin, String dob) {
 		this.fName = fName;
 		this.lName = lName;
 		this.SIN = sin;
 		this.DOB = dob;
-		this.addresses.add(address);
 		//this.roles.add(role);
 		//Either add this person to list of people in bankController or do it in GUI step
 	}
