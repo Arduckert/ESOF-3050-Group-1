@@ -36,4 +36,7 @@ public class Account {
 	public void something() {
 		System.out.println("Something");
 	}
+	public void random() {
+		System.out.println("hello");
+	}
 }
