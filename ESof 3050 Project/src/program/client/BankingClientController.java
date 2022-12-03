@@ -130,6 +130,10 @@ public class BankingClientController extends Application implements IBankingClie
 		changeScene(event,"AccountHolderLogin.fxml");
 	}
 	
+	public void switchToAccountHolderMainMenu(ActionEvent event) throws Exception{
+		changeScene(event,"AccountHolderMainMenu.fxml");
+	}
+	
 	//************************************************************************
 	
 	//*************************************************************************
@@ -201,7 +205,7 @@ public class BankingClientController extends Application implements IBankingClie
 	
 	@FXML
 	void TellerLoginSubmitButtonPressed(ActionEvent event) throws Exception{
-		if(bc==null)
+		if(bc==null||!bc.isConnected())
 			switchToTellerMainMenu(event);
 		else {
 			switchToTellerMainMenu(event);//remove later
@@ -368,9 +372,8 @@ public class BankingClientController extends Application implements IBankingClie
   	
   	@FXML
   	void AccountHolderLoginSubmitButtonPressed(ActionEvent event) throws Exception{
-  		if(bc==null)
-  			System.out.println();
-			//switchToAccountHolderMainMenu(event);
+  		if(bc==null || !bc.isConnected())
+  			switchToAccountHolderMainMenu(event);
 		else {
 			//switchToAccountHolderMainMenu(event);//remove later
 			//bc.loginAsAccoutnHolder(TellerNumberTextField.getText(), TellerPasswordTextField.getText());
