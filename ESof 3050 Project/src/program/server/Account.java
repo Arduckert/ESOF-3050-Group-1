@@ -33,4 +33,7 @@ public class Account {
 		return this.accountHolder;
 	}
 	
+	public void something() {
+		System.out.println("Something");
+	}
 }
