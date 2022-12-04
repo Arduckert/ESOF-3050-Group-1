@@ -74,6 +74,11 @@ public class BankingClientController extends Application implements IBankingClie
     }
 	
 	@FXML
+	void AccountHolderCancelButtonPressed(ActionEvent event) throws Exception{
+		switchToAccountHolderMainMenu(event);
+	}
+	
+	@FXML
     void EndSessionButtonPressed(ActionEvent event) {
 		try{
 			if(bc!=null)
@@ -87,6 +92,12 @@ public class BankingClientController extends Application implements IBankingClie
 	void LoginCancelButtonPressed(ActionEvent event) throws Exception{
 		switchToLoginChoiceScreen(event);
 	}
+	
+	@FXML
+    private ChoiceBox<?> SendingAccountChoiceBox;
+
+    @FXML
+    private TextField TransferAmountTextField;
 	
 	//********************************************************************
 	
@@ -139,6 +150,26 @@ public class BankingClientController extends Application implements IBankingClie
 	
 	public void switchToTellerSearchScreen(ActionEvent event) throws Exception{
 		changeScene(event,"TellerSearchScreen.fxml");
+	}
+	
+	public void switchToTransferBetweenAccountsScreen(ActionEvent event) throws Exception{
+		changeScene(event,"TransferBetweenYourAccounts.fxml");
+	}
+	
+	public void switchToTransferToAnotherAccountHolderScreen(ActionEvent event) throws Exception{
+		changeScene(event,"TransferToAnotherAccountHolder.fxml");
+	}
+	
+	public void switchToTransferConfirmationScreen(ActionEvent event) throws Exception{
+		changeScene(event,"TransferConfirmation.fxml");
+	}
+	
+	public void switchToDepositScreen(ActionEvent event) throws Exception{
+		changeScene(event,"Deposit.fxml");
+	}
+	
+	public void switchToWithdrawScreen(ActionEvent event) throws Exception{
+		changeScene(event,"Withdraw.fxml");
 	}
 	
 	//************************************************************************
@@ -409,7 +440,111 @@ public class BankingClientController extends Application implements IBankingClie
     }
     
   	//*********************************************************************
+    
+    //************************************************************************
+    //GUI components for account holder main menu
+    
+    @FXML
+    void TransferBetweenAccountsButtonPressed(ActionEvent event) throws Exception{
+    	switchToTransferBetweenAccountsScreen(event);
+    }
+    
+    @FXML
+    void TransferToAnotherAccountHolderButtonPressed(ActionEvent event) throws Exception {
+    	switchToTransferToAnotherAccountHolderScreen(event);
+    }
+    
+    @FXML
+    void ViewAccountsButtonPressed(ActionEvent event) throws Exception {
+    	//TODO make list view GUI and link here
+    }
+    
+    @FXML
+    void DepositButtonPressed(ActionEvent event) throws Exception {
+    	switchToDepositScreen(event);
+    }
+
+    @FXML
+    void WithdrawButtonPressed(ActionEvent event) throws Exception {
+    	switchToWithdrawScreen(event);
+    }
+    
+    //**********************************************************************
+    
+    //**********************************************************************
+    //GUI components for transfer between your accounts screen
+    
+    @FXML
+    private ChoiceBox<?> ReceivingAccountChoiceBox;
+
+    @FXML
+    void TransferBetweenAccountsSubmitButtonPressed(ActionEvent event) throws Exception {
+    	switchToTransferConfirmationScreen(event);
+    }
+    
+    //*********************************************************************
+    
+    //********************************************************************
+    //GUI components for transfer to another account holder
+    
+    @FXML
+    private TextField ReceivingAccountTextField;
+    
+    @FXML
+    void TransferToAnotherAccountHolderSubmitButtonPressed(ActionEvent event) throws Exception {
+    	switchToTransferConfirmationScreen(event);
+    }
+    
+    //*****************************************************************
+    
+    //*****************************************************************
+    //GUI components for transfer confirmation
+    
+    @FXML
+    private TextField ReceivingAccountConfirmationTextField;
+
+    @FXML
+    private TextField SendingAccountConfirmationTextField;
+
+    @FXML
+    private TextField TransferAmountConfirmationTextField;
+    
+    //****************************************************************
+    
+    //*****************************************************************
+    //GUI components for account list view
+    
+    //*******************************************************************
   	
+    //***************************************************************
+    //GUI components for deposit screen
+    
+    @FXML
+    void DepositSubmitButtonPressed(ActionEvent event) throws Exception{
+    	switchToTransferConfirmationScreen(event);
+    }
+    
+    //***************************************************************
+    
+    //**************************************************************
+    //GUI components for withdraw screen
+    
+    @FXML
+    void WithdrawSubmitButtonPressed(ActionEvent event) throws Exception{
+    	switchToTransferConfirmationScreen(event);
+    }
+    
+    //*************************************************************
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     //**************************************
     //Test for OCSF functionality
     
