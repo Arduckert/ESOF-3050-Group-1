@@ -155,10 +155,10 @@ public enum Datatype
 	ACCOUNT_HOLDER_FIND_RESULT,
 	
 	/**
-	 * This sends information about a creation result back to the client. No information
-	 * is included in this data type since the information is required is within the
-	 * message status value.
-	 * @object_size 0
+	 * This sends information about a creation result back to the client. The information
+	 * included in this datatype is the account holder's email address, pin number, and
+	 * account number
+	 * @object_size 3
 	 */
 	ACCOUNT_HOLDER_CREATION_RESULT,
 	

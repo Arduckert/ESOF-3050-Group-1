@@ -132,11 +132,10 @@ public class BankController implements IBankController
 		if (accountHolderIndex != -1)
 		{
 			//TODO: populate these fields (make a get at index method)
-			String accountHolderName = null;
 			String accountNumber = null;
 			String pin = null;	
 			
-			return new AccountHolderInfo(accountHolderName, email, accountNumber, pin);
+			return new AccountHolderInfo(email, accountNumber, pin);
 		}
 		else
 		{
@@ -148,13 +147,22 @@ public class BankController implements IBankController
 	 * create a new account holder
 	 */
 	@Override
-	public boolean createAccountHolder(String email, String pin, String tellerEmpID)
+	public AccountHolderInfo createAccountHolder(String email)
 	{
-		//TODO: call a create method that returns a boolean where true means
-		//the account was created, false if not (if there's a duplicate email
-		//or something)
-		boolean accountCreated = false;
-		return accountCreated;
+		//TODO: add code to create an account holder
+		boolean accountHolderCreated = false;
+		
+		if (accountHolderCreated)
+		{
+			String accountNumber = null;
+			String pin = null;	
+			AccountHolderInfo info = new AccountHolderInfo(email, accountNumber, pin);
+			return info;
+		}
+		else
+		{
+			return new AccountHolderInfo();
+		}
 	}
 
 	/**

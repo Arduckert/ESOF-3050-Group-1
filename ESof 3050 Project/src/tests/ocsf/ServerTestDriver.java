@@ -72,7 +72,6 @@ public class ServerTestDriver implements IBankController
 			//creates a new account holder info with the information about
 			//the account holder information
 			AccountHolderInfo info = new AccountHolderInfo(
-					TestVariables.availableAccountHolderFindName,
 					TestVariables.availableAccountHolderFindEmail,
 					TestVariables.availableAccountHolderNumber,
 					TestVariables.availableAccountHolderFindPin
@@ -90,11 +89,18 @@ public class ServerTestDriver implements IBankController
 	 * returns the available email to test both true and false
 	 */
 	@Override
-	public boolean createAccountHolder(String email, String pin, String tellerEmpID)
+	public AccountHolderInfo createAccountHolder(String email)
 	{
-		return email.equals(TestVariables.availableCreateAccountHolderEmail)
-				&& pin.equals(TestVariables.createAccountHolderPin)
-				&& tellerEmpID.equals(TestVariables.createAccountHolderTellerID);
+		if (email.equals(TestVariables.availableCreateAccountHolderEmail))
+		{
+			AccountHolderInfo info = new AccountHolderInfo(email, TestVariables.createAccountHolderNumber, TestVariables.createAccountHolderPin);
+			return info;
+		}
+		else
+		{
+			AccountHolderInfo info = new AccountHolderInfo();
+			return info;
+		}
 	}
 
 	/**

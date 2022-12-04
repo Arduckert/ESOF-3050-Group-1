@@ -93,13 +93,13 @@ public interface IBankingClientController
 	 * @param email the desired email address
 	 * @param pin the desired pin number
 	 */
-	public void createNewAccountHolder(String email, String pin, String tellerEmpID);
+	public void createNewAccountHolder(String email);
 	
 	/**
 	 * Handles the result of the creation of an account holder
 	 * @param isSuccessful true if an account holder was made, false if not
 	 */
-	public void handleCreateNewAccountHolderResult(boolean isSuccessful);
+	public void handleCreateNewAccountHolderResult(AccountHolderInfo ahi);
 	
 	///////////////////////////
 	// DELETE ACCOUNT HOLDER //

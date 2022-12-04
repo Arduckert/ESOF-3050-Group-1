@@ -210,8 +210,7 @@ public class BankingClient extends AbstractClient
 			AccountHolderInfo info = new AccountHolderInfo(
 					sp.GetData().get(0),
 					sp.GetData().get(1),
-					sp.GetData().get(2),
-					sp.GetData().get(3)
+					sp.GetData().get(2)
 					);
 			
 			bcc.handleFindAccountHolderByEmailResult(info);
@@ -233,9 +232,9 @@ public class BankingClient extends AbstractClient
 	 * @param pin the desired pin number
 	 * @throws IOException
 	 */
-	public void createAccountHolder(String email, String pin, String tellerEmpID) throws IOException
+	public void createAccountHolder(String email) throws IOException
 	{
-		ClientProtocol cp = new ClientProtocol(ServerAction.CREATE_ACCOUNTHOLDER, email, pin, tellerEmpID);
+		ClientProtocol cp = new ClientProtocol(ServerAction.CREATE_ACCOUNTHOLDER, email);
 		sendToServer(cp);
 	}
 	
@@ -249,11 +248,13 @@ public class BankingClient extends AbstractClient
 		//creation was successful
 		if (sp.getMessageStatus() == MessageStatus.SUCCESS)
 		{
-			bcc.handleCreateNewAccountHolderResult(true);
+			AccountHolderInfo info = new AccountHolderInfo(sp.GetData().get(0), sp.GetData().get(1), sp.GetData().get(2));
+			bcc.handleCreateNewAccountHolderResult(info);
 		}
 		else
 		{
-			bcc.handleCreateNewAccountHolderResult(false);
+			AccountHolderInfo info = new AccountHolderInfo();
+			bcc.handleCreateNewAccountHolderResult(info);
 		}
 	}
 	

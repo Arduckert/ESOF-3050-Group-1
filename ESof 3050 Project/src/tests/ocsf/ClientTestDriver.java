@@ -63,8 +63,8 @@ public class ClientTestDriver implements IBankingClientController
 			sendFindAccountHolderByEmailRequest(TestVariables.availableAccountHolderFindEmail); //should return true and the account holder information
 			sendFindAccountHolderByEmailRequest(TestVariables.unavailableAccountHolderFindEmail); //should return false and no information
 			
-			createNewAccountHolder(TestVariables.availableCreateAccountHolderEmail, TestVariables.createAccountHolderPin, TestVariables.createAccountHolderTellerID); //handler should return true
-			createNewAccountHolder(TestVariables.unavailableCreateAccountHolderEmail, TestVariables.createAccountHolderPin, TestVariables.createAccountHolderTellerID); //handler should return false
+			createNewAccountHolder(TestVariables.availableCreateAccountHolderEmail); //handler should return true
+			createNewAccountHolder(TestVariables.unavailableCreateAccountHolderEmail); //handler should return false
 			
 			deleteAccountHolder(TestVariables.availableDeleteAccountHolderNumber, TestVariables.deleteAccountHolderPin, TestVariables.deleteAccountHolderTellerID); //handler should return true
 			deleteAccountHolder(TestVariables.unavailableDeleteAccountHolderNumber, TestVariables.deleteAccountHolderPin, TestVariables.deleteAccountHolderTellerID); //handler should return false		
@@ -281,8 +281,7 @@ public class ClientTestDriver implements IBankingClientController
 		if (findAccountHolderByEmailTestCount == 0 && ahi.getHasInfo())
 		{
 			//is all the information the expected information?
-			if (ahi.accountHolderName.equals(TestVariables.availableAccountHolderFindName)
-				&& ahi.accountNumber.equals(TestVariables.availableAccountHolderFindNumber)
+			if (ahi.accountNumber.equals(TestVariables.availableAccountHolderFindNumber)
 				&& ahi.email.equals(TestVariables.availableAccountHolderFindEmail)
 				&& ahi.pin.equals(TestVariables.availableAccountHolderFindPin))
 			{
@@ -297,7 +296,7 @@ public class ClientTestDriver implements IBankingClientController
 		else if (findAccountHolderByEmailTestCount > 0 && !ahi.getHasInfo())
 		{
 			//is all of the information not the expected information?
-			if (ahi.accountHolderName == null && ahi.accountNumber == null && ahi.email == null && ahi.pin == null)
+			if (ahi.accountNumber == null && ahi.email == null && ahi.pin == null)
 			{
 				System.out.println("FIND ACCOUNT HOLDER BY EMAIL WITHOUT INFO TEST " + (findAccountHolderByEmailTestCount + 1) + " PASSED");
 			}
@@ -323,11 +322,11 @@ public class ClientTestDriver implements IBankingClientController
 	 * sends a request to the server to create a new account holder
 	 */
 	@Override
-	public void createNewAccountHolder(String email, String pin, String tellerEmpID)
+	public void createNewAccountHolder(String email)
 	{
 		try
 		{
-			bc.createAccountHolder(email, pin, tellerEmpID);
+			bc.createAccountHolder(email);
 		}
 		catch (IOException e)
 		{
@@ -340,13 +339,22 @@ public class ClientTestDriver implements IBankingClientController
 	 * handles the result of the account holder creation
 	 */
 	@Override
-	public void handleCreateNewAccountHolderResult(boolean isSuccessful)
+	public void handleCreateNewAccountHolderResult(AccountHolderInfo info)
 	{
-		if (createAccountHolderTestCount == 0 && isSuccessful)
+		if (createAccountHolderTestCount == 0 && info.getHasInfo())
 		{
-			System.out.println("CREATE ACCOUNT HOLDER TRUE TEST PASSED");
+			if (info.email.equals(TestVariables.availableCreateAccountHolderEmail)
+					&& info.accountNumber.equals(TestVariables.createAccountHolderNumber)
+					&& info.pin.equals(TestVariables.createAccountHolderPin))
+			{
+				System.out.println("CREATE ACCOUNT HOLDER TRUE TEST PASSED");
+			}
+			else
+			{
+				System.err.println("CREATE ACCOUNT HOLDER TRUE TEST " + (createAccountHolderTestCount + 1) + " FAILED - INFO DOES NOT MATCH");
+			}
 		}
-		else if (createAccountHolderTestCount == 1 && !isSuccessful)
+		else if (createAccountHolderTestCount == 1 && !info.getHasInfo())
 		{
 			System.out.println("CREATE ACCOUNT HOLDER FALSE TEST PASSED");
 		}

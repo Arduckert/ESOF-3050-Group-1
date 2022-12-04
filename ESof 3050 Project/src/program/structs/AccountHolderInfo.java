@@ -7,12 +7,7 @@ package src.program.structs;
  * display information about a specific account holder
  */
 public class AccountHolderInfo
-{
-	/**
-	 * The full name of the account holder (first and last name)
-	 */
-	public String accountHolderName;
-	
+{	
 	/**
 	 * the account holder's email address
 	 */
@@ -39,9 +34,8 @@ public class AccountHolderInfo
 	 * @param _email
 	 * @param _accountNumber
 	 */
-	public AccountHolderInfo(String _accountHolderName, String _email, String _accountNumber, String _pin)
+	public AccountHolderInfo(String _email, String _accountNumber, String _pin)
 	{
-		accountHolderName = _accountHolderName;
 		email = _email;
 		accountNumber = _accountNumber;
 		pin = _pin;
@@ -53,7 +47,6 @@ public class AccountHolderInfo
 	 */
 	public AccountHolderInfo()
 	{
-		accountHolderName = null;
 		email = null;
 		accountNumber = null;
 		pin = null;

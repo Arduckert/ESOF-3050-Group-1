@@ -589,11 +589,11 @@ public class BankingClientController extends Application implements IBankingClie
 	 * creates a new account holder
 	 */
 	@Override
-	public void createNewAccountHolder(String email, String pin, String tellerEmpID)
+	public void createNewAccountHolder(String email)
 	{
 		try
 		{
-			bc.createAccountHolder(email, pin, tellerEmpID);
+			bc.createAccountHolder(email);
 		}
 		catch (IOException e)
 		{
@@ -606,11 +606,11 @@ public class BankingClientController extends Application implements IBankingClie
 	 * handles the result of an account holder creation
 	 */
 	@Override
-	public void handleCreateNewAccountHolderResult(boolean isSuccessful)
+	public void handleCreateNewAccountHolderResult(AccountHolderInfo ahi)
 	{
 		// TODO add handle code
 		
-		if (isSuccessful)
+		if (ahi.getHasInfo())
 		{
 			//account was created
 		}

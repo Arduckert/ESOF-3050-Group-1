@@ -52,7 +52,7 @@ public interface IBankController
 	 * @return true if the account holder was created successfully,
 	 * false if not
 	 */
-	public boolean createAccountHolder(String email, String pin, String tellerEmpID);
+	public AccountHolderInfo createAccountHolder(String email);
 	
 	/**
 	 * deletes an account holder on the server

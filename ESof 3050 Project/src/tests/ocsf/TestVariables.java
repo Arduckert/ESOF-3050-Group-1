@@ -30,7 +30,7 @@ public final class TestVariables
 	//CREATE ACCOUNT HOLDER
 	public static final String availableCreateAccountHolderEmail = "tset321@example.com";
 	public static final String unavailableCreateAccountHolderEmail = "test321@example.com";
-	public static final String createAccountHolderTellerID = "123456";
+	public static final String createAccountHolderNumber = "213452";
 	public static final String createAccountHolderPin = "5678";
 	
 	//DELETE ACCOUNT HOLDER

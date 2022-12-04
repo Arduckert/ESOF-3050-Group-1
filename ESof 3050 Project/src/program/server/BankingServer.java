@@ -207,7 +207,7 @@ public class BankingServer extends AbstractServer
 		try
 		{
 			//adds the account holder information to the server protocol
-			sp.AddData(info.accountHolderName, info.email, info.accountNumber, info.pin);
+			sp.AddData(info.email, info.accountNumber, info.pin);
 			
 			try
 			{
@@ -232,9 +232,22 @@ public class BankingServer extends AbstractServer
 	 */
 	private void handleAccountHolderCreationRequest(ClientProtocol cp, ConnectionToClient client)
 	{
-		//success if the account creation was successful, fail if not
-		MessageStatus status = bc.createAccountHolder(cp.GetParameters().get(0), cp.GetParameters().get(1), cp.GetParameters().get(2)) ? MessageStatus.SUCCESS : MessageStatus.FAIL;	
+		//gets the account holder info of the created account
+		AccountHolderInfo info = bc.createAccountHolder(cp.GetParameters().get(0));	
+		
+		//sets the status based on the creation result of the account holder
+		MessageStatus status = info.getHasInfo() ? MessageStatus.SUCCESS : MessageStatus.FAIL;
+		
 		ServerProtocol sp = new ServerProtocol(status, Datatype.ACCOUNT_HOLDER_CREATION_RESULT);
+		
+		try
+		{
+			sp.AddData(info.email, info.accountNumber, info.pin);
+		}
+		catch (ParameterException e1)
+		{
+			e1.printStackTrace();
+		}
 		
 		try
 		{
