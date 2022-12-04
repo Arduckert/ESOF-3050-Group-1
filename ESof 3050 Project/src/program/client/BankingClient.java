@@ -58,6 +58,12 @@ public class BankingClient extends AbstractClient
 			case ACCOUNT_HOLDER_DELETION_RESULT:
 				processAccountHolderDeletionResult(sp);
 				break;
+			case PERSON_CREATION_RESULT:
+				processPersonCreationResult(sp);
+				break;
+			case PERSON_DELETION_RESULT:
+				processPersonDeletionResult(sp);
+				break;
 			case BASIC_MESSAGE:
 				processBasicMessage(sp);
 				break;
@@ -263,7 +269,7 @@ public class BankingClient extends AbstractClient
 	/////////////////////////////
 	
 	/**
-	 * sends a request to the server to create a new account holder
+	 * sends a request to the server to delete an existing account holder
 	 * @param email the desired email address
 	 * @param pin the desired pin number
 	 * @throws IOException
@@ -275,13 +281,13 @@ public class BankingClient extends AbstractClient
 	}
 	
 	/**
-	 * processes an account holder creation result
+	 * processes an account holder deletion result
 	 * @param sp
 	 */
 	private void processAccountHolderDeletionResult(ServerProtocol sp)
 	{
 		//sends true to the banking client controller handle method if the
-		//creation was successful
+		//deletion was successful
 		if (sp.getMessageStatus() == MessageStatus.SUCCESS)
 		{
 			bcc.handleAccountHolderDeletion(true);
@@ -289,6 +295,75 @@ public class BankingClient extends AbstractClient
 		else
 		{
 			bcc.handleAccountHolderDeletion(false);
+		}
+	}
+	
+	/////////////////////
+	//	CREATE PERSON  //
+	/////////////////////
+	
+	/**
+	 * sends a request to the server to create a new person
+	 * @param firstName
+	 * @param lastName
+	 * @param sin social insurance number
+	 * @param dateOfBirth
+	 * @throws IOException
+	 */
+	public void createPerson(String firstName, String lastName, String sin, String dateOfBirth) throws IOException
+	{
+		ClientProtocol cp = new ClientProtocol(ServerAction.CREATE_PERSON, firstName, lastName, sin, dateOfBirth);
+		sendToServer(cp);
+	}
+	
+	/**
+	 * processes a person creation result
+	 * @param sp
+	 */
+	private void processPersonCreationResult(ServerProtocol sp)
+	{
+		//sends true to the banking client controller handle method if the
+		//creation was successful
+		if (sp.getMessageStatus() == MessageStatus.SUCCESS)
+		{
+			bcc.handleCreatePersonResult(true);
+		}
+		else
+		{
+			bcc.handleCreatePersonResult(false);
+		}
+	}
+	
+	/////////////////////
+	//	DELETE PERSON  //
+	/////////////////////
+	
+	/**
+	 * sends a request to the server to delete a person
+	 * @param sin social insurance number
+	 * @throws IOException
+	 */
+	public void deletePerson(String sin) throws IOException
+	{
+		ClientProtocol cp = new ClientProtocol(ServerAction.DELETE_PERSON, sin);
+		sendToServer(cp);
+	}
+	
+	/**
+	 * processes a person deletion result
+	 * @param sp
+	 */
+	private void processPersonDeletionResult(ServerProtocol sp)
+	{
+		//sends true to the banking client controller handle method if the
+		//deletion was successful
+		if (sp.getMessageStatus() == MessageStatus.SUCCESS)
+		{
+			bcc.handlePersonDeletion(true);
+		}
+		else
+		{
+			bcc.handlePersonDeletion(false);
 		}
 	}
 }

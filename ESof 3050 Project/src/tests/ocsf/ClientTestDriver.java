@@ -20,6 +20,8 @@ public class ClientTestDriver implements IBankingClientController
 	private static int findAccountHolderByEmailTestCount = 0;
 	private static int createAccountHolderTestCount = 0;
 	private static int deleteAccountHolderTestCount = 0;
+	private static int createPersonTestCount = 0;
+	private static int deletePersonTestCount = 0;
 	
 	public ClientTestDriver()
 	{
@@ -63,11 +65,21 @@ public class ClientTestDriver implements IBankingClientController
 			sendFindAccountHolderByEmailRequest(TestVariables.availableAccountHolderFindEmail); //should return true and the account holder information
 			sendFindAccountHolderByEmailRequest(TestVariables.unavailableAccountHolderFindEmail); //should return false and no information
 			
+			//create new account holder tests
 			createNewAccountHolder(TestVariables.availableCreateAccountHolderEmail); //handler should return true
 			createNewAccountHolder(TestVariables.unavailableCreateAccountHolderEmail); //handler should return false
 			
+			//delete account holder tests
 			deleteAccountHolder(TestVariables.availableDeleteAccountHolderNumber, TestVariables.deleteAccountHolderPin); //handler should return true
 			deleteAccountHolder(TestVariables.unavailableDeleteAccountHolderNumber, TestVariables.deleteAccountHolderPin); //handler should return false		
+			
+			//create person tests
+			createNewPerson(TestVariables.availablePersonFirstName, TestVariables.personLastName, TestVariables.availablePersonSIN, TestVariables.personDOB); //handler should return true
+			createNewPerson(TestVariables.unavailablePersonFirstName, TestVariables.personLastName, TestVariables.availablePersonSIN, TestVariables.personDOB); //handler should return false
+			
+			//delete person tests
+			deletePerson(TestVariables.availablePersonSIN); //handler should return true
+			deletePerson(TestVariables.unavailablePersonSIN); //handler should return false
 			
 			Sleep(1000); //wait for connection to close
 			CloseServerConnection();
@@ -401,5 +413,91 @@ public class ClientTestDriver implements IBankingClientController
 			assert false;
 		}
 		deleteAccountHolderTestCount++;
+	}
+
+	//////////////////////////
+	//	CREATE PERSON TEST  //
+	//////////////////////////
+	
+	/**
+	 * sends a request to the server to test person creation
+	 */
+	@Override
+	public void createNewPerson(String firstName, String lastName, String sin, String dateOfBirth)
+	{
+		try
+		{
+			bc.createPerson(firstName, lastName, sin, dateOfBirth);
+		}
+		catch (IOException e)
+		{
+			System.err.println("CREATE PERSON TEST FAILED: EXCEPTION");
+			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * test handler for person creation
+	 */
+	@Override
+	public void handleCreatePersonResult(boolean isSuccessful)
+	{
+		if (createPersonTestCount == 0 && isSuccessful)
+		{
+			System.out.println("CREATE PERSON TRUE TEST PASSED");
+		}
+		else if (createPersonTestCount == 1 && !isSuccessful)
+		{
+			System.out.println("CREATE PERSON FALSE TEST PASSED");
+		}
+		else
+		{
+			System.err.println("CREATE PERSON TEST " + (createPersonTestCount + 1) + " FAILED");
+			assert false;
+		}
+		createPersonTestCount++;
+	}
+
+	//////////////////////////
+	//	DELETE PERSON TEST  //
+	//////////////////////////
+	
+	/**
+	 * sends a person deletion request to the server
+	 */
+	@Override
+	public void deletePerson(String sin)
+	{
+		try
+		{
+			bc.deletePerson(sin);
+		}
+		catch (IOException e)
+		{
+			System.err.println("DELETE PERSON TEST FAILED: EXCEPTION");
+			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * test handler for person deletion
+	 */
+	@Override
+	public void handlePersonDeletion(boolean isSuccessful)
+	{
+		if (deletePersonTestCount == 0 && isSuccessful)
+		{
+			System.out.println("DELETE PERSON TRUE TEST PASSED");
+		}
+		else if (deletePersonTestCount == 1 && !isSuccessful)
+		{
+			System.out.println("DELETE PERSON FALSE TEST PASSED");
+		}
+		else
+		{
+			System.err.println("DELETE PERSON TEST " + (deletePersonTestCount + 1) + " FAILED");
+			assert false;
+		}
+		deletePersonTestCount++;
 	}
 }

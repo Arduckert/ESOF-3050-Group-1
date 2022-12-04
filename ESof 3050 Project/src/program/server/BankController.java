@@ -176,6 +176,30 @@ public class BankController implements IBankController
 		boolean accountDeleted = false;
 		return accountDeleted;
 	}
+
+	/**
+	 * create a new person
+	 */
+	@Override
+	public boolean createPerson(String firstName, String lastName, String sin, String dateOfBirth)
+	{
+		//TODO: call a create method that returns a boolean where true means
+		//the person was created, false if not
+		boolean personCreated = false;
+		return personCreated;
+	}
+
+	/**
+	 * delete an existing person
+	 */
+	@Override
+	public boolean deletePerson(String sin)
+	{
+		//TODO: call a create method that returns a boolean where true means
+		//the person was deleted, false if not
+		boolean personCreated = false;
+		return personCreated;
+	}
 	
 }
 

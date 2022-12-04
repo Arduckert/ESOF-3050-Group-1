@@ -108,11 +108,16 @@ public enum ServerAction
 	
 	/**
 	 * TODO
+	 * This tells the server to create a new person. This takes a first name, a last name, a social
+	 * security number, and a date of birth. The server will return SUCCESS if the person was created
+	 * and FAIL if not.
 	 */
 	CREATE_PERSON,
 	
 	/**
 	 * TODO
+	 * This tells the server to delete an existing person. This takes a social security number.
+	 * The server will return SUCCESS if the person was deleted and FAIL if not.
 	 */
 	DELETE_PERSON,
 		

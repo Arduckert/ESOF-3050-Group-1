@@ -118,4 +118,40 @@ public interface IBankingClientController
 	 * if not
 	 */
 	public void handleAccountHolderDeletion(boolean isSuccessful);
+	
+	///////////////////
+	// CREATE PERSON //
+	///////////////////
+	
+	/**
+	 * Sends a request to the server to create a new account holder given an email
+	 * address and pin number
+	 * @param email the desired email address
+	 * @param pin the desired pin number
+	 */
+	public void createNewPerson(String firstName, String lastName, String sin, String dateOfBirth);
+	
+	/**
+	 * Handles the result of the creation of an account holder
+	 * @param isSuccessful true if an account holder was made, false if not
+	 */
+	public void handleCreatePersonResult(boolean isSuccessful);
+	
+	///////////////////
+	// DELETE PERSON //
+	///////////////////
+	
+	/**
+	 * Sends a request to the server to delete an account holder
+	 * @param accountNumber the account holder's account number
+	 * @param pin the account holder's pin
+	 */
+	public void deletePerson(String sin);
+	
+	/**
+	 * Handles the result of an account holder being deleted
+	 * @param isSuccessful true if the account holder was deleted, false
+	 * if not
+	 */
+	public void handlePersonDeletion(boolean isSuccessful);
 }

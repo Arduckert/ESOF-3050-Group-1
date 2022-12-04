@@ -61,4 +61,21 @@ public interface IBankController
 	 * @return true if the deletion was successful, false if not successful
 	 */
 	public boolean deleteAccountHolder(String accountNumber, String pin, String tellerEmpID);
+	
+	/**
+	 * creates a person on the server
+	 * @param firstName
+	 * @param lastName
+	 * @param sin social insurance number
+	 * @param dateOfBirth
+	 * @return true if the person was created, false if not
+	 */
+	public boolean createPerson(String firstName, String lastName, String sin, String dateOfBirth);
+	
+	/**
+	 * deletes a person from the server
+	 * @param sin
+	 * @return true if the person was deleted, false if not
+	 */
+	public boolean deletePerson(String sin);
 }

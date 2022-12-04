@@ -164,11 +164,27 @@ public enum Datatype
 	
 	/**
 	 * This sends information about an account holder deletion result back to the client.
-	 * No information is included in this data type since the information is required is
+	 * No information is included in this data type since the information required is
 	 * within the message status value.
 	 * @object_size 0
 	 */
 	ACCOUNT_HOLDER_DELETION_RESULT,
+	
+	/**
+	 * This sends information about a person creation result back to the client.
+	 * No information is included in this data type since the information required is
+	 * within the message status value.
+	 * @object_size 0
+	 */
+	PERSON_CREATION_RESULT,
+	
+	/**
+	 * This sends information about a person deletion result back to the client.
+	 * No information is included in this data type since the information required is
+	 * within the message status value.
+	 * @object_size 0
+	 */
+	PERSON_DELETION_RESULT,
 	
 	/**
 	 * This sends a string message back to the client. This is used as a way to test
