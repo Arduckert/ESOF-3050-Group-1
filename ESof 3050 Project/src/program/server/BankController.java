@@ -217,6 +217,14 @@ public class BankController implements IBankController
 		boolean addressRemoved = false;
 		return addressRemoved;
 	}
+
+	@Override
+	public boolean addAccountHolderToPerson(String sin, String email)
+	{
+		//TODO: call a create method that adds an account holder to a person
+		boolean personRoleCreated = false;
+		return personRoleCreated;
+	}
 	
 }
 

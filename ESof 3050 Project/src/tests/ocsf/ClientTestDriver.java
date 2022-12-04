@@ -24,6 +24,7 @@ public class ClientTestDriver implements IBankingClientController
 	private static int deletePersonTestCount = 0;
 	private static int addAddressTestCount = 0;
 	private static int removeAddressTestCount = 0;
+	private static int accountHolderToPersonTestCount = 0;
 	
 	public ClientTestDriver()
 	{
@@ -85,13 +86,17 @@ public class ClientTestDriver implements IBankingClientController
 			
 			//add address tests
 			addAddress(TestVariables.addressStreetName, TestVariables.addressStreetNumber, TestVariables.availablePostalCode, TestVariables.addressProvince,
-					TestVariables.addressCountry, TestVariables.availablePersonSIN);
+					TestVariables.addressCountry, TestVariables.availablePersonSIN); //handler should return true
 			addAddress(TestVariables.addressStreetName, TestVariables.addressStreetNumber, TestVariables.availablePostalCode, TestVariables.addressProvince,
-					TestVariables.addressCountry, TestVariables.unavailablePersonSIN);
+					TestVariables.addressCountry, TestVariables.unavailablePersonSIN); //handler should return false
 			
 			//remove address tests
-			removeAddress(TestVariables.availablePersonSIN, TestVariables.availablePostalCode);
-			removeAddress(TestVariables.availablePersonSIN, TestVariables.unavailablePostalCode);
+			removeAddress(TestVariables.availablePersonSIN, TestVariables.availablePostalCode); //handler should return true
+			removeAddress(TestVariables.availablePersonSIN, TestVariables.unavailablePostalCode); //handler should return false
+			
+			//add account holder to person test
+			addAccountHolderToPerson(TestVariables.availablePersonSIN, TestVariables.availableRoleEmail); //handler should return true
+			addAccountHolderToPerson(TestVariables.availablePersonSIN, TestVariables.unavailableRoleEmail); //handler should return false
 			
 			Sleep(1000); //wait for connection to close
 			CloseServerConnection();
@@ -598,5 +603,48 @@ public class ClientTestDriver implements IBankingClientController
 			assert false;
 		}
 		removeAddressTestCount++;
+	}
+
+	///////////////////////////////////////
+	// ADD ACCOUNT HOLDER ROLE TO PERSON //
+	///////////////////////////////////////
+	
+	/**
+	 * sends the required data to the server for testing
+	 */
+	@Override
+	public void addAccountHolderToPerson(String sin, String email)
+	{
+		try
+		{
+			bc.addAccountHolderToPerson(sin, email);
+		}
+		catch (IOException e)
+		{
+			System.err.println("ADD ACCOUNT HOLDER TO PERSON TEST FAILED: EXCEPTION");
+			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * handles the result sent by the server
+	 */
+	@Override
+	public void handleAccountHolderToPersonResult(boolean isSuccessful)
+	{
+		if (accountHolderToPersonTestCount == 0 && isSuccessful)
+		{
+			System.out.println("ADD ACCOUNT HOLDER TO PERSON TRUE TEST PASSED");
+		}
+		else if (accountHolderToPersonTestCount == 1 && !isSuccessful)
+		{
+			System.out.println("ADD ACCOUNT HOLDER TO PERSON TEST PASSED");
+		}
+		else
+		{
+			System.err.println("ADD ACCOUNT HOLDER TO PERSON TEST " + (accountHolderToPersonTestCount + 1) + " FAILED");
+			assert false;
+		}
+		accountHolderToPersonTestCount++;
 	}
 }

@@ -815,4 +815,44 @@ public class BankingClientController extends Application implements IBankingClie
 			//address was not removed
 		}
 	}
+
+	////////////////////////////////////////
+	// ADD ACCOUNT HOLDER ROLE TO PERSON  //
+	////////////////////////////////////////
+	
+	/**
+	 * sends a request to the server to add an account holder
+	 * role to a person
+	 */
+	@Override
+	public void addAccountHolderToPerson(String sin, String email)
+	{
+		try
+		{
+			bc.addAccountHolderToPerson(sin, email);
+		}
+		catch (IOException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * handles the result of adding an account holder to a person
+	 */
+	@Override
+	public void handleAccountHolderToPersonResult(boolean isSuccessful)
+	{
+		// TODO add handle code
+		
+		if (isSuccessful)
+		{
+			//address was removed
+		}
+		else
+		{
+			//address was not removed
+		}
+	}
 }

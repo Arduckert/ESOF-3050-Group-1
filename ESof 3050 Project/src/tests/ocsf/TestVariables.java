@@ -58,4 +58,8 @@ public final class TestVariables
 	public static final String addressStreetName = "Example St.";
 	public static final String addressProvince = "Ontario";
 	public static final String addressCountry = "Canada";
+	
+	//ADD ACCOUNT HOLDER ROLE TO PERSON
+	public static final String availableRoleEmail = "testing@example.com";
+	public static final String unavailableRoleEmail = "tseting@example.com";
 }

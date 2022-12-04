@@ -487,4 +487,43 @@ public class BankingServer extends AbstractServer
 			}
 		}
 	}
+	
+	/**
+	 * dispatches adding an account holder role to a person
+	 * @param cp
+	 * @param client
+	 */
+	private void handleAccountHolderToPersonRequest(ClientProtocol cp, ConnectionToClient client)
+	{
+		//only tellers can associate an account holder with a person
+		if (client.getInfo("LoginType") == LoginType.TELLER)
+		{
+			//success if the the association was added, false if not
+			MessageStatus status = bc.addAccountHolderToPerson(cp.GetParameters().get(0), cp.GetParameters().get(1)) ? MessageStatus.SUCCESS : MessageStatus.FAIL;	
+			ServerProtocol sp = new ServerProtocol(status, Datatype.ACCOUNTHOLDER_ROLE_ASSOCIATION_RESULT);
+			
+			try
+			{
+				client.sendToClient(sp);
+			}
+			catch (IOException e)
+			{
+				e.printStackTrace();
+			}
+		}
+		else
+		{
+			//send a fail request as the client is not a teller
+			ServerProtocol sp = new ServerProtocol(MessageStatus.FAIL, Datatype.ACCOUNTHOLDER_ROLE_ASSOCIATION_RESULT);
+			
+			try
+			{
+				client.sendToClient(sp);
+			}
+			catch (IOException e)
+			{
+				e.printStackTrace();
+			}
+		}
+	}
 }

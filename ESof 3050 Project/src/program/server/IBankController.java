@@ -98,4 +98,12 @@ public interface IBankController
 	 * @return true if the address was removed, false if not
 	 */
 	public boolean removeAddress(String sin, String postalCode);
+	
+	/**
+	 * adds an account holder role to a person
+	 * @param sin social insurance number of person
+	 * @param email the account holder email address
+	 * @return true if the role was added, false if not
+	 */
+	public boolean addAccountHolderToPerson(String sin, String email);
 }

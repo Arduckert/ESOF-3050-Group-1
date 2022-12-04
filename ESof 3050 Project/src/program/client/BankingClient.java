@@ -70,6 +70,9 @@ public class BankingClient extends AbstractClient
 			case ADDRESS_REMOVAL_RESULT:
 				processAddressRemovalResult(sp);
 				break;
+			case ACCOUNTHOLDER_ROLE_ASSOCIATION_RESULT:
+				processAccountHolderToPersonResult(sp);
+				break;
 			case BASIC_MESSAGE:
 				processBasicMessage(sp);
 				break;
@@ -437,6 +440,40 @@ public class BankingClient extends AbstractClient
 		else
 		{
 			bcc.handleRemoveAddressResult(false);
+		}
+	}
+	
+	/////////////////////////////////////////
+	//	ADD ACCOUNT HOLDER ROLE TO PERSON  //
+	/////////////////////////////////////////
+	
+	/**
+	 * sends a request to the server to add an account holder to a person
+	 * @param sin social insurance number
+	 * @param email account holder's email address
+	 * @throws IOException
+	 */
+	public void addAccountHolderToPerson(String sin, String email) throws IOException
+	{
+		ClientProtocol cp = new ClientProtocol(ServerAction.ADD_ACCOUNTHOLDER_ROLE_TO_PERSON, sin, email);
+		sendToServer(cp);
+	}
+	
+	/**
+	 * processes an account holder to person association result
+	 * @param sp
+	 */
+	private void processAccountHolderToPersonResult(ServerProtocol sp)
+	{
+		//sends true to the banking client controller handle method if the
+		//removal was successful
+		if (sp.getMessageStatus() == MessageStatus.SUCCESS)
+		{
+			bcc.handleAccountHolderToPersonResult(true);
+		}
+		else
+		{
+			bcc.handleAccountHolderToPersonResult(false);
 		}
 	}
 }

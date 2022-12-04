@@ -192,4 +192,21 @@ public interface IBankingClientController
 	 * @param isSuccessful
 	 */
 	public void handleRemoveAddressResult(boolean isSuccessful);
+	
+	///////////////////////////////////////
+	// ADD ACCOUNT HOLDER ROLE TO PERSON //
+	///////////////////////////////////////
+	
+	/**
+	 * adds an account holder association to a person
+	 * @param sin social insurance number
+	 * @param email account holder email address
+	 */
+	public void addAccountHolderToPerson(String sin, String email);
+	
+	/**
+	 * handles the result of adding an account holder to a person
+	 * @param isSuccessful
+	 */
+	public void handleAccountHolderToPersonResult(boolean isSuccessful);
 }

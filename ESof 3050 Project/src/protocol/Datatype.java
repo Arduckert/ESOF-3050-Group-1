@@ -203,6 +203,14 @@ public enum Datatype
 	ADDRESS_REMOVAL_RESULT,
 	
 	/**
+	 * This sends information about an account holder association with a person.
+	 * No information is included in this data type since the information required is
+	 * within the message status value.
+	 * @object_size 0
+	 */
+	ACCOUNTHOLDER_ROLE_ASSOCIATION_RESULT,
+	
+	/**
 	 * This sends a string message back to the client. This is used as a way to test
 	 * the client-server communication and can also be used to send a message back to
 	 * the client if the message has a FAIL status.

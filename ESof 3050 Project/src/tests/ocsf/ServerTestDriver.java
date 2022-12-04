@@ -159,4 +159,14 @@ public class ServerTestDriver implements IBankController
 		return sin.equals(TestVariables.availablePersonSIN)
 				&& postalCode.equals(TestVariables.availablePostalCode);
 	}
+
+	/**
+	 * tests the data obtained from the client to check if its the same
+	 */
+	@Override
+	public boolean addAccountHolderToPerson(String sin, String email)
+	{
+		return sin.equals(TestVariables.availablePersonSIN)
+				&& email.equals(TestVariables.availableRoleEmail);
+	}
 }
