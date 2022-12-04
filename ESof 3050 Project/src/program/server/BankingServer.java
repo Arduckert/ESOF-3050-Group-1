@@ -129,6 +129,11 @@ public class BankingServer extends AbstractServer
 		{
 			ServerProtocol sp = new ServerProtocol(MessageStatus.SUCCESS, Datatype.LOGIN_RESULT_ACCOUNTHOLDER);
 
+			//sets info in the connection to client to uniquely identify them
+			client.setInfo("LoginType", LoginType.ACCOUNTHOLDER);
+			client.setInfo("AccNum", cp.GetParameters().get(0));
+			client.setInfo("AccPin", cp.GetParameters().get(1));
+			
 			try
 			{
 				client.sendToClient(sp);
@@ -166,6 +171,11 @@ public class BankingServer extends AbstractServer
 		{
 			ServerProtocol sp = new ServerProtocol(MessageStatus.SUCCESS, Datatype.LOGIN_RESULT_TELLER);
 
+			//sets info in the connection to client to uniquely identify them
+			client.setInfo("LoginType", LoginType.TELLER);
+			client.setInfo("AccNum", cp.GetParameters().get(0));
+			client.setInfo("AccPin", cp.GetParameters().get(1));
+			
 			try
 			{
 				client.sendToClient(sp);
@@ -232,30 +242,45 @@ public class BankingServer extends AbstractServer
 	 */
 	private void handleAccountHolderCreationRequest(ClientProtocol cp, ConnectionToClient client)
 	{
-		//gets the account holder info of the created account
-		AccountHolderInfo info = bc.createAccountHolder(cp.GetParameters().get(0));	
-		
-		//sets the status based on the creation result of the account holder
-		MessageStatus status = info.getHasInfo() ? MessageStatus.SUCCESS : MessageStatus.FAIL;
-		
-		ServerProtocol sp = new ServerProtocol(status, Datatype.ACCOUNT_HOLDER_CREATION_RESULT);
-		
-		try
+		//only tellers can create account holders
+		if (client.getInfo("LoginType") == LoginType.TELLER)
 		{
-			sp.AddData(info.email, info.accountNumber, info.pin);
+			//gets the account holder info of the created account
+			AccountHolderInfo info = bc.createAccountHolder(cp.GetParameters().get(0));	
+			
+			//sets the status based on the creation result of the account holder
+			MessageStatus status = info.getHasInfo() ? MessageStatus.SUCCESS : MessageStatus.FAIL;
+			
+			ServerProtocol sp = new ServerProtocol(status, Datatype.ACCOUNT_HOLDER_CREATION_RESULT);
+			
+			try
+			{
+				sp.AddData(info.email, info.accountNumber, info.pin);
+			}
+			catch (ParameterException e1)
+			{
+				e1.printStackTrace();
+			}
+			
+			try
+			{
+				client.sendToClient(sp);
+			}
+			catch (IOException e)
+			{
+				e.printStackTrace();
+			}	
 		}
-		catch (ParameterException e1)
+		else
 		{
-			e1.printStackTrace();
-		}
-		
-		try
-		{
-			client.sendToClient(sp);
-		}
-		catch (IOException e)
-		{
-			e.printStackTrace();
+			try
+			{
+				client.sendToClient(new ServerProtocol(MessageStatus.FAIL, Datatype.ACCOUNT_HOLDER_CREATION_RESULT));
+			}
+			catch (IOException e)
+			{
+				e.printStackTrace();
+			}
 		}
 	}
 	

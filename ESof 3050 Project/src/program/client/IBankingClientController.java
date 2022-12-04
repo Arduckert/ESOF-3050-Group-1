@@ -110,7 +110,7 @@ public interface IBankingClientController
 	 * @param accountNumber the account holder's account number
 	 * @param pin the account holder's pin
 	 */
-	public void deleteAccountHolder(String accountNumber, String pin, String tellerEmpID);
+	public void deleteAccountHolder(String accountNumber, String pin);
 	
 	/**
 	 * Handles the result of an account holder being deleted

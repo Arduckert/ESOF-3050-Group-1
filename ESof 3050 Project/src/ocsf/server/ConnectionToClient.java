@@ -97,8 +97,7 @@ public class ConnectionToClient extends Thread
    * methods.
    */
   private HashMap savedInfo = new HashMap(10);
-
-
+  
 // CONSTRUCTORS *****************************************************
 
   /**
