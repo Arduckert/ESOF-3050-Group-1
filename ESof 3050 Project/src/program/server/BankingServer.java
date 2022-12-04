@@ -48,6 +48,12 @@ public class BankingServer extends AbstractServer
 			case DELETE_PERSON:
 				handlePersonDeletionRequest(cp, client);
 				break;
+			case ADD_ADDRESS_TO_PERSON:
+				handleAddressAdditionRequest(cp, client);
+				break;
+			case REMOVE_ADDRESS_FROM_PERSON:
+				handleAddressRemovalRequest(cp, client);
+				break;
 			default:
 				break;
 		}
@@ -392,6 +398,84 @@ public class BankingServer extends AbstractServer
 		{
 			//send a fail request as the client is not a teller
 			ServerProtocol sp = new ServerProtocol(MessageStatus.FAIL, Datatype.PERSON_DELETION_RESULT);
+			
+			try
+			{
+				client.sendToClient(sp);
+			}
+			catch (IOException e)
+			{
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	/**
+	 * dispatches adding an address from a person to the server
+	 * @param cp
+	 * @param client
+	 */
+	private void handleAddressAdditionRequest(ClientProtocol cp, ConnectionToClient client)
+	{
+		//only tellers can add addresses
+		if (client.getInfo("LoginType") == LoginType.TELLER)
+		{
+			//success if the the address was added, fail if not
+			MessageStatus status = bc.addAddress(cp.GetParameters().get(0), cp.GetParameters().get(1), cp.GetParameters().get(2), cp.GetParameters().get(3), cp.GetParameters().get(4), cp.GetParameters().get(5)) ? MessageStatus.SUCCESS : MessageStatus.FAIL;	
+			ServerProtocol sp = new ServerProtocol(status, Datatype.ADDRESS_ADDITION_RESULT);
+			
+			try
+			{
+				client.sendToClient(sp);
+			}
+			catch (IOException e)
+			{
+				e.printStackTrace();
+			}
+		}
+		else
+		{
+			//send a fail request as the client is not a teller
+			ServerProtocol sp = new ServerProtocol(MessageStatus.FAIL, Datatype.ADDRESS_ADDITION_RESULT);
+			
+			try
+			{
+				client.sendToClient(sp);
+			}
+			catch (IOException e)
+			{
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	/**
+	 * dispatches removing an address from a person to the server 
+	 * @param cp
+	 * @param client
+	 */
+	private void handleAddressRemovalRequest(ClientProtocol cp, ConnectionToClient client)
+	{
+		//only tellers can remove addresses from a person
+		if (client.getInfo("LoginType") == LoginType.TELLER)
+		{
+			//success if the the address was removed, fail if not
+			MessageStatus status = bc.removeAddress(cp.GetParameters().get(0), cp.GetParameters().get(1)) ? MessageStatus.SUCCESS : MessageStatus.FAIL;	
+			ServerProtocol sp = new ServerProtocol(status, Datatype.ADDRESS_REMOVAL_RESULT);
+			
+			try
+			{
+				client.sendToClient(sp);
+			}
+			catch (IOException e)
+			{
+				e.printStackTrace();
+			}
+		}
+		else
+		{
+			//send a fail request as the client is not a teller
+			ServerProtocol sp = new ServerProtocol(MessageStatus.FAIL, Datatype.ADDRESS_REMOVAL_RESULT);
 			
 			try
 			{

@@ -22,6 +22,8 @@ public class ClientTestDriver implements IBankingClientController
 	private static int deleteAccountHolderTestCount = 0;
 	private static int createPersonTestCount = 0;
 	private static int deletePersonTestCount = 0;
+	private static int addAddressTestCount = 0;
+	private static int removeAddressTestCount = 0;
 	
 	public ClientTestDriver()
 	{
@@ -80,6 +82,16 @@ public class ClientTestDriver implements IBankingClientController
 			//delete person tests
 			deletePerson(TestVariables.availablePersonSIN); //handler should return true
 			deletePerson(TestVariables.unavailablePersonSIN); //handler should return false
+			
+			//add address tests
+			addAddress(TestVariables.addressStreetName, TestVariables.addressStreetNumber, TestVariables.availablePostalCode, TestVariables.addressProvince,
+					TestVariables.addressCountry, TestVariables.availablePersonSIN);
+			addAddress(TestVariables.addressStreetName, TestVariables.addressStreetNumber, TestVariables.availablePostalCode, TestVariables.addressProvince,
+					TestVariables.addressCountry, TestVariables.unavailablePersonSIN);
+			
+			//remove address tests
+			removeAddress(TestVariables.availablePersonSIN, TestVariables.availablePostalCode);
+			removeAddress(TestVariables.availablePersonSIN, TestVariables.unavailablePostalCode);
 			
 			Sleep(1000); //wait for connection to close
 			CloseServerConnection();
@@ -499,5 +511,92 @@ public class ClientTestDriver implements IBankingClientController
 			assert false;
 		}
 		deletePersonTestCount++;
+	}
+
+	///////////////////////
+	// ADD ADDRESS TEST  //
+	///////////////////////
+	
+	/**
+	 * runs add address test
+	 */
+	@Override
+	public void addAddress(String streetName, String streetNumber, String postalCode, String province, String country,
+			String sin)
+	{
+		try
+		{
+			bc.addAddress(streetName, streetNumber, postalCode, province, country, sin);
+		}
+		catch (IOException e)
+		{
+			System.err.println("ADD ADDRESS TEST FAILED: EXCEPTION");
+			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * handles add address test result
+	 */
+	@Override
+	public void handleAddAddressResult(boolean isSuccessful)
+	{
+		if (addAddressTestCount == 0 && isSuccessful)
+		{
+			System.out.println("ADD ADDRESS TRUE TEST PASSED");
+		}
+		else if (addAddressTestCount == 1 && !isSuccessful)
+		{
+			System.out.println("ADD ADDRESS FALSE TEST PASSED");
+		}
+		else
+		{
+			System.err.println("DELETE PERSON TEST " + (addAddressTestCount + 1) + " FAILED");
+			assert false;
+		}
+		addAddressTestCount++;
+	}
+
+	/////////////////////////
+	// REMOVE ADDRESS TEST //
+	/////////////////////////
+	
+	/**
+	 * runs remove address test
+	 */
+	@Override
+	public void removeAddress(String sin, String postalCode)
+	{
+		try
+		{
+			bc.removeAddress(sin, postalCode);
+		}
+		catch (IOException e)
+		{
+			System.err.println("REMOVE ADDRESS TEST FAILED: EXCEPTION");
+			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * handles remove address test result
+	 */
+	@Override
+	public void handleRemoveAddressResult(boolean isSuccessful)
+	{
+		if (removeAddressTestCount == 0 && isSuccessful)
+		{
+			System.out.println("REMOVE ADDRESS TRUE TEST PASSED");
+		}
+		else if (removeAddressTestCount == 1 && !isSuccessful)
+		{
+			System.out.println("REMOVE ADDRESS FALSE TEST PASSED");
+		}
+		else
+		{
+			System.err.println("DELETE PERSON TEST " + (removeAddressTestCount + 1) + " FAILED");
+			assert false;
+		}
+		removeAddressTestCount++;
 	}
 }

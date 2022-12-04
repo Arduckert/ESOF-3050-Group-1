@@ -64,6 +64,12 @@ public class BankingClient extends AbstractClient
 			case PERSON_DELETION_RESULT:
 				processPersonDeletionResult(sp);
 				break;
+			case ADDRESS_ADDITION_RESULT:
+				processAddressAdditionResult(sp);
+				break;
+			case ADDRESS_REMOVAL_RESULT:
+				processAddressRemovalResult(sp);
+				break;
 			case BASIC_MESSAGE:
 				processBasicMessage(sp);
 				break;
@@ -364,6 +370,73 @@ public class BankingClient extends AbstractClient
 		else
 		{
 			bcc.handlePersonDeletion(false);
+		}
+	}
+	
+	///////////////////
+	//	ADD ADDRESS  //
+	///////////////////
+	
+	/**
+	 * sends a request to the server to add an address to a person
+	 * @param sin social insurance number
+	 * @throws IOException
+	 */
+	public void addAddress(String streetName, String streetNumber, String postalCode, String province, String country, String sid) throws IOException
+	{
+		ClientProtocol cp = new ClientProtocol(ServerAction.ADD_ADDRESS_TO_PERSON, streetName, streetNumber, postalCode, province, country, sid);
+		sendToServer(cp);
+	}
+	
+	/**
+	 * processes an address addition result
+	 * @param sp
+	 */
+	private void processAddressAdditionResult(ServerProtocol sp)
+	{
+		//sends true to the banking client controller handle method if the
+		//address was added successfully
+		if (sp.getMessageStatus() == MessageStatus.SUCCESS)
+		{
+			bcc.handleAddAddressResult(true);
+		}
+		else
+		{
+			bcc.handleAddAddressResult(false);
+		}
+	}
+	
+	//////////////////////
+	//	REMOVE ADDRESS  //
+	//////////////////////
+	
+	/**
+	 * sends a request to the server to remove an address from a person
+	 * @param sin social insurance number
+	 * @param postalCode
+	 * @throws IOException
+	 */
+	public void removeAddress(String sin, String postalCode) throws IOException
+	{
+		ClientProtocol cp = new ClientProtocol(ServerAction.REMOVE_ADDRESS_FROM_PERSON, sin, postalCode);
+		sendToServer(cp);
+	}
+	
+	/**
+	 * processes an address removal from an address
+	 * @param sp
+	 */
+	private void processAddressRemovalResult(ServerProtocol sp)
+	{
+		//sends true to the banking client controller handle method if the
+		//removal was successful
+		if (sp.getMessageStatus() == MessageStatus.SUCCESS)
+		{
+			bcc.handleRemoveAddressResult(true);
+		}
+		else
+		{
+			bcc.handleRemoveAddressResult(false);
 		}
 	}
 }

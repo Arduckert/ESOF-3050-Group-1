@@ -684,11 +684,11 @@ public class BankingClientController extends Application implements IBankingClie
 		
 		if (isSuccessful)
 		{
-			//account was deleted
+			//person was created
 		}
 		else
 		{
-			//could not delete existing account
+			//person was not created
 		}
 	}
 
@@ -717,11 +717,78 @@ public class BankingClientController extends Application implements IBankingClie
 		
 		if (isSuccessful)
 		{
-			//account was deleted
+			//person was deleted
 		}
 		else
 		{
-			//could not delete existing account
+			//person was not deleted
+		}
+	}
+
+	//////////////////
+	// ADD ADDRESS  //
+	//////////////////
+	
+	@Override
+	public void addAddress(String streetName, String streetNumber, String postalCode, String province, String country,
+			String sid)
+	{
+		try
+		{
+			bc.addAddress(streetName, streetNumber, postalCode, province, country, sid);
+		}
+		catch (IOException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}	
+	}
+
+	@Override
+	public void handleAddAddressResult(boolean isSuccessful)
+	{
+		// TODO add handle code
+		
+		if (isSuccessful)
+		{
+			//address was added
+		}
+		else
+		{
+			//address could not be added
+		}
+	}
+
+	/////////////////////
+	// REMOVE ADDRESS  //
+	/////////////////////
+	
+	@Override
+	public void removeAddress(String sin, String postalCode)
+	{
+		try
+		{
+			bc.removeAddress(sin, postalCode);
+		}
+		catch (IOException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	@Override
+	public void handleRemoveAddressResult(boolean isSuccessful)
+	{
+		// TODO add handle code
+		
+		if (isSuccessful)
+		{
+			//address was removed
+		}
+		else
+		{
+			//address was not removed
 		}
 	}
 }

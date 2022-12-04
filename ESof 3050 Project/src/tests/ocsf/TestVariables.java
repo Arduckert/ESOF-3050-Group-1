@@ -49,4 +49,13 @@ public final class TestVariables
 	public static final String unavailablePersonSIN = "987654321";
 	
 	public static final String personDOB = "12/25/1990";
+	
+	//ADD AND REMOVE ADDRESSES
+	public static final String availablePostalCode = "63146";
+	public static final String unavailablePostalCode = "52437";
+	
+	public static final String addressStreetNumber = "123";
+	public static final String addressStreetName = "Example St.";
+	public static final String addressProvince = "Ontario";
+	public static final String addressCountry = "Canada";
 }

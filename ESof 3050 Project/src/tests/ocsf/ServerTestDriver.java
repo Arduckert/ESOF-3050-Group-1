@@ -114,6 +114,9 @@ public class ServerTestDriver implements IBankController
 				&& tellerEmpID.equals(TestVariables.availableTellerID);
 	}
 
+	/**
+	 * tests the data obtained from the client to check if its the same
+	 */
 	@Override
 	public boolean createPerson(String firstName, String lastName, String sin, String dateOfBirth)
 	{
@@ -123,9 +126,37 @@ public class ServerTestDriver implements IBankController
 				&& dateOfBirth.equals(TestVariables.personDOB);
 	}
 
+	/**
+	 * tests the data obtained from the client to check if its the same
+	 */
 	@Override
 	public boolean deletePerson(String sin)
 	{
 		return sin.equals(TestVariables.availablePersonSIN);
+	}
+
+	/**
+	 * tests the data obtained from the client to check if its the same
+	 */
+	@Override
+	public boolean addAddress(String streetName, String streetNumber, String postalCode, String province,
+			String country, String sin)
+	{
+		return streetName.equals(TestVariables.addressStreetName)
+				&& streetNumber.equals(TestVariables.addressStreetNumber)
+				&& postalCode.equals(TestVariables.availablePostalCode)
+				&& province.equals(TestVariables.addressProvince)
+				&& country.equals(TestVariables.addressCountry)
+				&& sin.equals(TestVariables.availablePersonSIN);
+	}
+
+	/**
+	 * tests the data obtained from the client to check if its the same
+	 */
+	@Override
+	public boolean removeAddress(String sin, String postalCode)
+	{
+		return sin.equals(TestVariables.availablePersonSIN)
+				&& postalCode.equals(TestVariables.availablePostalCode);
 	}
 }
