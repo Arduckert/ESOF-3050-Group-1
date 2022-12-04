@@ -89,9 +89,9 @@ public class ServerTestDriver implements IBankController
 	 * returns the available email to test both true and false
 	 */
 	@Override
-	public AccountHolderInfo createAccountHolder(String email)
+	public AccountHolderInfo createAccountHolder(String email, String tellerEmpID)
 	{
-		if (email.equals(TestVariables.availableCreateAccountHolderEmail))
+		if (email.equals(TestVariables.availableCreateAccountHolderEmail) && tellerEmpID.equals(TestVariables.availableTellerID))
 		{
 			AccountHolderInfo info = new AccountHolderInfo(email, TestVariables.createAccountHolderNumber, TestVariables.createAccountHolderPin);
 			return info;
@@ -107,9 +107,10 @@ public class ServerTestDriver implements IBankController
 	 * returns the available email to test both true and false
 	 */
 	@Override
-	public boolean deleteAccountHolder(String accountNumber, String pin)
+	public boolean deleteAccountHolder(String accountNumber, String pin, String tellerEmpID)
 	{
 		return accountNumber.equals(TestVariables.availableDeleteAccountHolderNumber)
-				&& pin.equals(TestVariables.deleteAccountHolderPin);
+				&& pin.equals(TestVariables.deleteAccountHolderPin)
+				&& tellerEmpID.equals(TestVariables.availableTellerID);
 	}
 }

@@ -246,7 +246,7 @@ public class BankingServer extends AbstractServer
 		if (client.getInfo("LoginType") == LoginType.TELLER)
 		{
 			//gets the account holder info of the created account
-			AccountHolderInfo info = bc.createAccountHolder(cp.GetParameters().get(0));	
+			AccountHolderInfo info = bc.createAccountHolder(cp.GetParameters().get(0), (String)client.getInfo("AccNum"));	
 			
 			//sets the status based on the creation result of the account holder
 			MessageStatus status = info.getHasInfo() ? MessageStatus.SUCCESS : MessageStatus.FAIL;
@@ -295,7 +295,7 @@ public class BankingServer extends AbstractServer
 		if (client.getInfo("LoginType") == LoginType.TELLER)
 		{
 			//success if the account creation was successful, fail if not
-			MessageStatus status = bc.deleteAccountHolder(cp.GetParameters().get(0), cp.GetParameters().get(1)) ? MessageStatus.SUCCESS : MessageStatus.FAIL;	
+			MessageStatus status = bc.deleteAccountHolder(cp.GetParameters().get(0), cp.GetParameters().get(1), (String)client.getInfo("AccNum")) ? MessageStatus.SUCCESS : MessageStatus.FAIL;	
 			ServerProtocol sp = new ServerProtocol(status, Datatype.ACCOUNT_HOLDER_DELETION_RESULT);
 			
 			try

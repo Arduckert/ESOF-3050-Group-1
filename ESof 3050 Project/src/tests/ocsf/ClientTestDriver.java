@@ -389,15 +389,15 @@ public class ClientTestDriver implements IBankingClientController
 	{
 		if (deleteAccountHolderTestCount == 0 && isSuccessful)
 		{
-			System.out.println("CREATE ACCOUNT HOLDER TRUE TEST PASSED");
+			System.out.println("DELETE ACCOUNT HOLDER TRUE TEST PASSED");
 		}
 		else if (deleteAccountHolderTestCount == 1 && !isSuccessful)
 		{
-			System.out.println("CREATE ACCOUNT HOLDER FALSE TEST PASSED");
+			System.out.println("DELETE ACCOUNT HOLDER FALSE TEST PASSED");
 		}
 		else
 		{
-			System.err.println("CREATE ACCOUNT HOLDER TEST " + (deleteAccountHolderTestCount + 1) + " FAILED");
+			System.err.println("DELETE ACCOUNT HOLDER TEST " + (deleteAccountHolderTestCount + 1) + " FAILED");
 			assert false;
 		}
 		deleteAccountHolderTestCount++;
