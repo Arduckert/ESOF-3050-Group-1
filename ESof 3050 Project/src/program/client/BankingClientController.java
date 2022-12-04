@@ -644,6 +644,10 @@ public class BankingClientController extends Application implements IBankingClie
 		}
 	}
 
+	///////////////////////////
+	// DELETE ACCOUNT HOLDER //
+	///////////////////////////
+	
 	/**
 	 * deletes an existing account holder
 	 */
@@ -666,6 +670,72 @@ public class BankingClientController extends Application implements IBankingClie
 	 */
 	@Override
 	public void handleAccountHolderDeletion(boolean isSuccessful)
+	{
+		// TODO add handle code
+		
+		if (isSuccessful)
+		{
+			//account was deleted
+		}
+		else
+		{
+			//could not delete existing account
+		}
+	}
+
+	////////////////////
+	// CREATE PERSON  //
+	////////////////////
+	
+	@Override
+	public void createNewPerson(String firstName, String lastName, String sin, String dateOfBirth)
+	{
+		try
+		{
+			bc.createPerson(firstName, lastName, sin, dateOfBirth);
+		}
+		catch (IOException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}	
+	}
+
+	@Override
+	public void handleCreatePersonResult(boolean isSuccessful)
+	{
+		// TODO add handle code
+		
+		if (isSuccessful)
+		{
+			//account was deleted
+		}
+		else
+		{
+			//could not delete existing account
+		}
+	}
+
+	////////////////////
+	// DELETE PERSON  //
+	////////////////////
+	
+	@Override
+	public void deletePerson(String sin)
+	{
+		try
+		{
+			bc.deletePerson(sin);
+		}
+		catch (IOException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	@Override
+	public void handlePersonDeletion(boolean isSuccessful)
 	{
 		// TODO add handle code
 		

@@ -113,4 +113,19 @@ public class ServerTestDriver implements IBankController
 				&& pin.equals(TestVariables.deleteAccountHolderPin)
 				&& tellerEmpID.equals(TestVariables.availableTellerID);
 	}
+
+	@Override
+	public boolean createPerson(String firstName, String lastName, String sin, String dateOfBirth)
+	{
+		return firstName.equals(TestVariables.availablePersonFirstName)
+				&& lastName.equals(TestVariables.personLastName)
+				&& sin.equals(TestVariables.availablePersonSIN)
+				&& dateOfBirth.equals(TestVariables.personDOB);
+	}
+
+	@Override
+	public boolean deletePerson(String sin)
+	{
+		return sin.equals(TestVariables.availablePersonSIN);
+	}
 }

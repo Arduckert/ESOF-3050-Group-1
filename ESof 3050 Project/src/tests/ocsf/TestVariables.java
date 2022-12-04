@@ -39,4 +39,14 @@ public final class TestVariables
 	public static final String deleteAccountHolderTellerID = "654321";
 	public static final String deleteAccountHolderPin = "7654";
 	
+	//CREATE AND DELETE PERSON
+	public static final String availablePersonFirstName = "John";
+	public static final String unavailablePersonFirstName = "Jhon";
+	
+	public static final String personLastName = "Smith";
+	
+	public static final String availablePersonSIN = "123456789";
+	public static final String unavailablePersonSIN = "987654321";
+	
+	public static final String personDOB = "12/25/1990";
 }
