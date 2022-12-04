@@ -60,5 +60,5 @@ public interface IBankController
 	 * @param pin the account holder's pin
 	 * @return true if the deletion was successful, false if not successful
 	 */
-	public boolean deleteAccountHolder(String accountNumber, String pin, String tellerEmpID);
+	public boolean deleteAccountHolder(String accountNumber, String pin);
 }

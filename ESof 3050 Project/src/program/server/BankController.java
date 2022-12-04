@@ -169,12 +169,12 @@ public class BankController implements IBankController
 	 * delete an existing account holder
 	 */
 	@Override
-	public boolean deleteAccountHolder(String accountNumber, String pin, String tellerEmpID)
+	public boolean deleteAccountHolder(String accountNumber, String pin)
 	{
 		//TODO: call a delete method that returns a boolean where true means
 		//the account was deleted, false if not
-		boolean accountCreated = false;
-		return accountCreated;
+		boolean accountDeleted = false;
+		return accountDeleted;
 	}
 	
 }

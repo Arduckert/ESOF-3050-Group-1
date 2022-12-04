@@ -291,17 +291,35 @@ public class BankingServer extends AbstractServer
 	 */
 	private void handleAccountHolderDeletionRequest(ClientProtocol cp, ConnectionToClient client)
 	{
-		//success if the account creation was successful, fail if not
-		MessageStatus status = bc.deleteAccountHolder(cp.GetParameters().get(0), cp.GetParameters().get(1), cp.GetParameters().get(2)) ? MessageStatus.SUCCESS : MessageStatus.FAIL;	
-		ServerProtocol sp = new ServerProtocol(status, Datatype.ACCOUNT_HOLDER_DELETION_RESULT);
-		
-		try
+		//only tellers can delete account holders
+		if (client.getInfo("LoginType") == LoginType.TELLER)
 		{
-			client.sendToClient(sp);
+			//success if the account creation was successful, fail if not
+			MessageStatus status = bc.deleteAccountHolder(cp.GetParameters().get(0), cp.GetParameters().get(1)) ? MessageStatus.SUCCESS : MessageStatus.FAIL;	
+			ServerProtocol sp = new ServerProtocol(status, Datatype.ACCOUNT_HOLDER_DELETION_RESULT);
+			
+			try
+			{
+				client.sendToClient(sp);
+			}
+			catch (IOException e)
+			{
+				e.printStackTrace();
+			}
 		}
-		catch (IOException e)
+		else
 		{
-			e.printStackTrace();
+			//send a fail request as the client is not a teller
+			ServerProtocol sp = new ServerProtocol(MessageStatus.FAIL, Datatype.ACCOUNT_HOLDER_DELETION_RESULT);
+			
+			try
+			{
+				client.sendToClient(sp);
+			}
+			catch (IOException e)
+			{
+				e.printStackTrace();
+			}
 		}
 	}
 }

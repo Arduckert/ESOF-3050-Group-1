@@ -624,11 +624,11 @@ public class BankingClientController extends Application implements IBankingClie
 	 * deletes an existing account holder
 	 */
 	@Override
-	public void deleteAccountHolder(String accountNumber, String pin, String tellerEmpID)
+	public void deleteAccountHolder(String accountNumber, String pin)
 	{
 		try
 		{
-			bc.deleteAccountHolder(accountNumber, pin, tellerEmpID);
+			bc.deleteAccountHolder(accountNumber, pin);
 		}
 		catch (IOException e)
 		{

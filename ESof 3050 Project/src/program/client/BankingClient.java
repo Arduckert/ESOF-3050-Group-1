@@ -268,9 +268,9 @@ public class BankingClient extends AbstractClient
 	 * @param pin the desired pin number
 	 * @throws IOException
 	 */
-	public void deleteAccountHolder(String accountNumber, String pin, String tellerEmpID) throws IOException
+	public void deleteAccountHolder(String accountNumber, String pin) throws IOException
 	{
-		ClientProtocol cp = new ClientProtocol(ServerAction.DELETE_ACCOUNTHOLDER, accountNumber, pin, tellerEmpID);
+		ClientProtocol cp = new ClientProtocol(ServerAction.DELETE_ACCOUNTHOLDER, accountNumber, pin);
 		sendToServer(cp);
 	}
 	

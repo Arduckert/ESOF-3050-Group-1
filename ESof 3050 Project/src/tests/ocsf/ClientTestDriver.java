@@ -66,8 +66,8 @@ public class ClientTestDriver implements IBankingClientController
 			createNewAccountHolder(TestVariables.availableCreateAccountHolderEmail); //handler should return true
 			createNewAccountHolder(TestVariables.unavailableCreateAccountHolderEmail); //handler should return false
 			
-			deleteAccountHolder(TestVariables.availableDeleteAccountHolderNumber, TestVariables.deleteAccountHolderPin, TestVariables.deleteAccountHolderTellerID); //handler should return true
-			deleteAccountHolder(TestVariables.unavailableDeleteAccountHolderNumber, TestVariables.deleteAccountHolderPin, TestVariables.deleteAccountHolderTellerID); //handler should return false		
+			deleteAccountHolder(TestVariables.availableDeleteAccountHolderNumber, TestVariables.deleteAccountHolderPin); //handler should return true
+			deleteAccountHolder(TestVariables.unavailableDeleteAccountHolderNumber, TestVariables.deleteAccountHolderPin); //handler should return false		
 			
 			Sleep(1000); //wait for connection to close
 			CloseServerConnection();
@@ -371,11 +371,11 @@ public class ClientTestDriver implements IBankingClientController
 	//////////////////////////////////
 	
 	@Override
-	public void deleteAccountHolder(String accountNumber, String pin, String tellerEmpID)
+	public void deleteAccountHolder(String accountNumber, String pin)
 	{
 		try
 		{
-			bc.deleteAccountHolder(accountNumber, pin, tellerEmpID);
+			bc.deleteAccountHolder(accountNumber, pin);
 		}
 		catch (IOException e)
 		{
