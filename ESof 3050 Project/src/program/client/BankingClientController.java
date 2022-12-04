@@ -4,6 +4,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
@@ -18,6 +19,8 @@ import java.util.List;
 
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 // *** TODO: IMPLEMENT INTERFACE *** //
 public class BankingClientController extends Application implements IBankingClientController {
@@ -134,6 +137,10 @@ public class BankingClientController extends Application implements IBankingClie
 		changeScene(event,"AccountHolderMainMenu.fxml");
 	}
 	
+	public void switchToTellerSearchScreen(ActionEvent event) throws Exception{
+		changeScene(event,"TellerSearchScreen.fxml");
+	}
+	
 	//************************************************************************
 	
 	//*************************************************************************
@@ -225,7 +232,7 @@ public class BankingClientController extends Application implements IBankingClie
     @FXML
     void SearchExistingAccountHolderButtonPressed(ActionEvent event) throws Exception {
     	//temporary for testing OCSF
-    	switchToSampleBalanceScreen(event);
+    	switchToTellerSearchScreen(event);
     }
     @FXML
     void CreateNewAccountHolderButtonPressed(ActionEvent event) throws Exception {
@@ -385,6 +392,23 @@ public class BankingClientController extends Application implements IBankingClie
 	}
   	
   	//************************************************************************
+  	
+  	//**********************************************************************
+  	//GUI components for teller search for account holder screen
+  
+    @FXML
+    private ChoiceBox<String> TellerSearchParameterComboBox = new ChoiceBox<>();
+    
+
+    @FXML
+    private TextField TellerSearchValueTextField;
+
+    @FXML
+    void TellerSearchSubmitButtonPressed(ActionEvent event) {
+
+    }
+    
+  	//*********************************************************************
   	
     //**************************************
     //Test for OCSF functionality
