@@ -78,4 +78,32 @@ public interface IBankController
 	 * @return true if the person was deleted, false if not
 	 */
 	public boolean deletePerson(String sin);
+	
+	/**
+	 * adds an address to a person on the server
+	 * @param streetName
+	 * @param streetNumber
+	 * @param postalCode
+	 * @param province
+	 * @param country
+	 * @param sid person's social insurance number
+	 * @return true if the address was added, false if not
+	 */
+	public boolean addAddress(String streetName, String streetNumber, String postalCode, String province, String country, String sid);
+	
+	/**
+	 * removes an address from a person on the server
+	 * @param sin
+	 * @param postalCode
+	 * @return true if the address was removed, false if not
+	 */
+	public boolean removeAddress(String sin, String postalCode);
+	
+	/**
+	 * adds an account holder role to a person
+	 * @param sin social insurance number of person
+	 * @param email the account holder email address
+	 * @return true if the role was added, false if not
+	 */
+	public boolean addAccountHolderToPerson(String sin, String email);
 }

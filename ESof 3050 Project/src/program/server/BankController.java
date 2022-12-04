@@ -197,8 +197,33 @@ public class BankController implements IBankController
 	{
 		//TODO: call a create method that returns a boolean where true means
 		//the person was deleted, false if not
-		boolean personCreated = false;
-		return personCreated;
+		boolean personDeleted = false;
+		return personDeleted;
+	}
+
+	@Override
+	public boolean addAddress(String streetName, String streetNumber, String postalCode, String province,
+			String country, String sid)
+	{
+		//TODO: call a create method that adds an address to a person
+		boolean addressAdded = false;
+		return addressAdded;
+	}
+
+	@Override
+	public boolean removeAddress(String sin, String postalCode)
+	{
+		//TODO: call a create method that removes an address to a person
+		boolean addressRemoved = false;
+		return addressRemoved;
+	}
+
+	@Override
+	public boolean addAccountHolderToPerson(String sin, String email)
+	{
+		//TODO: call a create method that adds an account holder to a person
+		boolean personRoleCreated = false;
+		return personRoleCreated;
 	}
 	
 }

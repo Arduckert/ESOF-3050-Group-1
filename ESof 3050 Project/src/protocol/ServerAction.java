@@ -107,7 +107,6 @@ public enum ServerAction
 	DELETE_TELLER,
 	
 	/**
-	 * TODO
 	 * This tells the server to create a new person. This takes a first name, a last name, a social
 	 * security number, and a date of birth. The server will return SUCCESS if the person was created
 	 * and FAIL if not.
@@ -115,7 +114,6 @@ public enum ServerAction
 	CREATE_PERSON,
 	
 	/**
-	 * TODO
 	 * This tells the server to delete an existing person. This takes a social security number.
 	 * The server will return SUCCESS if the person was deleted and FAIL if not.
 	 */
@@ -123,6 +121,8 @@ public enum ServerAction
 		
 	/**
 	 * TODO
+	 * This tells the server to associate an account holder with a person. This takes a social security
+	 * number and an email address 
 	 */
 	ADD_ACCOUNTHOLDER_ROLE_TO_PERSON,
 	

@@ -100,7 +100,7 @@ public class ClientProtocol implements Serializable
 	
 	/**
 	 * Constructor that takes a server action and four parameters
-	 * @param _serverAction - the action the server wil do on the data
+	 * @param _serverAction - the action the server will do on the data
 	 * @param parameter1 - the first parameter
 	 * @param parameter2 - the second parameter
 	 * @param parameter3 - the third parameter
@@ -115,6 +115,50 @@ public class ClientProtocol implements Serializable
 		parameters.add(parameter2);
 		parameters.add(parameter3);
 		parameters.add(parameter4);
+	}
+	
+	/**
+	 * Constructor that takes a server action and five parameters
+	 * @param _serverAction - the action the server will do on the data
+	 * @param parameter1 - the first parameter
+	 * @param parameter2 - the second parameter
+	 * @param parameter3 - the third parameter
+	 * @param parameter4 - the fourth parameter
+	 * @param parameter5 - the fifth parameter
+	 */
+	public ClientProtocol(ServerAction _serverAction, String parameter1, String parameter2, String parameter3, String parameter4, String parameter5)
+	{
+		serverAction = _serverAction;
+		
+		parameters = new ArrayList<String>();
+		parameters.add(parameter1);
+		parameters.add(parameter2);
+		parameters.add(parameter3);
+		parameters.add(parameter4);
+		parameters.add(parameter5);
+	}
+	
+	/**
+	 * Constructor that takes a server action and six parameters
+	 * @param _serverAction - the action the server will do on the data
+	 * @param parameter1 - the first parameter
+	 * @param parameter2 - the second parameter
+	 * @param parameter3 - the third parameter
+	 * @param parameter4 - the fourth parameter
+	 * @param parameter5 - the fifth parameter
+	 * @param parameter6 - the sixth parameter
+	 */
+	public ClientProtocol(ServerAction _serverAction, String parameter1, String parameter2, String parameter3, String parameter4, String parameter5, String parameter6)
+	{
+		serverAction = _serverAction;
+		
+		parameters = new ArrayList<String>();
+		parameters.add(parameter1);
+		parameters.add(parameter2);
+		parameters.add(parameter3);
+		parameters.add(parameter4);
+		parameters.add(parameter5);
+		parameters.add(parameter6);
 	}
 	
 	/**

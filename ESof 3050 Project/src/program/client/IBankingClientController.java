@@ -154,4 +154,59 @@ public interface IBankingClientController
 	 * if not
 	 */
 	public void handlePersonDeletion(boolean isSuccessful);
+	
+	/////////////////
+	// ADD ADDRESS //
+	/////////////////
+	
+	/**
+	 * Adds an address to a person on the server
+	 * @param streetName
+	 * @param streetNumber
+	 * @param postalCode
+	 * @param province
+	 * @param country
+	 * @param sid person's social insurance number
+	 */
+	public void addAddress(String streetName, String streetNumber, String postalCode, String province, String country, String sid);
+	
+	/**
+	 * handles the result of adding an address to a person
+	 * @param isSuccessful
+	 */
+	public void handleAddAddressResult(boolean isSuccessful);
+	
+	////////////////////
+	// REMOVE ADDRESS //
+	////////////////////
+	
+	/**
+	 * removes an address from a person
+	 * @param sin person's social insurance number
+	 * @param postalCode
+	 */
+	public void removeAddress(String sin, String postalCode);
+	
+	/**
+	 * handles the result of removing an address from a person
+	 * @param isSuccessful
+	 */
+	public void handleRemoveAddressResult(boolean isSuccessful);
+	
+	///////////////////////////////////////
+	// ADD ACCOUNT HOLDER ROLE TO PERSON //
+	///////////////////////////////////////
+	
+	/**
+	 * adds an account holder association to a person
+	 * @param sin social insurance number
+	 * @param email account holder email address
+	 */
+	public void addAccountHolderToPerson(String sin, String email);
+	
+	/**
+	 * handles the result of adding an account holder to a person
+	 * @param isSuccessful
+	 */
+	public void handleAccountHolderToPersonResult(boolean isSuccessful);
 }
