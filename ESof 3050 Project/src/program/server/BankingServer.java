@@ -54,6 +54,9 @@ public class BankingServer extends AbstractServer
 			case REMOVE_ADDRESS_FROM_PERSON:
 				handleAddressRemovalRequest(cp, client);
 				break;
+			case ADD_ACCOUNTHOLDER_ROLE_TO_PERSON:
+				handleAccountHolderToPersonRequest(cp, client);
+				break;
 			default:
 				break;
 		}
