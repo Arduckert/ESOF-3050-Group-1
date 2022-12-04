@@ -125,7 +125,7 @@ public class ServerProtocol implements Serializable
 		case CUSTOMER_RECORD:
 			return 4;
 		case ACCOUNT_RECORD:
-			return 4;
+			return 3;
 		case LOGIN_ATTEMPT:
 			return 3;
 		case LOGIN_RESULT_ACCOUNTHOLDER:
