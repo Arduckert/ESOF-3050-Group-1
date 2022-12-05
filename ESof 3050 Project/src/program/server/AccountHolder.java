@@ -10,7 +10,7 @@ public class AccountHolder extends personRole{
 	
 //Constructor
 	public AccountHolder(int pin, int card, String email, Person person) {
-		super(0,person); //0 for role = 0;
+		super(person); //0 for role = 0;
 		this.pin = pin;
 		this.cardNum = card;
 		this.email = email;

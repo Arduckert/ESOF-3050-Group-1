@@ -10,7 +10,7 @@ public class Teller extends personRole{
 	
 	//Constructor
 	public Teller(int x, String y, Person person) {
-		super(1, person);
+		super(person);
 		this.empNum = x;
 		this.password = y;
 	}
