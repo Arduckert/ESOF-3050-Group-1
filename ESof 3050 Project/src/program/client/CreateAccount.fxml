@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<GridPane hgap="10.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" vgap="10.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+<GridPane hgap="10.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" vgap="10.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="src.program.client.BankingClientController">
   <columnConstraints>
     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="250.0" />
     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="250.0" />
@@ -27,7 +27,7 @@
             <Font size="24.0" />
          </font>
       </Label>
-      <Button mnemonicParsing="false" text="Cancel" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.valignment="TOP">
+      <Button mnemonicParsing="false" onAction="#SelectAccountHolderButtonPressed" text="Cancel" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.valignment="TOP">
          <font>
             <Font size="14.0" />
          </font>

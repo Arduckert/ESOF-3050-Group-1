@@ -6,6 +6,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
@@ -171,6 +172,34 @@ public class BankingClientController extends Application implements IBankingClie
 	
 	public void switchToWithdrawScreen(ActionEvent event) throws Exception{
 		changeScene(event,"Withdraw.fxml");
+	}
+	
+	public void switchToTellerSearchResultScreen(ActionEvent event)throws Exception{
+		changeScene(event,"TellerSearchResult.fxml");
+	}
+	
+	public void switchToAccountViewerScreen(ActionEvent event) throws Exception{
+		changeScene(event,"AccountViewer.fxml");
+	}
+	
+	public void switchToAccountHistoryScreen(ActionEvent event) throws Exception{
+		changeScene(event,"AccountHistory.fxml");
+	}
+	
+	public void switchToEditProfileScreen(ActionEvent event) throws Exception{
+		changeScene(event,"EditProfile.fxml");
+	}
+	
+	public void switchToCreateAccountScreen(ActionEvent event) throws Exception{
+		changeScene(event,"CreateAccount.fxml");
+	}
+	
+	public void switchToDeleteAccountScreen(ActionEvent event) throws Exception{
+		changeScene(event,"DeleteAccount.fxml");
+	}
+	
+	public void switchToDeleteProfileScreen(ActionEvent event) throws Exception{
+		changeScene(event,"DeleteProfile.fxml");
 	}
 	
 	//************************************************************************
@@ -436,7 +465,8 @@ public class BankingClientController extends Application implements IBankingClie
     private TextField TellerSearchValueTextField;
 
     @FXML
-    void TellerSearchSubmitButtonPressed(ActionEvent event) {
+    void TellerSearchSubmitButtonPressed(ActionEvent event) throws Exception{
+    	switchToTellerSearchResultScreen(event);
     	//TODO list view of matching account holders
     	//get choice box working properly
     }
@@ -458,7 +488,7 @@ public class BankingClientController extends Application implements IBankingClie
     
     @FXML
     void ViewAccountsButtonPressed(ActionEvent event) throws Exception {
-    	//TODO make list view GUI and link here
+    	switchToAccountViewerScreen(event);
     }
     
     @FXML
@@ -538,7 +568,109 @@ public class BankingClientController extends Application implements IBankingClie
     
     //*************************************************************
     
+    //*************************************************************
+    //GUI components for search results screen
     
+    @FXML
+    private ListView<?> CardNumberListView;
+
+    @FXML
+    private TextField ResultEmailTextField;
+
+    @FXML
+    private TextField ResultFirstNameTextField;
+
+    @FXML
+    private TextField ResultLastNameTextField;
+
+    @FXML
+    private TextField ResultSearchValueTextField;
+
+    @FXML
+    private TextField ResultSinTextField;
+
+    @FXML
+    private TextField ResultTypeTextField;
+
+    @FXML
+    void SelectAccountHolderButtonPressed(ActionEvent event) throws Exception{
+    	switchToEditProfileScreen(event);
+    }
+    
+    //*************************************************************
+    
+    //********************************************************
+    //GUI components for account viewer
+    
+    @FXML
+    private ListView<?> AccountNumberListView;
+
+    @FXML
+    private TextField AccountsBalanceTextField;
+
+    @FXML
+    private TextField AccountsCardNumberTextField;
+
+    @FXML
+    private TextField AccountsTypeTextField;
+
+    @FXML
+    void ViewAccountHistoryButtonPressed(ActionEvent event) throws Exception {
+    	switchToAccountHistoryScreen(event);
+    }
+    
+    //**********************************************************
+    
+    //***********************************************************
+    //GUI components for account history screen
+    
+    @FXML
+    private ListView<?> AccountHistoryListView;
+
+    @FXML
+    private TextField AccountHistoryNumberTextField;
+
+    @FXML
+    private TextField AccountHistoryOpenDateTextField;
+
+    @FXML
+    private TextField TransferHistoryAmountTextField;
+
+    @FXML
+    private TextField TransferHistoryDateTextField;
+
+    @FXML
+    private TextField TransferHistoryReceiverTextField;
+
+    @FXML
+    private TextField TransferHistorySenderTextField;
+    
+    //**********************************************************
+    
+    //********************************************************
+    //GUI components for edit profile screen
+    
+    @FXML
+    void AddAccountButtonPressed(ActionEvent event) throws Exception {
+    	switchToCreateAccountScreen(event);
+    }
+
+    @FXML
+    void DeleteProfileButtonPressed(ActionEvent event) throws Exception {
+    	switchToDeleteProfileScreen(event);
+    }
+
+    @FXML
+    void RemoveAccountButtonPressed(ActionEvent event) throws Exception {
+    	switchToDeleteAccountScreen(event);
+    }
+
+    @FXML
+    void ViewAddressesButtonPressed(ActionEvent event) throws Exception {
+
+    }
+    
+    //*******************************************************
     
     
     
