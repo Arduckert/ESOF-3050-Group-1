@@ -37,10 +37,17 @@ public enum ServerAction
 	/**
 	 * TODO
 	 * The tells the server to transfer money from one account to another. This takes the recipient's
-	 * email address, the account number of the account to transfer from, and the amount to transfer.
+	 * email address, the account type (cheqing, savings, etc.), and the amount to transfer.
 	 * The server returns SUCCESS and the new balance if the transfer goes through. 
 	 */
 	TRANSFER,
+	
+	/**
+	 * TODO
+	 * The tells the server to pay a bill. This takes the recipient, and the amount that needs to be paid.
+	 * The server returns SUCCESS and the new balance if the payment goes thro. 
+	 */
+	PAY_BILL,
 	
 	/**
 	 * This tells the server to create a new account holder. This takes an email address, and a pin
@@ -58,16 +65,27 @@ public enum ServerAction
 		
 	/**
 	 * TODO
+	 * This tells a server to create a new account on the server. This takes an account type
+	 * (cheqing, savings, mortgage, or line of credit) and the card number of the account
+	 * holder to add the account to. The server will return SUCCESS if the account is created
+	 * successfully, fail if not.
 	 */
 	CREATE_ACCOUNT,
 	
 	/**
 	 * TODO
+	 * This tells a server to delete an existing account on the server. This takes an account type
+	 * (cheqing, savings, mortgage, or line of credit) and the card number of the account
+	 * holder to remove the account from. The server will return SUCCESS if the account is created
+	 * successfully, fail if not.
 	 */
 	DELETE_ACCOUNT,
 	
 	/**
 	 * TODO
+	 * This tells a server to get information from an existing account on the server. This takes an
+	 * account type (cheqing, savings, mortgage, or line of credit). The server will return SUCCESS
+	 * and the account information, fail and nothing if not.
 	 */
 	GET_ACCOUNT,
 	
@@ -91,22 +109,23 @@ public enum ServerAction
 	ADD_ACCOUNTHOLDER_ROLE_TO_PERSON,
 	
 	/**
-	 * TODO
-	 */
-	MANAGE_BILL,
-	
-	/**
-	 * TODO
+	 * TODO This tells the server to return the transaction history of a specific account. This takes
+	 * an account type (cheqing, savings, etc.). The server will return SUCCESS and a list of transactions
+	 * back to the client, fail and nothing if not.
 	 */
 	GET_ACCOUNT_TRANSACTIONS,
 	
 	/**
-	 * TODO
+	 * TODO This tells the server to return the account records on the server. This takes no information.
+	 * The server will return SUCCESS and a list of account records back to the client, fail and nothing
+	 * if not.
 	 */
 	GET_ACCOUNT_RECORDS,
 	
 	/**
-	 * TODO
+	 * TODO This tells the server to return the customer records on the server. This takes no information.
+	 * The server will return SUCCESS and a list of customer records back to the client, fail and nothing
+	 * if not.
 	 */
 	GET_CUSTOMER_RECORDS,
 	
