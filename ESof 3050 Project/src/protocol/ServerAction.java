@@ -64,7 +64,6 @@ public enum ServerAction
 	DELETE_ACCOUNTHOLDER,
 		
 	/**
-	 * TODO
 	 * This tells a server to create a new account on the server. This takes an account type
 	 * (chequing, savings, mortgage, or line of credit) and the card number of the account
 	 * holder to add the account to. The server will return SUCCESS if the account is created
@@ -73,7 +72,6 @@ public enum ServerAction
 	CREATE_ACCOUNT,
 	
 	/**
-	 * TODO
 	 * This tells a server to delete an existing account on the server. This takes an account type
 	 * (chequing, savings, mortgage, or line of credit) and the card number of the account
 	 * holder to remove the account from. The server will return SUCCESS if the account is created

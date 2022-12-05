@@ -247,4 +247,4 @@ public interface IBankingClientController
 	 * if not
 	 */
 	public void handleAccountDeletion(boolean isSuccessful);
-}
+}	
