@@ -7,6 +7,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
@@ -37,6 +38,9 @@ public class BankingClientController extends Application implements IBankingClie
 	private Parent root;
 	private String startScreen="Connect.fxml";
 	private String appTitle="Banking Client";
+	private static boolean offline;
+	
+	private static ActionEvent ae;
 	
 	//********************************************************************
 	//Common methods
@@ -229,7 +233,6 @@ public class BankingClientController extends Application implements IBankingClie
 			port=9950; //default to 9950
 		bc = new BankingClient(ipAdd,port,this);
 		bc.openConnection();
-		System.out.println("Connection active: " + bc.isConnected());
 		switchToLoginChoiceScreen(event);
 		}
 		catch(Exception ex) {
@@ -239,6 +242,7 @@ public class BankingClientController extends Application implements IBankingClie
 	
 	@FXML
 	void OfflineButtonPressed(ActionEvent event) throws Exception{
+		offline=true;
 		switchToLoginChoiceScreen(event);
 	}
 	
@@ -266,18 +270,18 @@ public class BankingClientController extends Application implements IBankingClie
 	private TextField TellerNumberTextField;
 	
 	@FXML
-	private TextField TellerPasswordTextField;
+	private PasswordField TellerPasswordField;
 	
 	@FXML
-	public  TextArea TellerLoginErrorTextArea; //needs to be public to be changed by 
+	private TextArea TellerLoginErrorTextArea; //needs to be public to be changed by 
 	
 	@FXML
 	void TellerLoginSubmitButtonPressed(ActionEvent event) throws Exception{
-		if(bc==null||!bc.isConnected())
+		if(offline)
 			switchToTellerMainMenu(event);
 		else {
-			switchToTellerMainMenu(event);//remove later
-			//bc.loginAsTeller(TellerNumberTextField.getText(), TellerPasswordTextField.getText());
+			ae=event;
+			sendTellerLoginRequest(TellerNumberTextField.getText(), TellerPasswordField.getText());
 			//verify
 			//if good switch to main menu
 			//else change error label
@@ -738,6 +742,8 @@ public class BankingClientController extends Application implements IBankingClie
     
     //Initializer of GUI elements
     public void initialize() {
+    	if(ipAddTextField!=null)
+    		offline=false;
     	if(TellerSearchParameterChoiceBox!=null)
     		TellerSearchParameterChoiceBox.getItems().addAll(SearchParameterList);
     	if(AccountTypeChoiceBox!=null) {
@@ -876,10 +882,32 @@ public class BankingClientController extends Application implements IBankingClie
 		
 		if (isSuccessful)
 		{
+			System.out.println("Login Success");
 			//login successful change screen
+			
+				Platform.runLater(new Runnable() {
+					@Override
+					public void run() {
+						try {
+							switchToTellerMainMenu(ae);
+						}
+						catch(Exception e) {e.printStackTrace();}
+					}
+				});
 		}
 		else
 		{
+			System.out.println("Login Failed");
+			
+			Platform.runLater(new Runnable() {
+				@Override
+				public void run() {
+					try {
+						TellerLoginErrorTextArea.setText("Login Failed");
+					}
+					catch(Exception e) {e.printStackTrace();}
+				}
+			});
 			//login failed pop up message
 		}
 	}

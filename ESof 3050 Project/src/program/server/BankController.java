@@ -107,7 +107,12 @@ public class BankController implements IBankController
 	public boolean authenticateTellerLogin(String empID, String password)
 	{
 		// TODO add code here
-		return false;
+		
+		//prebaked values for testing
+		if(empID.equals("1111")&&password.equals("0000"))
+			return true;
+		else
+			return false;
 	}
 
 	
