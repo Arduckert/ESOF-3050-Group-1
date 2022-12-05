@@ -41,6 +41,7 @@ public class BankingClientController extends Application implements IBankingClie
 	private static boolean offline;
 	
 	private static ActionEvent ae;
+	private static TextArea ta;
 	
 	//********************************************************************
 	//Common methods
@@ -281,6 +282,7 @@ public class BankingClientController extends Application implements IBankingClie
 			switchToTellerMainMenu(event);
 		else {
 			ae=event;
+			ta=TellerLoginErrorTextArea;
 			sendTellerLoginRequest(TellerNumberTextField.getText(), TellerPasswordField.getText());
 			//verify
 			//if good switch to main menu
@@ -903,7 +905,7 @@ public class BankingClientController extends Application implements IBankingClie
 				@Override
 				public void run() {
 					try {
-						TellerLoginErrorTextArea.setText("Login Failed");
+						ta.setText("Login Failed");
 					}
 					catch(Exception e) {e.printStackTrace();}
 				}
