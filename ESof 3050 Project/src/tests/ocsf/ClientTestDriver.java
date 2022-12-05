@@ -101,6 +101,14 @@ public class ClientTestDriver implements IBankingClientController
 			addAccountHolderToPerson(TestVariables.availablePersonSIN, TestVariables.availableRoleEmail); //handler should return true
 			addAccountHolderToPerson(TestVariables.availablePersonSIN, TestVariables.unavailableRoleEmail); //handler should return false
 			
+			//create account test
+			createAccount(TestVariables.accountType, TestVariables.accountCardNumber); //handler should return true
+			createAccount(TestVariables.accountType, TestVariables.availableCreateAccountHolderEmail); //handler should return false
+			
+			//delete account test
+			deleteAccount(TestVariables.accountType, TestVariables.accountCardNumber); //handler should return true
+			deleteAccount(TestVariables.accountType, TestVariables.availableCreateAccountHolderEmail); //handler should return false
+			
 			Sleep(1000); //wait for connection to close
 			CloseServerConnection();
 		}
@@ -689,7 +697,7 @@ public class ClientTestDriver implements IBankingClientController
 		}
 		else if (accountCreationTestCount == 1 && !isSuccessful)
 		{
-			System.out.println("ADD ACCOUNT TEST PASSED");
+			System.out.println("ADD ACCOUNT FALSE TEST PASSED");
 		}
 		else
 		{
