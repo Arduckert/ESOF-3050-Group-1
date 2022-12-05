@@ -66,7 +66,7 @@ public enum ServerAction
 	/**
 	 * TODO
 	 * This tells a server to create a new account on the server. This takes an account type
-	 * (cheqing, savings, mortgage, or line of credit) and the card number of the account
+	 * (chequing, savings, mortgage, or line of credit) and the card number of the account
 	 * holder to add the account to. The server will return SUCCESS if the account is created
 	 * successfully, fail if not.
 	 */
@@ -75,7 +75,7 @@ public enum ServerAction
 	/**
 	 * TODO
 	 * This tells a server to delete an existing account on the server. This takes an account type
-	 * (cheqing, savings, mortgage, or line of credit) and the card number of the account
+	 * (chequing, savings, mortgage, or line of credit) and the card number of the account
 	 * holder to remove the account from. The server will return SUCCESS if the account is created
 	 * successfully, fail if not.
 	 */
@@ -84,7 +84,7 @@ public enum ServerAction
 	/**
 	 * TODO
 	 * This tells a server to get information from an existing account on the server. This takes an
-	 * account type (cheqing, savings, mortgage, or line of credit). The server will return SUCCESS
+	 * account type (chequing, savings, mortgage, or line of credit). The server will return SUCCESS
 	 * and the account information, fail and nothing if not.
 	 */
 	GET_ACCOUNT,

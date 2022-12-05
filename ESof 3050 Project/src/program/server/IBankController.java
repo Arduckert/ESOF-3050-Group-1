@@ -106,4 +106,20 @@ public interface IBankController
 	 * @return true if the role was added, false if not
 	 */
 	public boolean addAccountHolderToPerson(String sin, String email);
+	
+	/**
+	 * Creates an account and adds it to an account holder
+	 * @param accountType
+	 * @param cardNumber
+	 * @return true if the account was created successfully, false if not
+	 */
+	public boolean createAccount(AccountType accountType, String cardNumber);
+	
+	/**
+	 * Deletes an account and removes it from an account holder
+	 * @param accountType
+	 * @param cardNumber
+	 * @return true if the account was deleted successfully, false if not
+	 */
+	public boolean deleteAccount(AccountType accountType, String cardNumber);
 }
