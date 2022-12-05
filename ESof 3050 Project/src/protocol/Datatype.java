@@ -13,38 +13,7 @@ package src.protocol;
  * proper use.
  */
 public enum Datatype
-{
-	/**
-	 * This sends information about a person back to the client. The information included
-	 * in this data type is the person's first name, last name, date of birth, and social
-	 * insurance number.
-	 * @object_size 4
-	 */
-	PERSON,
-	
-	/**
-	 * This sends information about a teller back to the client. The information included
-	 * in this data type is the teller's employee number, and password.
-	 * @object_size 2
-	 */
-	TELLER,
-	
-	/**
-	 * This sends information about an account holder back to the client. The information
-	 * included in this data type is the card number, pin number, and email
-	 * address.
-	 * @object_size 3
-	 */
-	ACCOUNT_HOLDER,
-	
-	/**
-	 * This sends information about an account back to the client. The information
-	 * included in this data type is the account type (cheqing, savings, etc.), 
-	 * account number, balance, and date opened.
-	 * @object_size 4
-	 */
-	ACCOUNT,
-	
+{			
 	/**
 	 * This sends a balance of a specific account back to the client. The information
 	 * included in this data type is a balance.
@@ -53,34 +22,12 @@ public enum Datatype
 	BALANCE,
 	
 	/**
-	 * This sends information about a chequing account back to the client. The information
-	 * included in this data type is the account number, and balance.
-	 * @object_size 2
-	 */
-	CHEQUING_ACCOUNT,
-	
-	/**
-	 * This sends information about a savings account back to the client. The information
-	 * included in this data type is the account number, balance, and interest rate.
-	 * @object_size 3
-	 */
-	SAVINGS_ACCOUNT,
-	
-	/**
-	 * This sends information about a mortgage account back to the client. The information
-	 * included in this data type is the account number, balance, principle amount, and
-	 * interest amount.
+	 * This sends information about an account back to the client. The information
+	 * included in this data type is the account number, the balance, and the
+	 * account type (chequing, savings, mortgage, or line of credit)
 	 * @object_size 4
 	 */
-	MORTGAGE_ACCOUNT,
-	
-	/**
-	 * This sends information about a LOC account back to the client. The information
-	 * included in this data type is the account number, balance, interest rate, and credit
-	 * limit.
-	 * @object_size 4
-	 */
-	LINE_OF_CREDIT_ACCOUNT,
+	ACCOUNT,
 	
 	/**
 	 * This sends information about a transaction back to the client. The information
@@ -88,14 +35,6 @@ public enum Datatype
 	 * @object_size 4
 	 */
 	TRANSACTION,
-	
-	/**
-	 * This sends information about an address back to the client. The information
-	 * included in this data type is the full address name (streetNumber streetName),
-	 * postal code, provice, and country
-	 * @object_size 4
-	 */
-	ADDRESS,
 	
 	/**
 	 * This sends information about a bill back to the client. The information
@@ -120,15 +59,6 @@ public enum Datatype
 	 * @object_size 4
 	 */
 	ACCOUNT_RECORD,
-	
-	/**
-	 * This sends information about a login attempt back to the client.
-	 * The information included in this data type is the fail count,
-	 * the card number of the account holder doing the login, and
-	 * a boolean "y" or "n" whether or not the login was successful 
-	 * @object_size 3
-	 */
-	LOGIN_ATTEMPT,
 	
 	/**
 	 * This sends information about an account holder login result back to the client.

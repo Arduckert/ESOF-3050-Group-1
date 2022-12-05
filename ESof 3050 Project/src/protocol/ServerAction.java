@@ -36,38 +36,9 @@ public enum ServerAction
 	
 	/**
 	 * TODO
-	 * This tells the server to find an existing person on the server. This takes a
-	 * person's social insurance number as a parameter. The server returns SUCCESS
-	 * along with the person's first name, last name, social insurance number, and
-	 * date of birth if the person is found.
-	 */
-	FIND_PERSON_BY_SIN,
-	
-	/**
-	 * TODO
-	 * This tells the server to add money to an account. This takes the account number's
-	 * card number, account holder's pin, the account number of the account to deposit to,
-	 * and the amount to deposit to that account as parameters. The server returns SUCCESS
-	 * and the new balance if the deposit goes through.
-	 */
-	DEPOSIT,
-	
-	/**
-	 * TODO
-	 * This tells the server to remove money from an account. This takes the account number's
-	 * card number, account holder's pin, the account number of the account to withdraw from,
-	 * and the amount to withdraw from that account as parameters. The server returns SUCCESS
-	 * and the new balance if the withdrawal goes through.
-	 */
-	WITHDRAW,
-	
-	/**
-	 * TODO
 	 * The tells the server to transfer money from one account to another. This takes the recipient's
-	 * email address, the account holder's account number, the account holder's pin number, the account
-	 * number of the account to transfer from, and the amount to transfer. The server returns SUCCESS
-	 * and the new balance if the transfer goes through.
-	 * to transfer 
+	 * email address, the account number of the account to transfer from, and the amount to transfer.
+	 * The server returns SUCCESS and the new balance if the transfer goes through. 
 	 */
 	TRANSFER,
 	
@@ -79,7 +50,6 @@ public enum ServerAction
 	CREATE_ACCOUNTHOLDER,
 	
 	/**
-	 * TODO
 	 * This tells the server to delete an existing account holder from the server. This takes an
 	 * card number, and a pin number. The server will return SUCCESS if the account holder was
 	 * successfully deleted.
@@ -99,12 +69,7 @@ public enum ServerAction
 	/**
 	 * TODO
 	 */
-	CREATE_TELLER,
-	
-	/**
-	 * TODO
-	 */
-	DELETE_TELLER,
+	GET_ACCOUNT,
 	
 	/**
 	 * This tells the server to create a new person. This takes a first name, a last name, a social
@@ -120,7 +85,6 @@ public enum ServerAction
 	DELETE_PERSON,
 		
 	/**
-	 * TODO
 	 * This tells the server to associate an account holder with a person. This takes a social security
 	 * number and an email address 
 	 */
@@ -129,22 +93,7 @@ public enum ServerAction
 	/**
 	 * TODO
 	 */
-	ADD_TELLER_ROLE_TO_PERSON,
-	
-	/**
-	 * TODO
-	 */
-	CREATE_BILL,
-	
-	/**
-	 * TODO
-	 */
-	PAY_BILL,
-	
-	/**
-	 * TODO
-	 */
-	DELETE_BILL,
+	MANAGE_BILL,
 	
 	/**
 	 * TODO
@@ -162,17 +111,15 @@ public enum ServerAction
 	GET_CUSTOMER_RECORDS,
 	
 	/**
-	 * TODO
-	 */
-	GET_LOGIN_ATTEMPTS_FOR_ACCOUNTHOLDER,
-	
-	/**
-	 * TODO
+	 * This tells the server to add an address to a person. This takes all of the
+	 * parameters of an address (see Address.java in src.program.server) along with
+	 * the person's social insurance number.
 	 */
 	ADD_ADDRESS_TO_PERSON,
 	
 	/**
-	 * TODO
+	 * This tells the server to remove an address to a person. This takes
+	 * the person's social insurance number and the postal code of the address.
 	 */
 	REMOVE_ADDRESS_FROM_PERSON,
 	
