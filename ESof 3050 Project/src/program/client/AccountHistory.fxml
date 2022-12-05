@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<GridPane hgap="10.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" vgap="10.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="src.program.client.BankingClientController">
+<GridPane hgap="10.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" vgap="10.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="src.program.client.BankingClientController">
   <columnConstraints>
     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="300.0" />
     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="200.0" />
@@ -63,21 +63,11 @@
             <Font size="18.0" />
          </font>
       </Button>
-      <Label text="Date Account Opened" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="2">
-         <font>
-            <Font size="18.0" />
-         </font>
-      </Label>
       <Label text="Amount" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="6">
          <font>
             <Font size="18.0" />
          </font>
       </Label>
-      <TextField fx:id="AccountHistoryOpenDateTextField" GridPane.columnIndex="2" GridPane.rowIndex="2">
-         <font>
-            <Font size="18.0" />
-         </font>
-      </TextField>
       <Label text="Date" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="3">
          <font>
             <Font size="18.0" />

@@ -292,7 +292,6 @@ public class BankingClientController extends Application implements IBankingClie
 	
     @FXML
     void SearchExistingAccountHolderButtonPressed(ActionEvent event) throws Exception {
-    	//temporary for testing OCSF
     	switchToTellerSearchScreen(event);
     }
     @FXML
@@ -458,7 +457,7 @@ public class BankingClientController extends Application implements IBankingClie
   	//GUI components for teller search for account holder screen
   
     @FXML
-    private static ChoiceBox<?> TellerSearchParameterComboBox;
+    private ChoiceBox<String> TellerSearchParameterChoiceBox;
     
 
     @FXML
@@ -629,9 +628,6 @@ public class BankingClientController extends Application implements IBankingClie
     private TextField AccountHistoryNumberTextField;
 
     @FXML
-    private TextField AccountHistoryOpenDateTextField;
-
-    @FXML
     private TextField TransferHistoryAmountTextField;
 
     @FXML
@@ -720,18 +716,18 @@ public class BankingClientController extends Application implements IBankingClie
     
     //**************************************************
     
+    private String SearchParameterList[]= {"Card Number","SIN","Email"};
     
     //Initializer of GUI elements
-    @FXML
-    public static void initialize() {
-    	String list[]= {"test1","test2"};
-    	TellerSearchParameterComboBox=new ChoiceBox<>(FXCollections.observableArrayList(list));
+    public void initialize() {
+    	if(TellerSearchParameterChoiceBox!=null)
+    		TellerSearchParameterChoiceBox.getItems().addAll(SearchParameterList);
     	//TODO fix choice boxes
     }
     
     //Start function
 	public static void main(String[] args) throws Exception{
-		initialize();
+		//initialize();
 		launch(args);
 	}
 	
