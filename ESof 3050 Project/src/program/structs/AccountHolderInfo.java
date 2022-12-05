@@ -16,7 +16,7 @@ public class AccountHolderInfo
 	/**
 	 * the account holder's account number
 	 */
-	public String accountNumber;
+	public String accountNumber; //should be card number
 	
 	/**
 	 * the account holder's pin number
