@@ -96,7 +96,7 @@ public class BankingClientController extends Application implements IBankingClie
 	}
 	
 	@FXML
-    private ChoiceBox<?> SendingAccountChoiceBox;
+    private ChoiceBox<String> SendingAccountChoiceBox;
 
     @FXML
     private TextField TransferAmountTextField;
@@ -666,6 +666,22 @@ public class BankingClientController extends Application implements IBankingClie
     
     //*******************************************************
     
+    //********************************************************
+    //GUI components for create account screen
+    
+    @FXML
+    private ChoiceBox<String> AccountTypeChoiceBox;
+
+    @FXML
+    private TextField TellerCardNumberTextField;
+
+    @FXML
+    void CreateAccountButtonPressed(ActionEvent event) {
+
+    }
+    
+    //*********************************************************
+    
     
     
     
@@ -717,12 +733,20 @@ public class BankingClientController extends Application implements IBankingClie
     //**************************************************
     
     private String SearchParameterList[]= {"Card Number","SIN","Email"};
+    private String AccountTypeList[]= {"Chequing Account","Savings Account","Mortgage Account","Line-Of-Credit"};
+    public ObservableList<String> ActiveAccounts = FXCollections.observableArrayList();
     
     //Initializer of GUI elements
     public void initialize() {
     	if(TellerSearchParameterChoiceBox!=null)
     		TellerSearchParameterChoiceBox.getItems().addAll(SearchParameterList);
-    	//TODO fix choice boxes
+    	if(AccountTypeChoiceBox!=null) {
+    		AccountTypeChoiceBox.getItems().addAll(AccountTypeList);
+    	}
+    	if(SendingAccountChoiceBox!=null) {
+    		SendingAccountChoiceBox.getItems().addAll(ActiveAccounts);
+    		//TODO have BankingClient add items to ActiveAccounts. Specifically get all accounts belonging to a card number.
+    	}
     }
     
     //Start function

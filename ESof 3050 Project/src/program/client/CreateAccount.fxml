@@ -32,7 +32,7 @@
             <Font size="14.0" />
          </font>
       </Button>
-      <TextField editable="false" GridPane.columnIndex="1" GridPane.rowIndex="1">
+      <TextField fx:id="TellerCardNumberTextField" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="1">
          <font>
             <Font size="18.0" />
          </font>
@@ -47,8 +47,8 @@
             <Font size="18.0" />
          </font>
       </Label>
-      <ChoiceBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-      <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Create Account" GridPane.columnSpan="2147483647" GridPane.rowIndex="3">
+      <ChoiceBox fx:id="AccountTypeChoiceBox" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+      <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#CreateAccountButtonPressed" text="Create Account" GridPane.columnSpan="2147483647" GridPane.rowIndex="3">
          <font>
             <Font size="18.0" />
          </font>
