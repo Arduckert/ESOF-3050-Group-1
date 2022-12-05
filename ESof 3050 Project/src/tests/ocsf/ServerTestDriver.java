@@ -3,6 +3,7 @@ package src.tests.ocsf;
 import src.program.server.BankingServer;
 import src.program.server.IBankController;
 import src.program.structs.AccountHolderInfo;
+import src.program.structs.AccountType;
 
 import java.io.IOException;
 
@@ -168,5 +169,31 @@ public class ServerTestDriver implements IBankController
 	{
 		return sin.equals(TestVariables.availablePersonSIN)
 				&& email.equals(TestVariables.availableRoleEmail);
+	}
+	
+	/**
+	 * Creates an account and adds it to an account holder
+	 * @param accountType
+	 * @param cardNumber
+	 * @return true if the account was created successfully, false if not
+	 */
+	@Override
+	public boolean createAccount(AccountType accountType, String cardNumber)
+	{
+		return accountType == TestVariables.accountType
+				&& cardNumber.equals(TestVariables.accountCardNumber);
+	}
+	
+	/**
+	 * Deletes an account and removes it from an account holder
+	 * @param accountType
+	 * @param cardNumber
+	 * @return true if the account was deleted successfully, false if not
+	 */
+	@Override
+	public boolean deleteAccount(AccountType accountType, String cardNumber)
+	{
+		return accountType == TestVariables.accountType
+				&& cardNumber.equals(TestVariables.accountCardNumber);
 	}
 }

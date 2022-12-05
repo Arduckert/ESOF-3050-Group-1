@@ -11,6 +11,7 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import src.program.structs.AccountHolderInfo;
+import src.program.structs.AccountType;
 import javafx.event.ActionEvent;
 
 import java.io.IOException;
@@ -1145,11 +1146,99 @@ public class BankingClientController extends Application implements IBankingClie
 		
 		if (isSuccessful)
 		{
-			//address was removed
+			//account holder added to person
 		}
 		else
 		{
-			//address was not removed
+			//not added
+		}
+	}
+	
+	////////////////////
+	// CREATE ACCOUNT //
+	////////////////////
+	
+	/**
+	 * tells the server to create a new account and add it to an
+	 * existing account holder. Only tellers can do this action.
+	 * @param accountType account type
+	 * @param cardNumber the account holder's card number
+	 */
+	@Override
+	public void createAccount(AccountType accountType, String cardNumber)
+	{
+		try
+		{
+			bc.createAccount(accountType, cardNumber);
+		}
+		catch (IOException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	/**
+	 * Handles the result of an account being created
+	 * @param isSuccessful true if the account was deleted, false
+	 * if not
+	 */
+	@Override
+	public void handleAccountCreation(boolean isSuccessful)
+	{
+		// TODO add handle code
+		
+		if (isSuccessful)
+		{
+			//account created
+		}
+		else
+		{
+			//not created
+		}
+	}
+	
+	////////////////////
+	// DELETE ACCOUNT //
+	////////////////////
+	
+	/**
+	 * tells the server to delete an existing account and remove it from an
+	 * existing account holder. Only tellers can do this action.
+	 * @param accountType account type
+	 * @param cardNumber the account holder's card number
+	 */
+	@Override
+	public void deleteAccount(AccountType accountType, String cardNumber)
+	{
+		try
+		{
+			bc.deleteAccount(accountType, cardNumber);
+		}
+		catch (IOException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	/**
+	 * Handles the result of an account being deleted
+	 * @param isSuccessful true if the account holder was deleted, false
+	 * if not
+	 */
+	@Override
+	public void handleAccountDeletion(boolean isSuccessful)
+	{
+		// TODO add handle code
+		
+		if (isSuccessful)
+		{
+			//account deleted
+		}
+		else
+		{
+			//account not deleted
 		}
 	}
 }

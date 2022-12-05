@@ -209,4 +209,42 @@ public interface IBankingClientController
 	 * @param isSuccessful
 	 */
 	public void handleAccountHolderToPersonResult(boolean isSuccessful);
+	
+	////////////////////
+	// CREATE ACCOUNT //
+	////////////////////
+	
+	/**
+	 * tells the server to create a new account and add it to an
+	 * existing account holder. Only tellers can do this action.
+	 * @param accountType account type
+	 * @param cardNumber the account holder's card number
+	 */
+	public void createAccount(AccountType accountType, String cardNumber);
+	
+	/**
+	 * Handles the result of an account being created
+	 * @param isSuccessful true if the account was deleted, false
+	 * if not
+	 */
+	public void handleAccountCreation(boolean isSuccessful);
+	
+	////////////////////
+	// DELETE ACCOUNT //
+	////////////////////
+	
+	/**
+	 * tells the server to delete an existing account and remove it from an
+	 * existing account holder. Only tellers can do this action.
+	 * @param accountType account type
+	 * @param cardNumber the account holder's card number
+	 */
+	public void deleteAccount(AccountType accountType, String cardNumber);
+	
+	/**
+	 * Handles the result of an account being deleted
+	 * @param isSuccessful true if the account holder was deleted, false
+	 * if not
+	 */
+	public void handleAccountDeletion(boolean isSuccessful);
 }

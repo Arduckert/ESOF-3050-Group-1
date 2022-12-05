@@ -73,6 +73,12 @@ public class BankingClient extends AbstractClient
 			case ACCOUNTHOLDER_ROLE_ASSOCIATION_RESULT:
 				processAccountHolderToPersonResult(sp);
 				break;
+			case ACCOUNT_CREATION_RESULT:
+				processAccountCreationResult(sp);
+				break;
+			case ACCOUNT_DELETION_RESULT:
+				processAccountDeletionResult(sp);
+				break;
 			case BASIC_MESSAGE:
 				processBasicMessage(sp);
 				break;
@@ -474,6 +480,74 @@ public class BankingClient extends AbstractClient
 		else
 		{
 			bcc.handleAccountHolderToPersonResult(false);
+		}
+	}
+	
+	////////////////////
+	// CREATE ACCOUNT //
+	////////////////////
+	
+	/**
+	 * tells the server to create a new account and add it to an
+	 * existing account holder. Only tellers can do this action.
+	 * @param accountType account type
+	 * @param cardNumber the account holder's card number
+	 */
+	public void createAccount(AccountType accountType, String cardNumber) throws IOException
+	{
+		ClientProtocol cp = new ClientProtocol(ServerAction.CREATE_ACCOUNT, accountType.toString(), cardNumber);
+		sendToServer(cp);
+	}
+	
+	/**
+	 * Processes the result of an account being created
+	 * @param sp
+	 */
+	private void processAccountCreationResult(ServerProtocol sp)
+	{
+		//sends true to the banking client controller handle method if the
+		//creation was successful
+		if (sp.getMessageStatus() == MessageStatus.SUCCESS)
+		{
+			bcc.handleAccountCreation(true);
+		}
+		else
+		{
+			bcc.handleAccountCreation(false);
+		}
+	}
+	
+	////////////////////
+	// DELETE ACCOUNT //
+	////////////////////
+	
+	/**
+	 * tells the server to delete an existing account and remove it from an
+	 * existing account holder. Only tellers can do this action.
+	 * @param accountType account type
+	 * @param cardNumber the account holder's card number
+	 */
+	public void deleteAccount(AccountType accountType, String cardNumber) throws IOException
+	{
+		ClientProtocol cp = new ClientProtocol(ServerAction.DELETE_ACCOUNT, accountType.toString(), cardNumber);
+		sendToServer(cp);
+	}
+	
+	/**
+	 * Processes the result of an account being deleted
+	 * @param sp
+	 */
+	private void processAccountDeletionResult(ServerProtocol sp)
+	{
+		//sends true to the banking client controller handle method if the
+		//deletion was successful
+		if (sp.getMessageStatus() == MessageStatus.SUCCESS)
+		{
+			bcc.handleAccountDeletion(true);
+		}
+		else
+		{
+			bcc.handleAccountDeletion(false);
 		}
 	}
 }

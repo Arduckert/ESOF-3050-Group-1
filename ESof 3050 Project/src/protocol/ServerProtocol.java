@@ -222,6 +222,30 @@ public class ServerProtocol implements Serializable
 	}
 	
 	/**
+	 * Adds a new object with five parameters to the data list.
+	 * @param parameter1
+	 * @param parameter2
+	 * @param parameter3
+	 * @param parameter4
+	 * @param parameter5
+	 */
+	public void AddData(String parameter1, String parameter2, String parameter3, String parameter4, String parameter5) throws ParameterException
+	{
+		if (sizePerObject == 5)
+		{
+			data.add(parameter1);
+			data.add(parameter2);
+			data.add(parameter3);
+			data.add(parameter4);
+			data.add(parameter5);
+		}
+		else
+		{
+			throw new ParameterException("Cannot add an object of size 5, the dataType " + dataType + "requires an object size of " + sizePerObject);
+		}
+	}
+	
+	/**
 	 * returns the status of the message
 	 * @return message status
 	 */

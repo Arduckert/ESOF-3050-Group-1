@@ -57,6 +57,12 @@ public class BankingServer extends AbstractServer
 			case ADD_ACCOUNTHOLDER_ROLE_TO_PERSON:
 				handleAccountHolderToPersonRequest(cp, client);
 				break;
+			case CREATE_ACCOUNT:
+				handleAccountCreationRequest(cp, client);
+				break;
+			case DELETE_ACCOUNT:
+				handleAccountDeletionRequest(cp, client);
+				break;
 			default:
 				break;
 		}
@@ -518,6 +524,82 @@ public class BankingServer extends AbstractServer
 		{
 			//send a fail request as the client is not a teller
 			ServerProtocol sp = new ServerProtocol(MessageStatus.FAIL, Datatype.ACCOUNTHOLDER_ROLE_ASSOCIATION_RESULT);
+			
+			try
+			{
+				client.sendToClient(sp);
+			}
+			catch (IOException e)
+			{
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	/**
+	 * Requests the server to create an account
+	 * @param sp
+	 */
+	private void handleAccountCreationRequest(ClientProtocol cp, ConnectionToClient client)
+	{
+		//only tellers can add accounts to an account holder
+		if (client.getInfo("LoginType") == LoginType.TELLER)
+		{
+			//success if the the account was created, false if not
+			MessageStatus status = bc.createAccount(AccountType.valueOf(cp.GetParameters().get(0)), cp.GetParameters().get(1)) ? MessageStatus.SUCCESS : MessageStatus.FAIL;	
+			ServerProtocol sp = new ServerProtocol(status, Datatype.ACCOUNT_CREATION_RESULT);
+			
+			try
+			{
+				client.sendToClient(sp);
+			}
+			catch (IOException e)
+			{
+				e.printStackTrace();
+			}
+		}
+		else
+		{
+			//send a fail request as the client is not a teller
+			ServerProtocol sp = new ServerProtocol(MessageStatus.FAIL, Datatype.ACCOUNT_CREATION_RESULT);
+			
+			try
+			{
+				client.sendToClient(sp);
+			}
+			catch (IOException e)
+			{
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	/**
+	 * Requests the server to delete an account
+	 * @param sp
+	 */
+	private void handleAccountDeletionRequest(ClientProtocol cp, ConnectionToClient client)
+	{
+		//only tellers can add accounts to an account holder
+		if (client.getInfo("LoginType") == LoginType.TELLER)
+		{
+			//success if the the account was deleted, false if not
+			MessageStatus status = bc.deleteAccount(AccountType.valueOf(cp.GetParameters().get(0)), cp.GetParameters().get(1)) ? MessageStatus.SUCCESS : MessageStatus.FAIL;	
+			ServerProtocol sp = new ServerProtocol(status, Datatype.ACCOUNT_DELETION_RESULT);
+			
+			try
+			{
+				client.sendToClient(sp);
+			}
+			catch (IOException e)
+			{
+				e.printStackTrace();
+			}
+		}
+		else
+		{
+			//send a fail request as the client is not a teller
+			ServerProtocol sp = new ServerProtocol(MessageStatus.FAIL, Datatype.ACCOUNT_DELETION_RESULT);
 			
 			try
 			{

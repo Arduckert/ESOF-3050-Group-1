@@ -7,6 +7,7 @@ import java.net.UnknownHostException;
 import src.program.client.BankingClient;
 import src.program.client.IBankingClientController;
 import src.program.structs.AccountHolderInfo;
+import src.program.structs.AccountType;
 
 public class ClientTestDriver implements IBankingClientController
 {
@@ -25,6 +26,8 @@ public class ClientTestDriver implements IBankingClientController
 	private static int addAddressTestCount = 0;
 	private static int removeAddressTestCount = 0;
 	private static int accountHolderToPersonTestCount = 0;
+	private static int accountCreationTestCount = 0;
+	private static int accountDeletionTestCount = 0;
 	
 	public ClientTestDriver()
 	{
@@ -646,5 +649,101 @@ public class ClientTestDriver implements IBankingClientController
 			assert false;
 		}
 		accountHolderToPersonTestCount++;
+	}
+	
+	////////////////////
+	// CREATE ACCOUNT //
+	////////////////////
+	
+	/**
+	 * tells the server to create a new account and add it to an
+	 * existing account holder. Only tellers can do this action.
+	 * @param accountType account type
+	 * @param cardNumber the account holder's card number
+	 */
+	@Override
+	public void createAccount(AccountType accountType, String cardNumber)
+	{
+		try
+		{
+			bc.createAccount(accountType, cardNumber);
+		}
+		catch (IOException e)
+		{
+			System.err.println("ADD ACCOUNT TEST FAILED: EXCEPTION");
+			e.printStackTrace();
+		}
+	}
+	
+	/**
+	 * Handles the result of an account being created
+	 * @param isSuccessful true if the account was deleted, false
+	 * if not
+	 */
+	@Override
+	public void handleAccountCreation(boolean isSuccessful)
+	{
+		if (accountCreationTestCount == 0 && isSuccessful)
+		{
+			System.out.println("ADD ACCOUNT TRUE TEST PASSED");
+		}
+		else if (accountCreationTestCount == 1 && !isSuccessful)
+		{
+			System.out.println("ADD ACCOUNT TEST PASSED");
+		}
+		else
+		{
+			System.err.println("ADD ACCOUNT TEST " + (accountCreationTestCount + 1) + " FAILED");
+			assert false;
+		}
+		accountCreationTestCount++;
+	}
+	
+	////////////////////
+	// DELETE ACCOUNT //
+	////////////////////
+	
+	/**
+	 * tells the server to delete an existing account and remove it from an
+	 * existing account holder. Only tellers can do this action.
+	 * @param accountType account type
+	 * @param cardNumber the account holder's card number
+	 */
+	@Override
+	public void deleteAccount(AccountType accountType, String cardNumber)
+	{
+		try
+		{
+			bc.deleteAccount(accountType, cardNumber);
+		}
+		catch (IOException e)
+		{
+			System.err.println("DELETE ACCOUNT TEST FAILED: EXCEPTION");
+			e.printStackTrace();
+		}
+	}
+	
+	/**
+	 * Handles the result of an account being deleted
+	 * @param isSuccessful true if the account holder was deleted, false
+	 * if not
+	 */
+	@Override
+	public void handleAccountDeletion(boolean isSuccessful)
+	{
+		if (accountDeletionTestCount == 0 && isSuccessful)
+		{
+			System.out.println("DELETE ACCOUNT TRUE TEST PASSED");
+		}
+		else if (accountDeletionTestCount == 1 && !isSuccessful)
+		{
+			System.out.println("DELETE ACCOUNT FALSE TEST PASSED");
+		}
+		else
+		{
+			System.err.println("DELETE ACCOUNT TEST " + (accountDeletionTestCount + 1) + " FAILED");
+			assert false;
+		}
+		accountDeletionTestCount++;
 	}
 }

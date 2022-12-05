@@ -1,5 +1,7 @@
 package src.tests.ocsf;
 
+import src.program.structs.AccountType;
+
 public final class TestVariables
 {
 	//TEST MESSAGE TEST
@@ -62,4 +64,8 @@ public final class TestVariables
 	//ADD ACCOUNT HOLDER ROLE TO PERSON
 	public static final String availableRoleEmail = "testing@example.com";
 	public static final String unavailableRoleEmail = "tseting@example.com";
+	
+	//ADD AND DELETE ACCOUNT
+	public static final AccountType accountType = AccountType.CHEQUING;
+	public static final String accountCardNumber = "32547698";
 }

@@ -2,6 +2,7 @@ package src.program.server;
 import java.util.*;
 
 import src.program.structs.AccountHolderInfo;
+import src.program.structs.AccountType;
 
 // *** TODO: IMPLEMENT INTERFACE METHODS (REFER TO BLUE MARKS ON THE SCROLL BAR) *** //
 public class BankController implements IBankController
@@ -226,5 +227,32 @@ public class BankController implements IBankController
 		return personRoleCreated;
 	}
 	
+	/**
+	 * Creates an account and adds it to an account holder
+	 * @param accountType
+	 * @param cardNumber
+	 * @return true if the account was created successfully, false if not
+	 */
+	@Override
+	public boolean createAccount(AccountType accountType, String cardNumber)
+	{
+		//TODO: call a create method that adds an account to an account holder
+		boolean accountCreated = false;
+		return accountCreated;
+	}
+	
+	/**
+	 * Deletes an account and removes it from an account holder
+	 * @param accountType
+	 * @param cardNumber
+	 * @return true if the account was deleted successfully, false if not
+	 */
+	@Override
+	public boolean deleteAccount(AccountType accountType, String cardNumber)
+	{
+		//TODO: call a create method that removes an account to an account holder
+		boolean accountDeleted = false;
+		return accountDeleted;
+	}
 }
 
