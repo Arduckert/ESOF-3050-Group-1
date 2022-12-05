@@ -13,13 +13,34 @@ package src.protocol;
  * proper use.
  */
 public enum Datatype
-{			
+{
 	/**
-	 * This sends a balance of a specific account back to the client. The information
-	 * included in this data type is a balance.
+	 * No data is passed.
+	 * @object_size 0
+	 */
+	NONE,
+	
+	/**
+	 * This sends a string message back to the client. This is used as a way to test
+	 * the client-server communication and can also be used to send a message back to
+	 * the client if the message has a FAIL status.
 	 * @object_size 1
 	 */
-	BALANCE,
+	BASIC_MESSAGE,
+	
+	/**
+	 * This sends a balance of a specific account back to the client after a transaction
+	 * has been made. The information included in this data type is a balance.
+	 * @object_size 1
+	 */
+	TRANSFER_BALANCE,
+	
+	/**
+	 * This sends a balance of a specific account back to the client after a bill has been
+	 * payed. The information included in this data type is a balance.
+	 * @object_size 1
+	 */
+	BILL_BALANCE,
 	
 	/**
 	 * This sends information about an account back to the client. The information
@@ -35,6 +56,14 @@ public enum Datatype
 	 * @object_size 4
 	 */
 	TRANSACTION,
+	
+	/**
+	 * This sends information about a person's address back to the client. The information
+	 * included in this data type is the street number, street name, postal code, province,
+	 * and country
+	 * @object_size 5
+	 */
+	ADDRESS,
 	
 	/**
 	 * This sends information about a bill back to the client. The information
@@ -141,16 +170,18 @@ public enum Datatype
 	ACCOUNTHOLDER_ROLE_ASSOCIATION_RESULT,
 	
 	/**
-	 * This sends a string message back to the client. This is used as a way to test
-	 * the client-server communication and can also be used to send a message back to
-	 * the client if the message has a FAIL status.
-	 * @object_size 1
-	 */
-	BASIC_MESSAGE,
-	
-	/**
-	 * No data is passed.
+	 * This sends information about an account creation back to the client.
+	 * No information is included in this data type since the information required is
+	 * within the message status value.
 	 * @object_size 0
 	 */
-	NONE
+	ACCOUNT_CREATION_RESULT,
+	
+	/**
+	 * This sends information about an account deletion back to the client.
+	 * No information is included in this data type since the information required is
+	 * within the message status value.
+	 * @object_size 0
+	 */
+	ACCOUNT_DELETION_RESULT,
 }
