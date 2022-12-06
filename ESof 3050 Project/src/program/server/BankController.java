@@ -25,9 +25,25 @@ public class BankController implements IBankController
 		int num = 0;
 		while(numExists) {
 			numExists = false;
-			num = (int)(Math.random()*(999999999-100000000+1)+100000000);
-			for(int i=0; i<accountHolderList.size(); i++) {
-				if(accountHolderList.get(i).getCardNum() == num) {
+			num = (int)(Math.random()*(999999999-100000000+1)+100000000); //generate random 9 digit number
+			for(int i=0; i<accountHolderList.size(); i++) { 
+				if(accountHolderList.get(i).getCardNum() == num) { //checks if the number is already in use
+					numExists = true;
+				}
+			}
+		}
+		return num;
+	}
+	
+	//Method for generating Account Number
+	public int generateAccountNumber() {
+		boolean numExists = true;
+		int num = 0;
+		while(numExists) {
+			numExists = false;
+			num = (int)(Math.random()*(999999-100000+1)+100000); //generate random 6 digit number
+			for(int i=0; i<accountList.size(); i++) {
+				if(accountList.get(i).getAccountNum() == num) {
 					numExists = true;
 				}
 			}
@@ -89,8 +105,19 @@ public class BankController implements IBankController
 			return -1;
 		}
 	}
+	
+	//function for accepting from server
+	
+	
 
+
+	/******************************************
+	 * PROCESS METHODS FOR THE OCSF
+	 * FUNCTION WITH TODO NEED IMPLEMENTATION
+	 */
+	
 	//Authenticating the login of an account holder
+	@Override
 	public boolean authenticateAccountHolderLogin(String cardNumber, String pin) {
 		int cardNum = stringToInt(cardNumber);
 		int PIN = stringToInt(pin);
@@ -105,19 +132,10 @@ public class BankController implements IBankController
 			return false;
 	}
 	
-	//function for accepting from server
-	
-	
-
-
-	/******************************************
-	 * PROCESS METHODS FOR THE OCSF
-	 * FUNCTION WITH TODO NEED IMPLEMENTATION
-	 */
-	
 	/**
 	 * authenticate teller login request
 	 */
+	
 	@Override
 	public boolean authenticateTellerLogin(String empID, String password)
 	{
@@ -179,7 +197,7 @@ public class BankController implements IBankController
 		Person person = searchPerson(s);
 		Teller teller = searchTeller(id);
 		
-		if(person.getRoles().size() < 2 && person != null) {  //If this person is not already registered as an account holder and exists in the system
+		if(person.getRoles().size() < 2 && person != null && teller != null) {  //If this person is not already registered as an account holder and exists in the system
 			int card = generateCardNumber();
 			AccountHolder accountHolder = new AccountHolder(p, card, email, person);
 			accountHolderList.add(accountHolder);
@@ -245,21 +263,40 @@ public class BankController implements IBankController
 	public boolean addAddress(String streetName, String streetNumber, String postalCode, String province,
 			String country, String sid)
 	{
-		//TODO: call a create method that adds an address to a person
-		boolean addressAdded = false;
-		return addressAdded;
+		int num = stringToInt(streetNumber);
+		int sin = stringToInt(sid);
+		Person p = searchPerson(sin);
+		
+		if(p == null) {
+			return false;
+		}
+		else {
+			Address a = new Address(num, streetName, postalCode, province, country);
+			p.addAddress(a);
+			return true;
+		}
 	}
 
 	@Override
 	public boolean removeAddress(String sin, String postalCode)
 	{
-		//TODO: call a create method that removes an address to a person
-		boolean addressRemoved = false;
-		return addressRemoved;
+		int s = stringToInt(sin);
+		Person person = searchPerson(s);
+		if(person == null) { //if the person is not in the database return false
+			return false;
+		}
+		Address address = person.searchAddress(postalCode);
+		
+		if(address == null) { //if the address does not exist in the database
+			return false;
+		}
+	
+		person.getAdresses().remove(address);
+		return true;
 	}
 
 	@Override
-	public boolean addAccountHolderToPerson(String sin, String email)
+	public boolean addAccountHolderToPerson(String sin, String email) //This function should not be needed
 	{
 		//TODO: call a create method that adds an account holder to a person
 		boolean personRoleCreated = false;

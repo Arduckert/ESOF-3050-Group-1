@@ -59,6 +59,19 @@ public class Person {
 	public List<personRole> getRoles() {
 		return this.roles;
 	}
+	public List<Address> getAdresses(){
+		return this.addresses;
+	}
+	
+	//search for an address via postalCode
+	public Address searchAddress(String pCode) {
+		for(int i=0; i < addresses.size(); i++) {
+			if(addresses.get(i).getPostalCode().equals(pCode)) {
+				return addresses.get(i);
+			}
+		}
+		return null;
+	}
 	
 	//To string 
 	public String toString() {
