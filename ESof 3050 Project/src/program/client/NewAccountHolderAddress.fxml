@@ -64,7 +64,7 @@
                   <Font size="18.0" />
                </font>
             </Label>
-            <TextField prefWidth="30.0" text="0" GridPane.columnIndex="1">
+            <TextField fx:id="NewAccountHolderAddressTotalTextField" editable="false" prefWidth="30.0" text="0" GridPane.columnIndex="1">
                <font>
                   <Font size="18.0" />
                </font>

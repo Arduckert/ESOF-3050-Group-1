@@ -11,6 +11,7 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import src.program.server.Address;
 import src.program.structs.AccountHolderInfo;
 import src.program.structs.AccountType;
 import javafx.event.ActionEvent;
@@ -42,6 +43,25 @@ public class BankingClientController extends Application implements IBankingClie
 	
 	private static ActionEvent ae;
 	private static TextArea ta;
+	
+	//5 parameters for account holder + pin
+	private static String firstName;
+	private static String lastName;
+	private static String sin;
+	private static String dob;
+	private static String email;
+	private static String pin;
+	
+	//5 lists for address parameters
+	private static ObservableList<String> streetNameList=FXCollections.observableArrayList();
+	private static ObservableList<String> streetNumberList=FXCollections.observableArrayList();
+	private static ObservableList<String> postalCodeList=FXCollections.observableArrayList();
+	private static ObservableList<String> provinceList=FXCollections.observableArrayList();
+	private static ObservableList<String> countryList=FXCollections.observableArrayList();
+	//addAddress(streetName.get(n), streetNumber.get(n), postalCode.get(n), province.get(n), country.get(n), sin)
+	
+	
+	
 	
 	//********************************************************************
 	//Common methods
@@ -91,7 +111,7 @@ public class BankingClientController extends Application implements IBankingClie
 			if(bc!=null)
 				bc.closeConnection();
 		}
-		catch (Exception ex) {System.err.println(ex);}
+		catch (Exception e) {e.printStackTrace();}
     	Platform.exit();
     }
 	
@@ -113,6 +133,18 @@ public class BankingClientController extends Application implements IBankingClie
 	
 	//Changes scene to teller main menu
 	public void switchToTellerMainMenu(ActionEvent event) throws Exception{
+		firstName=null;
+		lastName=null;
+		sin=null;
+		dob=null;
+		email=null;
+		pin=null;
+		
+		streetNameList.removeAll(streetNameList);//clear list of addresses
+		streetNumberList.removeAll(streetNumberList);
+		postalCodeList.removeAll(postalCodeList);
+		provinceList.removeAll(provinceList);
+		countryList.removeAll(countryList);
 		changeScene(event,"TellerMainMenu.fxml");
 	}
 	
@@ -139,8 +171,8 @@ public class BankingClientController extends Application implements IBankingClie
 		changeScene(event,"NewAddress.fxml");
 	}
 	
-	public void switchToCardNumberAndPinScreen(ActionEvent event) throws Exception{
-		changeScene(event,"CardNumberAndPin.fxml");
+	public void switchToPinScreen(ActionEvent event) throws Exception{
+		changeScene(event,"Pin.fxml");
 	}
 	
 	public void switchToNewAccountHolderConfirmationScreen(ActionEvent event) throws Exception{
@@ -332,10 +364,36 @@ public class BankingClientController extends Application implements IBankingClie
     @FXML
     private TextField yearTextField;
     
+    @FXML 
+    private TextArea CreateAccountHolderErrorTextArea;
+    
     @FXML
     void NewAccountNextButtonPressed(ActionEvent event) throws Exception{
-    	//List addressList = new ArrayList();
-    	switchToNewAccountHolderAddressScreen(event);
+    	if(offline)
+    		switchToNewAccountHolderAddressScreen(event);
+    	if(!FirstNameTextField.getText().equals(""))
+    		firstName=FirstNameTextField.getText();
+    	else
+    		CreateAccountHolderErrorTextArea.setText("Blank field");
+    	if(!LastNameTextField.getText().equals(""))
+    		lastName=LastNameTextField.getText();
+    	else
+    		CreateAccountHolderErrorTextArea.setText("Blank field");
+    	if(!sinTextField.getText().equals(""))
+    		sin=sinTextField.getText();
+    	else
+    		CreateAccountHolderErrorTextArea.setText("Blank field");
+    	if(!emailTextField.getText().equals(""))
+    		email=emailTextField.getText();
+    	else
+    		CreateAccountHolderErrorTextArea.setText("Blank field");
+		if(monthTextField.getText().length()==2&&dayTextField.getText().length()==2&&yearTextField.getText().length()==4) {
+			dob=monthTextField.getText()+"/"+dayTextField.getText()+"/"+yearTextField.getText();
+		}
+		else
+			CreateAccountHolderErrorTextArea.setText("Date of birth invalid");
+		if(firstName!=null&&lastName!=null&&sin!=null&&email!=null&&dob!=null)
+			switchToNewAccountHolderAddressScreen(event);
     }
     
     
@@ -343,6 +401,9 @@ public class BankingClientController extends Application implements IBankingClie
     
     //************************************************************************
     //GUI components for new account holder address addition
+    
+    @FXML
+    private TextField NewAccountHolderAddressTotalTextField;
     
     @FXML
     void AddressBackButtonPressed(ActionEvent event) throws Exception{
@@ -356,7 +417,7 @@ public class BankingClientController extends Application implements IBankingClie
     
     @FXML
     void AddressNextButtonPressed(ActionEvent event) throws Exception{
-    	switchToCardNumberAndPinScreen(event);
+    	switchToPinScreen(event);
     }
     
     //**************************************************************************
@@ -386,8 +447,12 @@ public class BankingClientController extends Application implements IBankingClie
   	
   	@FXML
   	void AddressSubmitButtonPressed(ActionEvent event) throws Exception{
-  		//increment count
-  		//new address to list
+  		streetNameList.add(StreetNameTextField.getText());
+  		streetNumberList.add(StreetNumberTextField.getText());
+  		postalCodeList.add(PostalCodeTextField.getText());
+  		provinceList.add(ProvinceTextField.getText());
+  		countryList.add(CountryTextField.getText());
+  		
   		switchToNewAccountHolderAddressScreen(event);
   	}
   	
@@ -397,18 +462,15 @@ public class BankingClientController extends Application implements IBankingClie
   	//GUI components for card number generation and PIN entry
   	
   	@FXML
-  	private TextField NewCardNumberTextField;
-  	
-  	@FXML
   	private TextField NewPinTextField;
   	
   	@FXML
-  	void CardNumberAndPinBackButtonPressed(ActionEvent event) throws Exception{
+  	void PinBackButtonPressed(ActionEvent event) throws Exception{
   		switchToNewAccountHolderAddressScreen(event);
   	}
   	
   	@FXML
-  	void CardNumberAndPinDoneButtonPressed(ActionEvent event) throws Exception{
+  	void PinDoneButtonPressed(ActionEvent event) throws Exception{
   		switchToNewAccountHolderConfirmationScreen(event);
   	}
   	
@@ -743,20 +805,32 @@ public class BankingClientController extends Application implements IBankingClie
     
     private String SearchParameterList[]= {"Card Number","SIN","Email"};
     private String AccountTypeList[]= {"Chequing Account","Savings Account","Mortgage Account","Line-Of-Credit"};
-    public ObservableList<String> ActiveAccounts = FXCollections.observableArrayList();
+    private ObservableList<String> ActiveAccounts = FXCollections.observableArrayList();
     
     //Initializer of GUI elements
     public void initialize() {
-    	if(ipAddTextField!=null)
+    	if(FirstNameTextField!=null && firstName!=null) {
+    		FirstNameTextField.setText(firstName);
+    		LastNameTextField.setText(lastName);
+    		sinTextField.setText(sin);
+    		emailTextField.setText(email);
+    		dayTextField.setText(dob.substring(3, 5)); //day
+    		monthTextField.setText(dob.substring(0, 2)); //month
+    		yearTextField.setText(dob.substring(6, 10)); //year
+    	}
+    	if(ipAddTextField!=null) //connect screen
     		offline=false;
-    	if(TellerSearchParameterChoiceBox!=null)
+    	if(TellerSearchParameterChoiceBox!=null) //teller search screen
     		TellerSearchParameterChoiceBox.getItems().addAll(SearchParameterList);
-    	if(AccountTypeChoiceBox!=null) {
+    	if(AccountTypeChoiceBox!=null) { //new account
     		AccountTypeChoiceBox.getItems().addAll(AccountTypeList);
     	}
-    	if(SendingAccountChoiceBox!=null) {
+    	if(SendingAccountChoiceBox!=null) { //
     		SendingAccountChoiceBox.getItems().addAll(ActiveAccounts);
     		//TODO have BankingClient add items to ActiveAccounts. Specifically get all accounts belonging to a card number.
+    	}
+    	if(NewAccountHolderAddressTotalTextField!=null) {
+    		NewAccountHolderAddressTotalTextField.setText(Integer.toString(streetNameList.size()));
     	}
     }
     
