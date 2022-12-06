@@ -23,7 +23,7 @@
     <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
   </rowConstraints>
    <children>
-      <Label text="Delete Profile">
+      <Label text="Edit Profile">
          <font>
             <Font size="24.0" />
          </font>
@@ -33,7 +33,7 @@
             <Font size="14.0" />
          </font>
       </Button>
-      <TextField editable="false" GridPane.columnIndex="1" GridPane.rowIndex="1">
+      <TextField fx:id="EditCardNumberTextField" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="1">
          <font>
             <Font size="18.0" />
          </font>
