@@ -79,6 +79,8 @@ public class BankController implements IBankController
 		int PIN = stringToInt(pin);
 		
 		AccountHolder accountHolder = searchAccountHolder(cardNum);
+		if(accountHolder==null)
+			return false;
 		if(accountHolder.getPin() == PIN) {
 			return true;
 		}
@@ -104,6 +106,8 @@ public class BankController implements IBankController
 	{
 		int ID = stringToInt(empID);
 		Teller t = searchTeller(ID);
+		if(t==null)
+			return false;
 		if(t.getPassword().equals(password)) {
 			return true;
 		}

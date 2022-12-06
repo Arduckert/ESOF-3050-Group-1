@@ -55,7 +55,7 @@
          </font>
       </TextField>
       <Label fx:id="TellerLoginErrorLabel" GridPane.rowIndex="4" />
-      <TextArea fx:id="TellerLoginErrorTextArea" prefHeight="20.0" GridPane.columnSpan="2147483647" GridPane.rowIndex="4">
+      <TextArea fx:id="TellerLoginErrorTextArea" editable="false" prefHeight="20.0" GridPane.columnSpan="2147483647" GridPane.rowIndex="4">
          <font>
             <Font size="14.0" />
          </font>

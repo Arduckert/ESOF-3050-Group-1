@@ -438,7 +438,7 @@ public class BankingClientController extends Application implements IBankingClie
   	private TextField AccountHolderCardNumberTextField;
   	
   	@FXML
-  	private TextField AccountHolderPinTextField;
+  	private PasswordField AccountHolderPinPasswordField;
   	
   	@FXML
   	private TextArea AccountHolderLoginErrorTextArea;
@@ -448,9 +448,9 @@ public class BankingClientController extends Application implements IBankingClie
   		if(offline)
   			switchToAccountHolderMainMenu(event);
 		else {
-			ta=AccountHolderLoginErrorTextArea;
 			ae=event;
-			sendAccountHolderLoginRequest(AccountHolderCardNumberTextField.getText(), AccountHolderPinTextField.getText());
+			ta=AccountHolderLoginErrorTextArea;
+			sendAccountHolderLoginRequest(AccountHolderCardNumberTextField.getText(), AccountHolderPinPasswordField.getText());
 			//switchToAccountHolderMainMenu(event);//remove later
 			//bc.loginAsAccoutnHolder(TellerNumberTextField.getText(), TellerPasswordTextField.getText());
 			//verify
@@ -849,6 +849,7 @@ public class BankingClientController extends Application implements IBankingClie
 		if (isSuccessful)
 		{
 			//login success next screen
+			System.out.println("Login Success");
 			Platform.runLater(new Runnable() {
 				@Override
 				public void run() {
