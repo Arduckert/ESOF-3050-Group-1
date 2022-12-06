@@ -72,8 +72,8 @@ public class ClientTestDriver implements IBankingClientController
 			sendFindAccountHolderByEmailRequest(TestVariables.unavailableAccountHolderFindEmail); //should return false and no information
 			
 			//create new account holder tests
-			createNewAccountHolder(TestVariables.availableCreateAccountHolderEmail); //handler should return true
-			createNewAccountHolder(TestVariables.unavailableCreateAccountHolderEmail); //handler should return false
+			createNewAccountHolder(TestVariables.availableCreateAccountHolderEmail, TestVariables.createAccountHolderPin, TestVariables.createAccountHolderSin); //handler should return true
+			createNewAccountHolder(TestVariables.unavailableCreateAccountHolderEmail, TestVariables.createAccountHolderPin, TestVariables.createAccountHolderSin); //handler should return false
 			
 			//delete account holder tests
 			deleteAccountHolder(TestVariables.availableDeleteAccountHolderNumber); //handler should return true
@@ -362,11 +362,11 @@ public class ClientTestDriver implements IBankingClientController
 	 * sends a request to the server to create a new account holder
 	 */
 	@Override
-	public void createNewAccountHolder(String email)
+	public void createNewAccountHolder(String email, String pin, String sin)
 	{
 		try
 		{
-			bc.createAccountHolder(email);
+			bc.createAccountHolder(email, pin, sin);
 		}
 		catch (IOException e)
 		{
