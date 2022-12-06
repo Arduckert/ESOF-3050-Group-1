@@ -79,6 +79,9 @@ public class BankingClient extends AbstractClient
 			case ACCOUNT_DELETION_RESULT:
 				processAccountDeletionResult(sp);
 				break;
+			case ACCOUNT:
+				processAccountInformation(sp);
+				break;
 			case BASIC_MESSAGE:
 				processBasicMessage(sp);
 				break;
@@ -550,4 +553,66 @@ public class BankingClient extends AbstractClient
 			bcc.handleAccountDeletion(false);
 		}
 	}
+	
+	/////////////////
+	// GET ACCOUNT //
+	/////////////////
+	
+	/**
+	 * Tells the server to get information about a specific account from
+	 * a specific account holder
+	 * @param accountType account type (chequing, savings, etc.)
+	 * @param cardNumber the account holder's card number
+	 */
+	public void getAccount(AccountType accountType, String cardNumber) throws IOException
+	{
+		ClientProtocol cp = new ClientProtocol(ServerAction.GET_ACCOUNT, accountType.toString(), cardNumber);
+		sendToServer(cp);
+	}
+	
+	/**
+	 * Handles the information obtained from the server about an account
+	 * @param accountInfo
+	 */
+	private void processAccountInformation(ServerProtocol sp)
+	{
+		//sends the account information to the client
+		if (sp.getMessageStatus() == MessageStatus.SUCCESS)
+		{
+			AccountInfo info = new AccountInfo(AccountType.valueOf(sp.GetData().get(0)), sp.GetData().get(1), sp.GetData().get(2));
+			bcc.handleAccountInformation(info);
+		}
+		else
+		{
+			bcc.handleAccountInformation(new AccountInfo());
+		}
+	}
+	
+	////////////////////////////
+	// SETUP MORTGAGE ACCOUNT //
+	////////////////////////////
+	
+	//////////////
+	// TRANSFER //
+	//////////////
+	
+	///////////////////////////////
+	// TRANSFER BETWEEN ACCOUNTS //
+	///////////////////////////////
+	
+	//////////////
+	// PAY BILL //
+	//////////////
+	
+	//////////////////////
+	// GET TRANSACTIONS //
+	//////////////////////
+	
+	/////////////////////////
+	// GET ACCOUNT RECORDS //
+	/////////////////////////
+	
+	//////////////////////////
+	// GET CUSTOMER RECORDS //
+	//////////////////////////
 }

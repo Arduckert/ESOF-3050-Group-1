@@ -63,6 +63,9 @@ public class BankingServer extends AbstractServer
 			case DELETE_ACCOUNT:
 				handleAccountDeletionRequest(cp, client);
 				break;
+			case GET_ACCOUNT:
+				handleAccountGetRequest(cp, client);
+				break;
 			default:
 				break;
 		}
@@ -609,6 +612,50 @@ public class BankingServer extends AbstractServer
 			{
 				e.printStackTrace();
 			}
+		}
+	}
+	
+	/**
+	 * Returns information about a specific account from a specific account holder
+	 * @param accountType type of account (chequing, savings, etc.)
+	 * @param cardNumber the account holder's card number
+	 * @return
+	 */
+	private void handleAccountGetRequest(ClientProtocol cp, ConnectionToClient client)
+	{
+		//gets the account information from the bank controller
+		AccountInfo info = bc.getAccount(AccountType.valueOf(cp.GetParameters().get(0)), cp.GetParameters().get(1));
+		ServerProtocol sp;	
+		
+		//sends success if the accountinfo instance has information, fail if not
+		if (info.getHasInfo())
+		{
+			sp = new ServerProtocol(MessageStatus.SUCCESS, Datatype.ACCOUNT);
+			
+			try
+			{
+				//adds data to the server protocol
+				sp.AddData(info.accountType.toString(), info.balance, info.accountNumber);
+			}
+			catch (ParameterException e)
+			{
+				e.printStackTrace();
+			}
+		}
+		else
+		{
+			//fail message with no data
+			sp = new ServerProtocol(MessageStatus.FAIL, Datatype.ACCOUNT);
+		}
+		
+		try
+		{
+			//sends the info to the client
+			client.sendToClient(sp);
+		}
+		catch (IOException e)
+		{
+			e.printStackTrace();
 		}
 	}
 }

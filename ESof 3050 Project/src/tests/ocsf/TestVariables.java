@@ -69,4 +69,11 @@ public final class TestVariables
 	//ADD AND DELETE ACCOUNT
 	public static final AccountType accountType = AccountType.CHEQUING;
 	public static final String accountCardNumber = "32547698";
+	
+	//GET ACCOUNT
+	public static final AccountType getAccountType = AccountType.SAVINGS;
+	public static final String availableGetAccountCardNumber = "23485843";
+	public static final String unavailableGetAccountCardNumber = "234432843";
+	public static final String getAccountNumber = "43328822";
+	public static final String getAccountBalance = "145.32";
 }

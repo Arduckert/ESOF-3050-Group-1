@@ -36,11 +36,20 @@ public enum ServerAction
 	
 	/**
 	 * TODO
-	 * The tells the server to transfer money from one account to another. This takes the recipient's
-	 * email address, the account type (cheqing, savings, etc.), and the amount to transfer.
+	 * The tells the server to transfer money from one account to another. This takes the transfer type,
+	 * the recipient's email address, the account type (cheqing, savings, etc.), and the amount to transfer.
 	 * The server returns SUCCESS and the new balance if the transfer goes through. 
 	 */
 	TRANSFER,
+	
+	/**
+	 * TODO
+	 * The tells the server to transfer money from one account to another. This takes the sending account
+	 * type (chequing, savings, etc.), the receiving account type (chequing, savings, etc.), and the
+	 * amount to transfer.
+	 */
+	TRANSFER_BETWEEN_ACCOUNTS,
+	
 	
 	/**
 	 * TODO
@@ -86,6 +95,15 @@ public enum ServerAction
 	 * and the account information, fail and nothing if not.
 	 */
 	GET_ACCOUNT,
+	
+	/**
+	 * TODO
+	 * This tells a server to setup the information about a mortgage account. This takes a
+	 * mortgage length, an interest rate, and a principle amount. The server will return SUCCESS
+	 * if the information was added successfully.
+	 */
+	SETUP_MORTGAGE_ACCOUNT,
+	
 	
 	/**
 	 * This tells the server to create a new person. This takes a first name, a last name, a social

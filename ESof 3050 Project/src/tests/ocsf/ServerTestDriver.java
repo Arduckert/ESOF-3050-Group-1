@@ -3,6 +3,7 @@ package src.tests.ocsf;
 import src.program.server.BankingServer;
 import src.program.server.IBankController;
 import src.program.structs.AccountHolderInfo;
+import src.program.structs.AccountInfo;
 import src.program.structs.AccountType;
 
 import java.io.IOException;
@@ -197,5 +198,25 @@ public class ServerTestDriver implements IBankController
 	{
 		return accountType == TestVariables.accountType
 				&& cardNumber.equals(TestVariables.accountCardNumber);
+	}
+	
+	/**
+	 * Returns information about a specific account from a specific account holder
+	 * @param accountType type of account (chequing, savings, etc.)
+	 * @param cardNumber the account holder's card number
+	 * @return
+	 */
+	@Override
+	public AccountInfo getAccount(AccountType accountType, String cardNumber)
+	{
+		if (cardNumber.equals(TestVariables.availableGetAccountCardNumber))
+		{
+			AccountInfo info = new AccountInfo(accountType, TestVariables.getAccountBalance, TestVariables.getAccountNumber);
+			return info;
+		}
+		else
+		{
+			return new AccountInfo();
+		}
 	}
 }

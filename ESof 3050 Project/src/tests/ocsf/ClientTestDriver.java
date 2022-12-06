@@ -7,6 +7,7 @@ import java.net.UnknownHostException;
 import src.program.client.BankingClient;
 import src.program.client.IBankingClientController;
 import src.program.structs.AccountHolderInfo;
+import src.program.structs.AccountInfo;
 import src.program.structs.AccountType;
 
 public class ClientTestDriver implements IBankingClientController
@@ -28,6 +29,7 @@ public class ClientTestDriver implements IBankingClientController
 	private static int accountHolderToPersonTestCount = 0;
 	private static int accountCreationTestCount = 0;
 	private static int accountDeletionTestCount = 0;
+	private static int accountGetTestCount = 0;
 	
 	public ClientTestDriver()
 	{
@@ -753,5 +755,58 @@ public class ClientTestDriver implements IBankingClientController
 			assert false;
 		}
 		accountDeletionTestCount++;
+	}
+	
+	/////////////////
+	// GET ACCOUNT //
+	/////////////////
+	
+	/**
+	 * Tells the server to get information about a specific account from
+	 * a specific account holder
+	 * @param accountType account type (chequing, savings, etc.)
+	 * @param cardNumber the account holder's card number
+	 */
+	@Override
+	public void getAccount(AccountType accountType, String cardNumber)
+	{
+		try
+		{
+			bc.getAccount(accountType, cardNumber);
+		}
+		catch (IOException e)
+		{
+			System.err.println("GET ACCOUNT TEST FAILED: EXCEPTION");
+			e.printStackTrace();
+		}
+	}
+	
+	/**
+	 * Handles the information obtained from the server about an account and tests
+	 * for data integrity
+	 * @param accountInfo
+	 */
+	public void handleAccountInformation(AccountInfo accountInfo)
+	{
+		if (accountInfo.getHasInfo() && accountGetTestCount == 0)
+		{
+			//tests for data integrity
+			if (accountInfo.accountType == TestVariables.getAccountType
+					&& accountInfo.balance.equals(TestVariables.getAccountBalance)
+					&& accountInfo.accountNumber.equals(TestVariables.getAccountNumber))
+			{
+				System.out.println("GET ACCOUNT TRUE TEST PASSED");
+			}
+		}
+		else if (!accountInfo.getHasInfo() && accountGetTestCount == 1)
+		{
+			System.out.println("GET ACCOUNT FALSE TEST PASSED");
+		}
+		else
+		{
+			System.err.println("GET ACCOUNT TEST " + (accountGetTestCount + 1) + " FAILED");
+			assert false;
+		}
+		accountGetTestCount++;
 	}
 }

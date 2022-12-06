@@ -3,6 +3,7 @@ import java.util.*;
 import java.lang.Math;
 
 import src.program.structs.AccountHolderInfo;
+import src.program.structs.AccountInfo;
 import src.program.structs.AccountType;
 
 // *** TODO: IMPLEMENT INTERFACE METHODS (REFER TO BLUE MARKS ON THE SCROLL BAR) *** //
@@ -328,6 +329,17 @@ public class BankController implements IBankController
 		return accountDeleted;
 	}
 	
+	/**
+	 * Returns information about a specific account from a specific account holder
+	 * @param accountType type of account (chequing, savings, etc.)
+	 * @param cardNumber the account holder's card number
+	 * @return
+	 */
+	@Override
+	public AccountInfo getAccount(AccountType accountType, String cardNumber) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 	//MAIN
 	public static void main(String args[])

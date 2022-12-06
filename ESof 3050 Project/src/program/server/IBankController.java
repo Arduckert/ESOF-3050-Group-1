@@ -122,4 +122,12 @@ public interface IBankController
 	 * @return true if the account was deleted successfully, false if not
 	 */
 	public boolean deleteAccount(AccountType accountType, String cardNumber);
+	
+	/**
+	 * Returns information about a specific account from a specific account holder
+	 * @param accountType type of account (chequing, savings, etc.)
+	 * @param cardNumber the account holder's card number
+	 * @return
+	 */
+	public AccountInfo getAccount(AccountType accountType, String cardNumber);
 }

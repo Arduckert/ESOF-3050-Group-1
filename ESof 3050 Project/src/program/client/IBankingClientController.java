@@ -247,4 +247,50 @@ public interface IBankingClientController
 	 * if not
 	 */
 	public void handleAccountDeletion(boolean isSuccessful);
+	
+	/////////////////
+	// GET ACCOUNT //
+	/////////////////
+	
+	/**
+	 * Tells the server to get information about a specific account from
+	 * a specific account holder
+	 * @param accountType account type (chequing, savings, etc.)
+	 * @param cardNumber the account holder's card number
+	 */
+	public void getAccount(AccountType accountType, String cardNumber);
+	
+	/**
+	 * Handles the information obtained from the server about an account
+	 * @param accountInfo
+	 */
+	public void handleAccountInformation(AccountInfo accountInfo);
+	
+	////////////////////////////
+	// SETUP MORTGAGE ACCOUNT //
+	////////////////////////////
+	
+	//////////////
+	// TRANSFER //
+	//////////////
+	
+	///////////////////////////////
+	// TRANSFER BETWEEN ACCOUNTS //
+	///////////////////////////////
+	
+	//////////////
+	// PAY BILL //
+	//////////////
+	
+	//////////////////////
+	// GET TRANSACTIONS //
+	//////////////////////
+	
+	/////////////////////////
+	// GET ACCOUNT RECORDS //
+	/////////////////////////
+	
+	//////////////////////////
+	// GET CUSTOMER RECORDS //
+	//////////////////////////
 }	
