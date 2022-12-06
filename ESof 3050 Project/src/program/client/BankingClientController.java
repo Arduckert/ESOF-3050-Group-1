@@ -72,6 +72,8 @@ public class BankingClientController extends Application implements IBankingClie
 	
 	private static AccountHolderInfo ahi;
 	
+	private static String accountType;
+	
 	
 	
 	
@@ -142,6 +144,9 @@ public class BankingClientController extends Application implements IBankingClie
     void EditCancelButtonPressed(ActionEvent event) throws Exception{
     	switchToEditProfileScreen(event);
     }
+    
+    @FXML
+    private TextArea ErrorTextArea;
 	
 	//********************************************************************
 	
@@ -259,6 +264,10 @@ public class BankingClientController extends Application implements IBankingClie
 	
 	public void switchToDeleteProfileScreen(ActionEvent event) throws Exception{
 		changeScene(event,"DeleteProfile.fxml");
+	}
+	
+	public void switchToCreateAccountConfirmationScreen(ActionEvent event) throws Exception{
+		changeScene(event,"CreateAccountConfirmation.fxml");
 	}
 	
 	//************************************************************************
@@ -393,6 +402,11 @@ public class BankingClientController extends Application implements IBankingClie
     void NewAccountNextButtonPressed(ActionEvent event) throws Exception{
     	if(offline)
     		switchToNewAccountHolderAddressScreen(event);
+    	if(monthTextField.getText().length()==2&&dayTextField.getText().length()==2&&yearTextField.getText().length()==4) {
+			dob=monthTextField.getText()+"/"+dayTextField.getText()+"/"+yearTextField.getText();
+		}
+		else
+			CreateAccountHolderErrorTextArea.setText("Date of birth invalid");
     	if(!FirstNameTextField.getText().equals(""))
     		firstName=FirstNameTextField.getText();
     	else
@@ -409,11 +423,6 @@ public class BankingClientController extends Application implements IBankingClie
     		email=emailTextField.getText();
     	else
     		CreateAccountHolderErrorTextArea.setText("Blank field");
-		if(monthTextField.getText().length()==2&&dayTextField.getText().length()==2&&yearTextField.getText().length()==4) {
-			dob=monthTextField.getText()+"/"+dayTextField.getText()+"/"+yearTextField.getText();
-		}
-		else
-			CreateAccountHolderErrorTextArea.setText("Date of birth invalid");
 		if(firstName!=null&&lastName!=null&&sin!=null&&email!=null&&dob!=null)
 			switchToNewAccountHolderAddressScreen(event);
     }
@@ -463,25 +472,31 @@ public class BankingClientController extends Application implements IBankingClie
   	private TextField CountryTextField;
   	
   	@FXML
+  	private TextArea AddressErrorTextArea;
+  	
+  	@FXML
   	void AddressCancelButtonPressed(ActionEvent event) throws Exception{
   		switchToNewAccountHolderAddressScreen(event);
   	}
   	
   	@FXML
   	void AddressSubmitButtonPressed(ActionEvent event) throws Exception{
-  		streetNameList.add(StreetNameTextField.getText());
-  		streetNumberList.add(StreetNumberTextField.getText());
-  		postalCodeList.add(PostalCodeTextField.getText());
-  		provinceList.add(ProvinceTextField.getText());
-  		countryList.add(CountryTextField.getText());
-  		
-  		switchToNewAccountHolderAddressScreen(event);
+  		try {
+  			Integer.valueOf(StreetNumberTextField.getText());
+  			streetNameList.add(StreetNameTextField.getText());
+  			streetNumberList.add(StreetNumberTextField.getText());
+  			postalCodeList.add(PostalCodeTextField.getText());
+  			provinceList.add(ProvinceTextField.getText());
+  			countryList.add(CountryTextField.getText());
+  			switchToNewAccountHolderAddressScreen(event);
+  		}
+  		catch(Exception e) {AddressErrorTextArea.setText("Invalid street number");}
   	}
   	
   	//*******************************************************************
   	
   	//******************************************************************
-  	//GUI components for card number generation and PIN entry
+  	//GUI components for PIN entry
   	
   	@FXML
   	private TextField NewPinTextField;
@@ -502,7 +517,11 @@ public class BankingClientController extends Application implements IBankingClie
   			ta=PinErrorTextArea;
   			createNewPerson(firstName,lastName,sin,dob);
   			createNewAccountHolder(email,pin,sin);
-  			addAccountHolderToPerson(sin,email); //TODO ask if necessary
+  			addAccountHolderToPerson(sin,email); //TODO discuss necessity of creating person then account holder
+  			for(int i=0;i<streetNameList.size();i++) {
+  				addAddress(streetNameList.get(i),streetNumberList.get(i),
+  						postalCodeList.get(i),provinceList.get(i), countryList.get(i),sin);
+  			}
   		}
   		else
   			PinErrorTextArea.setText("Invalid pin");
@@ -569,6 +588,7 @@ public class BankingClientController extends Application implements IBankingClie
     	if(searchParameter.equals("Email"))
     		sendFindAccountHolderByEmailRequest(searchValue);
     	switchToTellerSearchResultScreen(event);
+    	//TODO add other search parameters
     }
     
   	//*********************************************************************
@@ -697,7 +717,7 @@ public class BankingClientController extends Application implements IBankingClie
     	ahi=CardNumberListView.getSelectionModel().getSelectedItem();
     	switchToEditProfileScreen(event);
     }
-    
+  
     //*************************************************************
     
     //********************************************************
@@ -783,11 +803,40 @@ public class BankingClientController extends Application implements IBankingClie
     private TextField TellerCardNumberTextField;
 
     @FXML
-    void CreateAccountButtonPressed(ActionEvent event) {
-
+    void CreateAccountButtonPressed(ActionEvent event) throws Exception {
+    	accountType=AccountTypeChoiceBox.getValue();
+    	if(accountType==null)
+    		ErrorTextArea.setText("No type selected");
+    	else if(accountType.equals("Chequing Account")) {
+    		createAccount(AccountType.CHEQUING, cardNumber);
+    		switchToCreateAccountConfirmationScreen(event);
+    	}
+    	else if(accountType.equals("Savings Account")) {
+    		createAccount(AccountType.SAVINGS, cardNumber);
+    		switchToCreateAccountConfirmationScreen(event);
+    	}
+    	else if(accountType.equals("Mortgage Account")) {
+    		createAccount(AccountType.MORTGAGE, cardNumber);
+    		switchToCreateAccountConfirmationScreen(event);
+    	}
+    	else if(accountType.equals("Line-Of-Credit")) {
+    		createAccount(AccountType.LINE_OF_CREDIT, cardNumber);
+    		switchToCreateAccountConfirmationScreen(event);
+    	}
     }
     
     //*********************************************************
+    
+    //*******************************************************
+    //GUI components for new account confirmation screen
+    
+    @FXML
+    private TextField AccountNumberConfirmationTextField;
+
+    @FXML
+    private TextField AccountTypeConfirmationTextField;
+    
+    //*******************************************************
     
     
     
@@ -877,12 +926,12 @@ public class BankingClientController extends Application implements IBankingClie
     	if(CardNumberListView!=null) {
     		CardNumberListView.getItems().addAll(searchList);
     		lv=CardNumberListView;
-    		//TODO observe for click
-    		
     		CardNumberListView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<AccountHolderInfo>() {
     			@Override
     			public void changed(ObservableValue<? extends AccountHolderInfo> ov, AccountHolderInfo oldValue, AccountHolderInfo newValue) {
     				    ResultEmailTextField.setText(newValue.email);
+    				    //TODO add other fields
+    				    //We need first name, last name and sin to be passed from server
     			}});
     	}
     	if(ResultTypeTextField!=null)
@@ -895,6 +944,13 @@ public class BankingClientController extends Application implements IBankingClie
     	
     	if(EditCardNumberTextField!=null&&ahi!=null)
     		EditCardNumberTextField.setText(ahi.cardNumber);
+    	
+    	//TODO get new account number
+    	//if(AccountNumberConfirmationTextField!=null)
+    	
+    	if(AccountTypeConfirmationTextField!=null)
+    		AccountTypeConfirmationTextField.setText(accountType);
+    		
     	
     }
     
