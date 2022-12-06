@@ -1059,11 +1059,11 @@ public class BankingClientController extends Application implements IBankingClie
 	 * creates a new account holder
 	 */
 	@Override
-	public void createNewAccountHolder(String email)
+	public void createNewAccountHolder(String email, String pin, String sin)
 	{
 		try
 		{
-			bc.createAccountHolder(email);
+			bc.createAccountHolder(email,pin,sin);
 		}
 		catch (IOException e)
 		{

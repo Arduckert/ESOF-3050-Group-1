@@ -72,12 +72,12 @@ public class ClientTestDriver implements IBankingClientController
 			sendFindAccountHolderByEmailRequest(TestVariables.unavailableAccountHolderFindEmail); //should return false and no information
 			
 			//create new account holder tests
-			createNewAccountHolder(TestVariables.availableCreateAccountHolderEmail); //handler should return true
-			createNewAccountHolder(TestVariables.unavailableCreateAccountHolderEmail); //handler should return false
+			createNewAccountHolder(TestVariables.availableCreateAccountHolderEmail, TestVariables.createAccountHolderPin, TestVariables.createAccountHolderSin); //handler should return true
+			createNewAccountHolder(TestVariables.unavailableCreateAccountHolderEmail, TestVariables.createAccountHolderPin, TestVariables.createAccountHolderSin); //handler should return false
 			
 			//delete account holder tests
-			deleteAccountHolder(TestVariables.availableDeleteAccountHolderNumber, TestVariables.deleteAccountHolderPin); //handler should return true
-			deleteAccountHolder(TestVariables.unavailableDeleteAccountHolderNumber, TestVariables.deleteAccountHolderPin); //handler should return false		
+			deleteAccountHolder(TestVariables.availableDeleteAccountHolderNumber); //handler should return true
+			deleteAccountHolder(TestVariables.unavailableDeleteAccountHolderNumber); //handler should return false		
 			
 			//create person tests
 			createNewPerson(TestVariables.availablePersonFirstName, TestVariables.personLastName, TestVariables.availablePersonSIN, TestVariables.personDOB); //handler should return true
@@ -321,7 +321,7 @@ public class ClientTestDriver implements IBankingClientController
 		if (findAccountHolderByEmailTestCount == 0 && ahi.getHasInfo())
 		{
 			//is all the information the expected information?
-			if (ahi.accountNumber.equals(TestVariables.availableAccountHolderFindNumber)
+			if (ahi.cardNumber.equals(TestVariables.availableAccountHolderFindNumber)
 				&& ahi.email.equals(TestVariables.availableAccountHolderFindEmail)
 				&& ahi.pin.equals(TestVariables.availableAccountHolderFindPin))
 			{
@@ -336,7 +336,7 @@ public class ClientTestDriver implements IBankingClientController
 		else if (findAccountHolderByEmailTestCount > 0 && !ahi.getHasInfo())
 		{
 			//is all of the information not the expected information?
-			if (ahi.accountNumber == null && ahi.email == null && ahi.pin == null)
+			if (ahi.cardNumber == null && ahi.email == null && ahi.pin == null)
 			{
 				System.out.println("FIND ACCOUNT HOLDER BY EMAIL WITHOUT INFO TEST " + (findAccountHolderByEmailTestCount + 1) + " PASSED");
 			}
@@ -362,11 +362,11 @@ public class ClientTestDriver implements IBankingClientController
 	 * sends a request to the server to create a new account holder
 	 */
 	@Override
-	public void createNewAccountHolder(String email)
+	public void createNewAccountHolder(String email, String pin, String sin)
 	{
 		try
 		{
-			bc.createAccountHolder(email);
+			bc.createAccountHolder(email, pin, sin);
 		}
 		catch (IOException e)
 		{
@@ -384,7 +384,7 @@ public class ClientTestDriver implements IBankingClientController
 		if (createAccountHolderTestCount == 0 && info.getHasInfo())
 		{
 			if (info.email.equals(TestVariables.availableCreateAccountHolderEmail)
-					&& info.accountNumber.equals(TestVariables.createAccountHolderNumber)
+					&& info.cardNumber.equals(TestVariables.createAccountHolderNumber)
 					&& info.pin.equals(TestVariables.createAccountHolderPin))
 			{
 				System.out.println("CREATE ACCOUNT HOLDER TRUE TEST PASSED");
@@ -411,11 +411,11 @@ public class ClientTestDriver implements IBankingClientController
 	//////////////////////////////////
 	
 	@Override
-	public void deleteAccountHolder(String accountNumber, String pin)
+	public void deleteAccountHolder(String accountNumber)
 	{
 		try
 		{
-			bc.deleteAccountHolder(accountNumber, pin);
+			bc.deleteAccountHolder(accountNumber);
 		}
 		catch (IOException e)
 		{

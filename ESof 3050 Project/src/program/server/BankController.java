@@ -1,5 +1,6 @@
 package src.program.server;
 import java.util.*;
+import java.lang.Math;
 
 import src.program.structs.AccountHolderInfo;
 import src.program.structs.AccountType;
@@ -16,6 +17,22 @@ public class BankController implements IBankController
 	
 	public BankController() {
 		
+	}
+	
+	//generates a random card number of 9 digits
+	public int generateCardNumber() {
+		boolean numExists = true;
+		int num = 0;
+		while(numExists) {
+			numExists = false;
+			num = (int)(Math.random()*(999999999-100000000+1)+100000000);
+			for(int i=0; i<accountHolderList.size(); i++) {
+				if(accountHolderList.get(i).getCardNum() == num) {
+					numExists = true;
+				}
+			}
+		}
+		return num;
 	}
 	
 	public void addAccountHolder(AccountHolder x) {
@@ -153,23 +170,30 @@ public class BankController implements IBankController
 	/**
 	 * create a new account holder
 	 */
-	@Override												/*for creating a record*/
-	public AccountHolderInfo createAccountHolder(String email, String tellerEmpID)
+	@Override											                	/*for creating a record*/
+	public AccountHolderInfo createAccountHolder(String email, String pin, String sin, String tellerEmpID)
 	{
-		//TODO: add code to create an account holder
-		boolean accountHolderCreated = false;
+		int p = stringToInt(pin);
+		int id = stringToInt(tellerEmpID);
+		int s = stringToInt(sin);
+		Person person = searchPerson(s);
+		Teller teller = searchTeller(id);
 		
-		if (accountHolderCreated)
-		{
-			String accountNumber = null;
-			String pin = null;	
-			AccountHolderInfo info = new AccountHolderInfo(email, accountNumber, pin);
+		if(person.getRoles().size() < 2 && person != null) {  //If this person is not already registered as an account holder and exists in the system
+			int card = generateCardNumber();
+			AccountHolder accountHolder = new AccountHolder(p, card, email, person);
+			accountHolderList.add(accountHolder);
+			CustomerRecord customerRecord = new CustomerRecord(teller, "created", accountHolder);
+			recordList.add(customerRecord);
+			
+			String cardText = card + "";
+			AccountHolderInfo info = new AccountHolderInfo(null, cardText, null);
 			return info;
-		}
-		else
-		{
+			}
+		else {
 			return new AccountHolderInfo();
 		}
+		
 	}
 
 	/**
@@ -193,10 +217,13 @@ public class BankController implements IBankController
 	@Override
 	public boolean createPerson(String firstName, String lastName, String sin, String dateOfBirth)
 	{
-		//TODO: call a create method that returns a boolean where true means
-		//the person was created, false if not
-		boolean personCreated = false;
-		return personCreated;
+		int s = stringToInt(sin);
+		if(searchPerson(s) == null) { //Person is not in the system already
+			Person p = new Person(firstName,lastName,s,dateOfBirth);
+			personList.add(p);
+			return true;
+		}
+		return false;
 	}
 
 	/**
@@ -205,10 +232,13 @@ public class BankController implements IBankController
 	@Override
 	public boolean deletePerson(String sin)
 	{
-		//TODO: call a create method that returns a boolean where true means
-		//the person was deleted, false if not
-		boolean personDeleted = false;
-		return personDeleted;
+		int s = stringToInt(sin);
+		Person p = searchPerson(s);
+		if(p.getRoles().isEmpty()) { //if this person is not a teller or an account holder
+			personList.remove(p);
+			return true;
+		}
+		return false;
 	}
 
 	@Override

@@ -37,9 +37,10 @@ public class Person {
 	public void addAddress(Address x) {
 		this.addresses.add(x);
 	}
-	public void setPersonRole(personRole x) {
+	public void addPersonRole(personRole x) {
+		if(roles.size()<2) {
 		this.roles.add(x);
-		//add if size less than 2
+		}
 	}
 	
 	//Getters
@@ -54,6 +55,9 @@ public class Person {
 	}
 	public int getSIN() {
 		return this.SIN;
+	}
+	public List<personRole> getRoles() {
+		return this.roles;
 	}
 	
 	//To string 
