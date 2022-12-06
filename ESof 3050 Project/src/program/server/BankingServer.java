@@ -66,6 +66,9 @@ public class BankingServer extends AbstractServer
 			case GET_ACCOUNT:
 				handleAccountGetRequest(cp, client);
 				break;
+			case TRANSFER:
+				handleTransferRequest(cp, client);
+				break;
 			default:
 				break;
 		}
@@ -657,5 +660,62 @@ public class BankingServer extends AbstractServer
 		{
 			e.printStackTrace();
 		}
+	}
+	
+	/**
+	 * Returns information about a specific account from a specific account holder
+	 * @param accountType type of account (chequing, savings, etc.)
+	 * @param cardNumber the account holder's card number
+	 * @return
+	 */
+	private void handleTransferRequest(ClientProtocol cp, ConnectionToClient client)
+	{
+		ServerProtocol sp;
+		
+		//only account holders can transfer funds from one account to another
+		if (client.getInfo("LoginType") == LoginType.ACCOUNTHOLDER)
+		{
+			//gets the old balance
+			String oldBalance = cp.GetParameters().get(3);
+			
+			//gets the new balance from the bank controller
+			String newBalance = bc.transfer(AccountType.valueOf(cp.GetParameters().get(0)), TransferType.valueOf(cp.GetParameters().get(1)), (String)client.getInfo("AccNum"), cp.GetParameters().get(2), cp.GetParameters().get(3));	
+			
+			//sends success if the new balance is different from the old balance
+			if (!oldBalance.equals(newBalance))
+			{
+				sp = new ServerProtocol(MessageStatus.SUCCESS, Datatype.TRANSFER_BALANCE);
+				
+				try
+				{
+					//adds data to the server protocol
+					sp.AddData(newBalance);
+				}
+				catch (ParameterException e)
+				{
+					e.printStackTrace();
+				}
+			}
+			else
+			{
+				//fail message with no data
+				sp = new ServerProtocol(MessageStatus.FAIL, Datatype.TRANSFER_BALANCE);
+			}
+		}
+		else
+		{
+			//fail message with no data if the account type is a teller
+			sp = new ServerProtocol(MessageStatus.FAIL, Datatype.TRANSFER_BALANCE);
+		}
+		
+		try
+		{
+			//sends the info to the client
+			client.sendToClient(sp);
+		}
+		catch (IOException e)
+		{
+			e.printStackTrace();
+		}	
 	}
 }

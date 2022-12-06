@@ -1,6 +1,7 @@
 package src.tests.ocsf;
 
 import src.program.structs.AccountType;
+import src.program.structs.TransferType;
 
 public final class TestVariables
 {
@@ -76,4 +77,12 @@ public final class TestVariables
 	public static final String unavailableGetAccountCardNumber = "234432843";
 	public static final String getAccountNumber = "43328822";
 	public static final String getAccountBalance = "145.32";
+	
+	//TRANSFER
+	public static final AccountType transferAccountType = AccountType.SAVINGS;
+	public static final TransferType transferType = TransferType.DEPOSIT;
+	public static final String changedAmount = "19.23";
+	public static final String unchangedAmount = "23.42";
+	public static final String transferRecipient = "tester123@example.com";
+	public static final String senderAccountNumber = "2134325";
 }

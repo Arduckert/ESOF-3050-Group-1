@@ -82,6 +82,9 @@ public class BankingClient extends AbstractClient
 			case ACCOUNT:
 				processAccountInformation(sp);
 				break;
+			case TRANSFER_BALANCE:
+				processTransferResult(sp);
+				break;
 			case BASIC_MESSAGE:
 				processBasicMessage(sp);
 				break;
@@ -595,6 +598,36 @@ public class BankingClient extends AbstractClient
 	//////////////
 	// TRANSFER //
 	//////////////
+	
+	/**
+	 * handles the transfer of funds from one account to another (or to an account if depositing or withdrawing)
+	 * @param accountType the account to transfer to or from (chequing, savings, etc.)
+	 * @param transferType deposit, withdraw, or transfer
+	 * @param recipientEmail the email address of the recipient (if doing a transfer)
+	 * @param amount the amount to send
+	 */
+	public void transfer(AccountType accountType, TransferType transferType, String recipientEmail, String amount) throws IOException
+	{
+		ClientProtocol cp = new ClientProtocol(ServerAction.TRANSFER, accountType.toString(), transferType.toString(), recipientEmail, amount);
+		sendToServer(cp);
+	}
+	
+	/**
+	 * processes the transfer result sent by the server
+	 * @param sp
+	 */
+	private void processTransferResult(ServerProtocol sp)
+	{
+		//sends the transfer result back to the client
+		if (sp.getMessageStatus() == MessageStatus.SUCCESS)
+		{
+			bcc.handleTransferResult(true, sp.GetData().get(0));
+		}
+		else
+		{
+			bcc.handleTransferResult(false, null);
+		}
+	}
 	
 	///////////////////////////////
 	// TRANSFER BETWEEN ACCOUNTS //

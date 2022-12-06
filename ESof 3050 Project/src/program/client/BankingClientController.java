@@ -15,6 +15,7 @@ import src.program.server.Address;
 import src.program.structs.AccountHolderInfo;
 import src.program.structs.AccountInfo;
 import src.program.structs.AccountType;
+import src.program.structs.TransferType;
 import javafx.event.ActionEvent;
 
 import java.io.IOException;
@@ -1431,6 +1432,49 @@ public class BankingClientController extends Application implements IBankingClie
 		else
 		{
 			//no info in account info
+		}
+	}
+	
+	//////////////
+	// TRANSFER //
+	//////////////
+	
+	/**
+	 * handles the transfer of funds from one account to another (or to an account if depositing or withdrawing)
+	 * @param accountType the account to transfer to or from (chequing, savings, etc.)
+	 * @param transferType deposit, withdraw, or transfer
+	 * @param recipientEmail the email address of the recipient (if doing a transfer)
+	 * @param amount the amount to send
+	 */
+	public void transfer(AccountType accountType, TransferType transferType, String recipientEmail, String amount)
+	{
+		try
+		{
+			bc.transfer(accountType, transferType, recipientEmail, amount);
+		}
+		catch (IOException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	/**
+	 * handles the transfer result
+	 * @param isSuccessful true if the transfer was successful, false if not
+	 * @param newBalance the new balance after the transfer
+	 */
+	public void handleTransferResult(boolean isSuccessful, String newBalance)
+	{
+		//TODO: add handle code
+		
+		if (isSuccessful)
+		{
+			//show new balance
+		}
+		else
+		{
+			//error message
 		}
 	}
 }

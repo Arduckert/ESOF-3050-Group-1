@@ -9,6 +9,7 @@ import src.program.client.IBankingClientController;
 import src.program.structs.AccountHolderInfo;
 import src.program.structs.AccountInfo;
 import src.program.structs.AccountType;
+import src.program.structs.TransferType;
 
 public class ClientTestDriver implements IBankingClientController
 {
@@ -30,6 +31,7 @@ public class ClientTestDriver implements IBankingClientController
 	private static int accountCreationTestCount = 0;
 	private static int accountDeletionTestCount = 0;
 	private static int accountGetTestCount = 0;
+	private static int transferTestCount = 0;
 	
 	public ClientTestDriver()
 	{
@@ -114,6 +116,13 @@ public class ClientTestDriver implements IBankingClientController
 			//get account test
 			getAccount(TestVariables.getAccountType, TestVariables.availableGetAccountCardNumber); //handler should return true
 			getAccount(TestVariables.getAccountType, TestVariables.unavailableGetAccountCardNumber); //handler should return false
+			
+			//to setup for the next test
+			sendAccountHolderLoginRequest(TestVariables.availableAccountHolderNumber, TestVariables.availableAccountHolderPin); //should return true
+			
+			//transfer test
+			transfer(TestVariables.transferAccountType, TestVariables.transferType, TestVariables.transferRecipient, TestVariables.changedAmount);
+			transfer(TestVariables.transferAccountType, TestVariables.transferType, TestVariables.transferRecipient, TestVariables.unchangedAmount);
 			
 			Sleep(1000); //wait for connection to close
 			CloseServerConnection();
@@ -812,5 +821,53 @@ public class ClientTestDriver implements IBankingClientController
 			assert false;
 		}
 		accountGetTestCount++;
+	}
+	
+	//////////////
+	// TRANSFER //
+	//////////////
+	
+	/**
+	 * handles the transfer of funds from one account to another (or to an account if depositing or withdrawing)
+	 * @param accountType the account to transfer to or from (chequing, savings, etc.)
+	 * @param transferType deposit, withdraw, or transfer
+	 * @param recipientEmail the email address of the recipient (if doing a transfer)
+	 * @param amount the amount to send
+	 */
+	public void transfer(AccountType accountType, TransferType transferType, String recipientEmail, String amount)
+	{
+		try
+		{
+			bc.transfer(accountType, transferType, recipientEmail, amount);
+		}
+		catch (IOException e)
+		{
+			System.err.println("GET ACCOUNT TEST FAILED: EXCEPTION");
+			e.printStackTrace();
+		}
+	}
+	
+	/**
+	 * handles the transfer result
+	 * @param isSuccessful true if the transfer was successful, false if not
+	 * @param newBalance the new balance after the transfer
+	 */
+	public void handleTransferResult(boolean isSuccessful, String newBalance)
+	{
+		//checks data integrity and if the test is the expected result
+		if (isSuccessful && transferTestCount == 0 && newBalance.equals(TestVariables.changedAmount))
+		{
+				System.out.println("TRANSFER TRUE TEST PASSED");
+		}
+		else if (!isSuccessful && transferTestCount == 1 && !newBalance.equals(TestVariables.changedAmount))
+		{
+			System.out.println("TRANSFER FALSE TEST PASSED");
+		}
+		else
+		{
+			System.err.println("TRANSFER TEST " + (transferTestCount + 1) + " FAILED");
+			assert false;
+		}
+		transferTestCount++;
 	}
 }

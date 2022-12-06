@@ -5,6 +5,7 @@ import java.lang.Math;
 import src.program.structs.AccountHolderInfo;
 import src.program.structs.AccountInfo;
 import src.program.structs.AccountType;
+import src.program.structs.TransferType;
 
 // *** TODO: IMPLEMENT INTERFACE METHODS (REFER TO BLUE MARKS ON THE SCROLL BAR) *** //
 public class BankController implements IBankController
@@ -339,6 +340,57 @@ public class BankController implements IBankController
 	public AccountInfo getAccount(AccountType accountType, String cardNumber) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+	
+	/**
+	 * Completes a transfer of funds from one party to another.
+	 * @param accountType the account type (chequing, savings, etc.)
+	 * @param transferType the transfer type (deposit, withdraw, transfer)
+	 * @param cardNumber the sender's card number
+	 * @param recipientEmail the recipient's email address
+	 * @param amount the amount of funds to transfer
+	 * @return the sender's new balance after the transfer is complete
+	 */
+	@Override
+	public String transfer(AccountType accountType, TransferType transferType, String cardNumber, String recipientEmail,
+			String amount)
+	{
+		//TODO: add handle code
+		
+		//get sending account holder using card number
+		//get account holder of recipient using email		
+		//get account of the sending account holder using accountType
+		switch (accountType)
+		{
+		case CHEQUING:
+			//look for the chequing account of the sender
+			break;
+		case SAVINGS:
+			//look for the savings account of the sender
+			break;
+		case MORTGAGE:
+			//look for the mortgage account of the sender
+			break;
+		case LINE_OF_CREDIT:
+			//look for the line of credit account of the sender
+			break;
+		}
+		
+		switch (transferType)
+		{
+		case DEPOSIT:
+			//deposit into account
+			break;
+		case WITHDRAW:
+			//remove money from account
+			break;
+		case TRANSFER:
+			//transfer money to recipient email
+		}
+		
+		//return the new balance after the transfer is complete
+		String newBalance = amount;
+		return newBalance;
 	}
 	
 	//MAIN

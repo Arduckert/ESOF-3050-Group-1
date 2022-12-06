@@ -274,6 +274,22 @@ public interface IBankingClientController
 	// TRANSFER //
 	//////////////
 	
+	/**
+	 * handles the transfer of funds from one account to another (or to an account if depositing or withdrawing)
+	 * @param accountType the account to transfer to or from (chequing, savings, etc.)
+	 * @param transferType deposit, withdraw, or transfer
+	 * @param recipientEmail the email address of the recipient (if doing a transfer)
+	 * @param amount the amount to send
+	 */
+	public void transfer(AccountType accountType, TransferType transferType, String recipientEmail, String amount);
+	
+	/**
+	 * handles the transfer result
+	 * @param isSuccessful true if the transfer was successful, false if not
+	 * @param newBalance the new balance after the transfer
+	 */
+	public void handleTransferResult(boolean isSuccessful, String newBalance);
+	
 	///////////////////////////////
 	// TRANSFER BETWEEN ACCOUNTS //
 	///////////////////////////////

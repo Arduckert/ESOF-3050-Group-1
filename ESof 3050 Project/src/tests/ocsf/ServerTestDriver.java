@@ -5,6 +5,7 @@ import src.program.server.IBankController;
 import src.program.structs.AccountHolderInfo;
 import src.program.structs.AccountInfo;
 import src.program.structs.AccountType;
+import src.program.structs.TransferType;
 
 import java.io.IOException;
 
@@ -217,6 +218,34 @@ public class ServerTestDriver implements IBankController
 		else
 		{
 			return new AccountInfo();
+		}
+	}
+	
+	/**
+	 * Completes a transfer of funds from one party to another.
+	 * @param accountType the account type (chequing, savings, etc.)
+	 * @param transferType the transfer type (deposit, withdraw, transfer)
+	 * @param cardNumber the sender's card number
+	 * @param recipientEmail the recipient's email address
+	 * @param amount the amount of funds to transfer
+	 * @return the sender's new balance after the transfer is complete
+	 */
+	public String transfer(AccountType accountType, TransferType transferType, String cardNumber, String recipientEmail, String amount)
+	{
+		//tests data integrity
+		if (accountType == TestVariables.transferAccountType
+				&& transferType == TestVariables.transferType
+				&& cardNumber.equals(TestVariables.senderAccountNumber)
+				&& recipientEmail.equals(TestVariables.transferRecipient)
+				&& amount.equals(TestVariables.unchangedAmount))
+		{
+			//returns a different balance from the input one if the data is equal
+			return TestVariables.changedAmount;
+		}
+		else
+		{
+			//returns the same balance 
+			return TestVariables.unchangedAmount;
 		}
 	}
 }
