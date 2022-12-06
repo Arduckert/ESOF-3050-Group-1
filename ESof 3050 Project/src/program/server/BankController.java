@@ -1,5 +1,6 @@
 package src.program.server;
 import java.util.*;
+import java.lang.Math;
 
 import src.program.structs.AccountHolderInfo;
 import src.program.structs.AccountType;
@@ -16,6 +17,22 @@ public class BankController implements IBankController
 	
 	public BankController() {
 		
+	}
+	
+	//generates a random card number of 9 digits
+	public int generateCardNumber() {
+		boolean numExists = true;
+		int num = 0;
+		while(numExists) {
+			numExists = false;
+			num = (int)(Math.random()*(999999999-100000000+1)+100000000);
+			for(int i=0; i<accountHolderList.size(); i++) {
+				if(accountHolderList.get(i).getCardNum() == num) {
+					numExists = true;
+				}
+			}
+		}
+		return num;
 	}
 	
 	public void addAccountHolder(AccountHolder x) {
@@ -160,26 +177,23 @@ public class BankController implements IBankController
 		int id = stringToInt(tellerEmpID);
 		int s = stringToInt(sin);
 		Person person = searchPerson(s);
+		Teller teller = searchTeller(id);
 		
 		if(person.getRoles().size() < 2 && person != null) {  //If this person is not already registered as an account holder and exists in the system
+			int card = generateCardNumber();
+			AccountHolder accountHolder = new AccountHolder(p, card, email, person);
+			accountHolderList.add(accountHolder);
+			CustomerRecord customerRecord = new CustomerRecord(teller, "created", accountHolder);
+			recordList.add(customerRecord);
 			
-			//AccountHolder accountHolder = new AccountHolder(p, card, email, person);
-		}
-		boolean accountHolderCreated = false;
-		
-		if (accountHolderCreated)
-		{
-
-			String e = null;
-			String x = null;
-			String card = null;
-			AccountHolderInfo info = new AccountHolderInfo(e, card, x);
+			String cardText = card + "";
+			AccountHolderInfo info = new AccountHolderInfo(null, cardText, null);
 			return info;
-		}
-		else
-		{
+			}
+		else {
 			return new AccountHolderInfo();
 		}
+		
 	}
 
 	/**
