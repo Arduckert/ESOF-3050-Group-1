@@ -513,12 +513,6 @@ public class BankingClientController extends Application implements IBankingClie
 			ae=event;
 			ta=AccountHolderLoginErrorTextArea;
 			sendAccountHolderLoginRequest(AccountHolderCardNumberTextField.getText(), AccountHolderPinPasswordField.getText());
-			//switchToAccountHolderMainMenu(event);//remove later
-			//bc.loginAsAccoutnHolder(TellerNumberTextField.getText(), TellerPasswordTextField.getText());
-			//verify
-			//if good switch to main menu
-			//else change error label
-			//if bc.ProccessTellerResult == true
 		}
 	}
   	
@@ -760,41 +754,7 @@ public class BankingClientController extends Application implements IBankingClie
     
     
     
-    //**************************************
-    //Test for OCSF functionality
     
-    @FXML
-    private TextField TestConnectionField;
-    @FXML
-    void BalanceFinderSubmitButtonPressed(ActionEvent event) throws Exception
-    {
-    	String testConnectionString = TestConnectionField.getText();
-    	
-    	//send string to server and save it
-    	//bc.SendTestMessageToServer(testConnectionString);
-    	
-    	//testing login function
-    	bc.loginAsAccountHolder("1234567",testConnectionString);
-    	
-    	//if good > change page
-    	
-    	//if bad > pop up
-    	
-    }
-    
-    void switchToSampleBalanceScreen(ActionEvent event) throws Exception{
-    	changeScene(event,"SampleBalanceFinder.fxml");
-    }
-    
-    //*********************************************
-    
-    //************************************************
-    //Send message to server
-    
-    public void sendToServer(String msg) throws Exception
-    {
-    	bc.sendToServer(msg);
-    }
     
     
     
@@ -840,7 +800,55 @@ public class BankingClientController extends Application implements IBankingClie
 		launch(args);
 	}
 	
+	//*****************************************************************************
 	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	//**************************************
+    //Test for OCSF functionality
+    
+    @FXML
+    private TextField TestConnectionField;
+    @FXML
+    void BalanceFinderSubmitButtonPressed(ActionEvent event) throws Exception
+    {
+    	String testConnectionString = TestConnectionField.getText();
+    	
+    	//send string to server and save it
+    	//bc.SendTestMessageToServer(testConnectionString);
+    	
+    	//testing login function
+    	bc.loginAsAccountHolder("1234567",testConnectionString);
+    	
+    	//if good > change page
+    	
+    	//if bad > pop up
+    	
+    }
+    
+    void switchToSampleBalanceScreen(ActionEvent event) throws Exception{
+    	changeScene(event,"SampleBalanceFinder.fxml");
+    }
+    
+    //*********************************************
+    
+    //************************************************
+    //Send message to server
+    
+    public void sendToServer(String msg) throws Exception
+    {
+    	bc.sendToServer(msg);
+    }
 	
 	
 	
