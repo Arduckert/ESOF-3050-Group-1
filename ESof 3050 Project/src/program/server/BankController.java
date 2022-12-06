@@ -78,9 +78,9 @@ public class BankController implements IBankController
 		return null; //throw error maybe
 	}
 	
-	public AccountHolder searchAccountHolder(int accountNumber) {
+	public AccountHolder searchAccountHolder(int cardNumber) {
 		for(int i=0; i<accountHolderList.size(); i++) {
-			if(accountHolderList.get(i).getCardNum() == accountNumber) {
+			if(accountHolderList.get(i).getCardNum() == cardNumber) {
 				return accountHolderList.get(i);
 			}
 		}
@@ -167,22 +167,20 @@ public class BankController implements IBankController
 	@Override
 	public AccountHolderInfo findAccountHolder(String email)
 	{
-		//TODO: call a find method that returns the index
-		//of the accountHolder (-1 if it doesn't find it)
-		int accountHolderIndex = -1;
+		AccountHolder accountHolder = null;
+		for(int i=0; i < accountHolderList.size(); i++) {  //check all account holders
+			if(accountHolderList.get(i).getEmail().equals(email)) {
+				accountHolder = accountHolderList.get(i);
+			}
+		}
+		if(accountHolder == null) { //if no accountHolder was found with that email
+			return new AccountHolderInfo(); //return empty info
+		}
 		
-		if (accountHolderIndex != -1)
-		{
-			//TODO: populate these fields (make a get at index method)
-			String accountNumber = null;
-			String pin = null;	
-			
-			return new AccountHolderInfo(email, accountNumber, pin);
-		}
-		else
-		{
-			return new AccountHolderInfo();
-		}
+		String cardNumber = accountHolder.getCardNum() + "";
+		String pin = accountHolder.getPin() + "";
+		
+		return new AccountHolderInfo(email, cardNumber, pin);
 	}
 
 	/**
@@ -309,12 +307,11 @@ public class BankController implements IBankController
 	 * @param cardNumber
 	 * @return true if the account was created successfully, false if not
 	 */
+	
 	@Override
 	public boolean createAccount(AccountType accountType, String cardNumber)
 	{
-		//TODO: call a create method that adds an account to an account holder
-		boolean accountCreated = false;
-		return accountCreated;
+		return false;
 	}
 	
 	/**
