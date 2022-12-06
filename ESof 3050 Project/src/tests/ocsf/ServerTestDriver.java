@@ -235,7 +235,7 @@ public class ServerTestDriver implements IBankController
 		//tests data integrity
 		if (accountType == TestVariables.transferAccountType
 				&& transferType == TestVariables.transferType
-				&& cardNumber.equals(TestVariables.senderAccountNumber)
+				&& cardNumber.equals(TestVariables.availableAccountHolderNumber)
 				&& recipientEmail.equals(TestVariables.transferRecipient)
 				&& amount.equals(TestVariables.unchangedAmount))
 		{
