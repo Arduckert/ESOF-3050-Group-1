@@ -445,9 +445,12 @@ public class BankingClientController extends Application implements IBankingClie
   	
   	@FXML
   	void AccountHolderLoginSubmitButtonPressed(ActionEvent event) throws Exception{
-  		if(bc==null || !bc.isConnected())
+  		if(offline)
   			switchToAccountHolderMainMenu(event);
 		else {
+			ta=AccountHolderLoginErrorTextArea;
+			ae=event;
+			sendAccountHolderLoginRequest(AccountHolderCardNumberTextField.getText(), AccountHolderPinTextField.getText());
 			//switchToAccountHolderMainMenu(event);//remove later
 			//bc.loginAsAccoutnHolder(TellerNumberTextField.getText(), TellerPasswordTextField.getText());
 			//verify
@@ -845,11 +848,31 @@ public class BankingClientController extends Application implements IBankingClie
 		
 		if (isSuccessful)
 		{
-			//login successful
+			//login success next screen
+			Platform.runLater(new Runnable() {
+				@Override
+				public void run() {
+					try {
+						switchToAccountHolderMainMenu(ae);
+					}
+					catch(Exception e) {e.printStackTrace();}
+				}
+			});
 		}
 		else
 		{
-			//login failed
+			//login failed print error
+			System.out.println("Login Failed");
+			
+			Platform.runLater(new Runnable() {
+				@Override
+				public void run() {
+					try {
+						ta.setText("Login Failed");
+					}
+					catch(Exception e) {e.printStackTrace();}
+				}
+			});
 		}
 	}
 
@@ -884,7 +907,6 @@ public class BankingClientController extends Application implements IBankingClie
 		
 		if (isSuccessful)
 		{
-			System.out.println("Login Success");
 			//login successful change screen
 			
 				Platform.runLater(new Runnable() {
@@ -899,6 +921,8 @@ public class BankingClientController extends Application implements IBankingClie
 		}
 		else
 		{
+			
+			//login failed print error
 			System.out.println("Login Failed");
 			
 			Platform.runLater(new Runnable() {
@@ -910,7 +934,6 @@ public class BankingClientController extends Application implements IBankingClie
 					catch(Exception e) {e.printStackTrace();}
 				}
 			});
-			//login failed pop up message
 		}
 	}
 
