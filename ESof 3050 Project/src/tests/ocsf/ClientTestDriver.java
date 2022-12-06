@@ -118,11 +118,12 @@ public class ClientTestDriver implements IBankingClientController
 			getAccount(TestVariables.getAccountType, TestVariables.unavailableGetAccountCardNumber); //handler should return false
 			
 			//to setup for the next test
+			accountHolderTestCount = 0;
 			sendAccountHolderLoginRequest(TestVariables.availableAccountHolderNumber, TestVariables.availableAccountHolderPin); //should return true
 			
 			//transfer test
-			transfer(TestVariables.transferAccountType, TestVariables.transferType, TestVariables.transferRecipient, TestVariables.changedAmount);
 			transfer(TestVariables.transferAccountType, TestVariables.transferType, TestVariables.transferRecipient, TestVariables.unchangedAmount);
+			transfer(TestVariables.transferAccountType, TestVariables.transferType, TestVariables.transferRecipient, TestVariables.changedAmount);
 			
 			Sleep(1000); //wait for connection to close
 			CloseServerConnection();
