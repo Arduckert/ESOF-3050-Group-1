@@ -45,9 +45,9 @@ public class BankController implements IBankController
 		return null; //throw error maybe
 	}
 	
-	public AccountHolder searchAccountHolder(int cardNum) {
+	public AccountHolder searchAccountHolder(int accountNumber) {
 		for(int i=0; i<accountHolderList.size(); i++) {
-			if(accountHolderList.get(i).getCardNum() == cardNum) {
+			if(accountHolderList.get(i).getCardNum() == accountNumber) {
 				return accountHolderList.get(i);
 			}
 		}
@@ -104,7 +104,7 @@ public class BankController implements IBankController
 	{
 		int ID = stringToInt(empID);
 		Teller t = searchTeller(ID);
-		if(t.getPassword() == password) {
+		if(t.getPassword().equals(password)) {
 			return true;
 		}
 		else
@@ -174,10 +174,13 @@ public class BankController implements IBankController
 	@Override												         /*for creating a record*/
 	public boolean deleteAccountHolder(String accountNumber, String tellerEmpID)
 	{
-		//TODO: call a delete method that returns a boolean where true means
-		//the account was deleted, false if not
-		boolean accountDeleted = false;
-		return accountDeleted;
+		int num = stringToInt(accountNumber);
+		AccountHolder a = searchAccountHolder(num);
+		if(a.accountList.isEmpty()) { //if the accountHolder has no open accounts
+			accountList.remove(a);
+			return true;
+		}
+		return false;
 	}
 
 	/**
