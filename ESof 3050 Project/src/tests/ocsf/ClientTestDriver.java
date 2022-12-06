@@ -111,6 +111,10 @@ public class ClientTestDriver implements IBankingClientController
 			deleteAccount(TestVariables.accountType, TestVariables.accountCardNumber); //handler should return true
 			deleteAccount(TestVariables.accountType, TestVariables.availableCreateAccountHolderEmail); //handler should return false
 			
+			//get account test
+			getAccount(TestVariables.getAccountType, TestVariables.availableGetAccountCardNumber); //handler should return true
+			getAccount(TestVariables.getAccountType, TestVariables.unavailableGetAccountCardNumber); //handler should return false
+			
 			Sleep(1000); //wait for connection to close
 			CloseServerConnection();
 		}
