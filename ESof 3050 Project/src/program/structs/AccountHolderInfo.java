@@ -16,7 +16,7 @@ public class AccountHolderInfo
 	/**
 	 * the account holder's account number
 	 */
-	public String accountNumber; //should be card number
+	public String cardNumber; //should be card number
 	
 	/**
 	 * the account holder's pin number
@@ -37,7 +37,7 @@ public class AccountHolderInfo
 	public AccountHolderInfo(String _email, String _accountNumber, String _pin)
 	{
 		email = _email;
-		accountNumber = _accountNumber;
+		cardNumber = _accountNumber;
 		pin = _pin;
 		hasInfo = true;
 	}
@@ -48,7 +48,7 @@ public class AccountHolderInfo
 	public AccountHolderInfo()
 	{
 		email = null;
-		accountNumber = null;
+		cardNumber = null;
 		pin = null;
 		hasInfo = false;
 	}

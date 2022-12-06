@@ -153,17 +153,27 @@ public class BankController implements IBankController
 	/**
 	 * create a new account holder
 	 */
-	@Override												/*for creating a record*/
-	public AccountHolderInfo createAccountHolder(String email, String tellerEmpID)
+	@Override											                	/*for creating a record*/
+	public AccountHolderInfo createAccountHolder(String email, String pin, String sin, String tellerEmpID)
 	{
-		//TODO: add code to create an account holder
+		int p = stringToInt(pin);
+		int id = stringToInt(tellerEmpID);
+		int s = stringToInt(sin);
+		Person person = searchPerson(s);
+		
+		if(person.getRoles().size() < 2 && person != null) {  //If this person is not already registered as an account holder and exists in the system
+			
+			//AccountHolder accountHolder = new AccountHolder(p, card, email, person);
+		}
 		boolean accountHolderCreated = false;
 		
 		if (accountHolderCreated)
 		{
-			String accountNumber = null;
-			String pin = null;	
-			AccountHolderInfo info = new AccountHolderInfo(email, accountNumber, pin);
+
+			String e = null;
+			String x = null;
+			String card = null;
+			AccountHolderInfo info = new AccountHolderInfo(e, card, x);
 			return info;
 		}
 		else
@@ -193,10 +203,13 @@ public class BankController implements IBankController
 	@Override
 	public boolean createPerson(String firstName, String lastName, String sin, String dateOfBirth)
 	{
-		//TODO: call a create method that returns a boolean where true means
-		//the person was created, false if not
-		boolean personCreated = false;
-		return personCreated;
+		int s = stringToInt(sin);
+		if(searchPerson(s) == null) { //Person is not in the system already
+			Person p = new Person(firstName,lastName,s,dateOfBirth);
+			personList.add(p);
+			return true;
+		}
+		return false;
 	}
 
 	/**
@@ -205,10 +218,13 @@ public class BankController implements IBankController
 	@Override
 	public boolean deletePerson(String sin)
 	{
-		//TODO: call a create method that returns a boolean where true means
-		//the person was deleted, false if not
-		boolean personDeleted = false;
-		return personDeleted;
+		int s = stringToInt(sin);
+		Person p = searchPerson(s);
+		if(p.getRoles().isEmpty()) { //if this person is not a teller or an account holder
+			personList.remove(p);
+			return true;
+		}
+		return false;
 	}
 
 	@Override

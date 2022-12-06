@@ -253,9 +253,9 @@ public class BankingClient extends AbstractClient
 	 * @param pin the desired pin number
 	 * @throws IOException
 	 */
-	public void createAccountHolder(String email) throws IOException
+	public void createAccountHolder(String email, String pin, String sin) throws IOException
 	{
-		ClientProtocol cp = new ClientProtocol(ServerAction.CREATE_ACCOUNTHOLDER, email);
+		ClientProtocol cp = new ClientProtocol(ServerAction.CREATE_ACCOUNTHOLDER, email, pin, sin);
 		sendToServer(cp);
 	}
 	

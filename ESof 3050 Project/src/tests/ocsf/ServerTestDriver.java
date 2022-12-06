@@ -108,10 +108,9 @@ public class ServerTestDriver implements IBankController
 	 * returns the available email to test both true and false
 	 */
 	@Override
-	public boolean deleteAccountHolder(String accountNumber, String pin, String tellerEmpID)
+	public boolean deleteAccountHolder(String accountNumber,String tellerEmpID)
 	{
 		return accountNumber.equals(TestVariables.availableDeleteAccountHolderNumber)
-				&& pin.equals(TestVariables.deleteAccountHolderPin)
 				&& tellerEmpID.equals(TestVariables.availableTellerID);
 	}
 

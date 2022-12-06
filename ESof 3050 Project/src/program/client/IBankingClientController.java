@@ -93,7 +93,7 @@ public interface IBankingClientController
 	 * @param email the desired email address
 	 * @param pin the desired pin number
 	 */
-	public void createNewAccountHolder(String email);
+	public void createNewAccountHolder(String email, String pin, String sin);
 	
 	/**
 	 * Handles the result of the creation of an account holder
