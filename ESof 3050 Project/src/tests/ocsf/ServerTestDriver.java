@@ -90,9 +90,12 @@ public class ServerTestDriver implements IBankController
 	 * returns the available email to test both true and false
 	 */
 	@Override
-	public AccountHolderInfo createAccountHolder(String email, String tellerEmpID)
+	public AccountHolderInfo createAccountHolder(String email, String pin, String sin, String tellerEmpID)
 	{
-		if (email.equals(TestVariables.availableCreateAccountHolderEmail) && tellerEmpID.equals(TestVariables.availableTellerID))
+		if (email.equals(TestVariables.availableCreateAccountHolderEmail)
+				&& tellerEmpID.equals(TestVariables.availableTellerID)
+				&& pin.equals(TestVariables.createAccountHolderPin)
+				&& sin.equals(TestVariables.createAccountHolderNumber))
 		{
 			AccountHolderInfo info = new AccountHolderInfo(email, TestVariables.createAccountHolderNumber, TestVariables.createAccountHolderPin);
 			return info;
