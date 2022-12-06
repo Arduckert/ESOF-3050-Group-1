@@ -95,7 +95,7 @@ public class ServerTestDriver implements IBankController
 		if (email.equals(TestVariables.availableCreateAccountHolderEmail)
 				&& tellerEmpID.equals(TestVariables.availableTellerID)
 				&& pin.equals(TestVariables.createAccountHolderPin)
-				&& sin.equals(TestVariables.createAccountHolderNumber))
+				&& sin.equals(TestVariables.createAccountHolderSin))
 		{
 			AccountHolderInfo info = new AccountHolderInfo(email, TestVariables.createAccountHolderNumber, TestVariables.createAccountHolderPin);
 			return info;
