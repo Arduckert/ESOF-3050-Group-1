@@ -16,17 +16,15 @@
   </columnConstraints>
   <rowConstraints>
     <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
-      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-    <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
       <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
     <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
   </rowConstraints>
    <children>
-      <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#CardNumberAndPinBackButtonPressed" text="&lt;&lt; Back" GridPane.rowIndex="4">
+      <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#PinBackButtonPressed" text="&lt;&lt; Back" GridPane.rowIndex="2">
          <font>
             <Font size="18.0" />
          </font></Button>
-      <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#CardNumberAndPinDoneButtonPressed" text="Done &gt;&gt;" GridPane.columnIndex="1" GridPane.rowIndex="4">
+      <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#PinDoneButtonPressed" text="Done &gt;&gt;" GridPane.columnIndex="1" GridPane.rowIndex="2">
          <font>
             <Font size="18.0" />
          </font></Button>
@@ -34,30 +32,17 @@
          <font>
             <Font size="14.0" />
          </font></Button>
-      <Label text="Card Number" GridPane.rowIndex="2">
+      <Label text="Enter Pin" GridPane.rowIndex="1">
          <font>
             <Font size="18.0" />
          </font></Label>
-      <Label text="Enter Pin" GridPane.rowIndex="3">
-         <font>
-            <Font size="18.0" />
-         </font></Label>
-      <TextField fx:id="NewCardNumberTextField" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="2">
+      <TextField fx:id="NewPinTextField" GridPane.columnIndex="1" GridPane.rowIndex="1">
          <font>
             <Font size="18.0" />
          </font></TextField>
-      <TextField fx:id="NewPinTextField" GridPane.columnIndex="1" GridPane.rowIndex="3">
-         <font>
-            <Font size="18.0" />
-         </font></TextField>
-      <Label text="Card Number and Pin">
+      <Label text="Create Pin">
          <font>
             <Font size="24.0" />
-         </font>
-      </Label>
-      <Label text="Login details for new account holder. Please enter pin." GridPane.columnSpan="2147483647" GridPane.rowIndex="1">
-         <font>
-            <Font size="18.0" />
          </font>
       </Label>
    </children>
