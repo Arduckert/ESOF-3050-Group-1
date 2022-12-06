@@ -79,6 +79,12 @@ public class BankingClient extends AbstractClient
 			case ACCOUNT_DELETION_RESULT:
 				processAccountDeletionResult(sp);
 				break;
+			case ACCOUNT:
+				processAccountInformation(sp);
+				break;
+			case TRANSFER_BALANCE:
+				processTransferResult(sp);
+				break;
 			case BASIC_MESSAGE:
 				processBasicMessage(sp);
 				break;
@@ -550,4 +556,96 @@ public class BankingClient extends AbstractClient
 			bcc.handleAccountDeletion(false);
 		}
 	}
+	
+	/////////////////
+	// GET ACCOUNT //
+	/////////////////
+	
+	/**
+	 * Tells the server to get information about a specific account from
+	 * a specific account holder
+	 * @param accountType account type (chequing, savings, etc.)
+	 * @param cardNumber the account holder's card number
+	 */
+	public void getAccount(AccountType accountType, String cardNumber) throws IOException
+	{
+		ClientProtocol cp = new ClientProtocol(ServerAction.GET_ACCOUNT, accountType.toString(), cardNumber);
+		sendToServer(cp);
+	}
+	
+	/**
+	 * Handles the information obtained from the server about an account
+	 * @param accountInfo
+	 */
+	private void processAccountInformation(ServerProtocol sp)
+	{
+		//sends the account information to the client
+		if (sp.getMessageStatus() == MessageStatus.SUCCESS)
+		{
+			AccountInfo info = new AccountInfo(AccountType.valueOf(sp.GetData().get(0)), sp.GetData().get(1), sp.GetData().get(2));
+			bcc.handleAccountInformation(info);
+		}
+		else
+		{
+			bcc.handleAccountInformation(new AccountInfo());
+		}
+	}
+	
+	////////////////////////////
+	// SETUP MORTGAGE ACCOUNT //
+	////////////////////////////
+	
+	//////////////
+	// TRANSFER //
+	//////////////
+	
+	/**
+	 * handles the transfer of funds from one account to another (or to an account if depositing or withdrawing)
+	 * @param accountType the account to transfer to or from (chequing, savings, etc.)
+	 * @param transferType deposit, withdraw, or transfer
+	 * @param recipientEmail the email address of the recipient (if doing a transfer)
+	 * @param amount the amount to send
+	 */
+	public void transfer(AccountType accountType, TransferType transferType, String recipientEmail, String amount) throws IOException
+	{
+		ClientProtocol cp = new ClientProtocol(ServerAction.TRANSFER, accountType.toString(), transferType.toString(), recipientEmail, amount);
+		sendToServer(cp);
+	}
+	
+	/**
+	 * processes the transfer result sent by the server
+	 * @param sp
+	 */
+	private void processTransferResult(ServerProtocol sp)
+	{
+		//sends the transfer result back to the client
+		if (sp.getMessageStatus() == MessageStatus.SUCCESS)
+		{
+			bcc.handleTransferResult(true, sp.GetData().get(0));
+		}
+		else
+		{
+			bcc.handleTransferResult(false, null);
+		}
+	}
+	
+	///////////////////////////////
+	// TRANSFER BETWEEN ACCOUNTS //
+	///////////////////////////////
+	
+	//////////////
+	// PAY BILL //
+	//////////////
+	
+	//////////////////////
+	// GET TRANSACTIONS //
+	//////////////////////
+	
+	/////////////////////////
+	// GET ACCOUNT RECORDS //
+	/////////////////////////
+	
+	//////////////////////////
+	// GET CUSTOMER RECORDS //
+	//////////////////////////
 }

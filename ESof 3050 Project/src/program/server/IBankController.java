@@ -122,4 +122,23 @@ public interface IBankController
 	 * @return true if the account was deleted successfully, false if not
 	 */
 	public boolean deleteAccount(AccountType accountType, String cardNumber);
+	
+	/**
+	 * Returns information about a specific account from a specific account holder
+	 * @param accountType type of account (chequing, savings, etc.)
+	 * @param cardNumber the account holder's card number
+	 * @return
+	 */
+	public AccountInfo getAccount(AccountType accountType, String cardNumber);
+	
+	/**
+	 * Completes a transfer of funds from one party to another.
+	 * @param accountType the account type (chequing, savings, etc.)
+	 * @param transferType the transfer type (deposit, withdraw, transfer)
+	 * @param cardNumber the sender's card number
+	 * @param recipientEmail the recipient's email address
+	 * @param amount the amount of funds to transfer
+	 * @return the sender's new balance after the transfer is complete
+	 */
+	public String transfer(AccountType accountType, TransferType transferType, String cardNumber, String recipientEmail, String amount);
 }

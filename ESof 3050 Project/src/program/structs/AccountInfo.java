@@ -19,11 +19,6 @@ public class AccountInfo
 	public String balance;
 	
 	/**
-	 * The date the account was opened
-	 */
-	public String dateOpened;
-	
-	/**
 	 * the account's number
 	 */
 	public String accountNumber;
@@ -40,11 +35,10 @@ public class AccountInfo
 	 * @param _dateOpened
 	 * @param _accountNumber
 	 */
-	public AccountInfo(AccountType _accountType, String _balance, String _dateOpened, String _accountNumber)
+	public AccountInfo(AccountType _accountType, String _balance, String _accountNumber)
 	{
 		accountType = _accountType;
 		balance = _balance;
-		dateOpened = _dateOpened;
 		accountNumber = _accountNumber;
 		hasInfo = true;
 	}
@@ -56,8 +50,15 @@ public class AccountInfo
 	{
 		accountType = null;
 		balance = null;
-		dateOpened = null;
 		accountNumber = null;
 		hasInfo = false;
+	}
+	
+	/**
+	 * @return true if the instance has information, false if not
+	 */
+	public boolean getHasInfo()
+	{
+		return hasInfo;
 	}
 }

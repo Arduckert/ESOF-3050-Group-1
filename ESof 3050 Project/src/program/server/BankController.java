@@ -3,7 +3,9 @@ import java.util.*;
 import java.lang.Math;
 
 import src.program.structs.AccountHolderInfo;
+import src.program.structs.AccountInfo;
 import src.program.structs.AccountType;
+import src.program.structs.TransferType;
 
 // *** TODO: IMPLEMENT INTERFACE METHODS (REFER TO BLUE MARKS ON THE SCROLL BAR) *** //
 public class BankController implements IBankController
@@ -25,9 +27,25 @@ public class BankController implements IBankController
 		int num = 0;
 		while(numExists) {
 			numExists = false;
-			num = (int)(Math.random()*(999999999-100000000+1)+100000000);
-			for(int i=0; i<accountHolderList.size(); i++) {
-				if(accountHolderList.get(i).getCardNum() == num) {
+			num = (int)(Math.random()*(999999999-100000000+1)+100000000); //generate random 9 digit number
+			for(int i=0; i<accountHolderList.size(); i++) { 
+				if(accountHolderList.get(i).getCardNum() == num) { //checks if the number is already in use
+					numExists = true;
+				}
+			}
+		}
+		return num;
+	}
+	
+	//Method for generating Account Number
+	public int generateAccountNumber() {
+		boolean numExists = true;
+		int num = 0;
+		while(numExists) {
+			numExists = false;
+			num = (int)(Math.random()*(999999-100000+1)+100000); //generate random 6 digit number
+			for(int i=0; i<accountList.size(); i++) {
+				if(accountList.get(i).getAccountNum() == num) {
 					numExists = true;
 				}
 			}
@@ -62,9 +80,9 @@ public class BankController implements IBankController
 		return null; //throw error maybe
 	}
 	
-	public AccountHolder searchAccountHolder(int accountNumber) {
+	public AccountHolder searchAccountHolder(int cardNumber) {
 		for(int i=0; i<accountHolderList.size(); i++) {
-			if(accountHolderList.get(i).getCardNum() == accountNumber) {
+			if(accountHolderList.get(i).getCardNum() == cardNumber) {
 				return accountHolderList.get(i);
 			}
 		}
@@ -89,8 +107,19 @@ public class BankController implements IBankController
 			return -1;
 		}
 	}
+	
+	//function for accepting from server
+	
+	
 
+
+	/******************************************
+	 * PROCESS METHODS FOR THE OCSF
+	 * FUNCTION WITH TODO NEED IMPLEMENTATION
+	 */
+	
 	//Authenticating the login of an account holder
+	@Override
 	public boolean authenticateAccountHolderLogin(String cardNumber, String pin) {
 		int cardNum = stringToInt(cardNumber);
 		int PIN = stringToInt(pin);
@@ -105,19 +134,10 @@ public class BankController implements IBankController
 			return false;
 	}
 	
-	//function for accepting from server
-	
-	
-
-
-	/******************************************
-	 * PROCESS METHODS FOR THE OCSF
-	 * FUNCTION WITH TODO NEED IMPLEMENTATION
-	 */
-	
 	/**
 	 * authenticate teller login request
 	 */
+	
 	@Override
 	public boolean authenticateTellerLogin(String empID, String password)
 	{
@@ -149,22 +169,20 @@ public class BankController implements IBankController
 	@Override
 	public AccountHolderInfo findAccountHolder(String email)
 	{
-		//TODO: call a find method that returns the index
-		//of the accountHolder (-1 if it doesn't find it)
-		int accountHolderIndex = -1;
+		AccountHolder accountHolder = null;
+		for(int i=0; i < accountHolderList.size(); i++) {  //check all account holders
+			if(accountHolderList.get(i).getEmail().equals(email)) {
+				accountHolder = accountHolderList.get(i);
+			}
+		}
+		if(accountHolder == null) { //if no accountHolder was found with that email
+			return new AccountHolderInfo(); //return empty info
+		}
 		
-		if (accountHolderIndex != -1)
-		{
-			//TODO: populate these fields (make a get at index method)
-			String accountNumber = null;
-			String pin = null;	
-			
-			return new AccountHolderInfo(email, accountNumber, pin);
-		}
-		else
-		{
-			return new AccountHolderInfo();
-		}
+		String cardNumber = accountHolder.getCardNum() + "";
+		String pin = accountHolder.getPin() + "";
+		
+		return new AccountHolderInfo(email, cardNumber, pin);
 	}
 
 	/**
@@ -179,7 +197,7 @@ public class BankController implements IBankController
 		Person person = searchPerson(s);
 		Teller teller = searchTeller(id);
 		
-		if(person.getRoles().size() < 2 && person != null) {  //If this person is not already registered as an account holder and exists in the system
+		if(person.getRoles().size() < 2 && person != null && teller != null) {  //If this person is not already registered as an account holder and exists in the system
 			int card = generateCardNumber();
 			AccountHolder accountHolder = new AccountHolder(p, card, email, person);
 			accountHolderList.add(accountHolder);
@@ -245,21 +263,40 @@ public class BankController implements IBankController
 	public boolean addAddress(String streetName, String streetNumber, String postalCode, String province,
 			String country, String sid)
 	{
-		//TODO: call a create method that adds an address to a person
-		boolean addressAdded = false;
-		return addressAdded;
+		int num = stringToInt(streetNumber);
+		int sin = stringToInt(sid);
+		Person p = searchPerson(sin);
+		
+		if(p == null) {
+			return false;
+		}
+		else {
+			Address a = new Address(num, streetName, postalCode, province, country);
+			p.addAddress(a);
+			return true;
+		}
 	}
 
 	@Override
 	public boolean removeAddress(String sin, String postalCode)
 	{
-		//TODO: call a create method that removes an address to a person
-		boolean addressRemoved = false;
-		return addressRemoved;
+		int s = stringToInt(sin);
+		Person person = searchPerson(s);
+		if(person == null) { //if the person is not in the database return false
+			return false;
+		}
+		Address address = person.searchAddress(postalCode);
+		
+		if(address == null) { //if the address does not exist in the database
+			return false;
+		}
+	
+		person.getAdresses().remove(address);
+		return true;
 	}
 
 	@Override
-	public boolean addAccountHolderToPerson(String sin, String email)
+	public boolean addAccountHolderToPerson(String sin, String email) //This function should not be needed
 	{
 		//TODO: call a create method that adds an account holder to a person
 		boolean personRoleCreated = false;
@@ -272,12 +309,11 @@ public class BankController implements IBankController
 	 * @param cardNumber
 	 * @return true if the account was created successfully, false if not
 	 */
+	
 	@Override
 	public boolean createAccount(AccountType accountType, String cardNumber)
 	{
-		//TODO: call a create method that adds an account to an account holder
-		boolean accountCreated = false;
-		return accountCreated;
+		return false;
 	}
 	
 	/**
@@ -294,6 +330,68 @@ public class BankController implements IBankController
 		return accountDeleted;
 	}
 	
+	/**
+	 * Returns information about a specific account from a specific account holder
+	 * @param accountType type of account (chequing, savings, etc.)
+	 * @param cardNumber the account holder's card number
+	 * @return
+	 */
+	@Override
+	public AccountInfo getAccount(AccountType accountType, String cardNumber) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	/**
+	 * Completes a transfer of funds from one party to another.
+	 * @param accountType the account type (chequing, savings, etc.)
+	 * @param transferType the transfer type (deposit, withdraw, transfer)
+	 * @param cardNumber the sender's card number
+	 * @param recipientEmail the recipient's email address
+	 * @param amount the amount of funds to transfer
+	 * @return the sender's new balance after the transfer is complete
+	 */
+	@Override
+	public String transfer(AccountType accountType, TransferType transferType, String cardNumber, String recipientEmail,
+			String amount)
+	{
+		//TODO: add handle code
+		
+		//get sending account holder using card number
+		//get account holder of recipient using email		
+		//get account of the sending account holder using accountType
+		switch (accountType)
+		{
+		case CHEQUING:
+			//look for the chequing account of the sender
+			break;
+		case SAVINGS:
+			//look for the savings account of the sender
+			break;
+		case MORTGAGE:
+			//look for the mortgage account of the sender
+			break;
+		case LINE_OF_CREDIT:
+			//look for the line of credit account of the sender
+			break;
+		}
+		
+		switch (transferType)
+		{
+		case DEPOSIT:
+			//deposit into account
+			break;
+		case WITHDRAW:
+			//remove money from account
+			break;
+		case TRANSFER:
+			//transfer money to recipient email
+		}
+		
+		//return the new balance after the transfer is complete
+		String newBalance = amount;
+		return newBalance;
+	}
 	
 	//MAIN
 	public static void main(String args[])

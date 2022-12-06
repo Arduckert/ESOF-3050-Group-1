@@ -45,8 +45,8 @@ public enum Datatype
 	/**
 	 * This sends information about an account back to the client. The information
 	 * included in this data type is the balance, the account type (chequing, savings,
-	 * mortgage, or line of credit), the date opened, and the account number
-	 * @object_size 4
+	 * mortgage, or line of credit), and the account number
+	 * @object_size 3
 	 */
 	ACCOUNT,
 	
