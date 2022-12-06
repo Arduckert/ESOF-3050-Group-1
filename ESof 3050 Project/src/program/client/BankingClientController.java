@@ -715,7 +715,8 @@ public class BankingClientController extends Application implements IBankingClie
     @FXML
     void SelectAccountHolderButtonPressed(ActionEvent event) throws Exception{
     	ahi=CardNumberListView.getSelectionModel().getSelectedItem();
-    	switchToEditProfileScreen(event);
+    	if(ahi!=null)
+    		switchToEditProfileScreen(event);
     }
   
     //*************************************************************
