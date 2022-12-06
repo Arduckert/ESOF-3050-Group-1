@@ -12,6 +12,7 @@ public class BankController implements IBankController
 	List<Record> recordList = new ArrayList<Record>(); //potential problem with Record name
 	List<Account> accountList = new ArrayList<Account>();
 	List<AccountHolder> accountHolderList = new ArrayList<AccountHolder>();
+	List<Teller> tellerList = new ArrayList<Teller>();
 	
 	public BankController() {
 		
@@ -19,6 +20,9 @@ public class BankController implements IBankController
 	
 	public void addAccountHolder(AccountHolder x) {
 		this.accountHolderList.add(x);
+	}
+	public void addTeller(Teller x) {
+		this.tellerList.add(x);
 	}
 	
 	
@@ -50,6 +54,15 @@ public class BankController implements IBankController
 		return null; //throw error maybe
 	}
 	
+	public Teller searchTeller(int ID) {
+		for(int i=0; i<tellerList.size();i++) {
+			if(tellerList.get(i).getEmpNum() == ID) {
+				return tellerList.get(i);
+			}
+		}
+		return null;
+	}
+	
 	//Function to convert string to integer
 	public int stringToInt(String str) {
 		try {
@@ -76,24 +89,7 @@ public class BankController implements IBankController
 	//function for accepting from server
 	
 	
-	public static void main(String args[])
-	{
-		BankController b = new BankController();
-		Address a = new Address(111, "John", "Thunder Bay", "Ontario", "P7656");
-		Person p = new Person("James", "Doe", 7777,"2000-03-02");
-		AccountHolder testAccountHolder = new AccountHolder(1111,1234567,"test@email.com",p);
-		b.addAccountHolder(testAccountHolder);
-		
-		int port = 9950;
-		BankingServer bs = new BankingServer(port, b);
-		try {
-			bs.listen();
-		}
-		catch (Exception ex) {
-			System.err.println(ex);
-		}
-		System.out.println("testing the server...");
-	}
+
 
 	/******************************************
 	 * PROCESS METHODS FOR THE OCSF
@@ -106,11 +102,11 @@ public class BankController implements IBankController
 	@Override
 	public boolean authenticateTellerLogin(String empID, String password)
 	{
-		// TODO add code here
-		
-		//prebaked values for testing
-		if(empID.equals("1111")&&password.equals("0000"))
+		int ID = stringToInt(empID);
+		Teller t = searchTeller(ID);
+		if(t.getPassword() == password) {
 			return true;
+		}
 		else
 			return false;
 	}
@@ -128,6 +124,7 @@ public class BankController implements IBankController
 	/**
 	 * finds an account holder on the server
 	 */
+	
 	@Override
 	public AccountHolderInfo findAccountHolder(String email)
 	{
@@ -175,7 +172,7 @@ public class BankController implements IBankController
 	 * delete an existing account holder
 	 */
 	@Override												         /*for creating a record*/
-	public boolean deleteAccountHolder(String accountNumber, String pin, String tellerEmpID)
+	public boolean deleteAccountHolder(String accountNumber, String tellerEmpID)
 	{
 		//TODO: call a delete method that returns a boolean where true means
 		//the account was deleted, false if not
@@ -258,6 +255,29 @@ public class BankController implements IBankController
 		//TODO: call a create method that removes an account to an account holder
 		boolean accountDeleted = false;
 		return accountDeleted;
+	}
+	
+	
+	//MAIN
+	public static void main(String args[])
+	{
+		BankController b = new BankController();
+		Address a1 = new Address(111, "John", "Thunder Bay", "Ontario", "P7656");
+		Person p1 = new Person("James", "Doe", 7777,"2000-03-02");
+		AccountHolder testAccountHolder = new AccountHolder(1111,12345,"test@email.com",p1);
+		Teller testTeller = new Teller(0000,"password",p1);
+		b.addAccountHolder(testAccountHolder);
+		b.addTeller(testTeller);
+		
+		int port = 9950;
+		BankingServer bs = new BankingServer(port, b);
+		try {
+			bs.listen();
+		}
+		catch (Exception ex) {
+			System.err.println(ex);
+		}
+		System.out.println("testing the server...");
 	}
 }
 
