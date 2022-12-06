@@ -860,7 +860,7 @@ public class ClientTestDriver implements IBankingClientController
 		{
 				System.out.println("TRANSFER TRUE TEST PASSED");
 		}
-		else if (!isSuccessful && transferTestCount == 1 && !newBalance.equals(TestVariables.changedAmount))
+		else if (!isSuccessful && transferTestCount == 1)
 		{
 			System.out.println("TRANSFER FALSE TEST PASSED");
 		}
