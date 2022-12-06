@@ -164,6 +164,9 @@ public class BankingClientController extends Application implements IBankingClie
 		postalCodeList.removeAll(postalCodeList);
 		provinceList.removeAll(provinceList);
 		countryList.removeAll(countryList);
+		
+		searchList.removeAll(searchList); //deletes all
+		
 		changeScene(event,"TellerMainMenu.fxml");
 	}
 	
@@ -1030,7 +1033,6 @@ public class BankingClientController extends Application implements IBankingClie
 		if (isSuccessful)
 		{
 			//login success next screen
-			System.out.println("Login Success");
 			Platform.runLater(new Runnable() {
 				@Override
 				public void run() {
@@ -1044,7 +1046,6 @@ public class BankingClientController extends Application implements IBankingClie
 		else
 		{
 			//login failed print error
-			System.out.println("Login Failed");
 			
 			Platform.runLater(new Runnable() {
 				@Override
@@ -1104,7 +1105,6 @@ public class BankingClientController extends Application implements IBankingClie
 		{
 			
 			//login failed print error
-			System.out.println("Login Failed");
 			
 			Platform.runLater(new Runnable() {
 				@Override
@@ -1151,14 +1151,12 @@ public class BankingClientController extends Application implements IBankingClie
 		{
 			//show account holder information
 			searchList.add(ahi);
-			System.out.println(lv);
 			if(lv!=null)
 				lv.getItems().add(ahi);
 		}
 		else
 		{
 			//show not found message
-			System.out.println("no match");
 		}
 	}
 

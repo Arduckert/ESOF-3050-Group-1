@@ -61,4 +61,12 @@ public class AccountHolderInfo
 	{
 		return hasInfo;
 	}
+	
+	/*
+	 * returns the cardNumber
+	 */
+	@Override
+	public String toString() {
+		return cardNumber;
+	}
 }
