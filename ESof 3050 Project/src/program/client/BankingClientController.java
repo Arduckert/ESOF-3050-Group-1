@@ -51,10 +51,11 @@ public class BankingClientController extends Application implements IBankingClie
 	//methods called by BankingClient can't access GUI components without these
 	private static ActionEvent ae;
 	private static TextArea ta;
-	private static ListView<AccountHolderInfo>ahilv;
-	private static ListView<AccountInfo>ailv;
+	private static ListView<AccountHolderInfo> ahilv;
+	private static ListView<AccountInfo> ailv;
 	private static ChoiceBox<AccountInfo> rcb;
 	private static ChoiceBox<AccountInfo> scb;
+	private static ListView<TransactionInfo> hlv;
 	
 	//5 parameters for account holder + pin and card number
 	private static String firstName;
@@ -96,6 +97,8 @@ public class BankingClientController extends Application implements IBankingClie
 	private static String amount;
 	
 	private static String newAccount;
+	
+	private static ObservableList<TransactionInfo> historyList=FXCollections.observableArrayList();
 	
 	
 	
@@ -856,7 +859,11 @@ public class BankingClientController extends Application implements IBankingClie
 
     @FXML
     void ViewAccountHistoryButtonPressed(ActionEvent event) throws Exception {
-    	switchToAccountHistoryScreen(event);
+    	ae=event;
+    	if(AccountNumberListView.getSelectionModel().getSelectedItem()!=null) {
+    		System.out.println("Getting history");
+    		getTransactions(AccountNumberListView.getSelectionModel().getSelectedItem().accountNumber);
+    	}
     }
     
     //**********************************************************
@@ -865,7 +872,7 @@ public class BankingClientController extends Application implements IBankingClie
     //GUI components for account history screen
     
     @FXML
-    private ListView<?> AccountHistoryListView;
+    private ListView<TransactionInfo> AccountHistoryListView;
 
     @FXML
     private TextField AccountHistoryNumberTextField;
@@ -1221,6 +1228,16 @@ public class BankingClientController extends Application implements IBankingClie
     	
     	if(AccountNumberConfirmationTextField!=null)
     		AccountNumberConfirmationTextField.setText(newAccount);
+    	
+    	if(AccountHistoryListView!=null) {
+    		AccountHistoryListView.getItems().addAll(historyList);
+    		hlv=AccountHistoryListView;
+    		AccountHistoryListView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<TransactionInfo>() {
+    			@Override
+    			public void changed(ObservableValue<? extends TransactionInfo> ov, TransactionInfo oldValue, TransactionInfo newValue) {
+    				
+    			}});
+    	}
     }
     
     //Start function
@@ -2070,13 +2087,35 @@ public class BankingClientController extends Application implements IBankingClie
 
 	@Override
 	public void getTransactions(String accountNumber) {
-		// TODO Auto-generated method stub
+		try {
+			bc.getTransactions(accountNumber);
+		}
+		catch (IOException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 	}
 
 	@Override
 	public void handleTransactions(ArrayList<TransactionInfo> transactions) {
-		// TODO Auto-generated method stub
+		System.out.println(transactions);
+		if(transactions!=null) {
+			historyList.addAll(transactions);
+			Platform.runLater(new Runnable() {
+				@Override
+				public void run() {
+					try {
+						switchToAccountHistoryScreen(ae);
+					}
+					catch(Exception e) {e.printStackTrace();}
+				}
+			});
+		}
+		else {
+			
+		}
 		
 	}
 
