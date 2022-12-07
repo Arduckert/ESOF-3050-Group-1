@@ -745,13 +745,15 @@ public class BankingServer extends AbstractServer
 	 */
 	private void handleGetTransactionHistoryRequest(ClientProtocol cp, ConnectionToClient client)
 	{
+		ServerProtocol sp;
+		
 		//only account holders can get the transactions from the server
 		if (client.getInfo("LoginType") == LoginType.ACCOUNTHOLDER)
 		{
 			//gets all the transactions from the banking server
 			ArrayList<TransactionInfo> info = bc.getTransactionHistory(cp.GetParameters().get(0));
 			
-			ServerProtocol sp = new ServerProtocol(MessageStatus.SUCCESS, Datatype.TRANSACTION);
+			sp = new ServerProtocol(MessageStatus.SUCCESS, Datatype.TRANSACTION);
 			
 			//adds each parameter of each transaction one by one
 			for (int i = 0; i < info.size(); i++)
@@ -766,16 +768,21 @@ public class BankingServer extends AbstractServer
 					e.printStackTrace();
 				}
 			}
-			
-			try
-			{
-				//sends the info to the client
-				client.sendToClient(sp);
-			}
-			catch (IOException e)
-			{
-				e.printStackTrace();
-			}
+		}
+		else
+		{
+			//create server protocol with no data
+			sp = new ServerProtocol(MessageStatus.SUCCESS, Datatype.TRANSACTION);
+		}
+		
+		try
+		{
+			//sends the info to the client
+			client.sendToClient(sp);
+		}
+		catch (IOException e)
+		{
+			e.printStackTrace();
 		}
 	}
 		
@@ -786,13 +793,15 @@ public class BankingServer extends AbstractServer
 	 */
 	private void handleGetAccountRecordsRequest(ClientProtocol cp, ConnectionToClient client)
 	{
+		ServerProtocol sp;
+		
 		//only tellers can get the account records from the server
 		if (client.getInfo("LoginType") == LoginType.TELLER)
 		{
 			//gets all the account records from the banking server
 			ArrayList<RecordInfo> info = bc.getAccountRecords();
 			
-			ServerProtocol sp = new ServerProtocol(MessageStatus.SUCCESS, Datatype.ACCOUNT_RECORD);
+			sp = new ServerProtocol(MessageStatus.SUCCESS, Datatype.ACCOUNT_RECORD);
 			
 			//adds each parameter of each account record one by one
 			for (int i = 0; i < info.size(); i++)
@@ -807,16 +816,21 @@ public class BankingServer extends AbstractServer
 					e.printStackTrace();
 				}
 			}
-			
-			try
-			{
-				//sends the info to the client
-				client.sendToClient(sp);
-			}
-			catch (IOException e)
-			{
-				e.printStackTrace();
-			}
+		}
+		else
+		{
+			//create server protocol with no data
+			sp = new ServerProtocol(MessageStatus.SUCCESS, Datatype.ACCOUNT_RECORD);
+		}
+		
+		try
+		{
+			//sends the info to the client
+			client.sendToClient(sp);
+		}
+		catch (IOException e)
+		{
+			e.printStackTrace();
 		}
 	}
 		
@@ -827,13 +841,15 @@ public class BankingServer extends AbstractServer
 	 */
 	private void handleGetCustomerRecordsRequest(ClientProtocol cp, ConnectionToClient client)
 	{
+		ServerProtocol sp;
+		
 		//only tellers can get the customer records from the server
 		if (client.getInfo("LoginType") == LoginType.TELLER)
 		{
 			//gets all the customer records from the banking server
 			ArrayList<RecordInfo> info = bc.getCustomerRecords();
 			
-			ServerProtocol sp = new ServerProtocol(MessageStatus.SUCCESS, Datatype.CUSTOMER_RECORD);
+			sp = new ServerProtocol(MessageStatus.SUCCESS, Datatype.CUSTOMER_RECORD);
 			
 			//adds each parameter of each customer record one by one
 			for (int i = 0; i < info.size(); i++)
@@ -848,16 +864,21 @@ public class BankingServer extends AbstractServer
 					e.printStackTrace();
 				}
 			}
-			
-			try
-			{
-				//sends the info to the client
-				client.sendToClient(sp);
-			}
-			catch (IOException e)
-			{
-				e.printStackTrace();
-			}
+		}
+		else
+		{
+			//create server protocol with no data
+			sp = new ServerProtocol(MessageStatus.SUCCESS, Datatype.CUSTOMER_RECORD);
+		}
+		
+		try
+		{
+			//sends the info to the client
+			client.sendToClient(sp);
+		}
+		catch (IOException e)
+		{
+			e.printStackTrace();
 		}
 	}
 	
