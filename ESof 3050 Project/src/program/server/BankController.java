@@ -214,24 +214,6 @@ public class BankController implements IBankController
 		return info;
 				
 	}
-	
-		/*
-		AccountHolder accountHolder = null;
-		for(int i=0; i < accountHolderList.size(); i++) {  //check all account holders
-			if(accountHolderList.get(i).getEmail().equals(email)) {
-				accountHolder = accountHolderList.get(i);
-			}
-		}
-		if(accountHolder == null) { //if no accountHolder was found with that email
-			return new AccountHolderInfo(); //return empty info
-		}
-		
-		String cardNumber = accountHolder.getCardNum() + "";
-		String pin = accountHolder.getPin() + "";
-		
-		return new AccountHolderInfo(email, cardNumber, pin);
-		*/
-	}
 
 	/**
 	 * create a new account holder
