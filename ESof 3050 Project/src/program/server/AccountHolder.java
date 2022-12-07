@@ -39,6 +39,9 @@ public class AccountHolder extends personRole{
 	public ArrayList<Account> getAccounts(){
 		return this.accountList;
 	}
+	public void addAccount(Account a) {
+		this.accountList.add(a);
+	}
 	
 	
 	

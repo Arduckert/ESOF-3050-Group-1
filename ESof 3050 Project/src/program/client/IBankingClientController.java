@@ -279,7 +279,7 @@ public interface IBankingClientController
 	 * @param interestRate the interest rate
 	 * @param principleAmount the principle amount of the mortgage
 	 */
-	public void setupMortgageAccount(String accountNumber, String mortgageLength, String interestRate, String principleAmount);
+	public void setupMortgageAccount(String accountNumber, String mortgageLength, String interestRate, String principleAmount, String tellerID);
 	
 	/**
 	 * handles the result of populating a mortgage account with information
@@ -297,7 +297,7 @@ public interface IBankingClientController
 	 * @param creditLimit the credit limit of the account
 	 * @param interestRate the interest rate
 	 */
-	public void setupLineOfCreditAccount(String accountNumber, String creditLimit, String interestRate);
+	public void setupLineOfCreditAccount(String accountNumber, String creditLimit, String interestRate, String tellerID);
 	
 	/**
 	 * handles the result of populating a line of credit account with information

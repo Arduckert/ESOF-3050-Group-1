@@ -5,6 +5,7 @@ import java.lang.Math;
 import src.program.structs.AccountHolderInfo;
 import src.program.structs.AccountInfo;
 import src.program.structs.AccountType;
+import src.program.structs.BillAction;
 import src.program.structs.RecordInfo;
 import src.program.structs.TransactionInfo;
 import src.program.structs.TransferType;
@@ -315,36 +316,53 @@ public class BankController implements IBankController
 	 * Creates an account and adds it to an account holder
 	 * @param accountType
 	 * @param cardNumber
-	 * @return true if the account was created successfully, false if not
+	 * 
 	 */
 	
 	@Override
-	public boolean createAccount(AccountType accountType, String cardNumber, String tellerID)//savings or chequing
+	public String createAccount(AccountType accountType, String cardNumber, String tellerID)//savings or chequing
 	{
 		int cardNum = stringToInt(cardNumber);
+		int id = stringToInt(tellerID);
+		Teller teller = searchTeller(id);
 		AccountHolder a = searchAccountHolder(cardNum);
 		int accountNum = generateAccountNumber();
+		
+		if(teller == null) {
+			return null; //teller could not be found
+		}
 		if(a == null) {
-			return false; //could not find account holder with that card number
+			return null; //could not find account holder with that card number
 		}
 		switch(accountType) {
 		case CHEQUING:
 			ChequingAccount cAccount = new ChequingAccount(accountNum,a);
 			accountList.add(cAccount);
 			
+			a.addAccount(cAccount);
 			
-			return true;
+			AccountRecord cRecord = new AccountRecord(teller,"created",cAccount);
+			recordList.add(cRecord);
+			
+			
+			return cAccount.getAccountNum()+"";
 		
 		case SAVINGS:
 			SavingsAccount sAccount = new SavingsAccount(accountNum,a,generalInterestRate);
 			accountList.add(sAccount);
-			return true;
+			
+			a.addAccount(sAccount);
+			
+			AccountRecord sRecord = new AccountRecord(teller,"created",sAccount);
+			recordList.add(sRecord);
+			
+			return sAccount.getAccountNum()+"";
 			
 		default:
 			break;
 		}
 		
-		return false;
+		return null;
 	}
 	
 	/**
@@ -357,8 +375,13 @@ public class BankController implements IBankController
 	public boolean deleteAccount(String accountNumber, String tellerID)
 	{
 		int num = stringToInt(accountNumber);
+		int id = stringToInt(tellerID);
+		Teller teller = searchTeller(id);
 		Account account = searchAccount(num);
 		
+		if(teller == null) {
+			return false;//teller not found
+		}
 		if(account == null) {
 			return false; //account holder not found
 		}
@@ -368,6 +391,9 @@ public class BankController implements IBankController
 		else {
 			account.getAccountHolder().accountList.remove(account);
 			accountList.remove(account);
+			
+			AccountRecord record = new AccountRecord(teller,"removed",account);
+			recordList.add(record);
 			return true;
 
 		}
@@ -586,7 +612,47 @@ public class BankController implements IBankController
 		
 	}
 	
-	
+	@Override
+	public boolean manageBill(BillAction billAction, String locAccountNumber) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public String setupMortgageAccount(String cardNumber, String mortgageLength, String interestRate, String principleAmount, String tellerID) {
+		int cardNum = stringToInt(cardNumber);
+		int mortgageLen = stringToInt(mortgageLength);
+		double ir = Double.valueOf(interestRate);
+		double principle = Double.valueOf(principleAmount);
+		int id = stringToInt(tellerID);
+		int accountNumber = generateAccountNumber();
+		
+		AccountHolder accountHolder = searchAccountHolder(cardNum);
+		Teller teller = searchTeller(id);
+		
+		if(accountHolder == null) {
+			return null; //account holder not found
+		}
+		if(teller == null) {
+			return null; //teller not found
+		}
+		MortgageAccount mAccount = new MortgageAccount(accountNumber,accountHolder,mortgageLen,principle,ir);
+		accountList.add(mAccount);
+		
+		accountHolder.addAccount(mAccount);
+		
+		AccountRecord record = new AccountRecord(teller,"created",mAccount);
+		recordList.add(record);
+		
+		
+		return mAccount.getAccountNum()+"";
+	}
+
+	@Override
+	public String setupLineOfCreditAccount(String accountNumber, String creditLimit, String interestRate, String tellerID) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 	
 	//MAIN
@@ -599,8 +665,8 @@ public class BankController implements IBankController
 		Teller testTeller = new Teller(0000,"password",p1);
 		b.addAccountHolder(testAccountHolder);
 		b.addTeller(testTeller);
-		b.createAccount(AccountType.CHEQUING, Integer.toString(12345));
-        b.createAccount(AccountType.SAVINGS, Integer.toString(12345));
+		b.createAccount(AccountType.CHEQUING, Integer.toString(12345),testTeller.getEmpNum()+"");
+        b.createAccount(AccountType.SAVINGS, Integer.toString(12345),testTeller.getEmpNum()+"");
 		
 		int port = 9950;
 		BankingServer bs = new BankingServer(port, b);

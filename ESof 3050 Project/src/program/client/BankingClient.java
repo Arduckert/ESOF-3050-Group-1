@@ -622,9 +622,9 @@ public class BankingClient extends AbstractClient
 	 * @param interestRate the interest rate
 	 * @param principleAmount the principle amount of the mortgage
 	 */
-	public void setupMortgageAccount(String accountNumber, String mortgageLength, String interestRate, String principleAmount) throws IOException
+	public void setupMortgageAccount(String accountNumber, String mortgageLength, String interestRate, String principleAmount, String tellerID) throws IOException
 	{
-		ClientProtocol cp = new ClientProtocol(ServerAction.SETUP_MORTGAGE_ACCOUNT, accountNumber, mortgageLength, interestRate, principleAmount);
+		ClientProtocol cp = new ClientProtocol(ServerAction.SETUP_MORTGAGE_ACCOUNT, accountNumber, mortgageLength, interestRate, principleAmount, tellerID);
 		sendToServer(cp);
 	}
 	
@@ -655,9 +655,9 @@ public class BankingClient extends AbstractClient
 	 * @param creditLimit the credit limit of the account
 	 * @param interestRate the interest rate
 	 */
-	public void setupLineOfCreditAccount(String accountNumber, String creditLimit, String interestRate) throws IOException
+	public void setupLineOfCreditAccount(String accountNumber, String creditLimit, String interestRate, String tellerID) throws IOException
 	{
-		ClientProtocol cp = new ClientProtocol(ServerAction.SETUP_LINE_OF_CREDIT_ACCOUNT, accountNumber, creditLimit, interestRate);
+		ClientProtocol cp = new ClientProtocol(ServerAction.SETUP_LINE_OF_CREDIT_ACCOUNT, accountNumber, creditLimit, interestRate, tellerID);
 		sendToServer(cp);
 	}
 	

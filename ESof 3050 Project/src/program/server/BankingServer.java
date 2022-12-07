@@ -568,35 +568,42 @@ public class BankingServer extends AbstractServer
 	 */
 	private void handleAccountCreationRequest(ClientProtocol cp, ConnectionToClient client)
 	{
+		ServerProtocol sp;
 		//only tellers can add accounts to an account holder
 		if (client.getInfo("LoginType") == LoginType.TELLER)
 		{
 			//success if the the account was created, false if not
-			MessageStatus status = bc.createAccount(AccountType.valueOf(cp.GetParameters().get(0)), cp.GetParameters().get(1), cp.GetParameters().get(2)) ? MessageStatus.SUCCESS : MessageStatus.FAIL;	
-			ServerProtocol sp = new ServerProtocol(status, Datatype.ACCOUNT_CREATION_RESULT);
-			
-			try
-			{
-				client.sendToClient(sp);
+			String accNum = bc.createAccount(AccountType.valueOf(cp.GetParameters().get(0)), cp.GetParameters().get(1), cp.GetParameters().get(2));	
+			if(accNum != null) {
+				sp = new ServerProtocol(MessageStatus.SUCCESS, Datatype.ACCOUNT_CREATION_RESULT);
+				try
+				{
+					//adds data to the server protocol
+					sp.AddData(accNum);
+				}
+				catch (ParameterException e)
+				{
+					e.printStackTrace();
+				}
 			}
-			catch (IOException e)
-			{
-				e.printStackTrace();
-			}
+			else {
+				sp = new ServerProtocol(MessageStatus.FAIL, Datatype.ACCOUNT_CREATION_RESULT);
+			}	
+				
 		}
 		else
 		{
 			//send a fail request as the client is not a teller
-			ServerProtocol sp = new ServerProtocol(MessageStatus.FAIL, Datatype.ACCOUNT_CREATION_RESULT);
-			
-			try
-			{
-				client.sendToClient(sp);
-			}
-			catch (IOException e)
-			{
-				e.printStackTrace();
-			}
+			sp = new ServerProtocol(MessageStatus.FAIL, Datatype.ACCOUNT_CREATION_RESULT);
+		}
+		try
+		{
+			//sends the info to the client
+			client.sendToClient(sp);
+		}
+		catch (IOException e)
+		{
+			e.printStackTrace();
 		}
 	}
 	
@@ -897,8 +904,22 @@ public class BankingServer extends AbstractServer
 		if (client.getInfo("LoginType") == LoginType.TELLER)
 		{
 			//success if the the info was populated, fail if not
-			MessageStatus status = bc.setupMortgageAccount(cp.GetParameters().get(0), cp.GetParameters().get(1), cp.GetParameters().get(2), cp.GetParameters().get(3)) ? MessageStatus.SUCCESS : MessageStatus.FAIL;	
-			sp = new ServerProtocol(status, Datatype.MORTGAGE_ACCOUNT_SETUP_RESULT);
+			String accNum = bc.setupMortgageAccount(cp.GetParameters().get(0), cp.GetParameters().get(1), cp.GetParameters().get(2), cp.GetParameters().get(3),cp.GetParameters().get(4));	
+			if(accNum != null) {
+			sp = new ServerProtocol(MessageStatus.SUCCESS, Datatype.MORTGAGE_ACCOUNT_SETUP_RESULT);
+			try
+			{
+				//adds data to the server protocol
+				sp.AddData(accNum);
+			}
+			catch (ParameterException e)
+			{
+				e.printStackTrace();
+			}
+			}
+			else {
+				sp = new ServerProtocol(MessageStatus.FAIL, Datatype.MORTGAGE_ACCOUNT_SETUP_RESULT);
+			}
 		}
 		else
 		{
@@ -931,8 +952,22 @@ public class BankingServer extends AbstractServer
 		if (client.getInfo("LoginType") == LoginType.TELLER)
 		{
 			//success if the the info was populated, fail if not
-			MessageStatus status = bc.setupLineOfCreditAccount(cp.GetParameters().get(0), cp.GetParameters().get(1), cp.GetParameters().get(2)) ? MessageStatus.SUCCESS : MessageStatus.FAIL;	
-			sp = new ServerProtocol(status, Datatype.LOC_ACCOUNT_SETUP_RESULT);
+			String accNum = bc.setupLineOfCreditAccount(cp.GetParameters().get(0), cp.GetParameters().get(1), cp.GetParameters().get(2),cp.GetParameters().get(3));	
+			if(accNum != null) {
+			sp = new ServerProtocol(MessageStatus.SUCCESS, Datatype.LOC_ACCOUNT_SETUP_RESULT);
+			try
+			{
+				//adds data to the server protocol
+				sp.AddData(accNum);
+			}
+			catch (ParameterException e)
+			{
+				e.printStackTrace();
+			}
+			}
+			else {
+				sp = new ServerProtocol(MessageStatus.FAIL, Datatype.LOC_ACCOUNT_SETUP_RESULT);
+			}
 		}
 		else
 		{

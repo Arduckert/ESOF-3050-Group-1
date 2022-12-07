@@ -115,7 +115,7 @@ public interface IBankController
 	 * @param cardNumber
 	 * @return true if the account was created successfully, false if not
 	 */
-	public boolean createAccount(AccountType accountType, String cardNumber, String tellerID);
+	public String createAccount(AccountType accountType, String cardNumber, String tellerID);
 	
 	/**
 	 * Deletes an account and removes it from an account holder
@@ -183,7 +183,7 @@ public interface IBankController
 	 * @param principleAmount the principle of the mortgage
 	 * @return true if the information is populated, false if not
 	 */
-	public boolean setupMortgageAccount(String accountNumber, String mortgageLength, String interestRate, String principleAmount);
+	public String setupMortgageAccount(String accountNumber, String mortgageLength, String interestRate, String principleAmount, String tellerID);
 	
 	/**
 	 * Setups a line of credit account given a set of information
@@ -192,5 +192,5 @@ public interface IBankController
 	 * @param interestRate the interest rate
 	 * @return true if the information is populated, false if not
 	 */
-	public boolean setupLineOfCreditAccount(String accountNumber, String creditLimit, String interestRate);
+	public String setupLineOfCreditAccount(String accountNumber, String creditLimit, String interestRate, String tellerID);
 }
