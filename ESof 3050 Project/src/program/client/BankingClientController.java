@@ -299,6 +299,10 @@ public class BankingClientController extends Application implements IBankingClie
 		changeScene(event,"MortgageAccount.fxml");
 	}
 	
+	public void switchToLOCScreen(ActionEvent event) throws Exception{
+		changeScene(event,"LOCAccount.fxml");
+	}
+	
 	//************************************************************************
 	
 	//*************************************************************************
@@ -783,8 +787,8 @@ public class BankingClientController extends Application implements IBankingClie
 
     @FXML
     void SelectAccountHolderButtonPressed(ActionEvent event) throws Exception{
-    	ahi=CardNumberListView.getSelectionModel().getSelectedItem();
-    	if(ahi!=null)
+    	cardNumber=CardNumberListView.getSelectionModel().getSelectedItem().cardNumber;
+    	if(cardNumber!=null)
     		switchToEditProfileScreen(event);
     }
   
@@ -889,8 +893,7 @@ public class BankingClientController extends Application implements IBankingClie
     		switchToMortgageAccountScreen(event);
     	}
     	else if(accountType.equals("Line-Of-Credit")) {
-    		createAccount(AccountType.LINE_OF_CREDIT, cardNumber);
-    		switchToCreateAccountConfirmationScreen(event);
+    		switchToLOCScreen(event);
     	}
     }
     
@@ -967,6 +970,22 @@ public class BankingClientController extends Application implements IBankingClie
     }
     
     //*************************************************
+    
+    //************************************************
+    //GUI comp for LOC
+    
+    @FXML
+    private TextField CreditLimitTextField;
+
+    @FXML
+    private TextField LOCInterestTextField;
+
+    @FXML
+    void CreateLOCButtonPressed(ActionEvent event) {
+    	//TODO make loc
+    }
+    
+    //************************************************
     
     
     
