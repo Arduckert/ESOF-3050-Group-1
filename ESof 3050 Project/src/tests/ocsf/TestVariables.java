@@ -106,7 +106,7 @@ public final class TestVariables
 	
 	//SETUP MORTGAGE ACCOUNT
 	public static final String availableMortgageAccountNumber = "12357643";
-	public static final String unavailableMortgageAccountNumber = "12357643";
+	public static final String unavailableMortgageAccountNumber = "123572643";
 	public static final String mortgageLength = "20";
 	public static final String interestRate = "0.10";
 	public static final String principleAmount = "164130.10";
