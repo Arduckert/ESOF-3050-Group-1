@@ -19,7 +19,7 @@ import javafx.event.ActionEvent;
 
 import java.io.IOException;
 import java.net.Inet4Address;
-
+import java.util.ArrayList;
 
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -49,6 +49,8 @@ public class BankingClientController extends Application implements IBankingClie
 	private static TextArea ta;
 	private static ListView<AccountHolderInfo>ahilv;
 	private static ListView<AccountInfo>ailv;
+	private static ChoiceBox<String> rcb;
+	private static ChoiceBox<String> scb;
 	
 	//5 parameters for account holder + pin and card number
 	private static String firstName;
@@ -79,6 +81,8 @@ public class BankingClientController extends Application implements IBankingClie
 	private static String deleteString;
 	
 	private static ObservableList<AccountInfo> accountList=FXCollections.observableArrayList();
+	private static ObservableList<String> receivingAccountList=FXCollections.observableArrayList();
+	private static ObservableList<String> sendingAccountList=FXCollections.observableArrayList();
 	
 	
 	
@@ -220,6 +224,8 @@ public class BankingClientController extends Application implements IBankingClie
 	}
 	
 	public void switchToAccountHolderMainMenu(ActionEvent event) throws Exception{
+		accountList.removeAll(accountList);
+		getAccounts(cardNumber);
 		changeScene(event,"AccountHolderMainMenu.fxml");
 	}
 	
@@ -1086,7 +1092,14 @@ public class BankingClientController extends Application implements IBankingClie
     			}});
     	}
     		
-    	
+    	if(SendingAccountChoiceBox!=null) {
+    		SendingAccountChoiceBox.setItems(sendingAccountList);
+    		scb=SendingAccountChoiceBox;
+    	}
+    	if(ReceivingAccountChoiceBox!=null) {
+    		ReceivingAccountChoiceBox.setItems(receivingAccountList);
+    		rcb=SendingAccountChoiceBox;
+    	}
     }
     
     //Start function
@@ -1720,11 +1733,11 @@ public class BankingClientController extends Application implements IBankingClie
 	 * @param cardNumber the account holder's card number
 	 */
 	@Override
-	public void getAccount(AccountType accountType, String cardNumber)
+	public void getAccounts(String cardNumber)
 	{
 		try
 		{
-			bc.getAccount(accountType, cardNumber);
+			bc.getAccounts(cardNumber);
 		}
 		catch (IOException e)
 		{
@@ -1738,16 +1751,28 @@ public class BankingClientController extends Application implements IBankingClie
 	 * @param accountInfo
 	 */
 	@Override
-	public void handleAccountInformation(AccountInfo accountInfo)
+	public void handleAccountInformation(ArrayList<AccountInfo> accountInfo)
 	{
 		//TODO: add handle code
 		
-		if (accountInfo.getHasInfo())
+		
+		if (!accountInfo.isEmpty())
 		{
-			//populate info
-			accountList.add(accountInfo);
-			if(ailv!=null)
-				ailv.getItems().add(accountInfo);
+			//add to account list
+			for(int i=0; i<accountInfo.size();i++) {
+				accountList.add(accountInfo.get(i));
+				receivingAccountList.add(accountInfo.get(i).accountNumber);
+				if(ailv!=null)
+					ailv.getItems().add(accountInfo.get(i));
+				if(rcb!=null)
+					rcb.getItems().add(accountInfo.get(i).accountNumber);
+				if(accountInfo.get(i).accountType!=AccountType.LINE_OF_CREDIT && accountInfo.get(i).accountType!=AccountType.MORTGAGE) {
+					sendingAccountList.add(accountInfo.get(i).accountNumber);
+					if(scb!=null)
+						scb.getItems().add(accountInfo.get(i).accountNumber);
+				}
+				
+			}
 		}
 		else
 		{

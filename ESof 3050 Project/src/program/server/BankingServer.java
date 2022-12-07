@@ -685,7 +685,7 @@ public class BankingServer extends AbstractServer
 			String newBalance = bc.transfer(TransferType.valueOf(cp.GetParameters().get(0)), cp.GetParameters().get(1), cp.GetParameters().get(2), cp.GetParameters().get(3));	
 			
 			//sends success if the new balance is different from the old balance
-			if (!newBalance.equals(null))
+			if (newBalance != null)
 			{
 				sp = new ServerProtocol(MessageStatus.SUCCESS, Datatype.TRANSFER_BALANCE);
 				

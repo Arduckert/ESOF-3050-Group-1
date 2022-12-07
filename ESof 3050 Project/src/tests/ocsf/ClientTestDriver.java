@@ -33,7 +33,6 @@ public class ClientTestDriver implements IBankingClientController
 	private static int accountHolderToPersonTestCount = 0;
 	private static int accountCreationTestCount = 0;
 	private static int accountDeletionTestCount = 0;
-	private static int accountGetTestCount = 0;
 	private static int transferTestCount = 0;
 	
 	public ClientTestDriver()
@@ -69,8 +68,8 @@ public class ClientTestDriver implements IBankingClientController
 			sendAccountHolderLoginRequest(TestVariables.unavailableAccountHolderNumber, TestVariables.unavailableAccountHolderPin); //should return false
 			
 			//transfer test
-			transfer(TestVariables.transferAccountType, TestVariables.transferType, TestVariables.transferRecipient, TestVariables.unchangedAmount);
-			transfer(TestVariables.transferAccountType, TestVariables.transferType, TestVariables.transferRecipient, TestVariables.changedAmount);
+			transfer(TestVariables.transferType, TestVariables.sendingAccountNum, TestVariables.availableReceivingAccountNum, TestVariables.transferAmount);
+			transfer(TestVariables.transferType, TestVariables.sendingAccountNum, TestVariables.unavailableReceivingAccountNum, TestVariables.transferAmount);
 			
 			//get transactions test
 			getTransactions(TestVariables.accountType);
@@ -124,8 +123,7 @@ public class ClientTestDriver implements IBankingClientController
 			deleteAccount(TestVariables.accountType, TestVariables.availableCreateAccountHolderEmail); //handler should return false
 			
 			//get account test
-			getAccount(TestVariables.getAccountType, TestVariables.availableGetAccountCardNumber); //handler should return true
-			getAccount(TestVariables.getAccountType, TestVariables.unavailableGetAccountCardNumber); //handler should return false
+			getAccounts(TestVariables.availableAccountHolderNumber);
 			
 			//get account and customer records tests
 			getAccountRecords();
@@ -788,11 +786,11 @@ public class ClientTestDriver implements IBankingClientController
 	 * @param cardNumber the account holder's card number
 	 */
 	@Override
-	public void getAccount(AccountType accountType, String cardNumber)
+	public void getAccounts(String cardNumber)
 	{
 		try
 		{
-			bc.getAccount(accountType, cardNumber);
+			bc.getAccounts(cardNumber);
 		}
 		catch (IOException e)
 		{
@@ -806,28 +804,24 @@ public class ClientTestDriver implements IBankingClientController
 	 * for data integrity
 	 * @param accountInfo
 	 */
-	public void handleAccountInformation(AccountInfo accountInfo)
+	public void handleAccountInformation(ArrayList<AccountInfo> accountInfo)
 	{
-		if (accountInfo.getHasInfo() && accountGetTestCount == 0)
+		if (accountInfo.get(0).accountType == TestVariables.account1.accountType
+				&& accountInfo.get(0).balance.equals(TestVariables.account1.balance)
+				&& accountInfo.get(0).accountNumber.equals(TestVariables.account1.accountNumber)
+				&& accountInfo.get(1).accountType == TestVariables.account2.accountType
+				&& accountInfo.get(1).balance.equals(TestVariables.account2.balance)
+				&& accountInfo.get(1).accountNumber.equals(TestVariables.account2.accountNumber)
+				&& accountInfo.get(2).accountType == TestVariables.account3.accountType
+				&& accountInfo.get(2).balance.equals(TestVariables.account3.balance)
+				&& accountInfo.get(2).accountNumber.equals(TestVariables.account3.accountNumber))
 		{
-			//tests for data integrity
-			if (accountInfo.accountType == TestVariables.getAccountType
-					&& accountInfo.balance.equals(TestVariables.getAccountBalance)
-					&& accountInfo.accountNumber.equals(TestVariables.getAccountNumber))
-			{
-				System.out.println("GET ACCOUNT TRUE TEST PASSED");
-			}
-		}
-		else if (!accountInfo.getHasInfo() && accountGetTestCount == 1)
-		{
-			System.out.println("GET ACCOUNT FALSE TEST PASSED");
+			System.out.println("GET ACCOUNTS TEST PASSED");
 		}
 		else
-		{
-			System.err.println("GET ACCOUNT TEST " + (accountGetTestCount + 1) + " FAILED");
+		{			
 			assert false;
 		}
-		accountGetTestCount++;
 	}
 	
 	//////////////
@@ -841,11 +835,11 @@ public class ClientTestDriver implements IBankingClientController
 	 * @param recipientEmail the email address of the recipient (if doing a transfer)
 	 * @param amount the amount to send
 	 */
-	public void transfer(AccountType accountType, TransferType transferType, String recipientEmail, String amount)
+	public void transfer(TransferType transferType, String sendingAccountNum, String recipientAccountNum, String amount)
 	{
 		try
 		{
-			bc.transfer(accountType, transferType, recipientEmail, amount);
+			bc.transfer(transferType, sendingAccountNum, recipientAccountNum, amount);
 		}
 		catch (IOException e)
 		{
@@ -862,11 +856,11 @@ public class ClientTestDriver implements IBankingClientController
 	public void handleTransferResult(boolean isSuccessful, String newBalance)
 	{
 		//checks data integrity and if the test is the expected result
-		if (isSuccessful && transferTestCount == 0 && newBalance.equals(TestVariables.changedAmount))
+		if (isSuccessful && transferTestCount == 0 && newBalance.equals(TestVariables.transferAmount))
 		{
-				System.out.println("TRANSFER TRUE TEST PASSED");
+			System.out.println("TRANSFER TRUE TEST PASSED");
 		}
-		else if (!isSuccessful && transferTestCount == 1)
+		else if (!isSuccessful && transferTestCount == 1 && newBalance == null)
 		{
 			System.out.println("TRANSFER FALSE TEST PASSED");
 		}
