@@ -54,6 +54,16 @@ public class ClientProtocol implements Serializable
 	}
 	
 	/**
+	 * Constructor that takes a server action and no parameters
+	 * @param _serverAction - the action the server will do on the data
+	 */
+	public ClientProtocol(ServerAction _serverAction)
+	{
+		serverAction = _serverAction;
+		parameters = new ArrayList<String>();
+	}
+	
+	/**
 	 * Constructor that takes a server action and one parameter
 	 * @param _serverAction - the action the server will do on the data
 	 * @param _parameters - the parameter to send to the server

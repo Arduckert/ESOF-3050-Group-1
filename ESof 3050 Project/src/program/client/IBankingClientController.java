@@ -1,5 +1,7 @@
 package src.program.client;
 
+import java.util.ArrayList;
+
 import src.program.structs.*;
 
 /**
@@ -302,11 +304,46 @@ public interface IBankingClientController
 	// GET TRANSACTIONS //
 	//////////////////////
 	
+	/**
+	 * tells the server to fetch all of the transactions for a specific account
+	 * @param accountType the account type (chequing, savings, etc.)
+	 */
+	public void getTransactions(AccountType accountType);
+	
+	/**
+	 * handles the transactions received by the server
+	 * @param transactions a list of information about each transaction in the
+	 * transaction history
+	 */
+	public void handleTransactions(ArrayList<TransactionInfo> transactions);
+	
 	/////////////////////////
 	// GET ACCOUNT RECORDS //
 	/////////////////////////
 	
+	/**
+	 * tells the server to fetch all of the account records on the server
+	 */
+	public void getAccountRecords();
+	
+	/**
+	 * handles the account records received by the server
+	 * @param accountRecords a list of account records
+	 */
+	public void handleAccountRecords(ArrayList<RecordInfo> accountRecords);
+	
 	//////////////////////////
 	// GET CUSTOMER RECORDS //
 	//////////////////////////
+	
+	/**
+	 * tells the server to fetch all of the customer records on the server
+	 */
+	public void getCustomerRecords();
+	
+	/**
+	 * handles the customer records received by the server
+	 * @param customerRecords a list of customer records
+	 */
+	public void handleCustomerRecords(ArrayList<RecordInfo> customerRecords);
 }	

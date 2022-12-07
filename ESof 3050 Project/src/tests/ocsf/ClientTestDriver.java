@@ -3,12 +3,15 @@ package src.tests.ocsf;
 import java.io.IOException;
 import java.net.Inet4Address;
 import java.net.UnknownHostException;
+import java.util.ArrayList;
 
 import src.program.client.BankingClient;
 import src.program.client.IBankingClientController;
 import src.program.structs.AccountHolderInfo;
 import src.program.structs.AccountInfo;
 import src.program.structs.AccountType;
+import src.program.structs.RecordInfo;
+import src.program.structs.TransactionInfo;
 import src.program.structs.TransferType;
 
 public class ClientTestDriver implements IBankingClientController
@@ -65,6 +68,13 @@ public class ClientTestDriver implements IBankingClientController
 			sendAccountHolderLoginRequest(TestVariables.unavailableAccountHolderNumber, TestVariables.availableAccountHolderPin); //should return false
 			sendAccountHolderLoginRequest(TestVariables.unavailableAccountHolderNumber, TestVariables.unavailableAccountHolderPin); //should return false
 			
+			//transfer test
+			transfer(TestVariables.transferAccountType, TestVariables.transferType, TestVariables.transferRecipient, TestVariables.unchangedAmount);
+			transfer(TestVariables.transferAccountType, TestVariables.transferType, TestVariables.transferRecipient, TestVariables.changedAmount);
+			
+			//get transactions test
+			getTransactions(TestVariables.accountType);
+			
 			//teller login request tests. 
 			sendTellerLoginRequest(TestVariables.availableTellerID, TestVariables.availableTellerPassword); //should return true
 			sendTellerLoginRequest(TestVariables.availableTellerID, TestVariables.unavailableTellerPassword); //should return false
@@ -117,13 +127,9 @@ public class ClientTestDriver implements IBankingClientController
 			getAccount(TestVariables.getAccountType, TestVariables.availableGetAccountCardNumber); //handler should return true
 			getAccount(TestVariables.getAccountType, TestVariables.unavailableGetAccountCardNumber); //handler should return false
 			
-			//to setup for the next test
-			accountHolderTestCount = 0;
-			sendAccountHolderLoginRequest(TestVariables.availableAccountHolderNumber, TestVariables.availableAccountHolderPin); //should return true
-			
-			//transfer test
-			transfer(TestVariables.transferAccountType, TestVariables.transferType, TestVariables.transferRecipient, TestVariables.unchangedAmount);
-			transfer(TestVariables.transferAccountType, TestVariables.transferType, TestVariables.transferRecipient, TestVariables.changedAmount);
+			//get account and customer records tests
+			getAccountRecords();
+			getCustomerRecords();
 			
 			Sleep(1000); //wait for connection to close
 			CloseServerConnection();
@@ -870,5 +876,150 @@ public class ClientTestDriver implements IBankingClientController
 			assert false;
 		}
 		transferTestCount++;
+	}
+	
+	//////////////////////
+	// GET TRANSACTIONS //
+	//////////////////////
+	
+	/**
+	 * tells the server to fetch all of the transactions for a specific account
+	 * @param accountType the account type (chequing, savings, etc.)
+	 */
+	public void getTransactions(AccountType accountType)
+	{
+		try
+		{
+			bc.getTransactions(accountType);
+		}
+		catch (IOException e)
+		{
+			System.err.println("GET TRANSACTIONS TEST FAILED: EXCEPTION");
+			e.printStackTrace();
+		}
+	}
+	
+	/**
+	 * handles the transactions received by the server
+	 * @param transactions a list of information about each transaction in the
+	 * transaction history
+	 */
+	public void handleTransactions(ArrayList<TransactionInfo> transactions)
+	{
+		if (transactions.get(0).date.equals(TestVariables.transaction1.date)
+				&& transactions.get(0).recipient.equals(TestVariables.transaction1.recipient)
+				&& transactions.get(0).transactionType.equals(TestVariables.transaction1.transactionType)
+				&& transactions.get(0).amount.equals(TestVariables.transaction1.amount)
+				&& transactions.get(1).date.equals(TestVariables.transaction2.date)
+				&& transactions.get(1).recipient.equals(TestVariables.transaction2.recipient)
+				&& transactions.get(1).transactionType.equals(TestVariables.transaction2.transactionType)
+				&& transactions.get(1).amount.equals(TestVariables.transaction2.amount)
+				&& transactions.get(2).date.equals(TestVariables.transaction3.date)
+				&& transactions.get(2).recipient.equals(TestVariables.transaction3.recipient)
+				&& transactions.get(2).transactionType.equals(TestVariables.transaction3.transactionType)
+				&& transactions.get(2).amount.equals(TestVariables.transaction3.amount))
+		{
+			System.out.println("GET TRANSACTIONS TEST PASSED");
+		}
+		else
+		{			
+			assert false;
+		}
+	}
+	
+	/////////////////////////
+	// GET ACCOUNT RECORDS //
+	/////////////////////////
+	
+	/**
+	 * tells the server to fetch all of the account records on the server
+	 */
+	public void getAccountRecords()
+	{
+		try
+		{
+			bc.getAccountRecords();
+		}
+		catch (IOException e)
+		{
+			System.err.println("GET ACCOUNT RECORDS TEST FAILED: EXCEPTION");
+			e.printStackTrace();
+		}
+	}
+	
+	/**
+	 * handles the account records received by the server
+	 * @param accountRecords a list of account records
+	 */
+	public void handleAccountRecords(ArrayList<RecordInfo> accountRecords)
+	{
+		if (accountRecords.get(0).recordDate.equals(TestVariables.accountRecord1.recordDate)
+				&& accountRecords.get(0).tellerEmpID.equals(TestVariables.accountRecord1.tellerEmpID)
+				&& accountRecords.get(0).recordType.equals(TestVariables.accountRecord1.recordType)
+				&& accountRecords.get(0).accountNumber.equals(TestVariables.accountRecord1.accountNumber)
+				&& accountRecords.get(1).recordDate.equals(TestVariables.accountRecord2.recordDate)
+				&& accountRecords.get(1).tellerEmpID.equals(TestVariables.accountRecord2.tellerEmpID)
+				&& accountRecords.get(1).recordType.equals(TestVariables.accountRecord2.recordType)
+				&& accountRecords.get(1).accountNumber.equals(TestVariables.accountRecord2.accountNumber)
+				&& accountRecords.get(2).recordDate.equals(TestVariables.accountRecord3.recordDate)
+				&& accountRecords.get(2).tellerEmpID.equals(TestVariables.accountRecord3.tellerEmpID)
+				&& accountRecords.get(2).recordType.equals(TestVariables.accountRecord3.recordType)
+				&& accountRecords.get(2).accountNumber.equals(TestVariables.accountRecord3.accountNumber))
+		{
+			System.out.println("ACCOUNT RECORDS TEST PASSED");
+		}
+		else
+		{
+			System.err.println("GET ACCOUNT RECORDS TEST FAILED: DATA NOT EQUAL");
+			assert false;
+		}
+	}
+	
+	//////////////////////////
+	// GET CUSTOMER RECORDS //
+	//////////////////////////
+	
+	/**
+	 * tells the server to fetch all of the customer records on the server
+	 */
+	public void getCustomerRecords()
+	{
+		try
+		{
+			bc.getCustomerRecords();
+		}
+		catch (IOException e)
+		{
+			System.err.println("GET CUSTOMER RECORDS TEST FAILED: EXCEPTION");
+			e.printStackTrace();
+		}
+	}
+	
+	/**
+	 * handles the customer records received by the server
+	 * @param customerRecords a list of customer records
+	 */
+	public void handleCustomerRecords(ArrayList<RecordInfo> customerRecords)
+	{
+		if (customerRecords.get(0).recordDate.equals(TestVariables.customerRecord1.recordDate)
+				&& customerRecords.get(0).tellerEmpID.equals(TestVariables.customerRecord1.tellerEmpID)
+				&& customerRecords.get(0).recordType.equals(TestVariables.customerRecord1.recordType)
+				&& customerRecords.get(0).accountNumber.equals(TestVariables.customerRecord1.accountNumber)
+				&& customerRecords.get(1).recordDate.equals(TestVariables.customerRecord2.recordDate)
+				&& customerRecords.get(1).tellerEmpID.equals(TestVariables.customerRecord2.tellerEmpID)
+				&& customerRecords.get(1).recordType.equals(TestVariables.customerRecord2.recordType)
+				&& customerRecords.get(1).accountNumber.equals(TestVariables.customerRecord2.accountNumber)
+				&& customerRecords.get(2).recordDate.equals(TestVariables.customerRecord3.recordDate)
+				&& customerRecords.get(2).tellerEmpID.equals(TestVariables.customerRecord3.tellerEmpID)
+				&& customerRecords.get(2).recordType.equals(TestVariables.customerRecord3.recordType)
+				&& customerRecords.get(2).accountNumber.equals(TestVariables.customerRecord3.accountNumber))
+		{
+			System.out.println("CUSTOMER RECORDS TEST PASSED");
+		}
+		else
+		{
+			System.err.println("GET CUSTOMER RECORDS TEST FAILED: DATA NOT EQUAL");
+			assert false;
+		}
 	}
 }

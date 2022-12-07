@@ -1,5 +1,7 @@
 package src.program.server;
 
+import java.util.ArrayList;
+
 import src.ocsf.server.*;
 import src.program.structs.*;
 
@@ -141,4 +143,27 @@ public interface IBankController
 	 * @return the sender's new balance after the transfer is complete
 	 */
 	public String transfer(AccountType accountType, TransferType transferType, String cardNumber, String recipientEmail, String amount);
+	
+	/**
+	 * gets the transaction history of a specific account
+	 * @param cardNumber the account holder's card number
+	 * @param accountType the account to fetch from (chequing, savings, etc.)
+	 * @return a list of information about each transaction
+	 */
+	public ArrayList<TransactionInfo> getTransactionHistory(String cardNumber, AccountType accountType);
+	
+	/**
+	 * gets all the account records from the server
+	 * @return a list of record info that contains information about each
+	 * account record
+	 */
+	public ArrayList<RecordInfo> getAccountRecords();
+	
+	
+	/**
+	 * gets all the customer records from the server
+	 * @return a list of record info that contains information about each
+	 * customer record
+	 */
+	public ArrayList<RecordInfo> getCustomerRecords();
 }

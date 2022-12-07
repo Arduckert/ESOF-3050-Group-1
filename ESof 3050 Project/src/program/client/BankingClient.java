@@ -2,6 +2,7 @@ package src.program.client;
 
 import java.io.IOException;
 import java.net.SocketException;
+import java.util.ArrayList;
 
 import src.ocsf.client.AbstractClient;
 import src.protocol.*;
@@ -84,6 +85,15 @@ public class BankingClient extends AbstractClient
 				break;
 			case TRANSFER_BALANCE:
 				processTransferResult(sp);
+				break;
+			case TRANSACTION:
+				processTransactions(sp);
+				break;
+			case ACCOUNT_RECORD:
+				processAccountRecords(sp);
+				break;
+			case CUSTOMER_RECORD:
+				processCustomerRecords(sp);
 				break;
 			case BASIC_MESSAGE:
 				processBasicMessage(sp);
@@ -641,11 +651,97 @@ public class BankingClient extends AbstractClient
 	// GET TRANSACTIONS //
 	//////////////////////
 	
+	/**
+	 * tells the server to fetch all of the transactions for a specific account
+	 * @param accountType the account type (chequing, savings, etc.)
+	 */
+	public void getTransactions(AccountType accountType) throws IOException
+	{
+		ClientProtocol cp = new ClientProtocol(ServerAction.GET_ACCOUNT_TRANSACTIONS, accountType.toString());
+		sendToServer(cp);
+	}
+	
+	/**
+	 * handles the transactions received by the server
+	 * @param transactions a list of information about each transaction in the
+	 * transaction history
+	 */
+	private void processTransactions(ServerProtocol sp)
+	{
+		ArrayList<TransactionInfo> transactions = new ArrayList<TransactionInfo>();
+		
+		//gets the data of each transaction and places it into the array list of transaction info
+		for (int i = 0; i < sp.GetData().size(); i += sp.getSizePerObject())
+		{
+			TransactionInfo info = new TransactionInfo(sp.GetData().get(i), sp.GetData().get(i+1), sp.GetData().get(i+2), sp.GetData().get(i+3));
+			transactions.add(info);
+		}
+		
+		//sends the list to the banking client controller
+		bcc.handleTransactions(transactions);
+	}
+	
 	/////////////////////////
 	// GET ACCOUNT RECORDS //
 	/////////////////////////
 	
+	/**
+	 * tells the server to fetch all of the account records on the server
+	 */
+	public void getAccountRecords() throws IOException
+	{
+		ClientProtocol cp = new ClientProtocol(ServerAction.GET_ACCOUNT_RECORDS);
+		sendToServer(cp);
+	}
+	
+	/**
+	 * handles the account records received by the server
+	 * @param accountRecords a list of account records
+	 */
+	private void processAccountRecords(ServerProtocol sp)
+	{
+		ArrayList<RecordInfo> records = new ArrayList<RecordInfo>();
+		
+		//gets the data of each account record and places it into the array list
+		for (int i = 0; i < sp.GetData().size(); i += sp.getSizePerObject())
+		{
+			RecordInfo info = new RecordInfo(sp.GetData().get(i), sp.GetData().get(i+1), sp.GetData().get(i+2), sp.GetData().get(i+3));
+			records.add(info);
+		}
+		
+		//sends the list to the banking client controller
+		bcc.handleAccountRecords(records);
+	}
+	
 	//////////////////////////
 	// GET CUSTOMER RECORDS //
 	//////////////////////////
+	
+	/**
+	 * tells the server to fetch all of the customer records on the server
+	 */
+	public void getCustomerRecords() throws IOException
+	{
+		ClientProtocol cp = new ClientProtocol(ServerAction.GET_CUSTOMER_RECORDS);
+		sendToServer(cp);
+	}
+	
+	/**
+	 * handles the customer records received by the server
+	 * @param customerRecords a list of customer records
+	 */
+	private void processCustomerRecords(ServerProtocol sp)
+	{
+		ArrayList<RecordInfo> records = new ArrayList<RecordInfo>();
+		
+		//gets the data of each customer record and places it into the array list
+		for (int i = 0; i < sp.GetData().size(); i += sp.getSizePerObject())
+		{
+			RecordInfo info = new RecordInfo(sp.GetData().get(i), sp.GetData().get(i+1), sp.GetData().get(i+2), sp.GetData().get(i+3));
+			records.add(info);
+		}
+		
+		//sends the list to the banking client controller
+		bcc.handleCustomerRecords(records);
+	}
 }
