@@ -4,6 +4,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ListView;
 import javafx.scene.control.PasswordField;
@@ -73,6 +74,8 @@ public class BankingClientController extends Application implements IBankingClie
 	private static AccountHolderInfo ahi;
 	
 	private static String accountType;
+	
+	private static String deleteString;
 	
 	
 	
@@ -268,6 +271,18 @@ public class BankingClientController extends Application implements IBankingClie
 	
 	public void switchToCreateAccountConfirmationScreen(ActionEvent event) throws Exception{
 		changeScene(event,"CreateAccountConfirmation.fxml");
+	}
+	
+	public void switchToDeleteAccountConfirmationScreen(ActionEvent event) throws Exception{
+		changeScene(event,"DeleteAccountConfirmation.fxml");
+	}
+	
+	public void switchToDeleteProfileConfirmationScreen(ActionEvent event) throws Exception{
+		changeScene(event,"DeleteProfileConfirmation.fxml");
+	}
+	
+	public void switchToMortgageAccountScreen(ActionEvent event) throws Exception{
+		changeScene(event,"MortgageAccount.fxml");
 	}
 	
 	//************************************************************************
@@ -817,8 +832,7 @@ public class BankingClientController extends Application implements IBankingClie
     		switchToCreateAccountConfirmationScreen(event);
     	}
     	else if(accountType.equals("Mortgage Account")) {
-    		createAccount(AccountType.MORTGAGE, cardNumber);
-    		switchToCreateAccountConfirmationScreen(event);
+    		switchToMortgageAccountScreen(event);
     	}
     	else if(accountType.equals("Line-Of-Credit")) {
     		createAccount(AccountType.LINE_OF_CREDIT, cardNumber);
@@ -838,6 +852,67 @@ public class BankingClientController extends Application implements IBankingClie
     private TextField AccountTypeConfirmationTextField;
     
     //*******************************************************
+    
+    //*******************************************************
+    //GUI components for delete account
+    
+    @FXML
+    private ChoiceBox<String> DeleteAccountChoiceBox;
+    
+    @FXML
+    private CheckBox DeleteAccountCheckBox;
+    
+    @FXML
+    void DeleteAccountButtonPressed(ActionEvent event) throws Exception{
+    	if(DeleteAccountCheckBox.isSelected()) {
+    		switchToDeleteAccountConfirmationScreen(event);
+    		//TODO send delete(accountnumber)
+    	}
+    }
+    
+    //********************************************************
+    
+    //********************************************************
+    //GUI components for delete account confirmation
+    
+    @FXML
+    private TextField AccountDeletedTextField;
+   
+    //********************************************************
+    
+    //**************************************************
+    //GUI components for delete profile
+    
+    @FXML
+    private CheckBox DeleteProfileCheckBox;
+    
+    @FXML
+    void DeleteProfileSubmitButtonPressed(ActionEvent event) throws Exception{
+    	if(DeleteProfileCheckBox.isSelected()) {
+    		deleteAccountHolder(cardNumber);
+    		switchToDeleteProfileConfirmationScreen(event);
+    		//TODO send delete(profile)
+    	}
+    }
+    
+    //****************************************************
+    
+    //**************************************************
+    //GUI comp for mortgage account
+
+    @FXML
+    private TextField MortageInterestTextField;
+
+    @FXML
+    private TextField MortgageValueTextField;
+
+    @FXML
+    void CreateMortgageAccountButtonPressed(ActionEvent event) {
+    	createAccount(AccountType.MORTGAGE, cardNumber);
+    	//TODO make mortgage account
+    }
+    
+    //*************************************************
     
     
     
@@ -948,10 +1023,13 @@ public class BankingClientController extends Application implements IBankingClie
     	
     	//TODO get new account number
     	//if(AccountNumberConfirmationTextField!=null)
+    		//AccountNumberConfirmationTextField.setText();
     	
     	if(AccountTypeConfirmationTextField!=null)
     		AccountTypeConfirmationTextField.setText(accountType);
-    		
+    	
+    	//if(DeleteAccountChoiceBox!=null)
+    		//TODO add accounts
     	
     }
     
