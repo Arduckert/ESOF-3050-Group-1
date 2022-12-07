@@ -51,7 +51,7 @@ public class BankingClient extends AbstractClient
 				processTellerLoginResult(sp);
 				break;
 			case ACCOUNT_HOLDER_FIND_RESULT:
-				processFindAccountHolderByEmailRequest(sp);
+				processFindAccountHolderRequest(sp);
 				break;
 			case ACCOUNT_HOLDER_CREATION_RESULT:
 				processAccountHolderResult(sp);
@@ -234,9 +234,9 @@ public class BankingClient extends AbstractClient
 	 * @param email the email address of the account holder you want to find
 	 * @throws IOException
 	 */
-	public void findAccountHolderByEmail(String email) throws IOException
+	public void findAccountHolder(InputType inputType, String parameter) throws IOException
 	{
-		ClientProtocol cp = new ClientProtocol(ServerAction.FIND_ACCOUNTHOLDER_BY_EMAIL, email);
+		ClientProtocol cp = new ClientProtocol(ServerAction.FIND_ACCOUNTHOLDER, inputType.toString(), parameter);
 		sendToServer(cp);
 	}
 	
@@ -245,7 +245,7 @@ public class BankingClient extends AbstractClient
 	 * by email address request
 	 * @param sp
 	 */
-	private void processFindAccountHolderByEmailRequest(ServerProtocol sp)
+	private void processFindAccountHolderRequest(ServerProtocol sp)
 	{
 		//sends information about the account holder if found
 		if (sp.getMessageStatus() == MessageStatus.SUCCESS)
@@ -256,15 +256,17 @@ public class BankingClient extends AbstractClient
 			AccountHolderInfo info = new AccountHolderInfo(
 					sp.GetData().get(0),
 					sp.GetData().get(1),
-					sp.GetData().get(2)
+					sp.GetData().get(2),
+					sp.GetData().get(3),
+					sp.GetData().get(4)
 					);
 			
-			bcc.handleFindAccountHolderByEmailResult(info);
+			bcc.handleFindAccountHolderResult(info);
 		}
 		else
 		{
 			//return an account holder info with no information
-			bcc.handleFindAccountHolderByEmailResult(new AccountHolderInfo());
+			bcc.handleFindAccountHolderResult(new AccountHolderInfo());
 		}
 	}
 	

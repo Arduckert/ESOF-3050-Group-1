@@ -45,7 +45,7 @@ public interface IBankController
 	 * @return a data structure containing all the information about the
 	 * account holder
 	 */
-	public AccountHolderInfo findAccountHolder(String email);
+	public AccountHolderInfo findAccountHolder(InputType inputType, String parameter);
 	
 	/**
 	 * creates an account holder on the server
