@@ -22,6 +22,7 @@
       <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
       <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
       <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+      <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
   </rowConstraints>
    <children>
       <Label text="Create Mortgage Account" GridPane.columnSpan="2147483647">
@@ -49,23 +50,33 @@
             <Font size="18.0" />
          </font>
       </Label>
-      <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#CreateMortgageAccountButtonPressed" text="Create Account" GridPane.columnSpan="2147483647" GridPane.rowIndex="4">
+      <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#CreateMortgageAccountButtonPressed" text="Create Account" GridPane.columnSpan="2147483647" GridPane.rowIndex="5">
          <font>
             <Font size="18.0" />
          </font>
       </Button>
-      <TextArea fx:id="ErrorTextArea" prefHeight="20.0" GridPane.columnSpan="2147483647" GridPane.rowIndex="5" />
-      <TextField fx:id="MortgageValueTextField" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="2">
+      <TextArea fx:id="ErrorTextArea" prefHeight="20.0" GridPane.columnSpan="2147483647" GridPane.rowIndex="6" />
+      <TextField fx:id="MortgageValueTextField" GridPane.columnIndex="1" GridPane.rowIndex="2">
          <font>
             <Font size="18.0" />
          </font>
       </TextField>
-      <Label text="Interest Rate" GridPane.rowIndex="3">
+      <Label text="Interest Rate" GridPane.rowIndex="4">
          <font>
             <Font size="18.0" />
          </font>
       </Label>
-      <TextField fx:id="MortageInterestTextField" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="3">
+      <TextField fx:id="InterestTextField" GridPane.columnIndex="1" GridPane.rowIndex="4">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </TextField>
+      <Label text="Mortgage Length (Months)" GridPane.rowIndex="3">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <TextField fx:id="MonthsTextField" GridPane.columnIndex="1" GridPane.rowIndex="3">
          <font>
             <Font size="18.0" />
          </font>

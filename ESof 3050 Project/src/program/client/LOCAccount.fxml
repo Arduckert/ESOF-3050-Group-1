@@ -55,7 +55,7 @@
          </font>
       </Button>
       <TextArea fx:id="ErrorTextArea" prefHeight="20.0" GridPane.columnSpan="2147483647" GridPane.rowIndex="5" />
-      <TextField fx:id="CreditLimitTextField" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="2">
+      <TextField fx:id="CreditLimitTextField" GridPane.columnIndex="1" GridPane.rowIndex="2">
          <font>
             <Font size="18.0" />
          </font>
@@ -65,7 +65,7 @@
             <Font size="18.0" />
          </font>
       </Label>
-      <TextField fx:id="LOCInterestTextField" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="3">
+      <TextField fx:id="InterestTextField" GridPane.columnIndex="1" GridPane.rowIndex="3">
          <font>
             <Font size="18.0" />
          </font>

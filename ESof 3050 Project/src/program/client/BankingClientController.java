@@ -1003,15 +1003,26 @@ public class BankingClientController extends Application implements IBankingClie
     //GUI comp for mortgage account
 
     @FXML
-    private TextField MortageInterestTextField;
+    private TextField InterestTextField;
 
     @FXML
     private TextField MortgageValueTextField;
+    
+    @FXML
+    private TextField MonthsTextField;
 
     @FXML
     void CreateMortgageAccountButtonPressed(ActionEvent event) {
-    	createAccount(AccountType.MORTGAGE, cardNumber,empID);
-    	//TODO make mortgage account
+    	ae=event;
+    	ta=ErrorTextArea;
+    	try {
+    		Integer.valueOf(MonthsTextField.getText());
+    		Double.valueOf(MortgageValueTextField.getText());
+    		Double.valueOf(InterestTextField.getText());
+    		setupMortgageAccount(cardNumber, MonthsTextField.getText(), InterestTextField.getText(),
+        			MortgageValueTextField.getText(), empID);
+    	}
+    	catch(Exception e) {ErrorTextArea.setText("Invalid field(s)");}
     }
     
     //*************************************************
@@ -1028,6 +1039,14 @@ public class BankingClientController extends Application implements IBankingClie
     @FXML
     void CreateLOCButtonPressed(ActionEvent event) {
     	//TODO make loc
+    	ae=event;
+    	ta=ErrorTextArea;
+    	try {
+    		Double.valueOf(CreditLimitTextField.getText());
+    		Double.valueOf(InterestTextField.getText());
+    		setupLineOfCreditAccount(cardNumber, CreditLimitTextField.getText(), InterestTextField.getText(), empID);
+    	}
+    	catch(Exception e) {ErrorTextArea.setText("Invalid field(s)");}
     }
     
     //************************************************
@@ -1941,26 +1960,87 @@ public class BankingClientController extends Application implements IBankingClie
 
 	@Override
 	public void setupMortgageAccount(String accountNumber, String mortgageLength, String interestRate,
-			String principleAmount) {
-		// TODO Auto-generated method stub
+			String principleAmount, String TellerID){
+		try
+		{
+			bc.setupMortgageAccount(accountNumber, mortgageLength, interestRate, principleAmount, TellerID);
+		}
+		catch (IOException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 	}
 
 	@Override
 	public void handleMortgageAccountSetupResult(boolean isSuccessful) {
 		// TODO Auto-generated method stub
+		if(isSuccessful) {
+			Platform.runLater(new Runnable() {
+				@Override
+				public void run() {
+					try {
+						switchToCreateAccountConfirmationScreen(ae);
+					}
+					catch(Exception e) {e.printStackTrace();}
+				}
+			});
+		}
+		else {
+			Platform.runLater(new Runnable() {
+				@Override
+				public void run() {
+					try {
+						ta.setText("Account creation failed");
+					}
+					catch(Exception e) {e.printStackTrace();}
+				}
+			});
+		}
 		
 	}
 
 	@Override
-	public void setupLineOfCreditAccount(String accountNumber, String creditLimit, String interestRate) {
+	public void setupLineOfCreditAccount(String accountNumber, String creditLimit, String interestRate, String TellerID) {
 		// TODO Auto-generated method stub
+		try
+		{
+			bc.setupLineOfCreditAccount(accountNumber, creditLimit, interestRate, TellerID);
+		}
+		catch (IOException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 	}
 
 	@Override
 	public void handleLineOfCreditSetupResult(boolean isSuccessful) {
 		// TODO Auto-generated method stub
+		if(isSuccessful) {
+			Platform.runLater(new Runnable() {
+				@Override
+				public void run() {
+					try {
+						switchToCreateAccountConfirmationScreen(ae);
+					}
+					catch(Exception e) {e.printStackTrace();}
+				}
+			});
+		}
+		else {
+			Platform.runLater(new Runnable() {
+				@Override
+				public void run() {
+					try {
+						ta.setText("Account creation failed");
+					}
+					catch(Exception e) {e.printStackTrace();}
+				}
+			});
+		}
 		
 	}
 
