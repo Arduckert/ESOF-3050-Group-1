@@ -49,6 +49,8 @@ public class BankingClientController extends Application implements IBankingClie
 	private static TextArea ta;
 	private static ListView<AccountHolderInfo>ahilv;
 	private static ListView<AccountInfo>ailv;
+	private static ChoiceBox<String> rcb;
+	private static ChoiceBox<String> scb;
 	
 	//5 parameters for account holder + pin and card number
 	private static String firstName;
@@ -79,6 +81,8 @@ public class BankingClientController extends Application implements IBankingClie
 	private static String deleteString;
 	
 	private static ObservableList<AccountInfo> accountList=FXCollections.observableArrayList();
+	private static ObservableList<String> receivingAccountList=FXCollections.observableArrayList();
+	private static ObservableList<String> sendingAccountList=FXCollections.observableArrayList();
 	
 	
 	
@@ -220,6 +224,8 @@ public class BankingClientController extends Application implements IBankingClie
 	}
 	
 	public void switchToAccountHolderMainMenu(ActionEvent event) throws Exception{
+		accountList.removeAll(accountList);
+		getAccounts(cardNumber);
 		changeScene(event,"AccountHolderMainMenu.fxml");
 	}
 	
@@ -1086,7 +1092,14 @@ public class BankingClientController extends Application implements IBankingClie
     			}});
     	}
     		
-    	
+    	if(SendingAccountChoiceBox!=null) {
+    		SendingAccountChoiceBox.setItems(sendingAccountList);
+    		scb=SendingAccountChoiceBox;
+    	}
+    	if(ReceivingAccountChoiceBox!=null) {
+    		ReceivingAccountChoiceBox.setItems(receivingAccountList);
+    		rcb=SendingAccountChoiceBox;
+    	}
     }
     
     //Start function
@@ -1748,8 +1761,17 @@ public class BankingClientController extends Application implements IBankingClie
 			//add to account list
 			for(int i=0; i<accountInfo.size();i++) {
 				accountList.add(accountInfo.get(i));
+				receivingAccountList.add(accountInfo.get(i).accountNumber);
 				if(ailv!=null)
 					ailv.getItems().add(accountInfo.get(i));
+				if(rcb!=null)
+					rcb.getItems().add(accountInfo.get(i).accountNumber);
+				if(accountInfo.get(i).accountType!=AccountType.LINE_OF_CREDIT && accountInfo.get(i).accountType!=AccountType.MORTGAGE) {
+					sendingAccountList.add(accountInfo.get(i).accountNumber);
+					if(scb!=null)
+						scb.getItems().add(accountInfo.get(i).accountNumber);
+				}
+				
 			}
 		}
 		else
