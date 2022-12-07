@@ -35,8 +35,8 @@ public class BankingServer extends AbstractServer
 			case TEST:
 				ProcessTestMessage(cp, client);
 				break;
-			case FIND_ACCOUNTHOLDER_BY_EMAIL:
-				handleFindAccountHolderByEmailRequest(cp, client);
+			case FIND_ACCOUNTHOLDER:
+				handleFindAccountHolderRequest(cp, client);
 				break;
 			case CREATE_ACCOUNTHOLDER:
 				handleAccountHolderCreationRequest(cp, client);
@@ -253,10 +253,10 @@ public class BankingServer extends AbstractServer
 	 * @param cp
 	 * @param client
 	 */
-	private void handleFindAccountHolderByEmailRequest(ClientProtocol cp, ConnectionToClient client)
+	private void handleFindAccountHolderRequest(ClientProtocol cp, ConnectionToClient client)
 	{
 		//sends a find account holder request to the bank controller
-		AccountHolderInfo info = bc.findAccountHolder(cp.GetParameters().get(0));
+		AccountHolderInfo info = bc.findAccountHolder(InputType.valueOf(cp.GetParameters().get(0)), cp.GetParameters().get(1));
 		
 		MessageStatus status = info.getHasInfo() ? MessageStatus.SUCCESS : MessageStatus.FAIL;
 		ServerProtocol sp = new ServerProtocol(status, Datatype.ACCOUNT_HOLDER_FIND_RESULT);
@@ -264,7 +264,7 @@ public class BankingServer extends AbstractServer
 		try
 		{
 			//adds the account holder information to the server protocol
-			sp.AddData(info.email, info.cardNumber, info.pin);
+			sp.AddData(info.email, info.cardNumber, info.pin, info.personName, info.sin);
 			
 			try
 			{
@@ -869,7 +869,7 @@ public class BankingServer extends AbstractServer
 		if (client.getInfo("LoginType") == LoginType.ACCOUNTHOLDER)
 		{
 			//success if the the bill was managed, fail if not
-			MessageStatus status = bc.manageBill(BillAction.valueOf(cp.GetParameters().get(0)), cp.GetParameters().get(1)) ? MessageStatus.SUCCESS : MessageStatus.FAIL;	
+			MessageStatus status = bc.manageBill(BillAction.valueOf(cp.GetParameters().get(0)), cp.GetParameters().get(1), cp.GetParameters().get(2), cp.GetParameters().get(3)) ? MessageStatus.SUCCESS : MessageStatus.FAIL;	
 			sp = new ServerProtocol(status, Datatype.BILL_MANAGE_RESULT);
 		}
 		else

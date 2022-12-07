@@ -51,7 +51,7 @@ public class BankingClient extends AbstractClient
 				processTellerLoginResult(sp);
 				break;
 			case ACCOUNT_HOLDER_FIND_RESULT:
-				processFindAccountHolderByEmailRequest(sp);
+				processFindAccountHolderRequest(sp);
 				break;
 			case ACCOUNT_HOLDER_CREATION_RESULT:
 				processAccountHolderResult(sp);
@@ -234,9 +234,9 @@ public class BankingClient extends AbstractClient
 	 * @param email the email address of the account holder you want to find
 	 * @throws IOException
 	 */
-	public void findAccountHolderByEmail(String email) throws IOException
+	public void findAccountHolder(InputType inputType, String parameter) throws IOException
 	{
-		ClientProtocol cp = new ClientProtocol(ServerAction.FIND_ACCOUNTHOLDER_BY_EMAIL, email);
+		ClientProtocol cp = new ClientProtocol(ServerAction.FIND_ACCOUNTHOLDER, inputType.toString(), parameter);
 		sendToServer(cp);
 	}
 	
@@ -245,7 +245,7 @@ public class BankingClient extends AbstractClient
 	 * by email address request
 	 * @param sp
 	 */
-	private void processFindAccountHolderByEmailRequest(ServerProtocol sp)
+	private void processFindAccountHolderRequest(ServerProtocol sp)
 	{
 		//sends information about the account holder if found
 		if (sp.getMessageStatus() == MessageStatus.SUCCESS)
@@ -256,15 +256,17 @@ public class BankingClient extends AbstractClient
 			AccountHolderInfo info = new AccountHolderInfo(
 					sp.GetData().get(0),
 					sp.GetData().get(1),
-					sp.GetData().get(2)
+					sp.GetData().get(2),
+					sp.GetData().get(3),
+					sp.GetData().get(4)
 					);
 			
-			bcc.handleFindAccountHolderByEmailResult(info);
+			bcc.handleFindAccountHolderResult(info);
 		}
 		else
 		{
 			//return an account holder info with no information
-			bcc.handleFindAccountHolderByEmailResult(new AccountHolderInfo());
+			bcc.handleFindAccountHolderResult(new AccountHolderInfo());
 		}
 	}
 	
@@ -534,11 +536,11 @@ public class BankingClient extends AbstractClient
 		//creation was successful
 		if (sp.getMessageStatus() == MessageStatus.SUCCESS)
 		{
-			bcc.handleAccountCreation(true);
+			bcc.handleAccountCreation(sp.GetData().get(0));
 		}
 		else
 		{
-			bcc.handleAccountCreation(false);
+			bcc.handleAccountCreation(null);
 		}
 	}
 	
@@ -721,9 +723,9 @@ public class BankingClient extends AbstractClient
 	 * @param billAction the action to perform (create a new bill or delete an existing bill)
 	 * @param locAccountNumber the account number of the line of credit account
 	 */
-	public void manageBill(BillAction billAction, String locAccountNumber) throws IOException
+	public void manageBill(BillAction billAction, String locAccountNumber, String amount, String receiver) throws IOException
 	{
-		ClientProtocol cp = new ClientProtocol(ServerAction.MANAGE_BILL, billAction.toString(), locAccountNumber);
+		ClientProtocol cp = new ClientProtocol(ServerAction.MANAGE_BILL, billAction.toString(), locAccountNumber, amount, receiver);
 		sendToServer(cp);
 	}
 	

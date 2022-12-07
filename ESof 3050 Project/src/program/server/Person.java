@@ -42,6 +42,9 @@ public class Person {
 		this.roles.add(x);
 		}
 	}
+	public void removeRole(personRole x) {
+		this.roles.remove(x);
+	}
 	
 	//Getters
 	public String getFName() {

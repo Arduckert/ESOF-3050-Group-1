@@ -121,9 +121,9 @@ public class ServerProtocol implements Serializable
 		case LOGIN_RESULT_TELLER:
 			return 0;
 		case ACCOUNT_HOLDER_FIND_RESULT:
-			return 3;
+			return 5;
 		case ACCOUNT_HOLDER_CREATION_RESULT:
-			return 3;
+			return 5;
 		case ACCOUNT_HOLDER_DELETION_RESULT:
 			return 0;
 		case PERSON_CREATION_RESULT:
@@ -137,13 +137,13 @@ public class ServerProtocol implements Serializable
 		case ACCOUNTHOLDER_ROLE_ASSOCIATION_RESULT:
 			return 0;
 		case ACCOUNT_CREATION_RESULT:
-			return 0;
+			return 1;
 		case ACCOUNT_DELETION_RESULT:
 			return 0;
 		case MORTGAGE_ACCOUNT_SETUP_RESULT:
-			return 0;
+			return 1;
 		case LOC_ACCOUNT_SETUP_RESULT:
-			return 0;
+			return 1;
 		default:
 			return 0;
 		}

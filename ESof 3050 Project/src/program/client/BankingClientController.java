@@ -1774,11 +1774,11 @@ public class BankingClientController extends Application implements IBankingClie
 	 * if not
 	 */
 	@Override
-	public void handleAccountCreation(boolean isSuccessful)
+	public void handleAccountCreation(String accountNumber)
 	{
 		// TODO add handle code
 		
-		if (isSuccessful)
+		if (accountNumber != null)
 		{
 			//account created
 		}
@@ -2045,7 +2045,7 @@ public class BankingClientController extends Application implements IBankingClie
 	}
 
 	@Override
-	public void manageBill(BillAction billAction, String locAccountNumber) {
+	public void manageBill(BillAction billAction, String locAccountNumber, String amount, String receiver) {
 		// TODO Auto-generated method stub
 		
 	}

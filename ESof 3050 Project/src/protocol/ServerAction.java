@@ -32,7 +32,7 @@ public enum ServerAction
 	 * account number, email, and person's name if the account is found. The server
 	 * returns FAIL with no information if the account was not found.
 	 */
-	FIND_ACCOUNTHOLDER_BY_EMAIL,
+	FIND_ACCOUNTHOLDER,
 	
 	/*
 	 * The tells the server to transfer money from one account to another. This takes the transfer type,
