@@ -123,7 +123,7 @@ public interface IBankController
 	 * @param cardNumber
 	 * @return true if the account was deleted successfully, false if not
 	 */
-	public boolean deleteAccount(AccountType accountType, String cardNumber);
+	public boolean deleteAccount(String cardNumber);
 	
 	/**
 	 * Returns information about a specific account from a specific account holder

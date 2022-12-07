@@ -601,7 +601,7 @@ public class BankingServer extends AbstractServer
 		if (client.getInfo("LoginType") == LoginType.TELLER)
 		{
 			//success if the the account was deleted, false if not
-			MessageStatus status = bc.deleteAccount(AccountType.valueOf(cp.GetParameters().get(0)), cp.GetParameters().get(1)) ? MessageStatus.SUCCESS : MessageStatus.FAIL;	
+			MessageStatus status = bc.deleteAccount(cp.GetParameters().get(0)) ? MessageStatus.SUCCESS : MessageStatus.FAIL;	
 			ServerProtocol sp = new ServerProtocol(status, Datatype.ACCOUNT_DELETION_RESULT);
 			
 			try

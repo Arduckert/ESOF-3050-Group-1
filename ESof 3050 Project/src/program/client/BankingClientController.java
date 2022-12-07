@@ -1676,11 +1676,11 @@ public class BankingClientController extends Application implements IBankingClie
 	 * @param cardNumber the account holder's card number
 	 */
 	@Override
-	public void deleteAccount(AccountType accountType, String cardNumber)
+	public void deleteAccount(String accountNumber)
 	{
 		try
 		{
-			bc.deleteAccount(accountType, cardNumber);
+			bc.deleteAccount(accountNumber);
 		}
 		catch (IOException e)
 		{

@@ -241,7 +241,7 @@ public interface IBankingClientController
 	 * @param accountType account type
 	 * @param cardNumber the account holder's card number
 	 */
-	public void deleteAccount(AccountType accountType, String cardNumber);
+	public void deleteAccount(String cardNumber);
 	
 	/**
 	 * Handles the result of an account being deleted

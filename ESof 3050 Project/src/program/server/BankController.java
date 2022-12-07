@@ -5,6 +5,8 @@ import java.lang.Math;
 import src.program.structs.AccountHolderInfo;
 import src.program.structs.AccountInfo;
 import src.program.structs.AccountType;
+import src.program.structs.RecordInfo;
+import src.program.structs.TransactionInfo;
 import src.program.structs.TransferType;
 
 // *** TODO: IMPLEMENT INTERFACE METHODS (REFER TO BLUE MARKS ON THE SCROLL BAR) *** //
@@ -16,6 +18,7 @@ public class BankController implements IBankController
 	List<Account> accountList = new ArrayList<Account>();
 	List<AccountHolder> accountHolderList = new ArrayList<AccountHolder>();
 	List<Teller> tellerList = new ArrayList<Teller>();
+	double generalInterestRate = 0.01;
 	
 	public BankController() {
 		
@@ -313,6 +316,27 @@ public class BankController implements IBankController
 	@Override
 	public boolean createAccount(AccountType accountType, String cardNumber)//savings or chequing
 	{
+		int cardNum = stringToInt(cardNumber);
+		AccountHolder a = searchAccountHolder(cardNum);
+		int accountNum = generateAccountNumber();
+		if(a == null) {
+			return false; //could not find account holder with that card number
+		}
+		switch(accountType) {
+		case CHEQUING:
+			ChequingAccount cAccount = new ChequingAccount(accountNum,a);
+			accountList.add(cAccount);
+			return true;
+		
+		case SAVINGS:
+			SavingsAccount sAccount = new SavingsAccount(accountNum,a,generalInterestRate);
+			accountList.add(sAccount);
+			return true;
+			
+		default:
+			break;
+		}
+		
 		return false;
 	}
 	
@@ -323,24 +347,22 @@ public class BankController implements IBankController
 	 * @return true if the account was deleted successfully, false if not
 	 */
 	@Override
-	public boolean deleteAccount(AccountType accountType, String cardNumber)
+	public boolean deleteAccount(String accountNumber)
 	{
-		//TODO: call a create method that removes an account to an account holder
-		boolean accountDeleted = false;
-		return accountDeleted;
+		int num = stringToInt(accountNumber);
+		Account account = searchAccount(num);
+		
+		if(account.getBalance() > 0) {
+			return false; //money is in account
+		}
+		if(account != null) { //if account holder exists
+			accountList.remove(account);
+			return true;
+		}
+		return false;
 	}
 	
-	/**
-	 * Returns information about a specific account from a specific account holder
-	 * @param accountType type of account (chequing, savings, etc.)
-	 * @param cardNumber the account holder's card number
-	 * @return
-	 */
-	@Override
-	public AccountInfo getAccount(AccountType accountType, String cardNumber) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+
 	
 	/**
 	 * Completes a transfer of funds from one party to another.
@@ -413,6 +435,37 @@ public class BankController implements IBankController
 			sender.setBalance(newBalance);
 			return newBalance + "";
 		}
+		
+		return null;
+	}
+	
+	/**
+	 * Returns information about a specific account from a specific account holder
+	 * @param accountType type of account (chequing, savings, etc.)
+	 * @param cardNumber the account holder's card number
+	 * @return
+	 */
+	@Override
+	public ArrayList<AccountInfo> getAccounts(String cardNumber) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	@Override
+	public ArrayList<TransactionInfo> getTransactionHistory(String cardNumber, AccountType accountType) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ArrayList<RecordInfo> getAccountRecords() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ArrayList<RecordInfo> getCustomerRecords() {
+		// TODO Auto-generated method stub
 		return null;
 	}
 	
@@ -440,5 +493,7 @@ public class BankController implements IBankController
 		}
 		System.out.println("testing the server...");
 	}
+
+	
 }
 
