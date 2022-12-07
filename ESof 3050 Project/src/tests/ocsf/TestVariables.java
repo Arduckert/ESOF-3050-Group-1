@@ -73,19 +73,16 @@ public final class TestVariables
 	public static final String accountCardNumber = "32547698";
 	
 	//GET ACCOUNT
-	public static final AccountType getAccountType = AccountType.SAVINGS;
-	public static final String availableGetAccountCardNumber = "23485843";
-	public static final String unavailableGetAccountCardNumber = "234432843";
-	public static final String getAccountNumber = "43328822";
-	public static final String getAccountBalance = "145.32";
+	public static final AccountInfo account1 = new AccountInfo(AccountType.CHEQUING, "1", "2");
+	public static final AccountInfo account2 = new AccountInfo(AccountType.SAVINGS, "3", "4");
+	public static final AccountInfo account3 = new AccountInfo(AccountType.MORTGAGE, "5", "6");
 	
 	//TRANSFER
-	public static final AccountType transferAccountType = AccountType.SAVINGS;
 	public static final TransferType transferType = TransferType.DEPOSIT;
-	public static final String changedAmount = "19.23";
-	public static final String unchangedAmount = "23.42";
-	public static final String transferRecipient = "tester123@example.com";
-	public static final String senderAccountNumber = "2134325";
+	public static final String sendingAccountNum = "23456256";
+	public static final String availableReceivingAccountNum = "65643832";
+	public static final String unavailableReceivingAccountNum = "65623222";
+	public static final String transferAmount = "50.00";
 	
 	//GET TRANSACTIONS
 	public static final TransactionInfo transaction1 = new TransactionInfo("1", "2", "3", "4");

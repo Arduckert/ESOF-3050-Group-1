@@ -12,8 +12,6 @@ import src.program.structs.TransferType;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import src.ocsf.server.ConnectionToClient;
-
 public class ServerTestDriver implements IBankController
 {
 	private static final int port = 9950;
@@ -211,17 +209,19 @@ public class ServerTestDriver implements IBankController
 	 * @return
 	 */
 	@Override
-	public AccountInfo getAccount(AccountType accountType, String cardNumber)
+	public ArrayList<AccountInfo> getAccounts(String cardNumber)
 	{
-		if (cardNumber.equals(TestVariables.availableGetAccountCardNumber))
+		if (!(cardNumber == TestVariables.availableAccountHolderNumber))
 		{
-			AccountInfo info = new AccountInfo(accountType, TestVariables.getAccountBalance, TestVariables.getAccountNumber);
-			return info;
+			System.err.println("GET ACCOUNTS TEST FAILED: ACCOUNT NUMBER DOESN'T MATCH");
+			assert false;
 		}
-		else
-		{
-			return new AccountInfo();
-		}
+		
+		ArrayList<AccountInfo> accounts = new ArrayList<AccountInfo>();
+		accounts.add(TestVariables.account1);
+		accounts.add(TestVariables.account2);
+		accounts.add(TestVariables.account3);
+		return accounts;
 	}
 	
 	/**
@@ -233,22 +233,22 @@ public class ServerTestDriver implements IBankController
 	 * @param amount the amount of funds to transfer
 	 * @return the sender's new balance after the transfer is complete
 	 */
-	public String transfer(AccountType accountType, TransferType transferType, String cardNumber, String recipientEmail, String amount)
+	@Override
+	public String transfer(TransferType transferType, String sendingAccountNum, String recipientAccountNum, String amount)
 	{
 		//tests data integrity
-		if (accountType == TestVariables.transferAccountType
-				&& transferType == TestVariables.transferType
-				&& cardNumber.equals(TestVariables.availableAccountHolderNumber)
-				&& recipientEmail.equals(TestVariables.transferRecipient)
-				&& amount.equals(TestVariables.unchangedAmount))
+		if (transferType == TestVariables.transferType
+				&& sendingAccountNum.equals(TestVariables.sendingAccountNum)
+				&& recipientAccountNum.equals(TestVariables.availableReceivingAccountNum)
+				&& amount.equals(TestVariables.transferAmount))
 		{
 			//returns a different balance from the input one if the data is equal
-			return TestVariables.changedAmount;
+			return TestVariables.transferAmount;
 		}
 		else
 		{
 			//returns the same balance 
-			return TestVariables.unchangedAmount;
+			return null;
 		}
 	}
 	
