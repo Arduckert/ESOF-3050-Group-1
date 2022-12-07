@@ -34,8 +34,7 @@ public enum ServerAction
 	 */
 	FIND_ACCOUNTHOLDER_BY_EMAIL,
 	
-	/**
-	 * TODO
+	/*
 	 * The tells the server to transfer money from one account to another. This takes the transfer type,
 	 * the recipient's email address, the account type (cheqing, savings, etc.), and the amount to transfer.
 	 * The server returns SUCCESS and the new balance if the transfer goes through. 
@@ -89,7 +88,6 @@ public enum ServerAction
 	DELETE_ACCOUNT,
 	
 	/**
-	 * TODO
 	 * This tells a server to get information from an existing account on the server. This takes an
 	 * account type (chequing, savings, mortgage, or line of credit). The server will return SUCCESS
 	 * and the account information, fail and nothing if not.
@@ -125,21 +123,21 @@ public enum ServerAction
 	ADD_ACCOUNTHOLDER_ROLE_TO_PERSON,
 	
 	/**
-	 * TODO This tells the server to return the transaction history of a specific account. This takes
+	 * This tells the server to return the transaction history of a specific account. This takes
 	 * an account type (cheqing, savings, etc.). The server will return SUCCESS and a list of transactions
 	 * back to the client, fail and nothing if not.
 	 */
 	GET_ACCOUNT_TRANSACTIONS,
 	
 	/**
-	 * TODO This tells the server to return the account records on the server. This takes no information.
+	 * This tells the server to return the account records on the server. This takes no information.
 	 * The server will return SUCCESS and a list of account records back to the client, fail and nothing
 	 * if not.
 	 */
 	GET_ACCOUNT_RECORDS,
 	
 	/**
-	 * TODO This tells the server to return the customer records on the server. This takes no information.
+	 * This tells the server to return the customer records on the server. This takes no information.
 	 * The server will return SUCCESS and a list of customer records back to the client, fail and nothing
 	 * if not.
 	 */
