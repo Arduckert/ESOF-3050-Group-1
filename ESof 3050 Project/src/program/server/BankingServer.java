@@ -65,7 +65,7 @@ public class BankingServer extends AbstractServer
 			case DELETE_ACCOUNT:
 				handleAccountDeletionRequest(cp, client);
 				break;
-			case GET_ACCOUNT:
+			case GET_ACCOUNTS:
 				handleAccountGetRequest(cp, client);
 				break;
 			case TRANSFER:
@@ -637,29 +637,23 @@ public class BankingServer extends AbstractServer
 	 */
 	private void handleAccountGetRequest(ClientProtocol cp, ConnectionToClient client)
 	{
-		//gets the account information from the bank controller
-		AccountInfo info = bc.getAccount(AccountType.valueOf(cp.GetParameters().get(0)), cp.GetParameters().get(1));
-		ServerProtocol sp;	
-		
-		//sends success if the accountinfo instance has information, fail if not
-		if (info.getHasInfo())
-		{
-			sp = new ServerProtocol(MessageStatus.SUCCESS, Datatype.ACCOUNT);
+		//gets all the transactions from the banking server
+		ArrayList<AccountInfo> info = bc.getAccounts(cp.GetParameters().get(0));
 			
+		ServerProtocol sp = new ServerProtocol(MessageStatus.SUCCESS, Datatype.ACCOUNT);
+			
+		//adds each parameter of each account one by one
+		for (int i = 0; i < info.size(); i++)
+		{
 			try
 			{
-				//adds data to the server protocol
-				sp.AddData(info.accountType.toString(), info.balance, info.accountNumber);
+				sp.AddData(info.get(i).accountType.toString(), info.get(i).balance, info.get(i).accountNumber);
 			}
 			catch (ParameterException e)
 			{
+				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-		}
-		else
-		{
-			//fail message with no data
-			sp = new ServerProtocol(MessageStatus.FAIL, Datatype.ACCOUNT);
 		}
 		
 		try

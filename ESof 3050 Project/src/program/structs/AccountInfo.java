@@ -24,11 +24,6 @@ public class AccountInfo
 	public String accountNumber;
 	
 	/**
-	 * boolean that determines if the instance is populated with information
-	 */
-	private boolean hasInfo;
-	
-	/**
 	 * constructor that takes arguments for each instance variable
 	 * @param _accountType
 	 * @param _balance
@@ -40,7 +35,6 @@ public class AccountInfo
 		accountType = _accountType;
 		balance = _balance;
 		accountNumber = _accountNumber;
-		hasInfo = true;
 	}
 	
 	/**
@@ -51,14 +45,5 @@ public class AccountInfo
 		accountType = null;
 		balance = null;
 		accountNumber = null;
-		hasInfo = false;
-	}
-	
-	/**
-	 * @return true if the instance has information, false if not
-	 */
-	public boolean getHasInfo()
-	{
-		return hasInfo;
 	}
 }
