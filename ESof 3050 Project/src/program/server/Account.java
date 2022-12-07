@@ -15,6 +15,7 @@ public class Account {
 		this.accountNum = accountNum;
 		this.dateOpened = LocalDate.now();
 		this.accountHolder = holder;
+		accountHolder.accountList.add(this);
 		//add to list in banking controller or do it in createAccount method
 	}
 	

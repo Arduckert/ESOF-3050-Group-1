@@ -470,8 +470,10 @@ public class BankController implements IBankController
 	public ArrayList<AccountInfo> getAccounts(String cardNumber) {
 		int num = stringToInt(cardNumber);
 		AccountHolder accountHolder = searchAccountHolder(num);
-		ArrayList<AccountInfo> infoList = null;
+		ArrayList<AccountInfo> infoList = new ArrayList<AccountInfo>();
 		AccountType type = null;
+		
+		System.out.println(accountHolder.getAccounts().size());
 		
 		if(accountHolder == null) {
 			return null; //account holder does not exists
@@ -588,6 +590,7 @@ public class BankController implements IBankController
 		b.addTeller(testTeller);
 		b.createAccount(AccountType.CHEQUING, Integer.toString(12345));
         b.createAccount(AccountType.SAVINGS, Integer.toString(12345));
+        System.out.println(b.getAccounts("12345"));
 		
 		int port = 9950;
 		BankingServer bs = new BankingServer(port, b);

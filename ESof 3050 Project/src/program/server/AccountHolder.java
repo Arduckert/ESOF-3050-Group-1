@@ -5,7 +5,7 @@ public class AccountHolder extends personRole{
 	private int pin;
 	private int cardNum;
 	private String email;
-	List<Account> accountList = new ArrayList<Account>();
+	public ArrayList<Account> accountList = new ArrayList<Account>();
 	LoginAttempt loginAttempt;
 	
 //Constructor
@@ -36,7 +36,7 @@ public class AccountHolder extends personRole{
 		return this.email;
 	}
 	
-	public List<Account> getAccounts(){
+	public ArrayList<Account> getAccounts(){
 		return this.accountList;
 	}
 	
