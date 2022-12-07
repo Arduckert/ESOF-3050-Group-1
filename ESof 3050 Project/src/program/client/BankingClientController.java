@@ -47,7 +47,8 @@ public class BankingClientController extends Application implements IBankingClie
 	//methods called by BankingClient can't access GUI components without these
 	private static ActionEvent ae;
 	private static TextArea ta;
-	private static ListView<AccountHolderInfo> lv;
+	private static ListView<AccountHolderInfo>ahilv;
+	private static ListView<AccountInfo>ailv;
 	
 	//5 parameters for account holder + pin and card number
 	private static String firstName;
@@ -76,6 +77,8 @@ public class BankingClientController extends Application implements IBankingClie
 	private static String accountType;
 	
 	private static String deleteString;
+	
+	private static ObservableList<AccountInfo> accountList=FXCollections.observableArrayList();
 	
 	
 	
@@ -580,6 +583,7 @@ public class BankingClientController extends Application implements IBankingClie
 		else {
 			ae=event;
 			ta=AccountHolderLoginErrorTextArea;
+			cardNumber=AccountHolderCardNumberTextField.getText();
 			sendAccountHolderLoginRequest(AccountHolderCardNumberTextField.getText(), AccountHolderPinPasswordField.getText());
 		}
 	}
@@ -740,7 +744,7 @@ public class BankingClientController extends Application implements IBankingClie
     //GUI components for account viewer
     
     @FXML
-    private ListView<?> AccountNumberListView;
+    private ListView<AccountInfo> AccountNumberListView;
 
     @FXML
     private TextField AccountsBalanceTextField;
@@ -1001,7 +1005,7 @@ public class BankingClientController extends Application implements IBankingClie
     	
     	if(CardNumberListView!=null) {
     		CardNumberListView.getItems().addAll(searchList);
-    		lv=CardNumberListView;
+    		ahilv=CardNumberListView;
     		CardNumberListView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<AccountHolderInfo>() {
     			@Override
     			public void changed(ObservableValue<? extends AccountHolderInfo> ov, AccountHolderInfo oldValue, AccountHolderInfo newValue) {
@@ -1018,8 +1022,8 @@ public class BankingClientController extends Application implements IBankingClie
     	//*************************************************
     	//Initialize edit menu and screens
     	
-    	if(EditCardNumberTextField!=null&&ahi!=null)
-    		EditCardNumberTextField.setText(ahi.cardNumber);
+    	if(EditCardNumberTextField!=null)
+    		EditCardNumberTextField.setText(cardNumber);
     	
     	//TODO get new account number
     	//if(AccountNumberConfirmationTextField!=null)
@@ -1030,6 +1034,22 @@ public class BankingClientController extends Application implements IBankingClie
     	
     	//if(DeleteAccountChoiceBox!=null)
     		//TODO add accounts
+    	
+    	//***************************************************
+    	
+    	if(AccountNumberListView!=null) {
+    		AccountNumberListView.getItems().addAll(accountList);
+    		ailv=AccountNumberListView;
+    		AccountNumberListView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<AccountInfo>() {
+    			@Override
+    			public void changed(ObservableValue<? extends AccountInfo> ov, AccountInfo oldValue, AccountInfo newValue) {
+    				AccountsBalanceTextField.setText(newValue.balance);
+    				AccountsTypeTextField.setText(newValue.getAccountTypeString());
+    				    //TODO add other fields
+    				    //We need first name, last name and sin to be passed from server
+    			}});
+    	}
+    		
     	
     }
     
@@ -1286,8 +1306,8 @@ public class BankingClientController extends Application implements IBankingClie
 		{
 			//show account holder information
 			searchList.add(ahi);
-			if(lv!=null)
-				lv.getItems().add(ahi);
+			if(ahilv!=null)
+				ahilv.getItems().add(ahi);
 		}
 		else
 		{
@@ -1689,6 +1709,9 @@ public class BankingClientController extends Application implements IBankingClie
 		if (accountInfo.getHasInfo())
 		{
 			//populate info
+			accountList.add(accountInfo);
+			if(ailv!=null)
+				ailv.getItems().add(accountInfo);
 		}
 		else
 		{
