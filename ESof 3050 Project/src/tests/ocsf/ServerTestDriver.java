@@ -211,7 +211,7 @@ public class ServerTestDriver implements IBankController
 	@Override
 	public ArrayList<AccountInfo> getAccounts(String cardNumber)
 	{
-		if (!(cardNumber == TestVariables.availableAccountHolderNumber))
+		if (!(cardNumber.equals(TestVariables.availableAccountHolderNumber)))
 		{
 			System.err.println("GET ACCOUNTS TEST FAILED: ACCOUNT NUMBER DOESN'T MATCH");
 			assert false;
