@@ -140,6 +140,10 @@ public class ServerProtocol implements Serializable
 			return 0;
 		case ACCOUNT_DELETION_RESULT:
 			return 0;
+		case MORTGAGE_ACCOUNT_SETUP_RESULT:
+			return 0;
+		case LOC_ACCOUNT_SETUP_RESULT:
+			return 0;
 		default:
 			return 0;
 		}

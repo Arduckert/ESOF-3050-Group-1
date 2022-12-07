@@ -312,4 +312,34 @@ public class ServerTestDriver implements IBankController
 	{
 		return billAction == TestVariables.billAction && locAccountNumber.equals(TestVariables.availableLOCAccountNumber);
 	}
+	
+	/**
+	 * Tests data integrity
+	 * @param accountNumber the account number of the mortgage account
+	 * @param mortgageLength the length of the mortgage in years
+	 * @param interestRate the interest rate
+	 * @param principleAmount the principle of the mortgage
+	 * @return true if the information is populated, false if not
+	 */
+	public boolean setupMortgageAccount(String accountNumber, String mortgageLength, String interestRate, String principleAmount)
+	{
+		return accountNumber.equals(TestVariables.availableMortgageAccountNumber)
+				&& mortgageLength.equals(TestVariables.mortgageLength)
+				&& interestRate.equals(TestVariables.interestRate)
+				&& principleAmount.equals(TestVariables.principleAmount);
+	}
+	
+	/**
+	 * Tests data integrity
+	 * @param accountNumber the account number of the line of credit account
+	 * @param creditLimit the credit limit of the account
+	 * @param interestRate the interest rate
+	 * @return true if the information is populated, false if not
+	 */
+	public boolean setupLineOfCreditAccount(String accountNumber, String creditLimit, String interestRate)
+	{
+		return accountNumber.equals(TestVariables.availableLOCAccountNumber)
+				&& creditLimit.equals(TestVariables.locCreditLimit)
+				&& interestRate.equals(TestVariables.locInterestRate);
+	}
 }

@@ -174,4 +174,23 @@ public interface IBankController
 	 * customer record
 	 */
 	public ArrayList<RecordInfo> getCustomerRecords();
+	
+	/**
+	 * Setups a mortgage account given a set of information
+	 * @param accountNumber the account number of the mortgage account
+	 * @param mortgageLength the length of the mortgage in years
+	 * @param interestRate the interest rate
+	 * @param principleAmount the principle of the mortgage
+	 * @return true if the information is populated, false if not
+	 */
+	public boolean setupMortgageAccount(String accountNumber, String mortgageLength, String interestRate, String principleAmount);
+	
+	/**
+	 * Setups a line of credit account given a set of information
+	 * @param accountNumber the account number of the line of credit account
+	 * @param creditLimit the credit limit of the account
+	 * @param interestRate the interest rate
+	 * @return true if the information is populated, false if not
+	 */
+	public boolean setupLineOfCreditAccount(String accountNumber, String creditLimit, String interestRate);
 }

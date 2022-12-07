@@ -2,7 +2,7 @@ package src.protocol;
 
 /**
  * Server Action
- * @author Written by Connor McNally on 11/08/2022 (Last Updated 11/29/2022)
+ * @author Written by Connor McNally on 11/08/2022 (Last Updated 12/07/2022)
  * 
  * @apiNote The Server Action enum contains the actions that the server can perform on
  * behalf on the client. For proper usage and what data to send, see proper usage for
@@ -42,7 +42,6 @@ public enum ServerAction
 	TRANSFER,
 	
 	/**
-	 * TODO
 	 * The tells the server to pay a bill. This takes the recipient, and the amount that needs to be paid,
 	 * and an account number. The server returns SUCCESS and the new balance if the payment goes through. 
 	 */
@@ -86,17 +85,15 @@ public enum ServerAction
 	GET_ACCOUNTS,
 	
 	/**
-	 * TODO
-	 * This tells a server to setup the information about a mortgage account. This takes a
-	 * mortgage length, an interest rate, and a principle amount. The server will return SUCCESS
+	 * This tells a server to setup the information about a mortgage account. This takes an account number,
+	 * a mortgage length, an interest rate, and a principle amount. The server will return SUCCESS
 	 * if the information was added successfully.
 	 */
 	SETUP_MORTGAGE_ACCOUNT,
 	
 	/**
-	 * TODO
-	 * This tells a server to setup the information about a line of credit account. This takes a
-	 * credit limit and an interest rate. The server will return SUCCESS
+	 * This tells a server to setup the information about a line of credit account. This takes an account number,
+	 * a credit limit and an interest rate. The server will return SUCCESS
 	 * if the information was added successfully.
 	 */
 	SETUP_LINE_OF_CREDIT_ACCOUNT,

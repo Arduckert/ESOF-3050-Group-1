@@ -103,4 +103,17 @@ public final class TestVariables
 	public static final BillAction billAction = BillAction.CREATE_BILL;
 	public static final String availableLOCAccountNumber = "23235333";
 	public static final String unavailableLOCAccountNumber = "42602331";
+	
+	//SETUP MORTGAGE ACCOUNT
+	public static final String availableMortgageAccountNumber = "12357643";
+	public static final String unavailableMortgageAccountNumber = "12357643";
+	public static final String mortgageLength = "20";
+	public static final String interestRate = "0.10";
+	public static final String principleAmount = "164130.10";
+	
+	//SETUP LINE OF CREDIT ACCOUNT
+	public static final String availableLOCSetupAccountNumber = "62643467";
+	public static final String unavailableLOCSetupAccountNumber = "35467532";
+	public static final String locCreditLimit = "1000.00";
+	public static final String locInterestRate = "0.12";
 }

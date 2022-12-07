@@ -272,9 +272,38 @@ public interface IBankingClientController
 	// SETUP MORTGAGE ACCOUNT //
 	////////////////////////////
 	
+	/**
+	 * Tells the server to setup a mortgage account given a set of information
+	 * @param accountNumber the account number of the mortgage account
+	 * @param mortgageLength the length of the mortgage in years
+	 * @param interestRate the interest rate
+	 * @param principleAmount the principle amount of the mortgage
+	 */
+	public void setupMortgageAccount(String accountNumber, String mortgageLength, String interestRate, String principleAmount);
+	
+	/**
+	 * handles the result of populating a mortgage account with information
+	 * @param isSuccessful true if the information is populated, false if not
+	 */
+	public void handleMortgageAccountSetupResult(boolean isSuccessful);
+	
 	//////////////////////////////////
 	// SETUP LINE OF CREDIT ACCOUNT //
 	//////////////////////////////////
+	
+	/**
+	 * Tells the server to setup a line of credit account given a set of information
+	 * @param accountNumber the account number of the line of credit account
+	 * @param creditLimit the credit limit of the account
+	 * @param interestRate the interest rate
+	 */
+	public void setupLineOfCreditAccount(String accountNumber, String creditLimit, String interestRate);
+	
+	/**
+	 * handles the result of populating a line of credit account with information
+	 * @param isSuccessful true if the information is populated, false if not
+	 */
+	public void handleLineOfCreditSetupResult(boolean isSuccessful);
 	
 	//////////////
 	// TRANSFER //

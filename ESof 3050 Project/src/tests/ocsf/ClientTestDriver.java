@@ -36,6 +36,8 @@ public class ClientTestDriver implements IBankingClientController
 	private static int accountDeletionTestCount = 0;
 	private static int transferTestCount = 0;
 	private static int manageBillTestCount = 0;
+	private static int mortgageSetupTestCount = 0;
+	private static int locSetupTestCount = 0;
 	
 	public ClientTestDriver()
 	{
@@ -134,6 +136,14 @@ public class ClientTestDriver implements IBankingClientController
 			//get account and customer records tests
 			getAccountRecords();
 			getCustomerRecords();
+			
+			//setup mortgage account tests
+			setupMortgageAccount(TestVariables.availableMortgageAccountNumber, TestVariables.mortgageLength, TestVariables.interestRate, TestVariables.principleAmount); //handler should return true
+			setupMortgageAccount(TestVariables.unavailableMortgageAccountNumber, TestVariables.mortgageLength, TestVariables.interestRate, TestVariables.principleAmount); //handler should return false
+			
+			//setup line of credit account tests
+			setupLineOfCreditAccount(TestVariables.availableLOCAccountNumber, TestVariables.locCreditLimit, TestVariables.locInterestRate);
+			setupLineOfCreditAccount(TestVariables.unavailableLOCAccountNumber, TestVariables.locCreditLimit, TestVariables.locInterestRate);
 			
 			Sleep(1000); //wait for connection to close
 			CloseServerConnection();
@@ -1069,5 +1079,96 @@ public class ClientTestDriver implements IBankingClientController
 			assert false;
 		}
 		manageBillTestCount++;
+	}
+	
+	////////////////////////////
+	// SETUP MORTGAGE ACCOUNT //
+	////////////////////////////
+	
+	/**
+	 * Tells the server to setup a mortgage account given a set of information
+	 * @param accountNumber the account number of the mortgage account
+	 * @param mortgageLength the length of the mortgage in years
+	 * @param interestRate the interest rate
+	 * @param principleAmount the principle amount of the mortgage
+	 */
+	public void setupMortgageAccount(String accountNumber, String mortgageLength, String interestRate, String principleAmount)
+	{
+		try
+		{
+			bc.setupMortgageAccount(accountNumber, mortgageLength, interestRate, principleAmount);
+		}
+		catch (IOException e)
+		{
+			System.err.println("SETUP MORTGAGE ACCOUNT TEST FAILED: EXCEPTION");
+			e.printStackTrace();
+		}
+	}
+	
+	/**
+	 * handles the result of populating a mortgage account with information
+	 * @param isSuccessful true if the information is populated, false if not
+	 */
+	public void handleMortgageAccountSetupResult(boolean isSuccessful)
+	{
+		if (mortgageSetupTestCount == 0 && isSuccessful)
+		{
+			System.out.println("SETUP MORTGAGE ACCOUNT TRUE TEST PASSED");
+		}
+		else if (mortgageSetupTestCount == 1 && !isSuccessful)
+		{
+			System.out.println("SETUP MORTGAGE ACCOUNT FALSE TEST PASSED");
+		}
+		else
+		{
+			System.err.println("SETUP MORTGAGE ACCOUNT TEST " + (mortgageSetupTestCount + 1) + " FAILED");
+			assert false;
+		}
+		mortgageSetupTestCount++;
+	}
+	
+	//////////////////////////////////
+	// SETUP LINE OF CREDIT ACCOUNT //
+	//////////////////////////////////
+	
+	/**
+	 * Tells the server to setup a line of credit account given a set of information
+	 * @param accountNumber the account number of the line of credit account
+	 * @param creditLimit the credit limit of the account
+	 * @param interestRate the interest rate
+	 */
+	public void setupLineOfCreditAccount(String accountNumber, String creditLimit, String interestRate)
+	{
+		try
+		{
+			bc.setupLineOfCreditAccount(accountNumber, creditLimit, interestRate);
+		}
+		catch (IOException e)
+		{
+			System.err.println("SETUP LOC ACCOUNT TEST FAILED: EXCEPTION");
+			e.printStackTrace();
+		}
+	}
+	
+	/**
+	 * handles the result of populating a line of credit account with information
+	 * @param isSuccessful true if the information is populated, false if not
+	 */
+	public void handleLineOfCreditSetupResult(boolean isSuccessful)
+	{
+		if (locSetupTestCount == 0 && isSuccessful)
+		{
+			System.out.println("SETUP LOC ACCOUNT TRUE TEST PASSED");
+		}
+		else if (locSetupTestCount == 1 && !isSuccessful)
+		{
+			System.out.println("SETUP LOC ACCOUNT FALSE TEST PASSED");
+		}
+		else
+		{
+			System.err.println("SETUP LOC ACCOUNT TEST " + (locSetupTestCount + 1) + " FAILED");
+			assert false;
+		}
+		locSetupTestCount++;
 	}
 }

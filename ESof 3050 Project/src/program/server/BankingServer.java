@@ -83,6 +83,12 @@ public class BankingServer extends AbstractServer
 			case MANAGE_BILL:
 				handleManageBillRequest(cp, client);
 				break;
+			case SETUP_MORTGAGE_ACCOUNT:
+				handleSetupMortgageAccountRequest(cp, client);
+				break;
+			case SETUP_LINE_OF_CREDIT_ACCOUNT:
+				handleSetupLineOfCreditAccountRequest(cp, client);
+				break;
 			default:
 				break;
 		}
@@ -863,6 +869,75 @@ public class BankingServer extends AbstractServer
 		{
 			//send a fail request if the client is a teller
 			sp = new ServerProtocol(MessageStatus.FAIL, Datatype.BILL_MANAGE_RESULT);
+		}
+		
+		try
+		{
+			client.sendToClient(sp);
+		}
+		catch (IOException e)
+		{
+			e.printStackTrace();
+		}
+	}
+	
+	/**
+	 * Setups a mortgage account given a set of information
+	 * @param accountNumber the account number of the mortgage account
+	 * @param mortgageLength the length of the mortgage in years
+	 * @param interestRate the interest rate
+	 * @param principleAmount the principle of the mortgage
+	 * @return true if the information is populated, false if not
+	 */
+	private void handleSetupMortgageAccountRequest(ClientProtocol cp, ConnectionToClient client)
+	{
+		ServerProtocol sp;
+		
+		//only tellers can setup a mortgage account
+		if (client.getInfo("LoginType") == LoginType.TELLER)
+		{
+			//success if the the info was populated, fail if not
+			MessageStatus status = bc.setupMortgageAccount(cp.GetParameters().get(0), cp.GetParameters().get(1), cp.GetParameters().get(2), cp.GetParameters().get(3)) ? MessageStatus.SUCCESS : MessageStatus.FAIL;	
+			sp = new ServerProtocol(status, Datatype.MORTGAGE_ACCOUNT_SETUP_RESULT);
+		}
+		else
+		{
+			//send a fail request if the client is a teller
+			sp = new ServerProtocol(MessageStatus.FAIL, Datatype.MORTGAGE_ACCOUNT_SETUP_RESULT);
+		}
+		
+		try
+		{
+			client.sendToClient(sp);
+		}
+		catch (IOException e)
+		{
+			e.printStackTrace();
+		}
+	}
+	
+	/**
+	 * Setups a line of credit account given a set of information
+	 * @param accountNumber the account number of the line of credit account
+	 * @param creditLimit the credit limit of the account
+	 * @param interestRate the interest rate
+	 * @return true if the information is populated, false if not
+	 */
+	private void handleSetupLineOfCreditAccountRequest(ClientProtocol cp, ConnectionToClient client)
+	{
+		ServerProtocol sp;
+		
+		//only tellers can setup a line of credit account
+		if (client.getInfo("LoginType") == LoginType.TELLER)
+		{
+			//success if the the info was populated, fail if not
+			MessageStatus status = bc.setupLineOfCreditAccount(cp.GetParameters().get(0), cp.GetParameters().get(1), cp.GetParameters().get(2)) ? MessageStatus.SUCCESS : MessageStatus.FAIL;	
+			sp = new ServerProtocol(status, Datatype.LOC_ACCOUNT_SETUP_RESULT);
+		}
+		else
+		{
+			//send a fail request if the client is a teller
+			sp = new ServerProtocol(MessageStatus.FAIL, Datatype.LOC_ACCOUNT_SETUP_RESULT);
 		}
 		
 		try

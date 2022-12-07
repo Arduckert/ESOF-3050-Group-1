@@ -98,6 +98,12 @@ public class BankingClient extends AbstractClient
 			case BILL_MANAGE_RESULT:
 				processBillManagementResult(sp);
 				break;
+			case MORTGAGE_ACCOUNT_SETUP_RESULT:
+				processMortgageAccountSetupResult(sp);
+				break;
+			case LOC_ACCOUNT_SETUP_RESULT:
+				processLineOfCreditSetupResult(sp);
+				break;
 			case BASIC_MESSAGE:
 				processBasicMessage(sp);
 				break;
@@ -608,6 +614,68 @@ public class BankingClient extends AbstractClient
 	////////////////////////////
 	// SETUP MORTGAGE ACCOUNT //
 	////////////////////////////
+	
+	/**
+	 * Tells the server to setup a mortgage account given a set of information
+	 * @param accountNumber the account number of the mortgage account
+	 * @param mortgageLength the length of the mortgage in years
+	 * @param interestRate the interest rate
+	 * @param principleAmount the principle amount of the mortgage
+	 */
+	public void setupMortgageAccount(String accountNumber, String mortgageLength, String interestRate, String principleAmount) throws IOException
+	{
+		ClientProtocol cp = new ClientProtocol(ServerAction.SETUP_MORTGAGE_ACCOUNT, accountNumber, mortgageLength, interestRate, principleAmount);
+		sendToServer(cp);
+	}
+	
+	/**
+	 * handles the result of populating a mortgage account with information
+	 * @param isSuccessful true if the information is populated, false if not
+	 */
+	private void processMortgageAccountSetupResult(ServerProtocol sp)
+	{
+		//sends the result back to the client
+		if (sp.getMessageStatus() == MessageStatus.SUCCESS)
+		{
+			bcc.handleMortgageAccountSetupResult(true);
+		}
+		else
+		{
+			bcc.handleMortgageAccountSetupResult(false);
+		}
+	}
+	
+	//////////////////////////////////
+	// SETUP LINE OF CREDIT ACCOUNT //
+	//////////////////////////////////
+	
+	/**
+	 * Tells the server to setup a line of credit account given a set of information
+	 * @param accountNumber the account number of the line of credit account
+	 * @param creditLimit the credit limit of the account
+	 * @param interestRate the interest rate
+	 */
+	public void setupLineOfCreditAccount(String accountNumber, String creditLimit, String interestRate) throws IOException
+	{
+		ClientProtocol cp = new ClientProtocol(ServerAction.SETUP_LINE_OF_CREDIT_ACCOUNT, accountNumber, creditLimit, interestRate);
+		sendToServer(cp);
+	}
+	
+	/**
+	 * processes the result of populating a line of credit account with information
+	 */
+	private void processLineOfCreditSetupResult(ServerProtocol sp)
+	{
+		//sends the result back to the client
+		if (sp.getMessageStatus() == MessageStatus.SUCCESS)
+		{
+			bcc.handleLineOfCreditSetupResult(true);
+		}
+		else
+		{
+			bcc.handleLineOfCreditSetupResult(false);
+		}
+	}
 	
 	//////////////
 	// TRANSFER //

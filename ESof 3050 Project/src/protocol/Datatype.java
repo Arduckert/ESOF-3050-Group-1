@@ -183,4 +183,20 @@ public enum Datatype
 	 * @object_size 0
 	 */
 	ACCOUNT_DELETION_RESULT,
+	
+	/**
+	 * This sends information about the result of the setup of a mortgage account.
+	 * No information is required in this data type since the information required is
+	 * within the message status value.
+	 * @object_size 0
+	 */
+	MORTGAGE_ACCOUNT_SETUP_RESULT,
+	
+	/**
+	 * This sends information about the result of the setup of a line of credit account.
+	 * No information is required in this data type since the information required is
+	 * within the message status value.
+	 * @object_size 0
+	 */
+	LOC_ACCOUNT_SETUP_RESULT
 }
