@@ -123,7 +123,7 @@ public class ServerProtocol implements Serializable
 		case ACCOUNT_HOLDER_FIND_RESULT:
 			return 5;
 		case ACCOUNT_HOLDER_CREATION_RESULT:
-			return 5;
+			return 3;
 		case ACCOUNT_HOLDER_DELETION_RESULT:
 			return 0;
 		case PERSON_CREATION_RESULT:
