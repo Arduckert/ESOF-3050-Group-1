@@ -144,6 +144,15 @@ public interface IBankController
 	public String transfer(TransferType transferType, String sendingAccountNum, String recipientAccountNum, String amount);
 	
 	/**
+	 * Either creates a new bill or delete an existing bill that belongs to a line
+	 * of credit account
+	 * @param billAction the action to perform
+	 * @param locAccountNumber the account number of the line of credit account
+	 * @return true if the action was performed successfully, false if not
+	 */
+	public boolean manageBill(BillAction billAction, String locAccountNumber);
+	
+	/**
 	 * gets the transaction history of a specific account
 	 * @param cardNumber the account holder's card number
 	 * @param accountType the account to fetch from (chequing, savings, etc.)

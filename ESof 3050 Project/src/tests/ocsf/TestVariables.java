@@ -98,4 +98,9 @@ public final class TestVariables
 	public static final RecordInfo customerRecord1 = new RecordInfo("25", "26", "27", "28");
 	public static final RecordInfo customerRecord2 = new RecordInfo("29", "30", "31", "32");
 	public static final RecordInfo customerRecord3 = new RecordInfo("33", "34", "35", "36");
+	
+	//MANAGE BILL
+	public static final BillAction billAction = BillAction.CREATE_BILL;
+	public static final String availableLOCAccountNumber = "23235333";
+	public static final String unavailableLOCAccountNumber = "42602331";
 }

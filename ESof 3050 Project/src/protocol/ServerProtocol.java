@@ -102,8 +102,8 @@ public class ServerProtocol implements Serializable
 			return 1;
 		case TRANSFER_BALANCE:
 			return 1;
-		case BILL_BALANCE:
-			return 1;
+		case BILL_MANAGE_RESULT:
+			return 0;
 		case ACCOUNT:
 			return 3;
 		case TRANSACTION:

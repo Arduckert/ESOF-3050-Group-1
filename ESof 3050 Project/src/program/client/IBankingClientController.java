@@ -272,6 +272,10 @@ public interface IBankingClientController
 	// SETUP MORTGAGE ACCOUNT //
 	////////////////////////////
 	
+	//////////////////////////////////
+	// SETUP LINE OF CREDIT ACCOUNT //
+	//////////////////////////////////
+	
 	//////////////
 	// TRANSFER //
 	//////////////
@@ -292,13 +296,24 @@ public interface IBankingClientController
 	 */
 	public void handleTransferResult(boolean isSuccessful, String newBalance);
 	
-	///////////////////////////////
-	// TRANSFER BETWEEN ACCOUNTS //
-	///////////////////////////////
+	/////////////////
+	// MANAGE BILL //
+	/////////////////
 	
-	//////////////
-	// PAY BILL //
-	//////////////
+	/**
+	 * Tells the server to either create a bill or delete a bill that belongs to a line
+	 * of credit account
+	 * @param billAction the action to perform (create a new bill or delete an existing bill)
+	 * @param locAccountNumber the account number of the line of credit account
+	 */
+	public void manageBill(BillAction billAction, String locAccountNumber);
+	
+	/**
+	 * Handles the result of the management of a bill
+	 * @param isSuccessful true if the action was performed successfully, false
+	 * if not
+	 */
+	public void handleBillManagementResult(boolean isSuccessful);
 	
 	//////////////////////
 	// GET TRANSACTIONS //

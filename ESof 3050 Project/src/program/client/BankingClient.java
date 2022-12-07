@@ -95,6 +95,9 @@ public class BankingClient extends AbstractClient
 			case CUSTOMER_RECORD:
 				processCustomerRecords(sp);
 				break;
+			case BILL_MANAGE_RESULT:
+				processBillManagementResult(sp);
+				break;
 			case BASIC_MESSAGE:
 				processBasicMessage(sp);
 				break;
@@ -640,9 +643,39 @@ public class BankingClient extends AbstractClient
 		}
 	}
 	
-	//////////////
-	// PAY BILL //
-	//////////////
+	/////////////////
+	// MANAGE BILL //
+	/////////////////
+	
+	/**
+	 * Tells the server to either create a bill or delete a bill that belongs to a line
+	 * of credit account
+	 * @param billAction the action to perform (create a new bill or delete an existing bill)
+	 * @param locAccountNumber the account number of the line of credit account
+	 */
+	public void manageBill(BillAction billAction, String locAccountNumber) throws IOException
+	{
+		ClientProtocol cp = new ClientProtocol(ServerAction.MANAGE_BILL, billAction.toString(), locAccountNumber);
+		sendToServer(cp);
+	}
+	
+	/**
+	 * Handles the result of the management of a bill
+	 * @param isSuccessful true if the action was performed successfully, false
+	 * if not
+	 */
+	private void processBillManagementResult(ServerProtocol sp)
+	{
+		//sends the management result back to the client
+		if (sp.getMessageStatus() == MessageStatus.SUCCESS)
+		{
+			bcc.handleBillManagementResult(true);
+		}
+		else
+		{
+			bcc.handleBillManagementResult(false);
+		}
+	}
 	
 	//////////////////////
 	// GET TRANSACTIONS //

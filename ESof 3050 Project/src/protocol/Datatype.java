@@ -36,11 +36,10 @@ public enum Datatype
 	TRANSFER_BALANCE,
 	
 	/**
-	 * This sends a balance of a specific account back to the client after a bill has been
-	 * payed. The information included in this data type is a balance.
-	 * @object_size 1
+	 * This sends the result of the management of a bill 
+	 * @object_size 0
 	 */
-	BILL_BALANCE,
+	BILL_MANAGE_RESULT,
 	
 	/**
 	 * This sends information about an account back to the client. The information

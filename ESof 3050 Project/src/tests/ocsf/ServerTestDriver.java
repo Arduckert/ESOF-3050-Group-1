@@ -5,6 +5,7 @@ import src.program.server.IBankController;
 import src.program.structs.AccountHolderInfo;
 import src.program.structs.AccountInfo;
 import src.program.structs.AccountType;
+import src.program.structs.BillAction;
 import src.program.structs.RecordInfo;
 import src.program.structs.TransactionInfo;
 import src.program.structs.TransferType;
@@ -299,5 +300,16 @@ public class ServerTestDriver implements IBankController
 		records.add(TestVariables.customerRecord2);
 		records.add(TestVariables.customerRecord3);
 		return records;
+	}
+	
+	/**
+	 * Returns true if the data is good, false if not
+	 * @param billAction the action to perform
+	 * @param locAccountNumber the account number of the line of credit account
+	 * @return true if the action was performed successfully, false if not
+	 */
+	public boolean manageBill(BillAction billAction, String locAccountNumber)
+	{
+		return billAction == TestVariables.billAction && locAccountNumber.equals(TestVariables.availableLOCAccountNumber);
 	}
 }

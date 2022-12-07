@@ -10,6 +10,7 @@ import src.program.client.IBankingClientController;
 import src.program.structs.AccountHolderInfo;
 import src.program.structs.AccountInfo;
 import src.program.structs.AccountType;
+import src.program.structs.BillAction;
 import src.program.structs.RecordInfo;
 import src.program.structs.TransactionInfo;
 import src.program.structs.TransferType;
@@ -34,6 +35,7 @@ public class ClientTestDriver implements IBankingClientController
 	private static int accountCreationTestCount = 0;
 	private static int accountDeletionTestCount = 0;
 	private static int transferTestCount = 0;
+	private static int manageBillTestCount = 0;
 	
 	public ClientTestDriver()
 	{
@@ -73,6 +75,10 @@ public class ClientTestDriver implements IBankingClientController
 			
 			//get transactions test
 			getTransactions(TestVariables.sendingAccountNum);
+			
+			//manage bill test
+			manageBill(TestVariables.billAction, TestVariables.availableLOCAccountNumber); //handler should return true
+			manageBill(TestVariables.billAction, TestVariables.unavailableLOCAccountNumber); //handler should return false
 			
 			//teller login request tests. 
 			sendTellerLoginRequest(TestVariables.availableTellerID, TestVariables.availableTellerPassword); //should return true
@@ -1015,5 +1021,53 @@ public class ClientTestDriver implements IBankingClientController
 			System.err.println("GET CUSTOMER RECORDS TEST FAILED: DATA NOT EQUAL");
 			assert false;
 		}
+	}
+	
+	/////////////////
+	// MANAGE BILL //
+	/////////////////
+	
+	/**
+	 * Tells the server to either create a bill or delete a bill that belongs to a line
+	 * of credit account
+	 * @param billAction the action to perform (create a new bill or delete an existing bill)
+	 * @param locAccountNumber the account number of the line of credit account
+	 */
+	@Override
+	public void manageBill(BillAction billAction, String locAccountNumber)
+	{
+		try
+		{
+			bc.manageBill(billAction, locAccountNumber);
+		}
+		catch (IOException e)
+		{
+			System.err.println("MANAGE BILL TEST FAILED: EXCEPTION");
+			e.printStackTrace();
+		}
+	}
+	
+	/**
+	 * Handles the result of the management of a bill
+	 * @param isSuccessful true if the action was performed successfully, false
+	 * if not
+	 */
+	@Override
+	public void handleBillManagementResult(boolean isSuccessful)
+	{
+		if (manageBillTestCount == 0 && isSuccessful)
+		{
+			System.out.println("MANAGE BILL TRUE TEST PASSED");
+		}
+		else if (manageBillTestCount == 1 && !isSuccessful)
+		{
+			System.out.println("MANAGE BILL FALSE TEST PASSED");
+		}
+		else
+		{
+			System.err.println("MANAGE BILL TEST " + (manageBillTestCount + 1) + " FAILED");
+			assert false;
+		}
+		manageBillTestCount++;
 	}
 }

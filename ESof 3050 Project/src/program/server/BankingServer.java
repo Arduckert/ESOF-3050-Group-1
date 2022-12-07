@@ -80,6 +80,9 @@ public class BankingServer extends AbstractServer
 			case GET_CUSTOMER_RECORDS:
 				handleGetCustomerRecordsRequest(cp, client);
 				break;
+			case MANAGE_BILL:
+				handleManageBillRequest(cp, client);
+				break;
 			default:
 				break;
 		}
@@ -842,6 +845,33 @@ public class BankingServer extends AbstractServer
 			{
 				e.printStackTrace();
 			}
+		}
+	}
+	
+	private void handleManageBillRequest(ClientProtocol cp, ConnectionToClient client)
+	{
+		ServerProtocol sp;
+		
+		//only account holders can manage bills
+		if (client.getInfo("LoginType") == LoginType.ACCOUNTHOLDER)
+		{
+			//success if the the bill was managed, fail if not
+			MessageStatus status = bc.manageBill(BillAction.valueOf(cp.GetParameters().get(0)), cp.GetParameters().get(1)) ? MessageStatus.SUCCESS : MessageStatus.FAIL;	
+			sp = new ServerProtocol(status, Datatype.BILL_MANAGE_RESULT);
+		}
+		else
+		{
+			//send a fail request if the client is a teller
+			sp = new ServerProtocol(MessageStatus.FAIL, Datatype.BILL_MANAGE_RESULT);
+		}
+		
+		try
+		{
+			client.sendToClient(sp);
+		}
+		catch (IOException e)
+		{
+			e.printStackTrace();
 		}
 	}
 }
