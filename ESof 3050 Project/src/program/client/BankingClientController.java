@@ -14,6 +14,7 @@ import javafx.stage.Stage;
 import src.program.structs.AccountHolderInfo;
 import src.program.structs.AccountInfo;
 import src.program.structs.AccountType;
+import src.program.structs.BillAction;
 import src.program.structs.RecordInfo;
 import src.program.structs.TransactionInfo;
 import src.program.structs.TransferType;
@@ -577,7 +578,6 @@ public class BankingClientController extends Application implements IBankingClie
   			ta=PinErrorTextArea;
   			createNewPerson(firstName,lastName,sin,dob);
   			createNewAccountHolder(email,pin,sin);
-  			addAccountHolderToPerson(sin,email); //TODO discuss necessity of creating person then account holder
   			for(int i=0;i<streetNameList.size();i++) {
   				addAddress(streetNameList.get(i),streetNumberList.get(i),
   						postalCodeList.get(i),provinceList.get(i), countryList.get(i),sin);
@@ -1156,8 +1156,6 @@ public class BankingClientController extends Application implements IBankingClie
     			public void changed(ObservableValue<? extends AccountInfo> ov, AccountInfo oldValue, AccountInfo newValue) {
     				AccountsBalanceTextField.setText(newValue.balance);
     				AccountsTypeTextField.setText(newValue.getAccountTypeString());
-    				    //TODO add other fields
-    				    //We need first name, last name and sin to be passed from server
     			}});
     	}
     		
@@ -1169,8 +1167,6 @@ public class BankingClientController extends Application implements IBankingClie
     			public void changed(ObservableValue<? extends AccountInfo> ov, AccountInfo oldValue, AccountInfo newValue) {
     				if(SenderBalanceTextField!=null&&newValue!=null)
     					SenderBalanceTextField.setText(newValue.balance);
-    				    //TODO add other fields
-    				    //We need first name, last name and sin to be passed from server
     			}});
     	}
     	if(ReceivingAccountChoiceBox!=null) {
@@ -1181,8 +1177,6 @@ public class BankingClientController extends Application implements IBankingClie
     			public void changed(ObservableValue<? extends AccountInfo> ov, AccountInfo oldValue, AccountInfo newValue) {
     				if(ReceiverBalanceTextField!=null&&newValue!=null)
     					ReceiverBalanceTextField.setText(newValue.balance);
-    				    //TODO add other fields
-    				    //We need first name, last name and sin to be passed from server
     			}});
     	}
     	
@@ -1916,9 +1910,7 @@ public class BankingClientController extends Application implements IBankingClie
 	 * @param newBalance the new balance after the transfer
 	 */
 	public void handleTransferResult(boolean isSuccessful, String newBalance)
-	{
-		//TODO: add handle code
-		
+	{	
 		if (isSuccessful)
 		{
 			//show new balance
@@ -1945,6 +1937,79 @@ public class BankingClientController extends Application implements IBankingClie
 				}
 			});
 		}
+	}
+
+	@Override
+	public void setupMortgageAccount(String accountNumber, String mortgageLength, String interestRate,
+			String principleAmount) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void handleMortgageAccountSetupResult(boolean isSuccessful) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void setupLineOfCreditAccount(String accountNumber, String creditLimit, String interestRate) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void handleLineOfCreditSetupResult(boolean isSuccessful) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void manageBill(BillAction billAction, String locAccountNumber) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void handleBillManagementResult(boolean isSuccessful) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void getTransactions(String accountNumber) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void handleTransactions(ArrayList<TransactionInfo> transactions) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void getAccountRecords() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void handleAccountRecords(ArrayList<RecordInfo> accountRecords) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void getCustomerRecords() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void handleCustomerRecords(ArrayList<RecordInfo> customerRecords) {
+		// TODO Auto-generated method stub
+		
 	}
 
 

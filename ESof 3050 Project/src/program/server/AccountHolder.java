@@ -5,7 +5,7 @@ public class AccountHolder extends personRole{
 	private int pin;
 	private int cardNum;
 	private String email;
-	public ArrayList<Account> accountList = new ArrayList<Account>();
+	private ArrayList<Account> accountList = new ArrayList<Account>();
 	LoginAttempt loginAttempt;
 	
 //Constructor
