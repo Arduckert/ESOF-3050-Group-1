@@ -953,19 +953,22 @@ public class BankingServer extends AbstractServer
 		{
 			//success if the the info was populated, fail if not
 			String accNum = bc.setupLineOfCreditAccount(cp.GetParameters().get(0), cp.GetParameters().get(1), cp.GetParameters().get(2),cp.GetParameters().get(3));	
-			if(accNum != null) {
-			sp = new ServerProtocol(MessageStatus.SUCCESS, Datatype.LOC_ACCOUNT_SETUP_RESULT);
-			try
+			
+			if(accNum != null)
 			{
-				//adds data to the server protocol
-				sp.AddData(accNum);
-			}
-			catch (ParameterException e)
-			{
+				sp = new ServerProtocol(MessageStatus.SUCCESS, Datatype.LOC_ACCOUNT_SETUP_RESULT);
+				try
+				{
+					//adds data to the server protocol
+					sp.AddData(accNum);
+				}
+				catch (ParameterException e)
+				{
 				e.printStackTrace();
+				}
 			}
-			}
-			else {
+			else
+			{
 				sp = new ServerProtocol(MessageStatus.FAIL, Datatype.LOC_ACCOUNT_SETUP_RESULT);
 			}
 		}

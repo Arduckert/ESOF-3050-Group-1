@@ -643,7 +643,7 @@ public class BankingClient extends AbstractClient
 		}
 		else
 		{
-			bcc.handleMortgageAccountSetupResult(sp.GetData().get(0));
+			bcc.handleMortgageAccountSetupResult(null);
 		}
 	}
 	
@@ -675,7 +675,7 @@ public class BankingClient extends AbstractClient
 		}
 		else
 		{
-			bcc.handleLineOfCreditSetupResult(sp.GetData().get(0));
+			bcc.handleLineOfCreditSetupResult(null);
 		}
 	}
 	
