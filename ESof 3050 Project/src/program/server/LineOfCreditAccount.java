@@ -9,14 +9,17 @@ public class LineOfCreditAccount extends Account {
 	private double creditLimit; 
 	List<MonthlyBill> bills = new ArrayList<MonthlyBill>();
 	
-	public LineOfCreditAccount(int accountNum, String date, AccountHolder holder, double i, double c) {
-		super(accountNum, date, holder);
+	public LineOfCreditAccount(int accountNum, AccountHolder holder, double i, double c) {
+		super(accountNum, holder);
 		this.interestRate = i;
 		this.creditLimit = c;
 	}
 	
 	public void addPurchase(double x) {
-		this.setBalance(this.getBalance()+(x*(1+interestRate)));
+		if((this.getBalance()+x) <= creditLimit){
+			this.setBalance(this.getBalance()+(x*(1+interestRate)));
+		}
+		//do nothing
 	}
 	
 	public void pay(double x) {

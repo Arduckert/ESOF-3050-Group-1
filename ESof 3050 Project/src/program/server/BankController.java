@@ -311,7 +311,7 @@ public class BankController implements IBankController
 	 */
 	
 	@Override
-	public boolean createAccount(AccountType accountType, String cardNumber)
+	public boolean createAccount(AccountType accountType, String cardNumber)//savings or chequing
 	{
 		return false;
 	}
@@ -352,35 +352,43 @@ public class BankController implements IBankController
 	 * @return the sender's new balance after the transfer is complete
 	 */
 	@Override
-	public String transfer(AccountType accountType, TransferType transferType, String cardNumber, String recipientEmail,
-			String amount)
+	public String transfer(TransferType transferType, String sendingAccountNum, String receivingAccountNum, String a)
 	{
-		//TODO: add handle code
+		//converting from strings
+		int sendingNum = stringToInt(sendingAccountNum);
+		int receivingNum = stringToInt(receivingAccountNum);
+		double amount = Double.valueOf(a);
 		
-		//get sending account holder using card number
-		//get account holder of recipient using email		
-		//get account of the sending account holder using accountType
-		switch (accountType)
-		{
-		case CHEQUING:
-			//look for the chequing account of the sender
-			break;
-		case SAVINGS:
-			//look for the savings account of the sender
-			break;
-		case MORTGAGE:
-			//look for the mortgage account of the sender
-			break;
-		case LINE_OF_CREDIT:
-			//look for the line of credit account of the sender
-			break;
+		//setting Accounts
+		Account sender = searchAccount(sendingNum);
+		Account receiver = searchAccount(receivingNum);
+		
+		if(sender == null || receiver == null) { //if the receiver or sender does not exist
+			return null;
 		}
 		
 		switch (transferType)
 		{
 		case DEPOSIT:
-			//deposit into account
-			break;
+			if(sender.getBalance() < amount) { //only if the sender has enough money
+				if(receiver.getClass() == ChequingAccount.class || receiver.getClass() == SavingsAccount.class) { //if the receiver is a savings or chequing account
+					double senderNewBalance = sender.getBalance() - amount;
+					double receiverNewBalance = receiver.getBalance() + amount;
+					sender.setBalance(senderNewBalance);
+					receiver.setBalance(receiverNewBalance);
+					return senderNewBalance + "";
+				}
+				if(receiver.getClass() == MortgageAccount.class) {
+					double senderNewBalance = sender.getBalance() - amount;
+					MortgageAccount MA = (MortgageAccount)receiver;
+					MA.payMortgage(amount);
+					return senderNewBalance + "";
+				}
+			}
+			else {
+				return null; //insufficient funds
+			}
+			
 		case WITHDRAW:
 			//remove money from account
 			break;
@@ -389,9 +397,12 @@ public class BankController implements IBankController
 		}
 		
 		//return the new balance after the transfer is complete
-		String newBalance = amount;
+		String newBalance = a;
 		return newBalance;
 	}
+	
+	
+	
 	
 	//MAIN
 	public static void main(String args[])

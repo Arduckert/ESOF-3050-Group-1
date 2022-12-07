@@ -1,17 +1,18 @@
 package src.program.server;
+import java.time.LocalDate;
 
 public class Account {
 	private double balance;
 	private int accountNum;
-	private String dateOpened;
+	private LocalDate dateOpened;
 	private AccountHolder accountHolder;
 	//List<TransactionRecord> accountHistory = new ArrayList<TransactionRecord>();
 
 //Constructor
-	public Account(int accountNum, String date, AccountHolder holder) {
+	public Account(int accountNum, AccountHolder holder) {
 		this.balance = 0.00;
 		this.accountNum = accountNum;
-		this.dateOpened = date;
+		this.dateOpened = LocalDate.now();
 		this.accountHolder = holder;
 		//add to list in banking controller or do it in createAccount method
 	}
@@ -27,7 +28,7 @@ public class Account {
 		return this.accountNum;
 	}
 	public String getDateOpened() {
-		return this.dateOpened;
+		return String.format(getDateOpened());
 	}
 	public AccountHolder getAccountHolder() {
 		return this.accountHolder;
