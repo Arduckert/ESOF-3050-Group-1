@@ -534,11 +534,11 @@ public class BankingClient extends AbstractClient
 		//creation was successful
 		if (sp.getMessageStatus() == MessageStatus.SUCCESS)
 		{
-			bcc.handleAccountCreation(true);
+			bcc.handleAccountCreation(sp.GetData().get(0));
 		}
 		else
 		{
-			bcc.handleAccountCreation(false);
+			bcc.handleAccountCreation(null);
 		}
 	}
 	

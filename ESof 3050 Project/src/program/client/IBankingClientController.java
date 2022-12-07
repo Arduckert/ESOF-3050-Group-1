@@ -229,7 +229,7 @@ public interface IBankingClientController
 	 * @param isSuccessful true if the account was deleted, false
 	 * if not
 	 */
-	public void handleAccountCreation(boolean isSuccessful);
+	public void handleAccountCreation(String accountNumber);
 	
 	////////////////////
 	// DELETE ACCOUNT //

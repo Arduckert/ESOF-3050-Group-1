@@ -205,6 +205,9 @@ public class BankController implements IBankController
 			int card = generateCardNumber();
 			AccountHolder accountHolder = new AccountHolder(p, card, email, person);
 			accountHolderList.add(accountHolder);
+			
+			accountHolder.getPerson().addPersonRole(accountHolder);
+			
 			CustomerRecord customerRecord = new CustomerRecord(teller, "created", accountHolder);
 			recordList.add(customerRecord);
 			
@@ -228,7 +231,11 @@ public class BankController implements IBankController
 		int id = stringToInt(tellerEmpID);
 		Teller t = searchTeller(id);
 		AccountHolder a = searchAccountHolder(num);
-		if(a.accountList.isEmpty()) { //if the accountHolder has no open accounts
+		if(a == null) {
+			return false; //couldnt find account holder
+		}
+		if(a.getAccounts().isEmpty()) { //if the accountHolder has no open accounts
+			a.getPerson().removeRole(a);
 			accountHolderList.remove(a);
 			
 			CustomerRecord customerRecord = new CustomerRecord(t, "removed", a);
@@ -389,7 +396,7 @@ public class BankController implements IBankController
 			return false; //money is in account
 		}
 		else {
-			account.getAccountHolder().accountList.remove(account);
+			account.getAccountHolder().getAccounts().remove(account);
 			accountList.remove(account);
 			
 			AccountRecord record = new AccountRecord(teller,"removed",account);
@@ -649,8 +656,18 @@ public class BankController implements IBankController
 	}
 
 	@Override
-	public String setupLineOfCreditAccount(String accountNumber, String creditLimit, String interestRate, String tellerID) {
-		// TODO Auto-generated method stub
+	public String setupLineOfCreditAccount(String cardNumber, String creditLimit, String interestRate, String tellerID) {
+		
+		int cardNum = stringToInt(cardNumber);
+		double creditLim = Double.valueOf(creditLimit);
+		double ir = Double.valueOf(interestRate);
+		int id = stringToInt(tellerID);
+		int accountNumber = generateAccountNumber();
+		
+		AccountHolder accountHolder = searchAccountHolder(cardNum);
+		
+		
+		
 		return null;
 	}
 	
