@@ -1,6 +1,11 @@
 package src.program.server;
 import java.util.*;
 import java.lang.Math;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 
 import src.program.structs.AccountHolderInfo;
 import src.program.structs.AccountInfo;
@@ -12,7 +17,7 @@ import src.program.structs.TransactionInfo;
 import src.program.structs.TransferType;
 
 // *** TODO: IMPLEMENT INTERFACE METHODS (REFER TO BLUE MARKS ON THE SCROLL BAR) *** //
-public class BankController implements IBankController
+public class BankController implements IBankController, Serializable
 {
 	
 	List<Person> personList = new ArrayList<Person>();
@@ -742,11 +747,23 @@ public class BankController implements IBankController
 		Person p1 = new Person("James", "Doe", 7777,"2000-03-02");
 		AccountHolder testAccountHolder = new AccountHolder(1111,12345,"test@email.com",p1);
 		Teller testTeller = new Teller(0000,"password",p1);
-		b.addAccountHolder(testAccountHolder);
-		b.addTeller(testTeller);
-		b.createAccount(AccountType.CHEQUING, Integer.toString(12345),testTeller.getEmpNum()+"");
-        b.createAccount(AccountType.SAVINGS, Integer.toString(12345),testTeller.getEmpNum()+"");
-
+		b.personList.add(p1);
+		//b.addAccountHolder(testAccountHolder);
+		//b.addTeller(testTeller);
+		//b.createAccount(AccountType.CHEQUING, Integer.toString(12345),testTeller.getEmpNum()+"");
+       // b.createAccount(AccountType.SAVINGS, Integer.toString(12345),testTeller.getEmpNum()+"");
+        
+        try {
+			ObjectOutputStream output = new ObjectOutputStream(new FileOutputStream("bank.txt"));
+			output.writeObject(b);
+			output.close();
+			System.out.println("file created");
+		} catch (FileNotFoundException e) {
+			System.out.println("file not found");
+		} catch (IOException e) {
+			System.out.println("IO exception");
+		}
+        
 		
 		int port = 9950;
 		BankingServer bs = new BankingServer(port, b);

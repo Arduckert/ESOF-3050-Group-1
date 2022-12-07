@@ -1,9 +1,10 @@
 package src.program.server;
+import java.io.Serializable;
 import java.util.*;
 
 import src.program.server.personRole;
 
-public class Person {
+public class Person implements Serializable{
 	private String fName;
 	private String lName;
 	private int SIN;
