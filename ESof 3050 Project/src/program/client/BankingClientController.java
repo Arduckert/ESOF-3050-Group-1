@@ -61,7 +61,10 @@ public class BankingClientController extends Application implements IBankingClie
 	private static String dob;
 	private static String email;
 	private static String pin;
+	
+	
 	private static String cardNumber;
+	private static String empID;
 	
 	//5 lists for address parameters
 	private static ObservableList<String> streetNameList=FXCollections.observableArrayList();
@@ -85,6 +88,10 @@ public class BankingClientController extends Application implements IBankingClie
 	private static ObservableList<AccountInfo> sendingAccountList=FXCollections.observableArrayList();
 	
 	private static AccountInfo deletedAccount;
+	
+	private static String sendingAccount;
+	private static String receivingAccount;
+	private static String amount;
 	
 	
 	
@@ -169,7 +176,13 @@ public class BankingClientController extends Application implements IBankingClie
     
     @FXML
     private TextArea ErrorTextArea;
-	
+    
+    @FXML
+    private TextField SenderBalanceTextField;
+    
+    @FXML
+    private TextField ReceiverBalanceTextField;
+    
 	//********************************************************************
 	
 	//**********************************************************************
@@ -384,6 +397,7 @@ public class BankingClientController extends Application implements IBankingClie
 		if(offline)
 			switchToTellerMainMenu(event);
 		else {
+			empID=TellerNumberTextField.getText();
 			ae=event;
 			ta=TellerLoginErrorTextArea;
 			sendTellerLoginRequest(TellerNumberTextField.getText(), TellerPasswordField.getText());
@@ -679,9 +693,13 @@ public class BankingClientController extends Application implements IBankingClie
     		ta=ErrorTextArea;
     		ae=event;
     		Double.valueOf(TransferAmountTextField.getText());
-    		if(ReceivingAccountChoiceBox.getValue()!=null&&SendingAccountChoiceBox.getValue()!=null)
-    			transfer(TransferType.TRANSFER, SendingAccountChoiceBox.getValue().accountNumber,
-    					ReceivingAccountChoiceBox.getValue().accountNumber, TransferAmountTextField.getText());
+    		if(ReceivingAccountChoiceBox.getValue()!=null&&SendingAccountChoiceBox.getValue()!=null) {
+    			receivingAccount=ReceivingAccountChoiceBox.getValue().accountNumber;
+    			sendingAccount=SendingAccountChoiceBox.getValue().accountNumber;
+    			amount=TransferAmountTextField.getText();
+    			transfer(TransferType.TRANSFER, sendingAccount,
+    					receivingAccount, amount);
+    		}
     		else
     			ErrorTextArea.setText("Empty field");
     	}
@@ -702,9 +720,13 @@ public class BankingClientController extends Application implements IBankingClie
     		ta=ErrorTextArea;
     		ae=event;
     		Double.valueOf(TransferAmountTextField.getText());
-    		if(SendingAccountChoiceBox.getValue()!=null&&ReceivingAccountTextField.getText().equals("")!=true)
-    			transfer(TransferType.TRANSFER, SendingAccountChoiceBox.getValue().accountNumber,
-    					ReceivingAccountTextField.getText(), TransferAmountTextField.getText());
+    		if(SendingAccountChoiceBox.getValue()!=null&&ReceivingAccountTextField.getText().equals("")!=true) {
+    			receivingAccount=ReceivingAccountTextField.getText();
+    			sendingAccount=SendingAccountChoiceBox.getValue().accountNumber;
+    			amount=TransferAmountTextField.getText();
+    			transfer(TransferType.TRANSFER, sendingAccount,
+    					receivingAccount, amount);
+    		}
     		else
     			ErrorTextArea.setText("Empty field");
     	}
@@ -741,8 +763,12 @@ public class BankingClientController extends Application implements IBankingClie
     		ta=ErrorTextArea;
     		ae=event;
     		Double.valueOf(TransferAmountTextField.getText());
-    		if(ReceivingAccountChoiceBox.getValue()!=null)
-    			transfer(TransferType.DEPOSIT, null,ReceivingAccountChoiceBox.getValue().accountNumber, TransferAmountTextField.getText());
+    		if(ReceivingAccountChoiceBox.getValue()!=null) {
+    			receivingAccount=ReceivingAccountChoiceBox.getValue().accountNumber;
+    			sendingAccount=null;
+    			amount=TransferAmountTextField.getText();
+    			transfer(TransferType.DEPOSIT, null,receivingAccount, amount);
+    		}
     		else
     			ErrorTextArea.setText("Empty field");
     	}
@@ -760,8 +786,12 @@ public class BankingClientController extends Application implements IBankingClie
     		ta=ErrorTextArea;
     		ae=event;
     		Double.valueOf(TransferAmountTextField.getText());
-    		if(SendingAccountChoiceBox.getValue()!=null)
-    			transfer(TransferType.WITHDRAW, SendingAccountChoiceBox.getValue().accountNumber,null, TransferAmountTextField.getText());
+    		if(SendingAccountChoiceBox.getValue()!=null) {
+    			receivingAccount=null;
+    			sendingAccount=SendingAccountChoiceBox.getValue().accountNumber;
+    			amount=TransferAmountTextField.getText();
+    			transfer(TransferType.WITHDRAW, sendingAccount,null, amount);
+    		}
     		else
     			ErrorTextArea.setText("Empty field");
     	}
@@ -891,11 +921,11 @@ public class BankingClientController extends Application implements IBankingClie
     	if(accountType==null)
     		ErrorTextArea.setText("No type selected");
     	else if(accountType.equals("Chequing Account")) {
-    		createAccount(AccountType.CHEQUING, cardNumber);
+    		createAccount(AccountType.CHEQUING, cardNumber,empID);
     		switchToCreateAccountConfirmationScreen(event);
     	}
     	else if(accountType.equals("Savings Account")) {
-    		createAccount(AccountType.SAVINGS, cardNumber);
+    		createAccount(AccountType.SAVINGS, cardNumber,empID);
     		switchToCreateAccountConfirmationScreen(event);
     	}
     	else if(accountType.equals("Mortgage Account")) {
@@ -934,7 +964,7 @@ public class BankingClientController extends Application implements IBankingClie
     	ae=event;
     	if(DeleteAccountCheckBox.isSelected()&&DeleteAccountChoiceBox.getValue()!=null) {
     		deletedAccount=DeleteAccountChoiceBox.getValue();
-    		deleteAccount(DeleteAccountChoiceBox.getValue().accountNumber);
+    		deleteAccount(DeleteAccountChoiceBox.getValue().accountNumber,empID);
     	}
     	else if(!DeleteAccountCheckBox.isSelected())
     		ErrorTextArea.setText("Check box not checked");
@@ -980,7 +1010,7 @@ public class BankingClientController extends Application implements IBankingClie
 
     @FXML
     void CreateMortgageAccountButtonPressed(ActionEvent event) {
-    	createAccount(AccountType.MORTGAGE, cardNumber);
+    	createAccount(AccountType.MORTGAGE, cardNumber,empID);
     	//TODO make mortgage account
     }
     
@@ -1134,14 +1164,39 @@ public class BankingClientController extends Application implements IBankingClie
     	if(SendingAccountChoiceBox!=null) {
     		SendingAccountChoiceBox.getItems().clear();
     		SendingAccountChoiceBox.setItems(sendingAccountList);
+    		SendingAccountChoiceBox.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<AccountInfo>() {
+    			@Override
+    			public void changed(ObservableValue<? extends AccountInfo> ov, AccountInfo oldValue, AccountInfo newValue) {
+    				if(SenderBalanceTextField!=null&&newValue!=null)
+    					SenderBalanceTextField.setText(newValue.balance);
+    				    //TODO add other fields
+    				    //We need first name, last name and sin to be passed from server
+    			}});
     	}
     	if(ReceivingAccountChoiceBox!=null) {
     		ReceivingAccountChoiceBox.getItems().clear();
     		ReceivingAccountChoiceBox.setItems(receivingAccountList);
+    		ReceivingAccountChoiceBox.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<AccountInfo>() {
+    			@Override
+    			public void changed(ObservableValue<? extends AccountInfo> ov, AccountInfo oldValue, AccountInfo newValue) {
+    				if(ReceiverBalanceTextField!=null&&newValue!=null)
+    					ReceiverBalanceTextField.setText(newValue.balance);
+    				    //TODO add other fields
+    				    //We need first name, last name and sin to be passed from server
+    			}});
     	}
     	
     	if(AccountDeletedTextField!=null)
     		AccountDeletedTextField.setText(deletedAccount.accountNumber);
+    	
+    	if(SendingAccountConfirmationTextField!=null)
+    		SendingAccountConfirmationTextField.setText(sendingAccount);
+    	
+    	if(ReceivingAccountConfirmationTextField!=null)
+    		ReceivingAccountConfirmationTextField.setText(receivingAccount);
+    	
+    	if(TransferAmountConfirmationTextField!=null)
+    		TransferAmountConfirmationTextField.setText(amount);
     }
     
     //Start function
