@@ -6,6 +6,7 @@ import src.program.structs.AccountHolderInfo;
 import src.program.structs.AccountInfo;
 import src.program.structs.AccountType;
 import src.program.structs.BillAction;
+import src.program.structs.InputType;
 import src.program.structs.RecordInfo;
 import src.program.structs.TransactionInfo;
 import src.program.structs.TransferType;
@@ -69,17 +70,19 @@ public class ServerTestDriver implements IBankController
 	 * the email doesn't match
 	 */
 	@Override
-	public AccountHolderInfo findAccountHolder(String email)
+	public AccountHolderInfo findAccountHolder(InputType inputType, String parameter)
 	{
 		//does the email match the available one?
-		if (email.equals(TestVariables.availableAccountHolderFindEmail))
+		if (parameter.equals(TestVariables.availableAccountHolderFindEmail) && inputType == TestVariables.findAccountHolderType)
 		{
 			//creates a new account holder info with the information about
 			//the account holder information
 			AccountHolderInfo info = new AccountHolderInfo(
 					TestVariables.availableAccountHolderFindEmail,
 					TestVariables.availableAccountHolderNumber,
-					TestVariables.availableAccountHolderFindPin
+					TestVariables.availableAccountHolderFindPin,
+					TestVariables.availableAccountHolderFindName,
+					TestVariables.availableAccountHolderFindSin
 					);
 			return info;
 		}
@@ -173,8 +176,7 @@ public class ServerTestDriver implements IBankController
 	@Override
 	public boolean addAccountHolderToPerson(String sin, String email)
 	{
-		return sin.equals(TestVariables.availablePersonSIN)
-				&& email.equals(TestVariables.availableRoleEmail);
+		return false;
 	}
 	
 	/**
@@ -184,10 +186,18 @@ public class ServerTestDriver implements IBankController
 	 * @return true if the account was created successfully, false if not
 	 */
 	@Override
-	public boolean createAccount(AccountType accountType, String cardNumber)
+	public String createAccount(AccountType accountType, String cardNumber, String tellerID)
 	{
-		return accountType == TestVariables.accountType
-				&& cardNumber.equals(TestVariables.accountCardNumber);
+		if (accountType == TestVariables.accountType
+				&& cardNumber.equals(TestVariables.accountCardNumber)
+				&& tellerID.equals(TestVariables.availableTellerID))
+		{
+			return TestVariables.createAccountNumber;
+		}
+		else
+		{
+			return null;
+		}
 	}
 	
 	/**
@@ -197,9 +207,10 @@ public class ServerTestDriver implements IBankController
 	 * @return true if the account was deleted successfully, false if not
 	 */
 	@Override
-	public boolean deleteAccount(String accountNumber)
+	public boolean deleteAccount(String accountNumber, String tellerID)
 	{
-		return accountNumber.equals(TestVariables.accountCardNumber);
+		return accountNumber.equals(TestVariables.accountCardNumber)
+				&& tellerID.equals(TestVariables.availableTellerID);
 	}
 	
 	/**
@@ -308,9 +319,13 @@ public class ServerTestDriver implements IBankController
 	 * @param locAccountNumber the account number of the line of credit account
 	 * @return true if the action was performed successfully, false if not
 	 */
-	public boolean manageBill(BillAction billAction, String locAccountNumber)
+	@Override
+	public boolean manageBill(BillAction billAction, String locAccountNumber, String billAmount, String billRecipient)
 	{
-		return billAction == TestVariables.billAction && locAccountNumber.equals(TestVariables.availableLOCAccountNumber);
+		return billAction == TestVariables.billAction
+				&& locAccountNumber.equals(TestVariables.availableLOCAccountNumber)
+				&& billAmount.equals(TestVariables.billAmount)
+				&& billRecipient.equals(TestVariables.billRecipient);
 	}
 	
 	/**
@@ -321,12 +336,21 @@ public class ServerTestDriver implements IBankController
 	 * @param principleAmount the principle of the mortgage
 	 * @return true if the information is populated, false if not
 	 */
-	public boolean setupMortgageAccount(String accountNumber, String mortgageLength, String interestRate, String principleAmount)
+	@Override
+	public String setupMortgageAccount(String cardNumber, String mortgageLength, String interestRate, String principleAmount, String tellerID)
 	{
-		return accountNumber.equals(TestVariables.availableMortgageAccountNumber)
+		if (cardNumber.equals(TestVariables.availableMortgageCardNumber)
 				&& mortgageLength.equals(TestVariables.mortgageLength)
 				&& interestRate.equals(TestVariables.interestRate)
-				&& principleAmount.equals(TestVariables.principleAmount);
+				&& principleAmount.equals(TestVariables.principleAmount)
+				&& tellerID.equals(TestVariables.availableTellerID))
+		{
+			return TestVariables.mortgageAccountNumber;
+		}
+		else
+		{
+			return null;
+		}
 	}
 	
 	/**
@@ -336,10 +360,19 @@ public class ServerTestDriver implements IBankController
 	 * @param interestRate the interest rate
 	 * @return true if the information is populated, false if not
 	 */
-	public boolean setupLineOfCreditAccount(String accountNumber, String creditLimit, String interestRate)
+	@Override
+	public String setupLineOfCreditAccount(String cardNumber, String creditLimit, String interestRate, String tellerID)
 	{
-		return accountNumber.equals(TestVariables.availableLOCAccountNumber)
+		if (cardNumber.equals(TestVariables.availableLOCSetupCardNumber)
 				&& creditLimit.equals(TestVariables.locCreditLimit)
-				&& interestRate.equals(TestVariables.locInterestRate);
+				&& interestRate.equals(TestVariables.locInterestRate)
+				&& tellerID.equals(TestVariables.availableTellerID))
+		{
+			return TestVariables.locAccountNumber;
+		}
+		else
+		{
+			return null;
+		}
 	}
 }

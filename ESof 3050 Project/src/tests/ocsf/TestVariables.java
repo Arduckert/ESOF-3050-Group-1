@@ -23,13 +23,15 @@ public final class TestVariables
 	public static final String unavailableTellerID = "345678";
 	public static final String unavailableTellerPassword = "password234";
 	
-	//FIND ACCOUNT HOLDER BY EMAIL
+	//FIND ACCOUNT HOLDER
 	public static final String availableAccountHolderFindEmail = "test123@example.com";
 	public static final String unavailableAccountHolderFindEmail = "tset123@example.com";
+	public static final InputType findAccountHolderType = InputType.EMAIL;
 	
 	public static final String availableAccountHolderFindName = "John Smith";
 	public static final String availableAccountHolderFindNumber = "1234567";
 	public static final String availableAccountHolderFindPin = "1234";
+	public static final String availableAccountHolderFindSin = "33344543";
 	
 	//CREATE ACCOUNT HOLDER
 	public static final String availableCreateAccountHolderEmail = "tset321@example.com";
@@ -64,13 +66,10 @@ public final class TestVariables
 	public static final String addressProvince = "Ontario";
 	public static final String addressCountry = "Canada";
 	
-	//ADD ACCOUNT HOLDER ROLE TO PERSON
-	public static final String availableRoleEmail = "testing@example.com";
-	public static final String unavailableRoleEmail = "tseting@example.com";
-	
 	//ADD AND DELETE ACCOUNT
 	public static final AccountType accountType = AccountType.CHEQUING;
 	public static final String accountCardNumber = "32547698";
+	public static final String createAccountNumber = "352432";
 	
 	//GET ACCOUNT
 	public static final AccountInfo account1 = new AccountInfo(AccountType.CHEQUING, "1", "2");
@@ -103,17 +102,21 @@ public final class TestVariables
 	public static final BillAction billAction = BillAction.CREATE_BILL;
 	public static final String availableLOCAccountNumber = "23235333";
 	public static final String unavailableLOCAccountNumber = "42602331";
+	public static final String billAmount = "12.43";
+	public static final String billRecipient = "Netflix";
 	
 	//SETUP MORTGAGE ACCOUNT
-	public static final String availableMortgageAccountNumber = "12357643";
-	public static final String unavailableMortgageAccountNumber = "123572643";
+	public static final String availableMortgageCardNumber = "12357643";
+	public static final String unavailableMortgageCardNumber = "123572643";
+	public static final String mortgageAccountNumber = "3242111";
 	public static final String mortgageLength = "20";
 	public static final String interestRate = "0.10";
 	public static final String principleAmount = "164130.10";
 	
 	//SETUP LINE OF CREDIT ACCOUNT
-	public static final String availableLOCSetupAccountNumber = "62643467";
-	public static final String unavailableLOCSetupAccountNumber = "35467532";
+	public static final String availableLOCSetupCardNumber = "62643467";
+	public static final String unavailableLOCSetupCardNumber = "35467532";
+	public static final String locAccountNumber = "39777111";
 	public static final String locCreditLimit = "1000.00";
 	public static final String locInterestRate = "0.12";
 }

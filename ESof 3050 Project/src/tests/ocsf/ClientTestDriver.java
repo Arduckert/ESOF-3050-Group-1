@@ -11,6 +11,7 @@ import src.program.structs.AccountHolderInfo;
 import src.program.structs.AccountInfo;
 import src.program.structs.AccountType;
 import src.program.structs.BillAction;
+import src.program.structs.InputType;
 import src.program.structs.RecordInfo;
 import src.program.structs.TransactionInfo;
 import src.program.structs.TransferType;
@@ -79,8 +80,8 @@ public class ClientTestDriver implements IBankingClientController
 			getTransactions(TestVariables.sendingAccountNum);
 			
 			//manage bill test
-			manageBill(TestVariables.billAction, TestVariables.availableLOCAccountNumber); //handler should return true
-			manageBill(TestVariables.billAction, TestVariables.unavailableLOCAccountNumber); //handler should return false
+			manageBill(TestVariables.billAction, TestVariables.availableLOCAccountNumber, TestVariables.billAmount, TestVariables.billRecipient); //handler should return true
+			manageBill(TestVariables.billAction, TestVariables.unavailableLOCAccountNumber, TestVariables.billAmount, TestVariables.billRecipient); //handler should return false
 			
 			//teller login request tests. 
 			sendTellerLoginRequest(TestVariables.availableTellerID, TestVariables.availableTellerPassword); //should return true
@@ -89,8 +90,8 @@ public class ClientTestDriver implements IBankingClientController
 			sendTellerLoginRequest(TestVariables.unavailableTellerID, TestVariables.unavailableTellerPassword); //should return false
 			
 			//find account holder by email request tests
-			sendFindAccountHolderByEmailRequest(TestVariables.availableAccountHolderFindEmail); //should return true and the account holder information
-			sendFindAccountHolderByEmailRequest(TestVariables.unavailableAccountHolderFindEmail); //should return false and no information
+			sendFindAccountHolderRequest(TestVariables.findAccountHolderType, TestVariables.availableAccountHolderFindEmail); //should return true and the account holder information
+			sendFindAccountHolderRequest(TestVariables.findAccountHolderType, TestVariables.unavailableAccountHolderFindEmail); //should return false and no information
 			
 			//create new account holder tests
 			createNewAccountHolder(TestVariables.availableCreateAccountHolderEmail, TestVariables.createAccountHolderPin, TestVariables.createAccountHolderSin); //handler should return true
@@ -119,16 +120,16 @@ public class ClientTestDriver implements IBankingClientController
 			removeAddress(TestVariables.availablePersonSIN, TestVariables.unavailablePostalCode); //handler should return false
 			
 			//add account holder to person test
-			addAccountHolderToPerson(TestVariables.availablePersonSIN, TestVariables.availableRoleEmail); //handler should return true
-			addAccountHolderToPerson(TestVariables.availablePersonSIN, TestVariables.unavailableRoleEmail); //handler should return false
+			//addAccountHolderToPerson(TestVariables.availablePersonSIN, TestVariables.availableRoleEmail); //handler should return true
+			//addAccountHolderToPerson(TestVariables.availablePersonSIN, TestVariables.unavailableRoleEmail); //handler should return false
 			
 			//create account test
-			createAccount(TestVariables.accountType, TestVariables.accountCardNumber); //handler should return true
-			createAccount(TestVariables.accountType, TestVariables.availableCreateAccountHolderEmail); //handler should return false
+			createAccount(TestVariables.accountType, TestVariables.accountCardNumber, TestVariables.availableTellerID); //handler should return true
+			createAccount(TestVariables.accountType, TestVariables.availableCreateAccountHolderEmail, TestVariables.availableTellerID); //handler should return false
 			
 			//delete account test
-			deleteAccount(TestVariables.accountCardNumber); //handler should return true
-			deleteAccount(TestVariables.availableCreateAccountHolderEmail); //handler should return false
+			deleteAccount(TestVariables.accountCardNumber, TestVariables.availableTellerID); //handler should return true
+			deleteAccount(TestVariables.availableCreateAccountHolderEmail, TestVariables.availableTellerID); //handler should return false
 			
 			//get account test
 			getAccounts(TestVariables.availableAccountHolderNumber);
@@ -138,12 +139,12 @@ public class ClientTestDriver implements IBankingClientController
 			getCustomerRecords();
 			
 			//setup mortgage account tests
-			setupMortgageAccount(TestVariables.availableMortgageAccountNumber, TestVariables.mortgageLength, TestVariables.interestRate, TestVariables.principleAmount); //handler should return true
-			setupMortgageAccount(TestVariables.unavailableMortgageAccountNumber, TestVariables.mortgageLength, TestVariables.interestRate, TestVariables.principleAmount); //handler should return false
+			setupMortgageAccount(TestVariables.availableMortgageCardNumber, TestVariables.mortgageLength, TestVariables.interestRate, TestVariables.principleAmount, TestVariables.availableTellerID); //handler should return true
+			setupMortgageAccount(TestVariables.unavailableMortgageCardNumber, TestVariables.mortgageLength, TestVariables.interestRate, TestVariables.principleAmount, TestVariables.availableTellerID); //handler should return false
 			
 			//setup line of credit account tests
-			setupLineOfCreditAccount(TestVariables.availableLOCAccountNumber, TestVariables.locCreditLimit, TestVariables.locInterestRate);
-			setupLineOfCreditAccount(TestVariables.unavailableLOCAccountNumber, TestVariables.locCreditLimit, TestVariables.locInterestRate);
+			setupLineOfCreditAccount(TestVariables.availableLOCSetupCardNumber, TestVariables.locCreditLimit, TestVariables.locInterestRate, TestVariables.availableTellerID); //handler should return true
+			setupLineOfCreditAccount(TestVariables.unavailableLOCSetupCardNumber, TestVariables.locCreditLimit, TestVariables.locInterestRate, TestVariables.availableTellerID); //handler should return false
 			
 			Sleep(1000); //wait for connection to close
 			CloseServerConnection();
@@ -334,11 +335,11 @@ public class ClientTestDriver implements IBankingClientController
 	 * the email address
 	 */
 	@Override
-	public void sendFindAccountHolderByEmailRequest(String email)
+	public void sendFindAccountHolderRequest(InputType inputType, String parameter)
 	{
 		try
 		{
-			bc.findAccountHolderByEmail(email);
+			bc.findAccountHolder(inputType, parameter);
 		}
 		catch (Exception e)
 		{
@@ -351,7 +352,7 @@ public class ClientTestDriver implements IBankingClientController
 	 * handles the result of the find account holder by email request
 	 */
 	@Override
-	public void handleFindAccountHolderByEmailResult(AccountHolderInfo ahi)
+	public void handleFindAccountHolderResult(AccountHolderInfo ahi)
 	{		
 		//the first test involves seeing if the account holder was found
 		if (findAccountHolderByEmailTestCount == 0 && ahi.getHasInfo())
@@ -706,11 +707,11 @@ public class ClientTestDriver implements IBankingClientController
 	 * @param cardNumber the account holder's card number
 	 */
 	@Override
-	public void createAccount(AccountType accountType, String cardNumber)
+	public void createAccount(AccountType accountType, String cardNumber, String tellerID)
 	{
 		try
 		{
-			bc.createAccount(accountType, cardNumber);
+			bc.createAccount(accountType, cardNumber, tellerID);
 		}
 		catch (IOException e)
 		{
@@ -725,13 +726,13 @@ public class ClientTestDriver implements IBankingClientController
 	 * if not
 	 */
 	@Override
-	public void handleAccountCreation(boolean isSuccessful)
+	public void handleAccountCreation(String accountNumber)
 	{
-		if (accountCreationTestCount == 0 && isSuccessful)
+		if (accountCreationTestCount == 0 && accountNumber.equals(TestVariables.createAccountNumber))
 		{
 			System.out.println("ADD ACCOUNT TRUE TEST PASSED");
 		}
-		else if (accountCreationTestCount == 1 && !isSuccessful)
+		else if (accountCreationTestCount == 1 && accountNumber == null)
 		{
 			System.out.println("ADD ACCOUNT FALSE TEST PASSED");
 		}
@@ -754,11 +755,11 @@ public class ClientTestDriver implements IBankingClientController
 	 * @param cardNumber the account holder's card number
 	 */
 	@Override
-	public void deleteAccount(String accountNumber)
+	public void deleteAccount(String accountNumber, String tellerID)
 	{
 		try
 		{
-			bc.deleteAccount(accountNumber);
+			bc.deleteAccount(accountNumber, tellerID);
 		}
 		catch (IOException e)
 		{
@@ -1044,11 +1045,11 @@ public class ClientTestDriver implements IBankingClientController
 	 * @param locAccountNumber the account number of the line of credit account
 	 */
 	@Override
-	public void manageBill(BillAction billAction, String locAccountNumber)
+	public void manageBill(BillAction billAction, String locAccountNumber, String amount, String receiver)
 	{
 		try
 		{
-			bc.manageBill(billAction, locAccountNumber);
+			bc.manageBill(billAction, locAccountNumber, amount, receiver);
 		}
 		catch (IOException e)
 		{
@@ -1092,11 +1093,11 @@ public class ClientTestDriver implements IBankingClientController
 	 * @param interestRate the interest rate
 	 * @param principleAmount the principle amount of the mortgage
 	 */
-	public void setupMortgageAccount(String accountNumber, String mortgageLength, String interestRate, String principleAmount)
+	public void setupMortgageAccount(String cardNumber, String mortgageLength, String interestRate, String principleAmount, String tellerID)
 	{
 		try
 		{
-			bc.setupMortgageAccount(accountNumber, mortgageLength, interestRate, principleAmount);
+			bc.setupMortgageAccount(cardNumber, mortgageLength, interestRate, principleAmount, tellerID);
 		}
 		catch (IOException e)
 		{
@@ -1109,13 +1110,13 @@ public class ClientTestDriver implements IBankingClientController
 	 * handles the result of populating a mortgage account with information
 	 * @param isSuccessful true if the information is populated, false if not
 	 */
-	public void handleMortgageAccountSetupResult(boolean isSuccessful)
+	public void handleMortgageAccountSetupResult(String accountNumber)
 	{
-		if (mortgageSetupTestCount == 0 && isSuccessful)
+		if (mortgageSetupTestCount == 0 && accountNumber.equals(TestVariables.mortgageAccountNumber))
 		{
 			System.out.println("SETUP MORTGAGE ACCOUNT TRUE TEST PASSED");
 		}
-		else if (mortgageSetupTestCount == 1 && !isSuccessful)
+		else if (mortgageSetupTestCount == 1 && accountNumber == null)
 		{
 			System.out.println("SETUP MORTGAGE ACCOUNT FALSE TEST PASSED");
 		}
@@ -1137,11 +1138,11 @@ public class ClientTestDriver implements IBankingClientController
 	 * @param creditLimit the credit limit of the account
 	 * @param interestRate the interest rate
 	 */
-	public void setupLineOfCreditAccount(String accountNumber, String creditLimit, String interestRate)
+	public void setupLineOfCreditAccount(String cardNumber, String creditLimit, String interestRate, String tellerID)
 	{
 		try
 		{
-			bc.setupLineOfCreditAccount(accountNumber, creditLimit, interestRate);
+			bc.setupLineOfCreditAccount(cardNumber, creditLimit, interestRate, tellerID);
 		}
 		catch (IOException e)
 		{
@@ -1154,13 +1155,13 @@ public class ClientTestDriver implements IBankingClientController
 	 * handles the result of populating a line of credit account with information
 	 * @param isSuccessful true if the information is populated, false if not
 	 */
-	public void handleLineOfCreditSetupResult(boolean isSuccessful)
+	public void handleLineOfCreditSetupResult(String accountNumber)
 	{
-		if (locSetupTestCount == 0 && isSuccessful)
+		if (locSetupTestCount == 0 && accountNumber.equals(TestVariables.locAccountNumber))
 		{
 			System.out.println("SETUP LOC ACCOUNT TRUE TEST PASSED");
 		}
-		else if (locSetupTestCount == 1 && !isSuccessful)
+		else if (locSetupTestCount == 1 && accountNumber == null)
 		{
 			System.out.println("SETUP LOC ACCOUNT FALSE TEST PASSED");
 		}
