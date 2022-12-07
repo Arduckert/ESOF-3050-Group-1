@@ -257,17 +257,11 @@ public class ServerTestDriver implements IBankController
 	 * @param accountType the account to fetch from (chequing, savings, etc.)
 	 * @return a list of information about each transaction
 	 */
-	public ArrayList<TransactionInfo> getTransactionHistory(String cardNumber, AccountType accountType)
+	public ArrayList<TransactionInfo> getTransactionHistory(String accountNumber)
 	{
-		if (!cardNumber.equals(TestVariables.availableAccountHolderNumber))
+		if (!accountNumber.equals(TestVariables.sendingAccountNum))
 		{
-			System.err.println("GET TRANSACTIONS TEST FAILED: CARD NUMBER DOESN'T MATCH");
-			assert false;
-		}
-		
-		if (!(accountType == TestVariables.accountType))
-		{
-			System.err.println("GET TRANSACTIONS TEST FAILED: ACCOUNT TYPE DOESN'T MATCH");
+			System.err.println("GET TRANSACTIONS TEST FAILED: ACCOUNT NUMBER DOESN'T MATCH");
 			assert false;
 		}
 		

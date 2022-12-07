@@ -306,9 +306,9 @@ public interface IBankingClientController
 	
 	/**
 	 * tells the server to fetch all of the transactions for a specific account
-	 * @param accountType the account type (chequing, savings, etc.)
+	 * @param accountNumber the account number of the account
 	 */
-	public void getTransactions(AccountType accountType);
+	public void getTransactions(String accountNumber);
 	
 	/**
 	 * handles the transactions received by the server

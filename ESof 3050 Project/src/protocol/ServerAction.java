@@ -43,10 +43,10 @@ public enum ServerAction
 	
 	/**
 	 * TODO
-	 * The tells the server to pay a bill. This takes the recipient, and the amount that needs to be paid.
-	 * The server returns SUCCESS and the new balance if the payment goes thro. 
+	 * The tells the server to pay a bill. This takes the recipient, and the amount that needs to be paid,
+	 * and an account number. The server returns SUCCESS and the new balance if the payment goes through. 
 	 */
-	PAY_BILL,
+	MANAGE_BILL,
 	
 	/**
 	 * This tells the server to create a new account holder. This takes an email address, and a pin
@@ -93,6 +93,13 @@ public enum ServerAction
 	 */
 	SETUP_MORTGAGE_ACCOUNT,
 	
+	/**
+	 * TODO
+	 * This tells a server to setup the information about a line of credit account. This takes a
+	 * credit limit and an interest rate. The server will return SUCCESS
+	 * if the information was added successfully.
+	 */
+	SETUP_LINE_OF_CREDIT_ACCOUNT,
 	
 	/**
 	 * This tells the server to create a new person. This takes a first name, a last name, a social

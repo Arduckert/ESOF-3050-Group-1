@@ -72,7 +72,7 @@ public class ClientTestDriver implements IBankingClientController
 			transfer(TestVariables.transferType, TestVariables.sendingAccountNum, TestVariables.unavailableReceivingAccountNum, TestVariables.transferAmount);
 			
 			//get transactions test
-			getTransactions(TestVariables.accountType);
+			getTransactions(TestVariables.sendingAccountNum);
 			
 			//teller login request tests. 
 			sendTellerLoginRequest(TestVariables.availableTellerID, TestVariables.availableTellerPassword); //should return true
@@ -878,13 +878,13 @@ public class ClientTestDriver implements IBankingClientController
 	
 	/**
 	 * tells the server to fetch all of the transactions for a specific account
-	 * @param accountType the account type (chequing, savings, etc.)
+	 * @param accountNumber the account number of the account
 	 */
-	public void getTransactions(AccountType accountType)
+	public void getTransactions(String accountNumber)
 	{
 		try
 		{
-			bc.getTransactions(accountType);
+			bc.getTransactions(accountNumber);
 		}
 		catch (IOException e)
 		{
