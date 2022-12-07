@@ -221,12 +221,17 @@ public class BankController implements IBankController
 	 * delete an existing account holder
 	 */
 	@Override												         /*for creating a record*/
-	public boolean deleteAccountHolder(String accountNumber, String tellerEmpID)
+	public boolean deleteAccountHolder(String cardNumber, String tellerEmpID)
 	{
-		int num = stringToInt(accountNumber);
+		int num = stringToInt(cardNumber);
+		int id = stringToInt(tellerEmpID);
+		Teller t = searchTeller(id);
 		AccountHolder a = searchAccountHolder(num);
 		if(a.accountList.isEmpty()) { //if the accountHolder has no open accounts
-			accountList.remove(a);
+			accountHolderList.remove(a);
+			
+			CustomerRecord customerRecord = new CustomerRecord(t, "removed", a);
+			recordList.add(customerRecord);
 			return true;
 		}
 		return false;
@@ -314,7 +319,7 @@ public class BankController implements IBankController
 	 */
 	
 	@Override
-	public boolean createAccount(AccountType accountType, String cardNumber)//savings or chequing
+	public boolean createAccount(AccountType accountType, String cardNumber, String tellerID)//savings or chequing
 	{
 		int cardNum = stringToInt(cardNumber);
 		AccountHolder a = searchAccountHolder(cardNum);
@@ -326,6 +331,8 @@ public class BankController implements IBankController
 		case CHEQUING:
 			ChequingAccount cAccount = new ChequingAccount(accountNum,a);
 			accountList.add(cAccount);
+			
+			
 			return true;
 		
 		case SAVINGS:
@@ -347,7 +354,7 @@ public class BankController implements IBankController
 	 * @return true if the account was deleted successfully, false if not
 	 */
 	@Override
-	public boolean deleteAccount(String accountNumber)
+	public boolean deleteAccount(String accountNumber, String tellerID)
 	{
 		int num = stringToInt(accountNumber);
 		Account account = searchAccount(num);

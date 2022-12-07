@@ -572,7 +572,7 @@ public class BankingServer extends AbstractServer
 		if (client.getInfo("LoginType") == LoginType.TELLER)
 		{
 			//success if the the account was created, false if not
-			MessageStatus status = bc.createAccount(AccountType.valueOf(cp.GetParameters().get(0)), cp.GetParameters().get(1)) ? MessageStatus.SUCCESS : MessageStatus.FAIL;	
+			MessageStatus status = bc.createAccount(AccountType.valueOf(cp.GetParameters().get(0)), cp.GetParameters().get(1), cp.GetParameters().get(2)) ? MessageStatus.SUCCESS : MessageStatus.FAIL;	
 			ServerProtocol sp = new ServerProtocol(status, Datatype.ACCOUNT_CREATION_RESULT);
 			
 			try
@@ -610,7 +610,7 @@ public class BankingServer extends AbstractServer
 		if (client.getInfo("LoginType") == LoginType.TELLER)
 		{
 			//success if the the account was deleted, false if not
-			MessageStatus status = bc.deleteAccount(cp.GetParameters().get(0)) ? MessageStatus.SUCCESS : MessageStatus.FAIL;	
+			MessageStatus status = bc.deleteAccount(cp.GetParameters().get(0),cp.GetParameters().get(1)) ? MessageStatus.SUCCESS : MessageStatus.FAIL;	
 			ServerProtocol sp = new ServerProtocol(status, Datatype.ACCOUNT_DELETION_RESULT);
 			
 			try

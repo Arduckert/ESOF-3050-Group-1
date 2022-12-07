@@ -1687,11 +1687,11 @@ public class BankingClientController extends Application implements IBankingClie
 	 * @param cardNumber the account holder's card number
 	 */
 	@Override
-	public void createAccount(AccountType accountType, String cardNumber)
+	public void createAccount(AccountType accountType, String cardNumber, String tellerID)
 	{
 		try
 		{
-			bc.createAccount(accountType, cardNumber);
+			bc.createAccount(accountType, cardNumber, tellerID);
 		}
 		catch (IOException e)
 		{
@@ -1731,11 +1731,11 @@ public class BankingClientController extends Application implements IBankingClie
 	 * @param cardNumber the account holder's card number
 	 */
 	@Override
-	public void deleteAccount(String accountNumber)
+	public void deleteAccount(String accountNumber, String tellerID)
 	{
 		try
 		{
-			bc.deleteAccount(accountNumber);
+			bc.deleteAccount(accountNumber,tellerID);
 		}
 		catch (IOException e)
 		{

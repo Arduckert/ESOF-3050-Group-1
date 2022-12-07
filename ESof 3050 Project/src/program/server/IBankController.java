@@ -115,7 +115,7 @@ public interface IBankController
 	 * @param cardNumber
 	 * @return true if the account was created successfully, false if not
 	 */
-	public boolean createAccount(AccountType accountType, String cardNumber);
+	public boolean createAccount(AccountType accountType, String cardNumber, String tellerID);
 	
 	/**
 	 * Deletes an account and removes it from an account holder
@@ -123,7 +123,7 @@ public interface IBankController
 	 * @param cardNumber
 	 * @return true if the account was deleted successfully, false if not
 	 */
-	public boolean deleteAccount(String cardNumber);
+	public boolean deleteAccount(String cardNumber, String tellerID);
 	
 	/**
 	 * Returns information about a specific account from a specific account holder

@@ -222,7 +222,7 @@ public interface IBankingClientController
 	 * @param accountType account type
 	 * @param cardNumber the account holder's card number
 	 */
-	public void createAccount(AccountType accountType, String cardNumber);
+	public void createAccount(AccountType accountType, String cardNumber, String tellerID);
 	
 	/**
 	 * Handles the result of an account being created
@@ -241,7 +241,7 @@ public interface IBankingClientController
 	 * @param accountType account type
 	 * @param cardNumber the account holder's card number
 	 */
-	public void deleteAccount(String cardNumber);
+	public void deleteAccount(String cardNumber, String tellerID);
 	
 	/**
 	 * Handles the result of an account being deleted

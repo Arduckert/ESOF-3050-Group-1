@@ -518,9 +518,9 @@ public class BankingClient extends AbstractClient
 	 * @param accountType account type
 	 * @param cardNumber the account holder's card number
 	 */
-	public void createAccount(AccountType accountType, String cardNumber) throws IOException
+	public void createAccount(AccountType accountType, String cardNumber, String tellerID) throws IOException
 	{
-		ClientProtocol cp = new ClientProtocol(ServerAction.CREATE_ACCOUNT, accountType.toString(), cardNumber);
+		ClientProtocol cp = new ClientProtocol(ServerAction.CREATE_ACCOUNT, accountType.toString(), cardNumber, tellerID);
 		sendToServer(cp);
 	}
 	
@@ -552,9 +552,9 @@ public class BankingClient extends AbstractClient
 	 * @param accountType account type
 	 * @param cardNumber the account holder's card number
 	 */
-	public void deleteAccount(String accountNumber) throws IOException
+	public void deleteAccount(String accountNumber, String tellerID) throws IOException
 	{
-		ClientProtocol cp = new ClientProtocol(ServerAction.DELETE_ACCOUNT, accountNumber);
+		ClientProtocol cp = new ClientProtocol(ServerAction.DELETE_ACCOUNT, accountNumber, tellerID);
 		sendToServer(cp);
 	}
 	
