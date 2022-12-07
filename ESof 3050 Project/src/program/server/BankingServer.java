@@ -869,7 +869,7 @@ public class BankingServer extends AbstractServer
 		if (client.getInfo("LoginType") == LoginType.ACCOUNTHOLDER)
 		{
 			//success if the the bill was managed, fail if not
-			MessageStatus status = bc.manageBill(BillAction.valueOf(cp.GetParameters().get(0)), cp.GetParameters().get(1)) ? MessageStatus.SUCCESS : MessageStatus.FAIL;	
+			MessageStatus status = bc.manageBill(BillAction.valueOf(cp.GetParameters().get(0)), cp.GetParameters().get(1), cp.GetParameters().get(2), cp.GetParameters().get(3)) ? MessageStatus.SUCCESS : MessageStatus.FAIL;	
 			sp = new ServerProtocol(status, Datatype.BILL_MANAGE_RESULT);
 		}
 		else

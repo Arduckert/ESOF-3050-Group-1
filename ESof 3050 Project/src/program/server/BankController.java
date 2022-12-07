@@ -620,9 +620,19 @@ public class BankController implements IBankController
 	}
 	
 	@Override
-	public boolean manageBill(BillAction billAction, String locAccountNumber) {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean manageBill(BillAction billAction, String locAccountNumber, String amount, String receiver) {
+		int accountNum = stringToInt(locAccountNumber);
+		LineOfCreditAccount account = (LineOfCreditAccount)searchAccount(accountNum);
+		
+		if(account == null) {
+			return false; //account not found
+		}
+		switch(billAction) {
+		case CREATE_BILL:
+			
+		
+		
+		}
 	}
 
 	@Override
@@ -665,10 +675,25 @@ public class BankController implements IBankController
 		int accountNumber = generateAccountNumber();
 		
 		AccountHolder accountHolder = searchAccountHolder(cardNum);
+		Teller teller = searchTeller(id);
 		
+		if(accountHolder == null) {
+			return null; //not found
+		}
 		
+		if(teller == null) {
+			return null; //not found teller
+		}
 		
-		return null;
+		LineOfCreditAccount account = new LineOfCreditAccount(accountNumber,accountHolder,ir,creditLim);
+		accountList.add(account);
+		
+		accountHolder.addAccount(account);
+		
+		AccountRecord record = new AccountRecord(teller, "created", account);
+		recordList.add(record);
+		
+		return account.getAccountNum() + "";
 	}
 	
 	

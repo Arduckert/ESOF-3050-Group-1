@@ -1965,7 +1965,7 @@ public class BankingClientController extends Application implements IBankingClie
 	}
 
 	@Override
-	public void manageBill(BillAction billAction, String locAccountNumber) {
+	public void manageBill(BillAction billAction, String locAccountNumber, String amount, String receiver) {
 		// TODO Auto-generated method stub
 		
 	}

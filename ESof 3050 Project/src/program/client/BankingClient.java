@@ -721,9 +721,9 @@ public class BankingClient extends AbstractClient
 	 * @param billAction the action to perform (create a new bill or delete an existing bill)
 	 * @param locAccountNumber the account number of the line of credit account
 	 */
-	public void manageBill(BillAction billAction, String locAccountNumber) throws IOException
+	public void manageBill(BillAction billAction, String locAccountNumber, String amount, String receiver) throws IOException
 	{
-		ClientProtocol cp = new ClientProtocol(ServerAction.MANAGE_BILL, billAction.toString(), locAccountNumber);
+		ClientProtocol cp = new ClientProtocol(ServerAction.MANAGE_BILL, billAction.toString(), locAccountNumber, amount, receiver);
 		sendToServer(cp);
 	}
 	

@@ -335,7 +335,7 @@ public interface IBankingClientController
 	 * @param billAction the action to perform (create a new bill or delete an existing bill)
 	 * @param locAccountNumber the account number of the line of credit account
 	 */
-	public void manageBill(BillAction billAction, String locAccountNumber);
+	public void manageBill(BillAction billAction, String locAccountNumber, String amount, String receiver);
 	
 	/**
 	 * Handles the result of the management of a bill

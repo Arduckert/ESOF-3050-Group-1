@@ -150,7 +150,7 @@ public interface IBankController
 	 * @param locAccountNumber the account number of the line of credit account
 	 * @return true if the action was performed successfully, false if not
 	 */
-	public boolean manageBill(BillAction billAction, String locAccountNumber);
+	public boolean manageBill(BillAction billAction, String locAccountNumber, String amount, String receiver);
 	
 	/**
 	 * gets the transaction history of a specific account
