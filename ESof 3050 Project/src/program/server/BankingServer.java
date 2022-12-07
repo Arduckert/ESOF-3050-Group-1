@@ -733,7 +733,7 @@ public class BankingServer extends AbstractServer
 		if (client.getInfo("LoginType") == LoginType.ACCOUNTHOLDER)
 		{
 			//gets all the transactions from the banking server
-			ArrayList<TransactionInfo> info = bc.getTransactionHistory((String)client.getInfo("AccNum"), AccountType.valueOf(cp.GetParameters().get(0)));
+			ArrayList<TransactionInfo> info = bc.getTransactionHistory((String)client.getInfo("AccNum"));
 			
 			ServerProtocol sp = new ServerProtocol(MessageStatus.SUCCESS, Datatype.TRANSACTION);
 			

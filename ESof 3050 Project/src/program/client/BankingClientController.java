@@ -14,6 +14,8 @@ import javafx.stage.Stage;
 import src.program.structs.AccountHolderInfo;
 import src.program.structs.AccountInfo;
 import src.program.structs.AccountType;
+import src.program.structs.RecordInfo;
+import src.program.structs.TransactionInfo;
 import src.program.structs.TransferType;
 import javafx.event.ActionEvent;
 
@@ -1846,4 +1848,6 @@ public class BankingClientController extends Application implements IBankingClie
 			});
 		}
 	}
+
+
 }

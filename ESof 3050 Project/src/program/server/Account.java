@@ -1,12 +1,13 @@
 package src.program.server;
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 public class Account {
 	private double balance;
 	private int accountNum;
 	private LocalDate dateOpened;
 	private AccountHolder accountHolder;
-	//List<TransactionRecord> accountHistory = new ArrayList<TransactionRecord>();
+	ArrayList<TransactionRecord> accountHistory = new ArrayList<TransactionRecord>();
 
 //Constructor
 	public Account(int accountNum, AccountHolder holder) {
@@ -15,6 +16,10 @@ public class Account {
 		this.dateOpened = LocalDate.now();
 		this.accountHolder = holder;
 		//add to list in banking controller or do it in createAccount method
+	}
+	
+	public void addTransaction(TransactionRecord t) {
+		this.accountHistory.add(t);
 	}
 //Setters
 	public void setBalance(double x) {
@@ -32,5 +37,8 @@ public class Account {
 	}
 	public AccountHolder getAccountHolder() {
 		return this.accountHolder;
+	}
+	public ArrayList<TransactionRecord> getRecords(){
+		return this.accountHistory;
 	}
 }

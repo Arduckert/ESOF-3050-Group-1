@@ -377,7 +377,7 @@ public class BankController implements IBankController
 	 * @return the sender's new balance after the transfer is complete
 	 */
 	@Override
-	public String transfer(TransferType transferType, String sendingAccountNum, String receivingAccountNum, String a)
+	public String transfer(TransferType transferType, String sendingAccountNum, String receivingAccountNum, String a) //make transaction record
 	{
 		//converting from strings
 		int sendingNum = stringToInt(sendingAccountNum);
@@ -404,18 +404,28 @@ public class BankController implements IBankController
 					
 					sender.setBalance(senderNewBalance); //setting the values of the actual account
 					receiver.setBalance(receiverNewBalance);
+					TransactionRecord record = new TransactionRecord(receiver,"transfer",amount); //creates a new transaction record
+					sender.addTransaction(record);
+			
 					return senderNewBalance + "";
 				}
 				if(receiver.getClass() == MortgageAccount.class) {
 					double senderNewBalance = sender.getBalance() - amount;
 					MortgageAccount MA = (MortgageAccount)receiver;
 					MA.payMortgage(amount);
+					TransactionRecord record = new TransactionRecord(receiver,"transfer",amount); //creates a new transaction record
+					sender.addTransaction(record);
+					
 					return senderNewBalance + "";
 				}
 				if(receiver.getClass() == LineOfCreditAccount.class) {
 					double senderNewBalance = sender.getBalance() - amount;
 					LineOfCreditAccount LA = (LineOfCreditAccount)receiver;
 					LA.pay(amount);
+					
+					TransactionRecord record = new TransactionRecord(receiver,"transfer",amount); //creates a new transaction record
+					sender.addTransaction(record);
+					
 					return senderNewBalance + "";
 				}
 			}
@@ -428,6 +438,10 @@ public class BankController implements IBankController
 			if(sender.getBalance() >= amount) { //sufficient funds
 				double newBalance = sender.getBalance() - amount;
 				sender.setBalance(newBalance);
+				
+				TransactionRecord record = new TransactionRecord(sender,"withdraw",amount); //creates a new transaction record
+				sender.addTransaction(record);
+				
 				return newBalance + "";
 			}
 			else {
@@ -436,6 +450,10 @@ public class BankController implements IBankController
 		case DEPOSIT:
 			double newBalance = sender.getBalance() + amount;
 			sender.setBalance(newBalance);
+			
+			TransactionRecord record = new TransactionRecord(sender,"deposit",amount); //creates a new transaction record
+			sender.addTransaction(record);
+			
 			return newBalance + "";
 		}
 		
@@ -478,21 +496,81 @@ public class BankController implements IBankController
 	}
 	
 	@Override
-	public ArrayList<TransactionInfo> getTransactionHistory(String cardNumber, AccountType accountType) {
-		// TODO Auto-generated method stub
-		return null;
+	public ArrayList<TransactionInfo> getTransactionHistory(String accountNumber) {
+		int num = stringToInt(accountNumber);
+		Account account = searchAccount(num);
+		ArrayList<TransactionInfo> infoList = null; //transactionInfo(date,rec,type,amount)
+		
+		if(account == null) {
+			return null; //account not found
+		}
+		
+		for(int i=0; i<account.getRecords().size(); i++) {
+			String date = account.getRecords().get(i).getDate();
+			String recepient = account.getRecords().get(i).getRecepient();
+			String type = account.getRecords().get(i).getType();
+			String amount = account.getRecords().get(i).getAmount();
+			TransactionInfo info = new TransactionInfo(date, recepient, type, amount);
+			infoList.add(info);
+		}
+		return infoList;
 	}
 
 	@Override
 	public ArrayList<RecordInfo> getAccountRecords() {
-		// TODO Auto-generated method stub
-		return null;
+		ArrayList<RecordInfo> infoList = null;
+		String date;
+		String teller;
+		String num;
+		String type = null;
+		
+		for(int i=0; i<recordList.size(); i++) {//iterate through recordList
+			if(recordList.get(i).getClass() == AccountRecord.class) {
+				date = recordList.get(i).getRecordDate(); //String of account date
+				teller = recordList.get(i).getTeller().getEmpNum() + ""; //string of teller ID
+				if(recordList.get(i).getAction().equals("created")){
+					type = "account creation";
+				}
+				if(recordList.get(i).getAction().equals("removed")){
+					type = "account deletion";
+				}
+				AccountRecord accountRecord = (AccountRecord)recordList.get(i);
+				num = accountRecord.getAccount().getAccountNum() + ""; //String of Account number
+				
+				RecordInfo info = new RecordInfo(date,teller,num,type);
+				infoList.add(info);		
+			}	
+		}
+		return infoList;
 	}
 
 	@Override
 	public ArrayList<RecordInfo> getCustomerRecords() {
-		// TODO Auto-generated method stub
-		return null;
+		ArrayList<RecordInfo> infoList = null;
+		String date;
+		String teller;
+		String num;
+		String type = null;
+		
+		for(int i=0; i<recordList.size(); i++) {//iterate through recordList
+			if(recordList.get(i).getClass() == CustomerRecord.class) {
+				date = recordList.get(i).getRecordDate(); //String of account date
+				teller = recordList.get(i).getTeller().getEmpNum() + ""; //string of teller ID
+				if(recordList.get(i).getAction().equals("created")){
+					type = "customer creation";
+				}
+				if(recordList.get(i).getAction().equals("removed")){
+					type = "customer deletion";
+				}
+				CustomerRecord customerRecord = (CustomerRecord)recordList.get(i);
+				num = customerRecord.getAccountHolder().getCardNum() + ""; //String of Card number
+				
+				RecordInfo info = new RecordInfo(date,teller,num,type);
+				infoList.add(info);		
+			}	
+		}
+		return infoList;
+		
 	}
 	
 	

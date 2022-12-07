@@ -13,7 +13,7 @@ public class RecordInfo
 	public String tellerEmpID;
 	
 	/**
-	 * the account number of either the account holder for a customer record
+	 * the card number of either the account holder for a customer record
 	 * or the account number of the account for an account record
 	 */
 	public String accountNumber;

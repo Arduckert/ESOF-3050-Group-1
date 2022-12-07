@@ -149,7 +149,7 @@ public interface IBankController
 	 * @param accountType the account to fetch from (chequing, savings, etc.)
 	 * @return a list of information about each transaction
 	 */
-	public ArrayList<TransactionInfo> getTransactionHistory(String cardNumber, AccountType accountType);
+	public ArrayList<TransactionInfo> getTransactionHistory(String accountNumber);
 	
 	/**
 	 * gets all the account records from the server

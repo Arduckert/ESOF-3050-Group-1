@@ -14,9 +14,17 @@ public abstract class Record {
 	public Teller getTeller() {
 		return this.teller;
 	}
+	public String getTellerString() {
+		String fName = this.getTeller().getPerson().getFName();
+		String lName = this.getTeller().getPerson().getLName();
+		return String.format("%s %s",fName,lName);
+	}
 	
 	public String getRecordDate() {
 		return String.format("%s",recordDate);
+	}
+	public String getAction() {
+		return this.action;
 	}
 	
 	@Override

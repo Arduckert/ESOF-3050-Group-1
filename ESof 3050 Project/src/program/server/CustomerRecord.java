@@ -8,6 +8,9 @@ public class CustomerRecord extends Record {
 		this.accountHolder = ah;
 	}
 	
+	public AccountHolder getAccountHolder() {
+		return this.accountHolder;
+	}
 	@Override
 	public String toString() {
 		return String.format("%s Account Holder: %s %s. Card Number: %d",super.toString(), accountHolder.getPerson().getFName(), accountHolder.getPerson().getLName(), accountHolder.getCardNum());

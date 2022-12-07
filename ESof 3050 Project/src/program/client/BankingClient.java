@@ -652,9 +652,9 @@ public class BankingClient extends AbstractClient
 	 * tells the server to fetch all of the transactions for a specific account
 	 * @param accountType the account type (chequing, savings, etc.)
 	 */
-	public void getTransactions(AccountType accountType) throws IOException
+	public void getTransactions() throws IOException
 	{
-		ClientProtocol cp = new ClientProtocol(ServerAction.GET_ACCOUNT_TRANSACTIONS, accountType.toString());
+		ClientProtocol cp = new ClientProtocol(ServerAction.GET_ACCOUNT_TRANSACTIONS);
 		sendToServer(cp);
 	}
 	

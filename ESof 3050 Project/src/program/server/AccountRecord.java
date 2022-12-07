@@ -8,6 +8,9 @@ public class AccountRecord extends Record{
 		this.account = a;
 	}
 	
+	public Account getAccount() {
+		return this.account;
+	}
 	@Override
 	public String toString() {
 		return String.format("%s Account: %s",super.toString(), account.getAccountNum());

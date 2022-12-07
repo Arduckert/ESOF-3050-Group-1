@@ -14,6 +14,21 @@ public class TransactionRecord {
 		this.amount = x;
 	}
 	
+	//getters
+	public String getDate() {
+		return String.format("s",date);
+	}
+	public String getAmount() {
+		return amount + "";
+	}
+	public String getRecepient() {
+		int recepientAccNum = this.recepient.getAccountNum();
+		return recepientAccNum + "";
+	}
+	public String getType() {
+		return this.transactionType;
+	}
+	
 	public String printTransaction() {
 		switch(transactionType) {
 		case "deposit":
