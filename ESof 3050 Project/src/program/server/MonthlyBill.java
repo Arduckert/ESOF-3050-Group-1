@@ -15,4 +15,7 @@ public class MonthlyBill {
 	public double getAmount() {
 		return this.amount;
 	}
+	public String getReceiver() {
+		return this.receivingParty;
+	}
 }

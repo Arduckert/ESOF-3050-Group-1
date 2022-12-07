@@ -6,6 +6,7 @@ import src.program.structs.AccountHolderInfo;
 import src.program.structs.AccountInfo;
 import src.program.structs.AccountType;
 import src.program.structs.BillAction;
+import src.program.structs.InputType;
 import src.program.structs.RecordInfo;
 import src.program.structs.TransactionInfo;
 import src.program.structs.TransferType;
@@ -171,8 +172,50 @@ public class BankController implements IBankController
 	 */
 	
 	@Override
-	public AccountHolderInfo findAccountHolder(String email)
+	public AccountHolderInfo findAccountHolder(InputType inputType, String parameter)
 	{
+		AccountHolderInfo info = null;
+		AccountHolder holder = null;
+		
+		switch(inputType) {
+		case EMAIL:
+			for(int i=0; i < accountHolderList.size(); i++) {  //check all account holders
+				if(accountHolderList.get(i).getEmail().equals(parameter)) {
+					holder = accountHolderList.get(i);
+				}
+			}
+		case CARD_NUMBER:
+			int cardNum = stringToInt(parameter);
+			for(int i=0; i < accountHolderList.size(); i++) {  //check all account holders
+				if(accountHolderList.get(i).getCardNum() == cardNum) {
+					holder = accountHolderList.get(i);
+				}	
+			}
+		case SIN:
+			int sin = stringToInt(parameter);
+			for(int i=0; i < accountHolderList.size(); i++) {  //check all account holders
+				if(accountHolderList.get(i).getPerson().getSIN() == sin) {
+					holder = accountHolderList.get(i);
+				}	
+			}
+		}
+			
+		if(holder == null) {
+			return null; // holder not found
+		}
+		
+		String email = holder.getEmail();
+		String card = holder.getCardNum() + "";
+		String pin = holder.getPin() + "";
+		String name = String.format("%s %s", holder.getPerson().getFName(), holder.getPerson().getLName());
+		String sNum = holder.getPerson().getSIN() + "";
+		
+		info = new AccountHolderInfo(email, card, pin, name, sNum);
+		return info;
+				
+	}
+	
+		/*
 		AccountHolder accountHolder = null;
 		for(int i=0; i < accountHolderList.size(); i++) {  //check all account holders
 			if(accountHolderList.get(i).getEmail().equals(email)) {
@@ -187,6 +230,7 @@ public class BankController implements IBankController
 		String pin = accountHolder.getPin() + "";
 		
 		return new AccountHolderInfo(email, cardNumber, pin);
+		*/
 	}
 
 	/**
@@ -620,8 +664,10 @@ public class BankController implements IBankController
 	}
 	
 	@Override
-	public boolean manageBill(BillAction billAction, String locAccountNumber, String amount, String receiver) {
+	public boolean manageBill(BillAction billAction, String locAccountNumber, String a, String receiver) {
 		int accountNum = stringToInt(locAccountNumber);
+		double amount = Double.valueOf(a);
+		
 		LineOfCreditAccount account = (LineOfCreditAccount)searchAccount(accountNum);
 		
 		if(account == null) {
@@ -629,10 +675,19 @@ public class BankController implements IBankController
 		}
 		switch(billAction) {
 		case CREATE_BILL:
+			MonthlyBill bill = new MonthlyBill(amount,receiver,account);
+			account.addBill(bill);
+			return true;
 			
-		
-		
+		case DELETE_BILL:
+			MonthlyBill mBill = account.searchBill(receiver);
+			if(mBill == null) {
+				return false; //bill not found
+			}
+			account.removeBill(mBill);
+			return true;
 		}
+		return false;
 	}
 
 	@Override

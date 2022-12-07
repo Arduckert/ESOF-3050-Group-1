@@ -22,10 +22,36 @@ public class LineOfCreditAccount extends Account {
 		//do nothing
 	}
 	
+	public void addAllBills() { //do this every month or time increment
+		double balance = this.getBalance();
+		for(int i=0; i<bills.size(); i++) {
+			balance = balance + bills.get(i).getAmount();
+		}
+		
+		this.setBalance(balance);
+	}
+	
 	public void pay(double x) {
 		if((this.getBalance() - x) >= 0) {
 			this.setBalance((this.getBalance() - x));
 		}
+	}
+	
+	public MonthlyBill searchBill(String receiver) {
+		for(int i=0; i<bills.size(); i++) {
+			if(bills.get(i).getReceiver().equals(receiver)) {
+				return bills.get(i);
+			}
+		}
+		return null;
+	}
+	
+	public void addBill(MonthlyBill bill) {
+		this.bills.add(bill);
+	}
+	
+	public void removeBill(MonthlyBill bill) {
+		this.bills.remove(bill);
 	}
 	
 
