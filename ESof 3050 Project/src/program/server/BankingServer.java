@@ -686,14 +686,12 @@ public class BankingServer extends AbstractServer
 		//only account holders can transfer funds from one account to another
 		if (client.getInfo("LoginType") == LoginType.ACCOUNTHOLDER)
 		{
-			//gets the old balance
-			String oldBalance = cp.GetParameters().get(3);
-			
+
 			//gets the new balance from the bank controller
-			String newBalance = bc.transfer(AccountType.valueOf(cp.GetParameters().get(0)), TransferType.valueOf(cp.GetParameters().get(1)), (String)client.getInfo("AccNum"), cp.GetParameters().get(2), cp.GetParameters().get(3));	
+			String newBalance = bc.transfer(TransferType.valueOf(cp.GetParameters().get(0)), cp.GetParameters().get(1), cp.GetParameters().get(2), cp.GetParameters().get(3));	
 			
 			//sends success if the new balance is different from the old balance
-			if (!oldBalance.equals(newBalance))
+			if (!newBalance.equals(null))
 			{
 				sp = new ServerProtocol(MessageStatus.SUCCESS, Datatype.TRANSFER_BALANCE);
 				

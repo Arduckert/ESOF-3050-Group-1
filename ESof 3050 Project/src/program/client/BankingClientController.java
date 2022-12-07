@@ -1629,11 +1629,11 @@ public class BankingClientController extends Application implements IBankingClie
 	 * @param recipientEmail the email address of the recipient (if doing a transfer)
 	 * @param amount the amount to send
 	 */
-	public void transfer(AccountType accountType, TransferType transferType, String recipientEmail, String amount)
+	public void transfer(TransferType transferType, String sendingAccountNum, String recipientAccountNum, String amount)
 	{
 		try
 		{
-			bc.transfer(accountType, transferType, recipientEmail, amount);
+			bc.transfer(transferType, sendingAccountNum, recipientAccountNum, amount);
 		}
 		catch (IOException e)
 		{

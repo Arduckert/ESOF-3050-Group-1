@@ -616,9 +616,9 @@ public class BankingClient extends AbstractClient
 	 * @param recipientEmail the email address of the recipient (if doing a transfer)
 	 * @param amount the amount to send
 	 */
-	public void transfer(AccountType accountType, TransferType transferType, String recipientEmail, String amount) throws IOException
+	public void transfer(TransferType transferType, String sendingAccountNum, String recipientAccountNum, String amount) throws IOException
 	{
-		ClientProtocol cp = new ClientProtocol(ServerAction.TRANSFER, accountType.toString(), transferType.toString(), recipientEmail, amount);
+		ClientProtocol cp = new ClientProtocol(ServerAction.TRANSFER, transferType.toString(), sendingAccountNum, recipientAccountNum, amount);
 		sendToServer(cp);
 	}
 	

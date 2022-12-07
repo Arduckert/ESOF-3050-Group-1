@@ -142,7 +142,7 @@ public interface IBankController
 	 * @param amount the amount of funds to transfer
 	 * @return the sender's new balance after the transfer is complete
 	 */
-	public String transfer(AccountType accountType, TransferType transferType, String cardNumber, String recipientEmail, String amount);
+	public String transfer(TransferType transferType, String sendingAccountNum, String recipientAccountNum, String amount);
 	
 	/**
 	 * gets the transaction history of a specific account

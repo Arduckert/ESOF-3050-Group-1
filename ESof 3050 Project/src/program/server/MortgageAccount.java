@@ -8,8 +8,8 @@ public class MortgageAccount extends Account{
 	private double monthlyIP;
 	private double monthlyPP;
 	
-	public MortgageAccount(int accountNum, String date, AccountHolder holder, int l, double p, double ir) {
-		super(accountNum, date, holder);
+	public MortgageAccount(int accountNum, AccountHolder holder, int l, double p, double ir) {
+		super(accountNum, holder);
 		this.mortgageLength = l;
 		this.interestRate = ir;
 		this.principleAmount = p;

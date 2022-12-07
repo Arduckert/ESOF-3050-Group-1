@@ -3,8 +3,8 @@ package src.program.server;
 public class ChequingAccount extends Account {
 
 	//Constructor
-	public ChequingAccount(int accountNum, String date, AccountHolder holder) {
-		super(accountNum, date, holder);
+	public ChequingAccount(int accountNum, AccountHolder holder) {
+		super(accountNum, holder);
 	}
 	
 	public void deposit(double x) {
