@@ -196,10 +196,9 @@ public class ServerTestDriver implements IBankController
 	 * @return true if the account was deleted successfully, false if not
 	 */
 	@Override
-	public boolean deleteAccount(AccountType accountType, String cardNumber)
+	public boolean deleteAccount(String accountNumber)
 	{
-		return accountType == TestVariables.accountType
-				&& cardNumber.equals(TestVariables.accountCardNumber);
+		return accountNumber.equals(TestVariables.accountCardNumber);
 	}
 	
 	/**

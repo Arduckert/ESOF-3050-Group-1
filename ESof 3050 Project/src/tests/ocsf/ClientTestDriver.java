@@ -119,8 +119,8 @@ public class ClientTestDriver implements IBankingClientController
 			createAccount(TestVariables.accountType, TestVariables.availableCreateAccountHolderEmail); //handler should return false
 			
 			//delete account test
-			deleteAccount(TestVariables.accountType, TestVariables.accountCardNumber); //handler should return true
-			deleteAccount(TestVariables.accountType, TestVariables.availableCreateAccountHolderEmail); //handler should return false
+			deleteAccount(TestVariables.accountCardNumber); //handler should return true
+			deleteAccount(TestVariables.availableCreateAccountHolderEmail); //handler should return false
 			
 			//get account test
 			getAccounts(TestVariables.availableAccountHolderNumber);
@@ -738,11 +738,11 @@ public class ClientTestDriver implements IBankingClientController
 	 * @param cardNumber the account holder's card number
 	 */
 	@Override
-	public void deleteAccount(AccountType accountType, String cardNumber)
+	public void deleteAccount(String accountNumber)
 	{
 		try
 		{
-			bc.deleteAccount(accountType, cardNumber);
+			bc.deleteAccount(accountNumber);
 		}
 		catch (IOException e)
 		{
