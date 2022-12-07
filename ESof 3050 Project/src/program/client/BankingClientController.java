@@ -15,6 +15,7 @@ import src.program.structs.AccountHolderInfo;
 import src.program.structs.AccountInfo;
 import src.program.structs.AccountType;
 import src.program.structs.BillAction;
+import src.program.structs.InputType;
 import src.program.structs.RecordInfo;
 import src.program.structs.TransactionInfo;
 import src.program.structs.TransferType;
@@ -93,6 +94,8 @@ public class BankingClientController extends Application implements IBankingClie
 	private static String sendingAccount;
 	private static String receivingAccount;
 	private static String amount;
+	
+	private static String newAccount;
 	
 	
 	
@@ -647,7 +650,11 @@ public class BankingClientController extends Application implements IBankingClie
     	searchParameter=TellerSearchParameterChoiceBox.getValue();
     	searchValue=TellerSearchValueTextField.getText();
     	if(searchParameter.equals("Email"))
-    		sendFindAccountHolderByEmailRequest(searchValue);
+    		sendFindAccountHolderRequest(InputType.EMAIL,searchValue);
+    	else if(searchParameter.equals("SIN"))
+    		sendFindAccountHolderRequest(InputType.SIN,searchValue);
+    	else if(searchParameter.equals("Card Number"))
+    		sendFindAccountHolderRequest(InputType.CARD_NUMBER,searchValue);
     	switchToTellerSearchResultScreen(event);
     	//TODO add other search parameters
     }
@@ -826,9 +833,11 @@ public class BankingClientController extends Application implements IBankingClie
 
     @FXML
     void SelectAccountHolderButtonPressed(ActionEvent event) throws Exception{
+    	if(CardNumberListView.getSelectionModel().getSelectedItem()!=null) {
     	cardNumber=CardNumberListView.getSelectionModel().getSelectedItem().cardNumber;
-    	if(cardNumber!=null)
-    		switchToEditProfileScreen(event);
+    		if(cardNumber!=null)
+    			switchToEditProfileScreen(event);
+    	}
     }
   
     //*************************************************************
@@ -1210,6 +1219,9 @@ public class BankingClientController extends Application implements IBankingClie
     	
     	if(TransferAmountConfirmationTextField!=null)
     		TransferAmountConfirmationTextField.setText(amount);
+    	
+    	if(AccountNumberConfirmationTextField!=null)
+    		AccountNumberConfirmationTextField.setText(newAccount);
     }
     
     //Start function
@@ -1438,41 +1450,11 @@ public class BankingClientController extends Application implements IBankingClie
 	
 	/**
 	 * find account holder by email
-	 */
-	@Override
-	public void sendFindAccountHolderByEmailRequest(String email)
-	{
-		try
-		{
-			bc.findAccountHolderByEmail(email);
-		}
-		catch (IOException e)
-		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}			
-	}
+	 *
 
 	/**
 	 * handle find result of the account holder
 	 */
-	@Override
-	public void handleFindAccountHolderByEmailResult(AccountHolderInfo ahi)
-	{
-		// TODO add handle code here
-		
-		if (ahi.getHasInfo())
-		{
-			//show account holder information
-			searchList.add(ahi);
-			if(ahilv!=null)
-				ahilv.getItems().add(ahi);
-		}
-		else
-		{
-			//show not found message
-		}
-	}
 
 	///////////////////////////
 	// CREATE ACCOUNT HOLDER //
@@ -1780,6 +1762,16 @@ public class BankingClientController extends Application implements IBankingClie
 		
 		if (accountNumber != null)
 		{
+			newAccount=accountNumber;
+			Platform.runLater(new Runnable() {
+				@Override
+				public void run() {
+					try {
+						switchToCreateAccountConfirmationScreen(ae);
+					}
+					catch(Exception e) {e.printStackTrace();}
+				}
+			});
 			//account created
 		}
 		else
@@ -1981,6 +1973,8 @@ public class BankingClientController extends Application implements IBankingClie
 				@Override
 				public void run() {
 					try {
+						//TODO get account number
+						//newAccount=isSuccesful;
 						switchToCreateAccountConfirmationScreen(ae);
 					}
 					catch(Exception e) {e.printStackTrace();}
@@ -2024,6 +2018,8 @@ public class BankingClientController extends Application implements IBankingClie
 				@Override
 				public void run() {
 					try {
+						//TODO get account number
+						//newAccount=isSuccesful;
 						switchToCreateAccountConfirmationScreen(ae);
 					}
 					catch(Exception e) {e.printStackTrace();}
@@ -2089,6 +2085,38 @@ public class BankingClientController extends Application implements IBankingClie
 	@Override
 	public void handleCustomerRecords(ArrayList<RecordInfo> customerRecords) {
 		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void sendFindAccountHolderRequest(InputType inputType, String parameter) {
+		// TODO Auto-generated method stub
+		try
+		{
+			bc.findAccountHolder(inputType,parameter);
+		}
+		catch (IOException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}	
+	}
+
+	@Override
+	public void handleFindAccountHolderResult(AccountHolderInfo ahi) {
+		// TODO add handle code here
+		
+			if (ahi.getHasInfo())
+			{
+				//show account holder information
+				searchList.add(ahi);
+				if(ahilv!=null)
+					ahilv.getItems().add(ahi);
+			}
+			else
+			{
+				//show not found message
+			}
 		
 	}
 
