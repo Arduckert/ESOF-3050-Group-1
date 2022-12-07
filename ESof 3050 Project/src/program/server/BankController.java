@@ -366,15 +366,18 @@ public class BankController implements IBankController
 		if(sender == null || receiver == null) { //if the receiver or sender does not exist
 			return null;
 		}
-		
+		if(amount < 0) {
+			return null;
+		}
 		switch (transferType)
 		{
-		case DEPOSIT:
-			if(sender.getBalance() < amount) { //only if the sender has enough money
+		case TRANSFER:
+			if(sender.getBalance() >= amount) { //only if the sender has enough money
 				if(receiver.getClass() == ChequingAccount.class || receiver.getClass() == SavingsAccount.class) { //if the receiver is a savings or chequing account
 					double senderNewBalance = sender.getBalance() - amount;
 					double receiverNewBalance = receiver.getBalance() + amount;
-					sender.setBalance(senderNewBalance);
+					
+					sender.setBalance(senderNewBalance); //setting the values of the actual account
 					receiver.setBalance(receiverNewBalance);
 					return senderNewBalance + "";
 				}
@@ -384,21 +387,33 @@ public class BankController implements IBankController
 					MA.payMortgage(amount);
 					return senderNewBalance + "";
 				}
+				if(receiver.getClass() == LineOfCreditAccount.class) {
+					double senderNewBalance = sender.getBalance() - amount;
+					LineOfCreditAccount LA = (LineOfCreditAccount)receiver;
+					LA.pay(amount);
+					return senderNewBalance + "";
+				}
 			}
 			else {
 				return null; //insufficient funds
 			}
 			
+			
 		case WITHDRAW:
-			//remove money from account
-			break;
-		case TRANSFER:
-			//transfer money to recipient email
+			if(sender.getBalance() >= amount) { //sufficient funds
+				double newBalance = sender.getBalance() - amount;
+				sender.setBalance(newBalance);
+				return newBalance + "";
+			}
+			else {
+				return null;
+			}
+		case DEPOSIT:
+			double newBalance = sender.getBalance() + amount;
+			sender.setBalance(newBalance);
+			return newBalance + "";
 		}
-		
-		//return the new balance after the transfer is complete
-		String newBalance = a;
-		return newBalance;
+		return null;
 	}
 	
 	
