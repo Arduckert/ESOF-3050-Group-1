@@ -1966,9 +1966,9 @@ public class BankingClientController extends Application implements IBankingClie
 	}
 
 	@Override
-	public void handleMortgageAccountSetupResult(boolean isSuccessful) {
+	public void handleMortgageAccountSetupResult(String accNumber) {
 		// TODO Auto-generated method stub
-		if(isSuccessful) {
+		if(accNumber != null) {
 			Platform.runLater(new Runnable() {
 				@Override
 				public void run() {
@@ -2011,9 +2011,9 @@ public class BankingClientController extends Application implements IBankingClie
 	}
 
 	@Override
-	public void handleLineOfCreditSetupResult(boolean isSuccessful) {
+	public void handleLineOfCreditSetupResult(String accNumber) {
 		// TODO Auto-generated method stub
-		if(isSuccessful) {
+		if(accNumber != null) {
 			Platform.runLater(new Runnable() {
 				@Override
 				public void run() {

@@ -639,11 +639,11 @@ public class BankingClient extends AbstractClient
 		//sends the result back to the client
 		if (sp.getMessageStatus() == MessageStatus.SUCCESS)
 		{
-			bcc.handleMortgageAccountSetupResult(true);
+			bcc.handleMortgageAccountSetupResult(sp.GetData().get(0));
 		}
 		else
 		{
-			bcc.handleMortgageAccountSetupResult(false);
+			bcc.handleMortgageAccountSetupResult(sp.GetData().get(0));
 		}
 	}
 	
@@ -671,11 +671,11 @@ public class BankingClient extends AbstractClient
 		//sends the result back to the client
 		if (sp.getMessageStatus() == MessageStatus.SUCCESS)
 		{
-			bcc.handleLineOfCreditSetupResult(true);
+			bcc.handleLineOfCreditSetupResult(sp.GetData().get(0));
 		}
 		else
 		{
-			bcc.handleLineOfCreditSetupResult(false);
+			bcc.handleLineOfCreditSetupResult(sp.GetData().get(0));
 		}
 	}
 	

@@ -285,7 +285,7 @@ public interface IBankingClientController
 	 * handles the result of populating a mortgage account with information
 	 * @param isSuccessful true if the information is populated, false if not
 	 */
-	public void handleMortgageAccountSetupResult(boolean isSuccessful);
+	public void handleMortgageAccountSetupResult(String accNumber);
 	
 	//////////////////////////////////
 	// SETUP LINE OF CREDIT ACCOUNT //
@@ -303,7 +303,7 @@ public interface IBankingClientController
 	 * handles the result of populating a line of credit account with information
 	 * @param isSuccessful true if the information is populated, false if not
 	 */
-	public void handleLineOfCreditSetupResult(boolean isSuccessful);
+	public void handleLineOfCreditSetupResult(String accNumber);
 	
 	//////////////
 	// TRANSFER //
