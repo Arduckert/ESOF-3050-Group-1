@@ -599,8 +599,8 @@ public class BankController implements IBankController
 		Teller testTeller = new Teller(0000,"password",p1);
 		b.addAccountHolder(testAccountHolder);
 		b.addTeller(testTeller);
-		b.createAccount(AccountType.CHEQUING, Integer.toString(12345));
-        b.createAccount(AccountType.SAVINGS, Integer.toString(12345));
+		b.createAccount(AccountType.CHEQUING, Integer.toString(12345),null);
+        b.createAccount(AccountType.SAVINGS, Integer.toString(12345),null);
 		
 		int port = 9950;
 		BankingServer bs = new BankingServer(port, b);
