@@ -429,6 +429,7 @@ public class BankingClientController extends Application implements IBankingClie
     void NewAccountNextButtonPressed(ActionEvent event) throws Exception{
     	if(offline)
     		switchToNewAccountHolderAddressScreen(event);
+    	
     	if(monthTextField.getText().length()==2&&dayTextField.getText().length()==2&&yearTextField.getText().length()==4) {
 			dob=monthTextField.getText()+"/"+dayTextField.getText()+"/"+yearTextField.getText();
 		}
@@ -442,16 +443,21 @@ public class BankingClientController extends Application implements IBankingClie
     		lastName=LastNameTextField.getText();
     	else
     		CreateAccountHolderErrorTextArea.setText("Blank field");
-    	if(!sinTextField.getText().equals(""))
-    		sin=sinTextField.getText();
-    	else
-    		CreateAccountHolderErrorTextArea.setText("Blank field");
+    	try {
+    		Integer.valueOf(sinTextField.getText());
+    		if(!sinTextField.getText().equals(""))
+    			sin=sinTextField.getText();
+    		else
+    			CreateAccountHolderErrorTextArea.setText("Blank field");
+    	}
+    	catch(Exception e) {CreateAccountHolderErrorTextArea.setText("Sin invalid");}
     	if(!emailTextField.getText().equals(""))
     		email=emailTextField.getText();
     	else
     		CreateAccountHolderErrorTextArea.setText("Blank field");
 		if(firstName!=null&&lastName!=null&&sin!=null&&email!=null&&dob!=null)
 			switchToNewAccountHolderAddressScreen(event);
+    	
     }
     
     
