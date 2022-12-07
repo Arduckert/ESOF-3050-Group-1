@@ -36,6 +36,10 @@ public class AccountHolder extends personRole{
 		return this.email;
 	}
 	
+	public List<Account> getAccounts(){
+		return this.accountList;
+	}
+	
 	
 	
 }

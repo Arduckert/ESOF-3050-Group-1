@@ -352,14 +352,17 @@ public class BankController implements IBankController
 		int num = stringToInt(accountNumber);
 		Account account = searchAccount(num);
 		
+		if(account == null) {
+			return false; //account holder not found
+		}
 		if(account.getBalance() > 0) {
 			return false; //money is in account
 		}
-		if(account != null) { //if account holder exists
+		else {
 			accountList.remove(account);
 			return true;
+
 		}
-		return false;
 	}
 	
 
@@ -447,8 +450,31 @@ public class BankController implements IBankController
 	 */
 	@Override
 	public ArrayList<AccountInfo> getAccounts(String cardNumber) {
-		// TODO Auto-generated method stub
-		return null;
+		int num = stringToInt(cardNumber);
+		AccountHolder accountHolder = searchAccountHolder(num);
+		ArrayList<AccountInfo> infoList = null;
+		AccountType type = null;
+		
+		if(accountHolder == null) {
+			return null; //account holder does not exists
+		}
+		for(int i = 0; i < accountHolder.getAccounts().size(); i++) { //iterate through all of the holders accounts
+			if(accountHolder.getAccounts().get(i).getClass() == ChequingAccount.class) {
+				type = AccountType.CHEQUING;
+			}
+			if(accountHolder.getAccounts().get(i).getClass() == SavingsAccount.class) {
+				type = AccountType.SAVINGS;
+			}
+			if(accountHolder.getAccounts().get(i).getClass() == MortgageAccount.class) {
+				type = AccountType.MORTGAGE;
+			}
+			if(accountHolder.getAccounts().get(i).getClass() == LineOfCreditAccount.class) {
+				type = AccountType.LINE_OF_CREDIT;
+			}
+			AccountInfo info = new AccountInfo(type,accountHolder.getAccounts().get(i).getBalance() + "",accountHolder.getAccounts().get(i).getAccountNum() + "");
+			infoList.add(info);
+		}
+		return infoList;
 	}
 	
 	@Override
@@ -482,6 +508,8 @@ public class BankController implements IBankController
 		Teller testTeller = new Teller(0000,"password",p1);
 		b.addAccountHolder(testAccountHolder);
 		b.addTeller(testTeller);
+		b.createAccount(AccountType.CHEQUING, Integer.toString(12345));
+        b.createAccount(AccountType.SAVINGS, Integer.toString(12345));
 		
 		int port = 9950;
 		BankingServer bs = new BankingServer(port, b);
