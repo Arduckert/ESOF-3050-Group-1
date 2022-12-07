@@ -43,15 +43,6 @@ public enum ServerAction
 	
 	/**
 	 * TODO
-	 * The tells the server to transfer money from one account to another. This takes the sending account
-	 * type (chequing, savings, etc.), the receiving account type (chequing, savings, etc.), and the
-	 * amount to transfer.
-	 */
-	TRANSFER_BETWEEN_ACCOUNTS,
-	
-	
-	/**
-	 * TODO
 	 * The tells the server to pay a bill. This takes the recipient, and the amount that needs to be paid.
 	 * The server returns SUCCESS and the new balance if the payment goes thro. 
 	 */
@@ -92,7 +83,7 @@ public enum ServerAction
 	 * account type (chequing, savings, mortgage, or line of credit). The server will return SUCCESS
 	 * and the account information, fail and nothing if not.
 	 */
-	GET_ACCOUNT,
+	GET_ACCOUNTS,
 	
 	/**
 	 * TODO

@@ -260,13 +260,13 @@ public interface IBankingClientController
 	 * @param accountType account type (chequing, savings, etc.)
 	 * @param cardNumber the account holder's card number
 	 */
-	public void getAccount(AccountType accountType, String cardNumber);
+	public void getAccounts(String cardNumber);
 	
 	/**
 	 * Handles the information obtained from the server about an account
 	 * @param accountInfo
 	 */
-	public void handleAccountInformation(AccountInfo accountInfo);
+	public void handleAccountInformation(ArrayList<AccountInfo> accountInfo);
 	
 	////////////////////////////
 	// SETUP MORTGAGE ACCOUNT //
@@ -283,7 +283,7 @@ public interface IBankingClientController
 	 * @param recipientEmail the email address of the recipient (if doing a transfer)
 	 * @param amount the amount to send
 	 */
-	public void transfer(AccountType accountType, TransferType transferType, String recipientEmail, String amount);
+	public void transfer(TransferType transferType, String sendingAccountNum, String recipientAccountNum, String amount);
 	
 	/**
 	 * handles the transfer result

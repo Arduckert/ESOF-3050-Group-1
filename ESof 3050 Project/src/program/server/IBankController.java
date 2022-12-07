@@ -131,11 +131,10 @@ public interface IBankController
 	 * @param cardNumber the account holder's card number
 	 * @return
 	 */
-	public AccountInfo getAccount(AccountType accountType, String cardNumber);
+	public ArrayList<AccountInfo> getAccounts(String cardNumber);
 	
 	/**
 	 * Completes a transfer of funds from one party to another.
-	 * @param accountType the account type (chequing, savings, etc.)
 	 * @param transferType the transfer type (deposit, withdraw, transfer)
 	 * @param cardNumber the sender's card number
 	 * @param recipientEmail the recipient's email address

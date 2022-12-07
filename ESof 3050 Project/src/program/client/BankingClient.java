@@ -572,14 +572,13 @@ public class BankingClient extends AbstractClient
 	/////////////////
 	
 	/**
-	 * Tells the server to get information about a specific account from
+	 * Tells the server to get information about all the accounts from
 	 * a specific account holder
-	 * @param accountType account type (chequing, savings, etc.)
 	 * @param cardNumber the account holder's card number
 	 */
-	public void getAccount(AccountType accountType, String cardNumber) throws IOException
+	public void getAccounts(String cardNumber) throws IOException
 	{
-		ClientProtocol cp = new ClientProtocol(ServerAction.GET_ACCOUNT, accountType.toString(), cardNumber);
+		ClientProtocol cp = new ClientProtocol(ServerAction.GET_ACCOUNTS, cardNumber);
 		sendToServer(cp);
 	}
 	
@@ -589,16 +588,18 @@ public class BankingClient extends AbstractClient
 	 */
 	private void processAccountInformation(ServerProtocol sp)
 	{
-		//sends the account information to the client
-		if (sp.getMessageStatus() == MessageStatus.SUCCESS)
+		//the list to send
+		ArrayList<AccountInfo> accounts = new ArrayList<AccountInfo>();
+		
+		//gets the data of each account and places it into the array list of account info
+		for (int i = 0; i < sp.GetData().size(); i += sp.getSizePerObject())
 		{
-			AccountInfo info = new AccountInfo(AccountType.valueOf(sp.GetData().get(0)), sp.GetData().get(1), sp.GetData().get(2));
-			bcc.handleAccountInformation(info);
+			AccountInfo info = new AccountInfo(AccountType.valueOf(sp.GetData().get(i)), sp.GetData().get(i+1), sp.GetData().get(i+2));
+			accounts.add(info);
 		}
-		else
-		{
-			bcc.handleAccountInformation(new AccountInfo());
-		}
+		
+		//sends the list to the banking client controller
+		bcc.handleAccountInformation(accounts);
 	}
 	
 	////////////////////////////
