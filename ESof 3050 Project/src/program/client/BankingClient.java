@@ -543,9 +543,9 @@ public class BankingClient extends AbstractClient
 	 * @param accountType account type
 	 * @param cardNumber the account holder's card number
 	 */
-	public void deleteAccount(AccountType accountType, String cardNumber) throws IOException
+	public void deleteAccount(String accountNumber) throws IOException
 	{
-		ClientProtocol cp = new ClientProtocol(ServerAction.DELETE_ACCOUNT, accountType.toString(), cardNumber);
+		ClientProtocol cp = new ClientProtocol(ServerAction.DELETE_ACCOUNT, accountNumber);
 		sendToServer(cp);
 	}
 	
