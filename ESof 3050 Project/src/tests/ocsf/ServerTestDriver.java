@@ -5,9 +5,12 @@ import src.program.server.IBankController;
 import src.program.structs.AccountHolderInfo;
 import src.program.structs.AccountInfo;
 import src.program.structs.AccountType;
+import src.program.structs.RecordInfo;
+import src.program.structs.TransactionInfo;
 import src.program.structs.TransferType;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import src.ocsf.server.ConnectionToClient;
 
@@ -247,5 +250,61 @@ public class ServerTestDriver implements IBankController
 			//returns the same balance 
 			return TestVariables.unchangedAmount;
 		}
+	}
+	
+	/**
+	 * gets the transaction history of a specific account
+	 * @param cardNumber the account holder's card number
+	 * @param accountType the account to fetch from (chequing, savings, etc.)
+	 * @return a list of information about each transaction
+	 */
+	public ArrayList<TransactionInfo> getTransactionHistory(String cardNumber, AccountType accountType)
+	{
+		if (!cardNumber.equals(TestVariables.availableAccountHolderNumber))
+		{
+			System.err.println("GET TRANSACTIONS TEST FAILED: CARD NUMBER DOESN'T MATCH");
+			assert false;
+		}
+		
+		if (!(accountType == TestVariables.accountType))
+		{
+			System.err.println("GET TRANSACTIONS TEST FAILED: ACCOUNT TYPE DOESN'T MATCH");
+			assert false;
+		}
+		
+		ArrayList<TransactionInfo> transactions = new ArrayList<TransactionInfo>();
+		transactions.add(TestVariables.transaction1);
+		transactions.add(TestVariables.transaction2);
+		transactions.add(TestVariables.transaction3);
+		return transactions;
+	}
+	
+	/**
+	 * gets all the account records from the server
+	 * @return a list of record info that contains information about each
+	 * account record
+	 */
+	public ArrayList<RecordInfo> getAccountRecords()
+	{
+		ArrayList<RecordInfo> records = new ArrayList<RecordInfo>();
+		records.add(TestVariables.accountRecord1);
+		records.add(TestVariables.accountRecord2);
+		records.add(TestVariables.accountRecord3);
+		return records;
+	}
+	
+	
+	/**
+	 * gets all the customer records from the server
+	 * @return a list of record info that contains information about each
+	 * customer record
+	 */
+	public ArrayList<RecordInfo> getCustomerRecords()
+	{
+		ArrayList<RecordInfo> records = new ArrayList<RecordInfo>();
+		records.add(TestVariables.customerRecord1);
+		records.add(TestVariables.customerRecord2);
+		records.add(TestVariables.customerRecord3);
+		return records;
 	}
 }

@@ -1,7 +1,8 @@
 package src.tests.ocsf;
 
-import src.program.structs.AccountType;
-import src.program.structs.TransferType;
+import java.util.ArrayList;
+
+import src.program.structs.*;
 
 public final class TestVariables
 {
@@ -85,4 +86,19 @@ public final class TestVariables
 	public static final String unchangedAmount = "23.42";
 	public static final String transferRecipient = "tester123@example.com";
 	public static final String senderAccountNumber = "2134325";
+	
+	//GET TRANSACTIONS
+	public static final TransactionInfo transaction1 = new TransactionInfo("1", "2", "3", "4");
+	public static final TransactionInfo transaction2 = new TransactionInfo("5", "6", "7", "8");
+	public static final TransactionInfo transaction3 = new TransactionInfo("9", "10", "1", "12");
+	
+	//GET ACCOUNT RECORDS
+	public static final RecordInfo accountRecord1 = new RecordInfo("13", "14", "15", "16");
+	public static final RecordInfo accountRecord2 = new RecordInfo("17", "18", "19", "20");
+	public static final RecordInfo accountRecord3 = new RecordInfo("21", "22", "23", "24");
+	
+	//GET CUSTOMER RECORDS
+	public static final RecordInfo customerRecord1 = new RecordInfo("25", "26", "27", "28");
+	public static final RecordInfo customerRecord2 = new RecordInfo("29", "30", "31", "32");
+	public static final RecordInfo customerRecord3 = new RecordInfo("33", "34", "35", "36");
 }

@@ -1,6 +1,8 @@
 package src.program.server;
 
 import java.io.IOException;
+import java.util.ArrayList;
+
 import src.ocsf.server.AbstractServer;
 import src.ocsf.server.ConnectionToClient;
 import src.protocol.*;
@@ -68,6 +70,15 @@ public class BankingServer extends AbstractServer
 				break;
 			case TRANSFER:
 				handleTransferRequest(cp, client);
+				break;
+			case GET_ACCOUNT_TRANSACTIONS:
+				handleGetTransactionHistoryRequest(cp, client);
+				break;
+			case GET_ACCOUNT_RECORDS:
+				handleGetAccountRecordsRequest(cp, client);
+				break;
+			case GET_CUSTOMER_RECORDS:
+				handleGetCustomerRecordsRequest(cp, client);
 				break;
 			default:
 				break;
@@ -716,6 +727,129 @@ public class BankingServer extends AbstractServer
 		catch (IOException e)
 		{
 			e.printStackTrace();
-		}	
+		}
+	}
+	
+	/**
+	 * sends a message to the server to retrieve the transaction history of an account
+	 * @param cp
+	 * @param client
+	 */
+	private void handleGetTransactionHistoryRequest(ClientProtocol cp, ConnectionToClient client)
+	{
+		//only account holders can get the transactions from the server
+		if (client.getInfo("LoginType") == LoginType.ACCOUNTHOLDER)
+		{
+			//gets all the transactions from the banking server
+			ArrayList<TransactionInfo> info = bc.getTransactionHistory((String)client.getInfo("AccNum"), AccountType.valueOf(cp.GetParameters().get(0)));
+			
+			ServerProtocol sp = new ServerProtocol(MessageStatus.SUCCESS, Datatype.TRANSACTION);
+			
+			//adds each parameter of each transaction one by one
+			for (int i = 0; i < info.size(); i++)
+			{
+				try
+				{
+					sp.AddData(info.get(i).date, info.get(i).recipient, info.get(i).transactionType, info.get(i).amount);
+				}
+				catch (ParameterException e)
+				{
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			
+			try
+			{
+				//sends the info to the client
+				client.sendToClient(sp);
+			}
+			catch (IOException e)
+			{
+				e.printStackTrace();
+			}
+		}
+	}
+		
+	/**
+	 * sends a message to the server to retrieve the account records on the server
+	 * @param cp
+	 * @param client
+	 */
+	private void handleGetAccountRecordsRequest(ClientProtocol cp, ConnectionToClient client)
+	{
+		//only tellers can get the account records from the server
+		if (client.getInfo("LoginType") == LoginType.TELLER)
+		{
+			//gets all the account records from the banking server
+			ArrayList<RecordInfo> info = bc.getAccountRecords();
+			
+			ServerProtocol sp = new ServerProtocol(MessageStatus.SUCCESS, Datatype.ACCOUNT_RECORD);
+			
+			//adds each parameter of each account record one by one
+			for (int i = 0; i < info.size(); i++)
+			{
+				try
+				{
+					sp.AddData(info.get(i).recordDate, info.get(i).tellerEmpID, info.get(i).accountNumber, info.get(i).recordType);
+				}
+				catch (ParameterException e)
+				{
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			
+			try
+			{
+				//sends the info to the client
+				client.sendToClient(sp);
+			}
+			catch (IOException e)
+			{
+				e.printStackTrace();
+			}
+		}
+	}
+		
+	/**
+	 * sends a message to the server to retrieve the customer records on the server
+	 * @param cp
+	 * @param client
+	 */
+	private void handleGetCustomerRecordsRequest(ClientProtocol cp, ConnectionToClient client)
+	{
+		//only tellers can get the customer records from the server
+		if (client.getInfo("LoginType") == LoginType.TELLER)
+		{
+			//gets all the customer records from the banking server
+			ArrayList<RecordInfo> info = bc.getCustomerRecords();
+			
+			ServerProtocol sp = new ServerProtocol(MessageStatus.SUCCESS, Datatype.CUSTOMER_RECORD);
+			
+			//adds each parameter of each customer record one by one
+			for (int i = 0; i < info.size(); i++)
+			{
+				try
+				{
+					sp.AddData(info.get(i).recordDate, info.get(i).tellerEmpID, info.get(i).accountNumber, info.get(i).recordType);
+				}
+				catch (ParameterException e)
+				{
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			
+			try
+			{
+				//sends the info to the client
+				client.sendToClient(sp);
+			}
+			catch (IOException e)
+			{
+				e.printStackTrace();
+			}
+		}
 	}
 }
