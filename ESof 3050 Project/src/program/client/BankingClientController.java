@@ -995,9 +995,10 @@ public class BankingClientController extends Application implements IBankingClie
     
     @FXML
     void DeleteProfileSubmitButtonPressed(ActionEvent event) throws Exception{
-    	if(DeleteProfileCheckBox.isSelected()) {
+    	ae=event;
+    	ta=ErrorTextArea;
+    	if(DeleteProfileCheckBox.isSelected()) { 
     		deleteAccountHolder(cardNumber);
-    		switchToDeleteProfileConfirmationScreen(event);
     		//TODO send delete(profile)
     	}
     }
@@ -1543,11 +1544,28 @@ public class BankingClientController extends Application implements IBankingClie
 		
 		if (isSuccessful)
 		{
-			//account was deleted
+			Platform.runLater(new Runnable() {
+				@Override
+				public void run() {
+					try {
+						switchToDeleteProfileConfirmationScreen(ae);
+					}
+					catch(Exception e) {e.printStackTrace();}
+				}
+			});
+			
 		}
 		else
 		{
-			//could not delete existing account
+			Platform.runLater(new Runnable() {
+				@Override
+				public void run() {
+					try {
+						ta.setText("Deletion Failed");
+					}
+					catch(Exception e) {e.printStackTrace();}
+				}
+			});
 		}
 	}
 
