@@ -36,4 +36,9 @@ public class TransactionInfo
 		transactionType = _transactionType;
 		amount = _amount;
 	}
+	
+	@Override
+	public String toString() {
+		return date;
+	}
 }
