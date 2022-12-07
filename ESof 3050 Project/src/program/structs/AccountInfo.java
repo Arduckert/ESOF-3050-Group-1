@@ -46,4 +46,22 @@ public class AccountInfo
 		balance = null;
 		accountNumber = null;
 	}
+	
+	public String getAccountTypeString() {
+		if(accountType.equals(AccountType.CHEQUING))
+			return "Chequing Account";
+		else if(accountType.equals(AccountType.SAVINGS))
+			return "Savings Account";
+		else if(accountType.equals(AccountType.MORTGAGE))
+				return "Mortgage Account";
+		else if(accountType.equals(AccountType.LINE_OF_CREDIT))
+			return "Line-Of-Credit";
+		return null;
+		
+	}
+	
+	@Override
+	public String toString() {
+		return accountNumber;
+	}
 }
