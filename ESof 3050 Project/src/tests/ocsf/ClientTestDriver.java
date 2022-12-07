@@ -906,15 +906,23 @@ public class ClientTestDriver implements IBankingClientController
 	 */
 	public void handleTransactions(ArrayList<TransactionInfo> transactions)
 	{
-		if (transactions.get(0).equals(TestVariables.transaction1)
-				&& transactions.get(1).equals(TestVariables.transaction2)
-				&& transactions.get(2).equals(TestVariables.transaction3))
+		if (transactions.get(0).date.equals(TestVariables.transaction1.date)
+				&& transactions.get(0).recipient.equals(TestVariables.transaction1.recipient)
+				&& transactions.get(0).transactionType.equals(TestVariables.transaction1.transactionType)
+				&& transactions.get(0).amount.equals(TestVariables.transaction1.amount)
+				&& transactions.get(1).date.equals(TestVariables.transaction2.date)
+				&& transactions.get(1).recipient.equals(TestVariables.transaction2.recipient)
+				&& transactions.get(1).transactionType.equals(TestVariables.transaction2.transactionType)
+				&& transactions.get(1).amount.equals(TestVariables.transaction2.amount)
+				&& transactions.get(2).date.equals(TestVariables.transaction3.date)
+				&& transactions.get(2).recipient.equals(TestVariables.transaction3.recipient)
+				&& transactions.get(2).transactionType.equals(TestVariables.transaction3.transactionType)
+				&& transactions.get(2).amount.equals(TestVariables.transaction3.amount))
 		{
 			System.out.println("GET TRANSACTIONS TEST PASSED");
 		}
 		else
-		{
-			System.err.println("GET TRANSACTIONS TEST FAILED: DATA NOT EQUAL");
+		{			
 			assert false;
 		}
 	}
@@ -945,9 +953,18 @@ public class ClientTestDriver implements IBankingClientController
 	 */
 	public void handleAccountRecords(ArrayList<RecordInfo> accountRecords)
 	{
-		if (accountRecords.get(0).equals(TestVariables.accountRecord1)
-				&& accountRecords.get(1).equals(TestVariables.accountRecord2)
-				&& accountRecords.get(2).equals(TestVariables.accountRecord3))
+		if (accountRecords.get(0).recordDate.equals(TestVariables.accountRecord1.recordDate)
+				&& accountRecords.get(0).tellerEmpID.equals(TestVariables.accountRecord1.tellerEmpID)
+				&& accountRecords.get(0).recordType.equals(TestVariables.accountRecord1.recordType)
+				&& accountRecords.get(0).accountNumber.equals(TestVariables.accountRecord1.accountNumber)
+				&& accountRecords.get(1).recordDate.equals(TestVariables.accountRecord2.recordDate)
+				&& accountRecords.get(1).tellerEmpID.equals(TestVariables.accountRecord2.tellerEmpID)
+				&& accountRecords.get(1).recordType.equals(TestVariables.accountRecord2.recordType)
+				&& accountRecords.get(1).accountNumber.equals(TestVariables.accountRecord2.accountNumber)
+				&& accountRecords.get(2).recordDate.equals(TestVariables.accountRecord3.recordDate)
+				&& accountRecords.get(2).tellerEmpID.equals(TestVariables.accountRecord3.tellerEmpID)
+				&& accountRecords.get(2).recordType.equals(TestVariables.accountRecord3.recordType)
+				&& accountRecords.get(2).accountNumber.equals(TestVariables.accountRecord3.accountNumber))
 		{
 			System.out.println("ACCOUNT RECORDS TEST PASSED");
 		}
@@ -984,9 +1001,18 @@ public class ClientTestDriver implements IBankingClientController
 	 */
 	public void handleCustomerRecords(ArrayList<RecordInfo> customerRecords)
 	{
-		if (customerRecords.get(0).equals(TestVariables.customerRecord1)
-				&& customerRecords.get(1).equals(TestVariables.customerRecord2)
-				&& customerRecords.get(2).equals(TestVariables.customerRecord3))
+		if (customerRecords.get(0).recordDate.equals(TestVariables.customerRecord1.recordDate)
+				&& customerRecords.get(0).tellerEmpID.equals(TestVariables.customerRecord1.tellerEmpID)
+				&& customerRecords.get(0).recordType.equals(TestVariables.customerRecord1.recordType)
+				&& customerRecords.get(0).accountNumber.equals(TestVariables.customerRecord1.accountNumber)
+				&& customerRecords.get(1).recordDate.equals(TestVariables.customerRecord2.recordDate)
+				&& customerRecords.get(1).tellerEmpID.equals(TestVariables.customerRecord2.tellerEmpID)
+				&& customerRecords.get(1).recordType.equals(TestVariables.customerRecord2.recordType)
+				&& customerRecords.get(1).accountNumber.equals(TestVariables.customerRecord2.accountNumber)
+				&& customerRecords.get(2).recordDate.equals(TestVariables.customerRecord3.recordDate)
+				&& customerRecords.get(2).tellerEmpID.equals(TestVariables.customerRecord3.tellerEmpID)
+				&& customerRecords.get(2).recordType.equals(TestVariables.customerRecord3.recordType)
+				&& customerRecords.get(2).accountNumber.equals(TestVariables.customerRecord3.accountNumber))
 		{
 			System.out.println("CUSTOMER RECORDS TEST PASSED");
 		}
