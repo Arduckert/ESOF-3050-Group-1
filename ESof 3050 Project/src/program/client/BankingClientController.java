@@ -80,11 +80,11 @@ public class BankingClientController extends Application implements IBankingClie
 	
 	private static String accountType;
 	
-	private static String deleteString;
-	
 	private static ObservableList<AccountInfo> accountList=FXCollections.observableArrayList();
 	private static ObservableList<AccountInfo> receivingAccountList=FXCollections.observableArrayList();
 	private static ObservableList<AccountInfo> sendingAccountList=FXCollections.observableArrayList();
+	
+	private static AccountInfo deletedAccount;
 	
 	
 	
@@ -109,6 +109,13 @@ public class BankingClientController extends Application implements IBankingClie
 		scene = new Scene(root);
 		stage.setScene(scene);
 		stage.show();
+	}
+	
+	public void refreshAccounts() {
+		accountList.clear();
+		sendingAccountList.clear();
+		receivingAccountList.clear();
+		getAccounts(cardNumber);
 	}
 	
 	//***********************************************************************
@@ -226,10 +233,7 @@ public class BankingClientController extends Application implements IBankingClie
 	}
 	
 	public void switchToAccountHolderMainMenu(ActionEvent event) throws Exception{
-		accountList.clear();
-		sendingAccountList.clear();
-		receivingAccountList.clear();
-		getAccounts(cardNumber);
+		refreshAccounts();
 		changeScene(event,"AccountHolderMainMenu.fxml");
 	}
 	
@@ -270,6 +274,7 @@ public class BankingClientController extends Application implements IBankingClie
 	}
 	
 	public void switchToEditProfileScreen(ActionEvent event) throws Exception{
+		refreshAccounts();
 		changeScene(event,"EditProfile.fxml");
 	}
 	
@@ -918,17 +923,23 @@ public class BankingClientController extends Application implements IBankingClie
     //GUI components for delete account
     
     @FXML
-    private ChoiceBox<String> DeleteAccountChoiceBox;
+    private ChoiceBox<AccountInfo> DeleteAccountChoiceBox;
     
     @FXML
     private CheckBox DeleteAccountCheckBox;
     
     @FXML
     void DeleteAccountButtonPressed(ActionEvent event) throws Exception{
-    	if(DeleteAccountCheckBox.isSelected()) {
-    		switchToDeleteAccountConfirmationScreen(event);
-    		//TODO send delete(accountnumber)
+    	ta=ErrorTextArea;
+    	ae=event;
+    	if(DeleteAccountCheckBox.isSelected()&&DeleteAccountChoiceBox.getValue()!=null) {
+    		deletedAccount=DeleteAccountChoiceBox.getValue();
+    		deleteAccount(DeleteAccountChoiceBox.getValue().accountNumber);
     	}
+    	else if(!DeleteAccountCheckBox.isSelected())
+    		ErrorTextArea.setText("Check box not checked");
+    	else if(DeleteAccountChoiceBox.getValue()==null)
+    		ErrorTextArea.setText("Account not selected");
     }
     
     //********************************************************
@@ -1100,8 +1111,10 @@ public class BankingClientController extends Application implements IBankingClie
     	if(AccountTypeConfirmationTextField!=null)
     		AccountTypeConfirmationTextField.setText(accountType);
     	
-    	//if(DeleteAccountChoiceBox!=null)
-    		//TODO add accounts
+    	if(DeleteAccountChoiceBox!=null) {
+    		DeleteAccountChoiceBox.getItems().clear();
+    		DeleteAccountChoiceBox.setItems(accountList);
+    	}
     	
     	//***************************************************
     	
@@ -1119,17 +1132,16 @@ public class BankingClientController extends Application implements IBankingClie
     	}
     		
     	if(SendingAccountChoiceBox!=null) {
-    		System.out.println(sendingAccountList);
     		SendingAccountChoiceBox.getItems().clear();
     		SendingAccountChoiceBox.setItems(sendingAccountList);
-    		scb=SendingAccountChoiceBox;
     	}
     	if(ReceivingAccountChoiceBox!=null) {
-    		System.out.println(receivingAccountList);
     		ReceivingAccountChoiceBox.getItems().clear();
     		ReceivingAccountChoiceBox.setItems(receivingAccountList);
-    		rcb=ReceivingAccountChoiceBox;
     	}
+    	
+    	if(AccountDeletedTextField!=null)
+    		AccountDeletedTextField.setText(deletedAccount.accountNumber);
     }
     
     //Start function
@@ -1744,11 +1756,28 @@ public class BankingClientController extends Application implements IBankingClie
 		
 		if (isSuccessful)
 		{
-			//account deleted
+			Platform.runLater(new Runnable() {
+				@Override
+				public void run() {
+					try {
+						switchToDeleteAccountConfirmationScreen(ae);
+					}
+					catch(Exception e) {e.printStackTrace();}
+				}
+			});
 		}
 		else
 		{
-			//account not deleted
+			Platform.runLater(new Runnable() {
+				@Override
+				public void run() {
+					try {
+						ta.setText("Deletion failed");
+					}
+					catch(Exception e) {e.printStackTrace();}
+				}
+			});
+			
 		}
 	}
 

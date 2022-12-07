@@ -359,6 +359,7 @@ public class BankController implements IBankController
 			return false; //money is in account
 		}
 		else {
+			account.getAccountHolder().accountList.remove(account);
 			accountList.remove(account);
 			return true;
 
