@@ -817,10 +817,7 @@ public class BankingClientController extends Application implements IBankingClie
     private TextField ResultEmailTextField;
 
     @FXML
-    private TextField ResultFirstNameTextField;
-
-    @FXML
-    private TextField ResultLastNameTextField;
+    private TextField ResultNameTextField;
 
     @FXML
     private TextField ResultSearchValueTextField;
@@ -926,16 +923,15 @@ public class BankingClientController extends Application implements IBankingClie
 
     @FXML
     void CreateAccountButtonPressed(ActionEvent event) throws Exception {
+    	ae=event;
     	accountType=AccountTypeChoiceBox.getValue();
     	if(accountType==null)
     		ErrorTextArea.setText("No type selected");
     	else if(accountType.equals("Chequing Account")) {
     		createAccount(AccountType.CHEQUING, cardNumber,empID);
-    		switchToCreateAccountConfirmationScreen(event);
     	}
     	else if(accountType.equals("Savings Account")) {
     		createAccount(AccountType.SAVINGS, cardNumber,empID);
-    		switchToCreateAccountConfirmationScreen(event);
     	}
     	else if(accountType.equals("Mortgage Account")) {
     		switchToMortgageAccountScreen(event);
@@ -1147,6 +1143,8 @@ public class BankingClientController extends Application implements IBankingClie
     			@Override
     			public void changed(ObservableValue<? extends AccountHolderInfo> ov, AccountHolderInfo oldValue, AccountHolderInfo newValue) {
     				    ResultEmailTextField.setText(newValue.email);
+    				    ResultNameTextField.setText(newValue.personName);
+    				    ResultSinTextField.setText(newValue.sin);
     				    //TODO add other fields
     				    //We need first name, last name and sin to be passed from server
     			}});
@@ -1974,7 +1972,7 @@ public class BankingClientController extends Application implements IBankingClie
 				public void run() {
 					try {
 						//TODO get account number
-						//newAccount=isSuccesful;
+						newAccount=accNumber;
 						switchToCreateAccountConfirmationScreen(ae);
 					}
 					catch(Exception e) {e.printStackTrace();}
@@ -2019,7 +2017,7 @@ public class BankingClientController extends Application implements IBankingClie
 				public void run() {
 					try {
 						//TODO get account number
-						//newAccount=isSuccesful;
+						newAccount=accNumber;
 						switchToCreateAccountConfirmationScreen(ae);
 					}
 					catch(Exception e) {e.printStackTrace();}
