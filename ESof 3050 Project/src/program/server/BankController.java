@@ -388,15 +388,16 @@ public class BankController implements IBankController
 		Account sender = searchAccount(sendingNum);
 		Account receiver = searchAccount(receivingNum);
 		
-		if(sender == null || receiver == null) { //if the receiver or sender does not exist
-			return null;
-		}
+		
+		
 		if(amount < 0) {
 			return null;
 		}
 		switch (transferType)
 		{
 		case TRANSFER:
+			if(sender == null || receiver == null) //if the receiver or sender does not exist
+				return null;
 			if(sender.getBalance() >= amount) { //only if the sender has enough money
 				if(receiver.getClass() == ChequingAccount.class || receiver.getClass() == SavingsAccount.class) { //if the receiver is a savings or chequing account
 					double senderNewBalance = sender.getBalance() - amount;
@@ -435,6 +436,8 @@ public class BankController implements IBankController
 			
 			
 		case WITHDRAW:
+			if(sender == null) //if the receiver or sender does not exist
+				return null;
 			if(sender.getBalance() >= amount) { //sufficient funds
 				double newBalance = sender.getBalance() - amount;
 				sender.setBalance(newBalance);
@@ -448,11 +451,13 @@ public class BankController implements IBankController
 				return null;
 			}
 		case DEPOSIT:
-			double newBalance = sender.getBalance() + amount;
-			sender.setBalance(newBalance);
+			if(receiver == null) //if the receiver or sender does not exist
+				return null;
+			double newBalance = receiver.getBalance() + amount;
+			receiver.setBalance(newBalance);
 			
-			TransactionRecord record = new TransactionRecord(sender,"deposit",amount); //creates a new transaction record
-			sender.addTransaction(record);
+			TransactionRecord record = new TransactionRecord(receiver,"deposit",amount); //creates a new transaction record
+			receiver.addTransaction(record);
 			
 			return newBalance + "";
 		}
@@ -472,8 +477,6 @@ public class BankController implements IBankController
 		AccountHolder accountHolder = searchAccountHolder(num);
 		ArrayList<AccountInfo> infoList = new ArrayList<AccountInfo>();
 		AccountType type = null;
-		
-		System.out.println(accountHolder.getAccounts().size());
 		
 		if(accountHolder == null) {
 			return null; //account holder does not exists
@@ -590,7 +593,6 @@ public class BankController implements IBankController
 		b.addTeller(testTeller);
 		b.createAccount(AccountType.CHEQUING, Integer.toString(12345));
         b.createAccount(AccountType.SAVINGS, Integer.toString(12345));
-        System.out.println(b.getAccounts("12345"));
 		
 		int port = 9950;
 		BankingServer bs = new BankingServer(port, b);

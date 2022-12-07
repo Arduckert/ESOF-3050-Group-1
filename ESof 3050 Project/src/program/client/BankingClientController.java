@@ -51,8 +51,8 @@ public class BankingClientController extends Application implements IBankingClie
 	private static TextArea ta;
 	private static ListView<AccountHolderInfo>ahilv;
 	private static ListView<AccountInfo>ailv;
-	private static ChoiceBox<String> rcb;
-	private static ChoiceBox<String> scb;
+	private static ChoiceBox<AccountInfo> rcb;
+	private static ChoiceBox<AccountInfo> scb;
 	
 	//5 parameters for account holder + pin and card number
 	private static String firstName;
@@ -83,8 +83,8 @@ public class BankingClientController extends Application implements IBankingClie
 	private static String deleteString;
 	
 	private static ObservableList<AccountInfo> accountList=FXCollections.observableArrayList();
-	private static ObservableList<String> receivingAccountList=FXCollections.observableArrayList();
-	private static ObservableList<String> sendingAccountList=FXCollections.observableArrayList();
+	private static ObservableList<AccountInfo> receivingAccountList=FXCollections.observableArrayList();
+	private static ObservableList<AccountInfo> sendingAccountList=FXCollections.observableArrayList();
 	
 	
 	
@@ -147,10 +147,10 @@ public class BankingClientController extends Application implements IBankingClie
 	}
 	
 	@FXML
-    private ChoiceBox<String> SendingAccountChoiceBox;
+    private ChoiceBox<AccountInfo> SendingAccountChoiceBox;
 	
 	@FXML
-	private ChoiceBox<String> ReceivingAccountChoiceBox;
+	private ChoiceBox<AccountInfo> ReceivingAccountChoiceBox;
 
     @FXML
     private TextField TransferAmountTextField;
@@ -226,7 +226,9 @@ public class BankingClientController extends Application implements IBankingClie
 	}
 	
 	public void switchToAccountHolderMainMenu(ActionEvent event) throws Exception{
-		accountList.removeAll(accountList);
+		accountList.clear();
+		sendingAccountList.clear();
+		receivingAccountList.clear();
 		getAccounts(cardNumber);
 		changeScene(event,"AccountHolderMainMenu.fxml");
 	}
@@ -673,7 +675,8 @@ public class BankingClientController extends Application implements IBankingClie
     		ae=event;
     		Double.valueOf(TransferAmountTextField.getText());
     		if(ReceivingAccountChoiceBox.getValue()!=null&&SendingAccountChoiceBox.getValue()!=null)
-    			transfer(TransferType.TRANSFER, SendingAccountChoiceBox.getValue(),ReceivingAccountChoiceBox.getValue(), TransferAmountTextField.getText());
+    			transfer(TransferType.TRANSFER, SendingAccountChoiceBox.getValue().accountNumber,
+    					ReceivingAccountChoiceBox.getValue().accountNumber, TransferAmountTextField.getText());
     		else
     			ErrorTextArea.setText("Empty field");
     	}
@@ -695,7 +698,8 @@ public class BankingClientController extends Application implements IBankingClie
     		ae=event;
     		Double.valueOf(TransferAmountTextField.getText());
     		if(SendingAccountChoiceBox.getValue()!=null&&ReceivingAccountTextField.getText().equals("")!=true)
-    			transfer(TransferType.TRANSFER, SendingAccountChoiceBox.getValue(),ReceivingAccountTextField.getText(), TransferAmountTextField.getText());
+    			transfer(TransferType.TRANSFER, SendingAccountChoiceBox.getValue().accountNumber,
+    					ReceivingAccountTextField.getText(), TransferAmountTextField.getText());
     		else
     			ErrorTextArea.setText("Empty field");
     	}
@@ -733,7 +737,7 @@ public class BankingClientController extends Application implements IBankingClie
     		ae=event;
     		Double.valueOf(TransferAmountTextField.getText());
     		if(ReceivingAccountChoiceBox.getValue()!=null)
-    			transfer(TransferType.DEPOSIT, null,ReceivingAccountChoiceBox.getValue(), TransferAmountTextField.getText());
+    			transfer(TransferType.DEPOSIT, null,ReceivingAccountChoiceBox.getValue().accountNumber, TransferAmountTextField.getText());
     		else
     			ErrorTextArea.setText("Empty field");
     	}
@@ -752,7 +756,7 @@ public class BankingClientController extends Application implements IBankingClie
     		ae=event;
     		Double.valueOf(TransferAmountTextField.getText());
     		if(SendingAccountChoiceBox.getValue()!=null)
-    			transfer(TransferType.WITHDRAW, SendingAccountChoiceBox.getValue(),null, TransferAmountTextField.getText());
+    			transfer(TransferType.WITHDRAW, SendingAccountChoiceBox.getValue().accountNumber,null, TransferAmountTextField.getText());
     		else
     			ErrorTextArea.setText("Empty field");
     	}
@@ -1005,7 +1009,6 @@ public class BankingClientController extends Application implements IBankingClie
     
     private String SearchParameterList[]= {"Card Number","SIN","Email"};
     private String AccountTypeList[]= {"Chequing Account","Savings Account","Mortgage Account","Line-Of-Credit"};
-    private ObservableList<String> ActiveAccounts = FXCollections.observableArrayList();
     
     //Initializer of GUI elements
     public void initialize() {
@@ -1065,10 +1068,6 @@ public class BankingClientController extends Application implements IBankingClie
     	//*************************************************
     	//fill choice box with accounts (for transfers)
     	
-    	if(SendingAccountChoiceBox!=null)
-    		SendingAccountChoiceBox.getItems().addAll(ActiveAccounts);
-    		//TODO have BankingClient add items to ActiveAccounts. Specifically get all accounts belonging to a card number.
-    	
     	//*************************************************
     	//initializing GUI for search results page
     	
@@ -1120,12 +1119,16 @@ public class BankingClientController extends Application implements IBankingClie
     	}
     		
     	if(SendingAccountChoiceBox!=null) {
+    		System.out.println(sendingAccountList);
+    		SendingAccountChoiceBox.getItems().clear();
     		SendingAccountChoiceBox.setItems(sendingAccountList);
     		scb=SendingAccountChoiceBox;
     	}
     	if(ReceivingAccountChoiceBox!=null) {
+    		System.out.println(receivingAccountList);
+    		ReceivingAccountChoiceBox.getItems().clear();
     		ReceivingAccountChoiceBox.setItems(receivingAccountList);
-    		rcb=SendingAccountChoiceBox;
+    		rcb=ReceivingAccountChoiceBox;
     	}
     }
     
@@ -1788,17 +1791,9 @@ public class BankingClientController extends Application implements IBankingClie
 			//add to account list
 			for(int i=0; i<accountInfo.size();i++) {
 				accountList.add(accountInfo.get(i));
-				receivingAccountList.add(accountInfo.get(i).accountNumber);
-				if(ailv!=null)
-					ailv.getItems().add(accountInfo.get(i));
-				if(rcb!=null)
-					rcb.getItems().add(accountInfo.get(i).accountNumber);
-				if(accountInfo.get(i).accountType!=AccountType.LINE_OF_CREDIT && accountInfo.get(i).accountType!=AccountType.MORTGAGE) {
-					sendingAccountList.add(accountInfo.get(i).accountNumber);
-					if(scb!=null)
-						scb.getItems().add(accountInfo.get(i).accountNumber);
-				}
-				
+				receivingAccountList.add(accountInfo.get(i));
+				if(accountInfo.get(i).accountType!=AccountType.LINE_OF_CREDIT && accountInfo.get(i).accountType!=AccountType.MORTGAGE)
+					sendingAccountList.add(accountInfo.get(i));
 			}
 		}
 		else
