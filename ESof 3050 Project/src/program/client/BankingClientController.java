@@ -19,7 +19,7 @@ import javafx.event.ActionEvent;
 
 import java.io.IOException;
 import java.net.Inet4Address;
-
+import java.util.ArrayList;
 
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -1720,11 +1720,11 @@ public class BankingClientController extends Application implements IBankingClie
 	 * @param cardNumber the account holder's card number
 	 */
 	@Override
-	public void getAccount(AccountType accountType, String cardNumber)
+	public void getAccounts(String cardNumber)
 	{
 		try
 		{
-			bc.getAccount(accountType, cardNumber);
+			bc.getAccounts(cardNumber);
 		}
 		catch (IOException e)
 		{
@@ -1738,16 +1738,19 @@ public class BankingClientController extends Application implements IBankingClie
 	 * @param accountInfo
 	 */
 	@Override
-	public void handleAccountInformation(AccountInfo accountInfo)
+	public void handleAccountInformation(ArrayList<AccountInfo> accountInfo)
 	{
 		//TODO: add handle code
 		
-		if (accountInfo.getHasInfo())
+		
+		if (!accountInfo.isEmpty())
 		{
-			//populate info
-			accountList.add(accountInfo);
-			if(ailv!=null)
-				ailv.getItems().add(accountInfo);
+			//add to account list
+			for(int i=0; i<accountInfo.size();i++) {
+				accountList.add(accountInfo.get(i));
+				if(ailv!=null)
+					ailv.getItems().add(accountInfo.get(i));
+			}
 		}
 		else
 		{
