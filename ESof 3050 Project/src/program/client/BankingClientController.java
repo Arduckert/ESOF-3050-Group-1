@@ -142,6 +142,9 @@ public class BankingClientController extends Application implements IBankingClie
 	
 	@FXML
     private ChoiceBox<String> SendingAccountChoiceBox;
+	
+	@FXML
+	private ChoiceBox<String> ReceivingAccountChoiceBox;
 
     @FXML
     private TextField TransferAmountTextField;
@@ -644,13 +647,19 @@ public class BankingClientController extends Application implements IBankingClie
     
     //**********************************************************************
     //GUI components for transfer between your accounts screen
-    
-    @FXML
-    private ChoiceBox<?> ReceivingAccountChoiceBox;
 
     @FXML
     void TransferBetweenAccountsSubmitButtonPressed(ActionEvent event) throws Exception {
-    	switchToTransferConfirmationScreen(event);
+    	try {
+    		ta=ErrorTextArea;
+    		ae=event;
+    		Double.valueOf(TransferAmountTextField.getText());
+    		if(ReceivingAccountChoiceBox.getValue()!=null&&SendingAccountChoiceBox.getValue()!=null)
+    			transfer(TransferType.TRANSFER, SendingAccountChoiceBox.getValue(),ReceivingAccountChoiceBox.getValue(), TransferAmountTextField.getText());
+    		else
+    			ErrorTextArea.setText("Empty field");
+    	}
+    	catch(Exception e) {ErrorTextArea.setText("Invalid amount");}
     }
     
     //*********************************************************************
@@ -663,7 +672,16 @@ public class BankingClientController extends Application implements IBankingClie
     
     @FXML
     void TransferToAnotherAccountHolderSubmitButtonPressed(ActionEvent event) throws Exception {
-    	switchToTransferConfirmationScreen(event);
+    	try {
+    		ta=ErrorTextArea;
+    		ae=event;
+    		Double.valueOf(TransferAmountTextField.getText());
+    		if(SendingAccountChoiceBox.getValue()!=null&&ReceivingAccountTextField.getText().equals("")!=true)
+    			transfer(TransferType.TRANSFER, SendingAccountChoiceBox.getValue(),ReceivingAccountTextField.getText(), TransferAmountTextField.getText());
+    		else
+    			ErrorTextArea.setText("Empty field");
+    	}
+    	catch(Exception e) {ErrorTextArea.setText("Invalid amount");}
     }
     
     //*****************************************************************
@@ -692,7 +710,16 @@ public class BankingClientController extends Application implements IBankingClie
     
     @FXML
     void DepositSubmitButtonPressed(ActionEvent event) throws Exception{
-    	switchToTransferConfirmationScreen(event);
+    	try {
+    		ta=ErrorTextArea;
+    		ae=event;
+    		Double.valueOf(TransferAmountTextField.getText());
+    		if(ReceivingAccountChoiceBox.getValue()!=null)
+    			transfer(TransferType.DEPOSIT, null,ReceivingAccountChoiceBox.getValue(), TransferAmountTextField.getText());
+    		else
+    			ErrorTextArea.setText("Empty field");
+    	}
+    	catch(Exception e) {ErrorTextArea.setText("Invalid amount");}
     }
     
     //***************************************************************
@@ -702,7 +729,16 @@ public class BankingClientController extends Application implements IBankingClie
     
     @FXML
     void WithdrawSubmitButtonPressed(ActionEvent event) throws Exception{
-    	switchToTransferConfirmationScreen(event);
+    	try {
+    		ta=ErrorTextArea;
+    		ae=event;
+    		Double.valueOf(TransferAmountTextField.getText());
+    		if(SendingAccountChoiceBox.getValue()!=null)
+    			transfer(TransferType.WITHDRAW, SendingAccountChoiceBox.getValue(),null, TransferAmountTextField.getText());
+    		else
+    			ErrorTextArea.setText("Empty field");
+    	}
+    	catch(Exception e) {ErrorTextArea.setText("Invalid amount");}
     }
     
     //*************************************************************
@@ -1755,10 +1791,28 @@ public class BankingClientController extends Application implements IBankingClie
 		if (isSuccessful)
 		{
 			//show new balance
+			Platform.runLater(new Runnable() {
+				@Override
+				public void run() {
+					try {
+						switchToTransferConfirmationScreen(ae);
+					}
+					catch(Exception e) {e.printStackTrace();}
+				}
+			});
 		}
 		else
 		{
 			//error message
+			Platform.runLater(new Runnable() {
+				@Override
+				public void run() {
+					try {
+						ta.setText("Transfer failed");
+					}
+					catch(Exception e) {e.printStackTrace();}
+				}
+			});
 		}
 	}
 }
