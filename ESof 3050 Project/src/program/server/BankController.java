@@ -39,7 +39,7 @@ public class BankController implements IBankController, Serializable
 			output.writeObject(z);
 			output.close();
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
+			System.out.println("file not found");
 			e.printStackTrace();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -54,15 +54,12 @@ public class BankController implements IBankController, Serializable
 			try {
 				b = (BankController) input.readObject();
 			} catch (ClassNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				System.out.println("Class not found");
 			}
 		} catch (FileNotFoundException e) {
-			b = new BankController();
-			e.printStackTrace();
+			System.out.println("file not found");
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.out.println("IO exception 2");
 		}
 		
 		return b;
@@ -796,14 +793,22 @@ public class BankController implements IBankController, Serializable
 	//MAIN
 	public static void main(String args[])
 	{
-		BankController b = load();
-		String name2 = b.getPersonList().get(0).getFName();
-		System.out.println(name2);
+		BankController b;
+		b = load();
 		
 		int port = 9950;
 		BankingServer bs = new BankingServer(port, b);
 		try {
 			bs.listen();
+			while(true) {
+				Timer timer = new Timer(b);
+				timer.run();
+				System.out.println("2 Minutes have past: Mortgages and Credit accounts have been updated...");
+				save(b);
+				System.out.println("Bank Data Saved...");
+				Thread.sleep(120000);
+				
+			}
 		}
 		catch (Exception ex) {
 			System.err.println(ex);
@@ -818,23 +823,18 @@ public class BankController implements IBankController, Serializable
 
 
 /*
- * 	BankController b = new BankController();
-		//Address a1 = new Address(111, "John", "Thunder Bay", "Ontario", "P7656");
-		Person p1 = new Person("Jonny", "Doe", 7777,"2000-03-02");
-		//AccountHolder testAccountHolder = new AccountHolder(1111,12345,"test@email.com",p1);
-		//Teller testTeller = new Teller(0000,"password",p1);
-		b.personList.add(p1);
-		//b.addAccountHolder(testAccountHolder);
-		//b.addTeller(testTeller);
-		//b.createAccount(AccountType.CHEQUING, Integer.toString(12345),testTeller.getEmpNum()+"");
-       // b.createAccount(AccountType.SAVINGS, Integer.toString(12345),testTeller.getEmpNum()+"");
-		String name = b.getPersonList().get(0).getFName();
-		System.out.println(name);
-		save(b);
+ * BankController b = new BankController();
+		Person aric = new Person("Aric", "Duckert", 1111, "2000-05-18");
+		Person matt = new Person("Matt", "Camire", 2222 , "2000-05-18");
+		Person connor = new Person("Connor", "McNally", 3333 , "2000-05-18");
 		
-		BankController b2;
-		b2 = load();
-		String name2 = b2.getPersonList().get(0).getFName();
-		System.out.println(name2);
+		Teller tellerAric = new Teller(1111,"aric",aric);
+		Teller tellerMatt = new Teller(2222,"matt",matt);
+		Teller tellerConnor = new Teller(3333,"connor",connor);
+		
+		b.addTeller(tellerConnor);
+		b.addTeller(tellerMatt);
+		b.addTeller(tellerAric);
+		save(b);
  */
 
