@@ -55,7 +55,7 @@
             <Font size="18.0" />
          </font>
       </Button>
-      <TextArea fx:id="ErrorTextArea" prefHeight="20.0" GridPane.columnSpan="2147483647" GridPane.rowIndex="6" />
+      <TextArea fx:id="ErrorTextArea" editable="false" prefHeight="20.0" GridPane.columnSpan="2147483647" GridPane.rowIndex="6" />
       <TextField fx:id="MortgageValueTextField" GridPane.columnIndex="1" GridPane.rowIndex="2">
          <font>
             <Font size="18.0" />

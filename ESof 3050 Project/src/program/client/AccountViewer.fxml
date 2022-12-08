@@ -44,7 +44,7 @@
                   <Font size="14.0" />
                </font>
             </Label>
-            <TextField fx:id="EditCardNumberTextField">
+            <TextField fx:id="EditCardNumberTextField" editable="false">
                <font>
                   <Font size="14.0" />
                </font>
@@ -66,12 +66,12 @@
             <Font size="18.0" />
          </font>
       </Label>
-      <TextField fx:id="AccountsBalanceTextField" GridPane.columnIndex="2" GridPane.rowIndex="3">
+      <TextField fx:id="AccountsBalanceTextField" editable="false" GridPane.columnIndex="2" GridPane.rowIndex="3">
          <font>
             <Font size="18.0" />
          </font>
       </TextField>
-      <TextField fx:id="AccountsTypeTextField" GridPane.columnIndex="2" GridPane.rowIndex="4">
+      <TextField fx:id="AccountsTypeTextField" editable="false" GridPane.columnIndex="2" GridPane.rowIndex="4">
          <font>
             <Font size="18.0" />
          </font>

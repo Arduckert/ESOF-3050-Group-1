@@ -63,7 +63,7 @@
             <Font size="18.0" />
          </font>
       </Button>
-      <TextArea fx:id="ErrorTextArea" prefHeight="20.0" GridPane.columnSpan="2147483647" GridPane.rowIndex="5" />
+      <TextArea fx:id="ErrorTextArea" editable="false" prefHeight="20.0" GridPane.columnSpan="2147483647" GridPane.rowIndex="5" />
       <TextField fx:id="SenderBalanceTextField" editable="false" GridPane.columnIndex="2" GridPane.rowIndex="1">
          <font>
             <Font size="18.0" />

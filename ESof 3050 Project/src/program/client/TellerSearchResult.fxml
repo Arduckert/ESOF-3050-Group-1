@@ -45,7 +45,7 @@
                   <Font size="14.0" />
                </font>
             </Label>
-            <TextField fx:id="ResultTypeTextField">
+            <TextField fx:id="ResultTypeTextField" editable="false">
                <font>
                   <Font size="14.0" />
                </font>
@@ -55,7 +55,7 @@
                   <Font size="14.0" />
                </font>
             </Label>
-            <TextField fx:id="ResultSearchValueTextField">
+            <TextField fx:id="ResultSearchValueTextField" editable="false">
                <font>
                   <Font size="14.0" />
                </font>

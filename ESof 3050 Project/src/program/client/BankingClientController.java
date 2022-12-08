@@ -463,12 +463,17 @@ public class BankingClientController extends Application implements IBankingClie
     void NewAccountNextButtonPressed(ActionEvent event) throws Exception{
     	if(offline)
     		switchToNewAccountHolderAddressScreen(event);
-    	
-    	if(monthTextField.getText().length()==2&&dayTextField.getText().length()==2&&yearTextField.getText().length()==4) {
-			dob=monthTextField.getText()+"/"+dayTextField.getText()+"/"+yearTextField.getText();
-		}
-		else
-			CreateAccountHolderErrorTextArea.setText("Date of birth invalid");
+    	try {
+    		Integer.valueOf(monthTextField.getText());
+    		Integer.valueOf(dayTextField.getText());
+    		Integer.valueOf(yearTextField.getText());
+    		if(monthTextField.getText().length()==2&&dayTextField.getText().length()==2&&yearTextField.getText().length()==4)
+    			dob=monthTextField.getText()+"/"+dayTextField.getText()+"/"+yearTextField.getText();
+    		else
+    			CreateAccountHolderErrorTextArea.setText("Date of birth invalid");
+    	}
+    	catch(Exception e) {CreateAccountHolderErrorTextArea.setText("Date of birth invalid");}
+		
     	if(!FirstNameTextField.getText().equals(""))
     		firstName=FirstNameTextField.getText();
     	else
@@ -578,19 +583,23 @@ public class BankingClientController extends Application implements IBankingClie
   	
   	@FXML
   	void PinDoneButtonPressed(ActionEvent event) throws Exception{
-  		if(NewPinTextField.getText().length()==4) {
-  			pin=NewPinTextField.getText();
-  			ae=event;
-  			ta=PinErrorTextArea;
-  			createNewPerson(firstName,lastName,sin,dob);
-  			createNewAccountHolder(email,pin,sin);
-  			for(int i=0;i<streetNameList.size();i++) {
-  				addAddress(streetNameList.get(i),streetNumberList.get(i),
+  		try {
+  			Integer.valueOf(NewPinTextField.getText());
+  			if(NewPinTextField.getText().length()==4) {
+  				pin=NewPinTextField.getText();
+  				ae=event;
+  				ta=PinErrorTextArea;
+  				createNewPerson(firstName,lastName,sin,dob);
+  				createNewAccountHolder(email,pin,sin);
+  				for(int i=0;i<streetNameList.size();i++) {
+  					addAddress(streetNameList.get(i),streetNumberList.get(i),
   						postalCodeList.get(i),provinceList.get(i), countryList.get(i),sin);
+  				}
   			}
+  			else
+  				PinErrorTextArea.setText("Invalid pin");
   		}
-  		else
-  			PinErrorTextArea.setText("Invalid pin");
+  		catch(Exception e) {PinErrorTextArea.setText("Invalid pin");}
   	}
   	
   	//*******************************************************************
