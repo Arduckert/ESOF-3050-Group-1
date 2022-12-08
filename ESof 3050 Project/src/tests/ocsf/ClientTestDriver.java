@@ -936,7 +936,7 @@ public class ClientTestDriver implements IBankingClientController
 			System.out.println("GET TRANSACTIONS TEST PASSED");
 		}
 		else
-		{			
+		{		
 			assert false;
 		}
 	}
