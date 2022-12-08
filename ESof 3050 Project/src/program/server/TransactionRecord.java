@@ -3,13 +3,15 @@ import java.io.Serializable;
 import java.time.LocalDate;
 
 public class TransactionRecord implements Serializable{
+	private Account sender;
 	private Account recepient;
 	private LocalDate date;
 	private String transactionType;
 	private double amount;
 	
-	public TransactionRecord(Account a, String t, double x) {
-		this.recepient = a;
+	public TransactionRecord(Account sen, Account rec, String t, double x) {
+		this.sender = sen;
+		this.recepient = rec;
 		this.date = LocalDate.now();
 		this.transactionType = t;
 		this.amount = x;
@@ -25,6 +27,10 @@ public class TransactionRecord implements Serializable{
 	public String getRecepient() {
 		int recepientAccNum = this.recepient.getAccountNum();
 		return recepientAccNum + "";
+	}
+	public String getSender() {
+		int sendingAccNum = this.sender.getAccountNum();
+		return sendingAccNum + "";
 	}
 	public String getType() {
 		return this.transactionType;

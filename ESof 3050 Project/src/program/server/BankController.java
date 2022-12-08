@@ -68,6 +68,12 @@ public class BankController implements IBankController, Serializable
 		return b;
 	}
 	
+	//getter
+	public List<Account> getAccountList(){
+		
+		return this.accountList;
+	}
+	
 	//generates a random card number of 9 digits
 	public int generateCardNumber() {
 		boolean numExists = true;
@@ -517,8 +523,9 @@ public class BankController implements IBankController, Serializable
 					
 					sender.setBalance(senderNewBalance); //setting the values of the actual account
 					receiver.setBalance(receiverNewBalance);
-					TransactionRecord record = new TransactionRecord(receiver,"transfer",amount); //creates a new transaction record
+					TransactionRecord record = new TransactionRecord(sender, receiver,"transfer",amount); //creates a new transaction record
 					sender.addTransaction(record);
+					receiver.addTransaction(record);
 			
 					return senderNewBalance + "";
 				}
@@ -526,8 +533,9 @@ public class BankController implements IBankController, Serializable
 					double senderNewBalance = sender.getBalance() - amount;
 					MortgageAccount MA = (MortgageAccount)receiver;
 					MA.payMortgage(amount);
-					TransactionRecord record = new TransactionRecord(receiver,"transfer",amount); //creates a new transaction record
+					TransactionRecord record = new TransactionRecord(sender,receiver,"transfer",amount); //creates a new transaction record
 					sender.addTransaction(record);
+					receiver.addTransaction(record);
 					
 					return senderNewBalance + "";
 				}
@@ -536,8 +544,9 @@ public class BankController implements IBankController, Serializable
 					LineOfCreditAccount LA = (LineOfCreditAccount)receiver;
 					LA.pay(amount);
 					
-					TransactionRecord record = new TransactionRecord(receiver,"transfer",amount); //creates a new transaction record
+					TransactionRecord record = new TransactionRecord(sender,receiver,"transfer",amount); //creates a new transaction record
 					sender.addTransaction(record);
+					receiver.addTransaction(record);
 					
 					return senderNewBalance + "";
 				}
@@ -554,7 +563,7 @@ public class BankController implements IBankController, Serializable
 				double newBalance = sender.getBalance() - amount;
 				sender.setBalance(newBalance);
 				
-				TransactionRecord record = new TransactionRecord(sender,"withdraw",amount); //creates a new transaction record
+				TransactionRecord record = new TransactionRecord(sender,null,"withdraw",amount); //creates a new transaction record
 				sender.addTransaction(record);
 				
 				return newBalance + "";
@@ -568,7 +577,7 @@ public class BankController implements IBankController, Serializable
 			double newBalance = receiver.getBalance() + amount;
 			receiver.setBalance(newBalance);
 			
-			TransactionRecord record = new TransactionRecord(receiver,"deposit",amount); //creates a new transaction record
+			TransactionRecord record = new TransactionRecord(null,receiver,"deposit",amount); //creates a new transaction record
 			receiver.addTransaction(record);
 			
 			return newBalance + "";
@@ -625,9 +634,10 @@ public class BankController implements IBankController, Serializable
 		for(int i=0; i<account.getRecords().size(); i++) {
 			String date = account.getRecords().get(i).getDate();
 			String recepient = account.getRecords().get(i).getRecepient();
+			String sender = account.getRecords().get(i).getSender();
 			String type = account.getRecords().get(i).getType();
 			String amount = account.getRecords().get(i).getAmount();
-			TransactionInfo info = new TransactionInfo(date, recepient, type, amount);
+			TransactionInfo info = new TransactionInfo(date, recepient, sender, type, amount);
 			infoList.add(info);
 		}
 		return infoList;

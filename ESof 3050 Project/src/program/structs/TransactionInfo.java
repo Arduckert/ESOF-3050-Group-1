@@ -12,6 +12,9 @@ public class TransactionInfo
 	 */
 	public String recipient;
 	
+	
+	public String sender;
+	
 	/**
 	 * transaction type (DEPOSIT, WITHDRAW, TRANSFER)
 	 */
@@ -29,10 +32,11 @@ public class TransactionInfo
 	 * @param _transactionType
 	 * @param _amount
 	 */
-	public TransactionInfo(String _date, String _recipient, String _transactionType, String _amount)
+	public TransactionInfo(String _date, String _recipient, String send, String _transactionType, String _amount)
 	{
 		date = _date;
 		recipient = _recipient;
+		sender = send;
 		transactionType = _transactionType;
 		amount = _amount;
 	}
