@@ -32,6 +32,41 @@ public class BankController implements IBankController, Serializable
 	public BankController() {
 		
 	}
+	//SAVE
+	public static void save(BankController z) {
+		try {
+			ObjectOutputStream output = new ObjectOutputStream(new FileOutputStream("bank.dat"));
+			output.writeObject(z);
+			output.close();
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	//LOAD
+	public static BankController load() {
+		BankController b = null;
+		try {
+			ObjectInputStream input = new ObjectInputStream(new FileInputStream("bank.dat"));
+			try {
+				b = (BankController) input.readObject();
+			} catch (ClassNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		} catch (FileNotFoundException e) {
+			b = new BankController();
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return b;
+	}
 	
 	//generates a random card number of 9 digits
 	public int generateCardNumber() {
@@ -744,57 +779,17 @@ public class BankController implements IBankController, Serializable
 	}
 	
 
-	public static void save(BankController z) {
-		try {
-			ObjectOutputStream output = new ObjectOutputStream(new FileOutputStream("bank.dat"));
-			output.writeObject(z);
-			output.close();
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
 	
-	public static BankController load() {
-		BankController b = null;
-		try {
-			ObjectInputStream input = new ObjectInputStream(new FileInputStream("bank.dat"));
-			try {
-				b = (BankController) input.readObject();
-			} catch (ClassNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		return b;
-	}
+	
+
 	
 	//MAIN
 	public static void main(String args[])
 	{
-		BankController b = new BankController();
-		Address a1 = new Address(111, "John", "Thunder Bay", "Ontario", "P7656");
-		Person p1 = new Person("Jonny", "Doe", 7777,"2000-03-02");
-		AccountHolder testAccountHolder = new AccountHolder(1111,12345,"test@email.com",p1);
-		Teller testTeller = new Teller(0000,"password",p1);
-		b.personList.add(p1);
-		b.addAccountHolder(testAccountHolder);
-		b.addTeller(testTeller);
-		b.createAccount(AccountType.CHEQUING, Integer.toString(12345),testTeller.getEmpNum()+"");
-        b.createAccount(AccountType.SAVINGS, Integer.toString(12345),testTeller.getEmpNum()+"");
+		BankController b = load();
+		String name2 = b.getPersonList().get(0).getFName();
+		System.out.println(name2);
 		
-        save(b);
-        
 		int port = 9950;
 		BankingServer bs = new BankingServer(port, b);
 		try {

@@ -17,7 +17,7 @@ public class TransactionRecord implements Serializable{
 	
 	//getters
 	public String getDate() {
-		return String.format("s",date);
+		return String.format("%s",date);
 	}
 	public String getAmount() {
 		return amount + "";
