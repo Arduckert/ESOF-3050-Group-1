@@ -84,9 +84,9 @@ public final class TestVariables
 	public static final String transferAmount = "50.00";
 	
 	//GET TRANSACTIONS
-	public static final TransactionInfo transaction1 = new TransactionInfo("1", "2", "3", "4");
-	public static final TransactionInfo transaction2 = new TransactionInfo("5", "6", "7", "8");
-	public static final TransactionInfo transaction3 = new TransactionInfo("9", "10", "1", "12");
+	public static final TransactionInfo transaction1 = new TransactionInfo("1", "2", "3", "4", "5");
+	public static final TransactionInfo transaction2 = new TransactionInfo("5", "6", "7", "8", "9");
+	public static final TransactionInfo transaction3 = new TransactionInfo("9", "10", "1", "12", "13");
 	
 	//GET ACCOUNT RECORDS
 	public static final RecordInfo accountRecord1 = new RecordInfo("13", "14", "15", "16");

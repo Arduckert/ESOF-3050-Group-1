@@ -773,7 +773,7 @@ public class BankingClient extends AbstractClient
 		//gets the data of each transaction and places it into the array list of transaction info
 		for (int i = 0; i < sp.GetData().size(); i += sp.getSizePerObject())
 		{
-			TransactionInfo info = new TransactionInfo(sp.GetData().get(i), sp.GetData().get(i+1), sp.GetData().get(i+2), sp.GetData().get(i+3));
+			TransactionInfo info = new TransactionInfo(sp.GetData().get(i), sp.GetData().get(i+1), sp.GetData().get(i+2), sp.GetData().get(i+3), sp.GetData().get(i+4));
 			transactions.add(info);
 		}
 		

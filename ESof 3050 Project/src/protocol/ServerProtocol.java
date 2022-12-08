@@ -107,7 +107,7 @@ public class ServerProtocol implements Serializable
 		case ACCOUNT:
 			return 3;
 		case TRANSACTION:
-			return 4;
+			return 5;
 		case ADDRESS:
 			return 5;
 		case BILL:

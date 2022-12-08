@@ -761,7 +761,7 @@ public class BankingServer extends AbstractServer  implements Serializable
 			{
 				try
 				{
-					sp.AddData(info.get(i).date, info.get(i).recipient, info.get(i).transactionType, info.get(i).amount);
+					sp.AddData(info.get(i).date, info.get(i).sender, info.get(i).recipient, info.get(i).transactionType, info.get(i).amount);
 				}
 				catch (ParameterException e)
 				{
