@@ -100,6 +100,8 @@ public class BankingClientController extends Application implements IBankingClie
 	
 	private static ObservableList<TransactionInfo> historyList=FXCollections.observableArrayList();
 	
+	private static AccountInfo selectedAccount;
+	
 	
 	
 	
@@ -688,6 +690,7 @@ public class BankingClientController extends Application implements IBankingClie
     
     @FXML
     void ViewAccountsButtonPressed(ActionEvent event) throws Exception {
+    	historyList.clear();
     	switchToAccountViewerScreen(event);
     }
     
@@ -870,7 +873,7 @@ public class BankingClientController extends Application implements IBankingClie
     void ViewAccountHistoryButtonPressed(ActionEvent event) throws Exception {
     	ae=event;
     	if(AccountNumberListView.getSelectionModel().getSelectedItem()!=null) {
-    		System.out.println("Getting history");
+    		selectedAccount=AccountNumberListView.getSelectionModel().getSelectedItem();
     		getTransactions(AccountNumberListView.getSelectionModel().getSelectedItem().accountNumber);
     	}
     }
@@ -1244,9 +1247,19 @@ public class BankingClientController extends Application implements IBankingClie
     		AccountHistoryListView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<TransactionInfo>() {
     			@Override
     			public void changed(ObservableValue<? extends TransactionInfo> ov, TransactionInfo oldValue, TransactionInfo newValue) {
-    				
+    				if(TransferHistoryDateTextField!=null)
+    					TransferHistoryDateTextField.setText(newValue.date);
+    				if(TransferHistorySenderTextField!=null)
+    					TransferHistorySenderTextField.setText(newValue.recipient);
+    				if(TransferHistoryAmountTextField!=null)
+    					TransferHistoryAmountTextField.setText(newValue.amount);
+    				if(TransferHistoryReceiverTextField!=null)
+    					TransferHistoryReceiverTextField.setText(newValue.transactionType);
     			}});
     	}
+    	
+    	if(AccountHistoryNumberTextField!=null)
+    		AccountHistoryNumberTextField.setText(selectedAccount.accountNumber);
     }
     
     //Start function
@@ -2109,7 +2122,6 @@ public class BankingClientController extends Application implements IBankingClie
 
 	@Override
 	public void handleTransactions(ArrayList<TransactionInfo> transactions) {
-		System.out.println(transactions);
 		if(transactions!=null) {
 			historyList.addAll(transactions);
 			Platform.runLater(new Runnable() {
