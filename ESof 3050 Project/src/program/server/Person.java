@@ -1,3 +1,21 @@
+//--------------------------------------------------------------
+//Brief description of this file:
+//		The person class stores all important data on a person in the banking system.
+//
+//Related Documents:
+//		Specifications Document
+//		Design Document
+//
+//File created by Aric Duckert
+//File approved by Connor McNally and Mathew Camire
+//
+//List of Important variable names and their brief description:
+//		fName & lName: the first and last name of the person
+//		SIN: the social insurance number of a person (used as a unique key)
+//		DOB: the date of birth of the person
+//		addresses: a list of all addresses belonging to that person 
+//		personRole: the roles of the person (a person can be a teller, account holder, neither, or both)
+//----------------------------------------------------------------
 package src.program.server;
 import java.io.Serializable;
 import java.util.*;

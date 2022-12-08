@@ -1,3 +1,18 @@
+//--------------------------------------------------------------
+//Brief description of this file:
+//		this class stores all information on an account holder attempting to login
+//		it allows for the 
+//
+//Related Documents:
+//		Specifications Document
+//		Design Document
+//
+//File created by Aric Duckert
+//File approved by Connor McNally and Mathew Camire
+//
+//List of Important variable names and their brief description:
+//
+//----------------------------------------------------------------
 package src.program.server;
 
 import java.io.Serializable;

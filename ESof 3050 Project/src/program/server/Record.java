@@ -1,3 +1,19 @@
+//--------------------------------------------------------------
+//Brief description of this file:
+//		The record class is an abstract class that stores information about either a customer or account creation/deletion
+//
+//Related Documents:
+//		Specifications Document
+//		Design Document
+//
+//File created by Aric Duckert
+//File approved by Connor McNally and Mathew Camire
+//
+//List of Important variable names and their brief description:
+//		recordDate: This is the date the record was created
+//		teller: the teller that performed the action
+//		action: either "created" or "removed" depending on teller action
+//----------------------------------------------------------------
 package src.program.server;
 import java.io.Serializable;
 import java.time.LocalDate;

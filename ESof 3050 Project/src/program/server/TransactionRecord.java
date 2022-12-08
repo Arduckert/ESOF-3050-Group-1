@@ -1,3 +1,20 @@
+//--------------------------------------------------------------
+//Brief description of this file:
+//		This is the transaction record. A transaction record is created every time a transaction occurs
+//		
+//Related Documents:
+//		Specifications Document
+//		Design Document
+//
+//File created by Aric Duckert
+//File approved by Connor McNally and Mathew Camire
+//
+//List of Important variable names and their brief description:
+//		sender & receiver: stores an account type corresponding to the sender and receiver of the account
+//		date: the day the transaction occurs
+//		transactionType: is either withdraw, deposit, or transfer
+//		amount: a double variable for the amount of money
+//----------------------------------------------------------------
 package src.program.server;
 import java.io.Serializable;
 import java.time.LocalDate;

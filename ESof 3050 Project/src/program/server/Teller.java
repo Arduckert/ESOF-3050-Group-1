@@ -1,3 +1,20 @@
+//--------------------------------------------------------------
+//Brief description of this file:
+//		The Teller class which has all details for a bank employee stored.
+//
+//Related Documents:
+//		Specifications Document
+//		Design Document
+//
+//File created by Aric Duckert
+//File approved by Connor McNally and Mathew Camire
+//
+//List of Important variable names and their brief description:
+//		empNum: the employee number of the teller (used as a unique key)
+//		password: this is the employees password used for loging in
+//		records: a list of all records that the teller took part in (either creating or deleting an account or am account holder)
+//
+//----------------------------------------------------------------
 package src.program.server;
 
 import java.io.Serializable;
