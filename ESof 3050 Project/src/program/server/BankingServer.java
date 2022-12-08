@@ -1,6 +1,7 @@
 package src.program.server;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import src.ocsf.server.AbstractServer;
@@ -8,7 +9,7 @@ import src.ocsf.server.ConnectionToClient;
 import src.protocol.*;
 import src.program.structs.*;
 
-public class BankingServer extends AbstractServer
+public class BankingServer extends AbstractServer  implements Serializable
 {
 	IBankController bc;
 	

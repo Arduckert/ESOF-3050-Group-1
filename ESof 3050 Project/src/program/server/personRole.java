@@ -1,6 +1,8 @@
 package src.program.server;
 
-public class personRole {
+import java.io.Serializable;
+
+public class personRole  implements Serializable{
 	Person person;
 	//Constructor
 	public personRole(Person p) {

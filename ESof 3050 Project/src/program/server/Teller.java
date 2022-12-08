@@ -1,9 +1,10 @@
 package src.program.server;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Teller extends personRole{
+public class Teller extends personRole implements Serializable{
 	private int empNum;
 	private String password;
 	private List<Record> records = new ArrayList<Record>();

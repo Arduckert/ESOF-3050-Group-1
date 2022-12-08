@@ -1,7 +1,8 @@
 package src.program.server;
+import java.io.Serializable;
 import java.util.*;
 
-public class AccountHolder extends personRole{
+public class AccountHolder extends personRole  implements Serializable{
 	private int pin;
 	private int cardNum;
 	private String email;

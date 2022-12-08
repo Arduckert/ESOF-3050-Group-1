@@ -1,6 +1,8 @@
 package src.program.server;
 
-public class MortgageAccount extends Account{
+import java.io.Serializable;
+
+public class MortgageAccount extends Account implements Serializable{
 
 	private int mortgageLength; //years
 	private double interestRate;

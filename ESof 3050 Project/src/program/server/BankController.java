@@ -1,9 +1,11 @@
 package src.program.server;
 import java.util.*;
 import java.lang.Math;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
@@ -70,6 +72,9 @@ public class BankController implements IBankController, Serializable
 		this.tellerList.add(x);
 	}
 	
+	public List<Person> getPersonList(){
+		return this.personList;
+	}
 	
 	//search functions
 	public Person searchPerson(int sin) {
@@ -738,33 +743,58 @@ public class BankController implements IBankController, Serializable
 		return account.getAccountNum() + "";
 	}
 	
+
+	public static void save(BankController z) {
+		try {
+			ObjectOutputStream output = new ObjectOutputStream(new FileOutputStream("bank.dat"));
+			output.writeObject(z);
+			output.close();
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public static BankController load() {
+		BankController b = null;
+		try {
+			ObjectInputStream input = new ObjectInputStream(new FileInputStream("bank.dat"));
+			try {
+				b = (BankController) input.readObject();
+			} catch (ClassNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return b;
+	}
 	
 	//MAIN
 	public static void main(String args[])
 	{
 		BankController b = new BankController();
 		Address a1 = new Address(111, "John", "Thunder Bay", "Ontario", "P7656");
-		Person p1 = new Person("James", "Doe", 7777,"2000-03-02");
+		Person p1 = new Person("Jonny", "Doe", 7777,"2000-03-02");
 		AccountHolder testAccountHolder = new AccountHolder(1111,12345,"test@email.com",p1);
 		Teller testTeller = new Teller(0000,"password",p1);
 		b.personList.add(p1);
-		//b.addAccountHolder(testAccountHolder);
-		//b.addTeller(testTeller);
-		//b.createAccount(AccountType.CHEQUING, Integer.toString(12345),testTeller.getEmpNum()+"");
-       // b.createAccount(AccountType.SAVINGS, Integer.toString(12345),testTeller.getEmpNum()+"");
-        
-        try {
-			ObjectOutputStream output = new ObjectOutputStream(new FileOutputStream("bank.txt"));
-			output.writeObject(b);
-			output.close();
-			System.out.println("file created");
-		} catch (FileNotFoundException e) {
-			System.out.println("file not found");
-		} catch (IOException e) {
-			System.out.println("IO exception");
-		}
-        
+		b.addAccountHolder(testAccountHolder);
+		b.addTeller(testTeller);
+		b.createAccount(AccountType.CHEQUING, Integer.toString(12345),testTeller.getEmpNum()+"");
+        b.createAccount(AccountType.SAVINGS, Integer.toString(12345),testTeller.getEmpNum()+"");
 		
+        save(b);
+        
 		int port = 9950;
 		BankingServer bs = new BankingServer(port, b);
 		try {
@@ -773,9 +803,33 @@ public class BankController implements IBankController, Serializable
 		catch (Exception ex) {
 			System.err.println(ex);
 		}
+		
 		System.out.println("testing the server...");
 	}
 
 	
 }
+
+
+
+/*
+ * 	BankController b = new BankController();
+		//Address a1 = new Address(111, "John", "Thunder Bay", "Ontario", "P7656");
+		Person p1 = new Person("Jonny", "Doe", 7777,"2000-03-02");
+		//AccountHolder testAccountHolder = new AccountHolder(1111,12345,"test@email.com",p1);
+		//Teller testTeller = new Teller(0000,"password",p1);
+		b.personList.add(p1);
+		//b.addAccountHolder(testAccountHolder);
+		//b.addTeller(testTeller);
+		//b.createAccount(AccountType.CHEQUING, Integer.toString(12345),testTeller.getEmpNum()+"");
+       // b.createAccount(AccountType.SAVINGS, Integer.toString(12345),testTeller.getEmpNum()+"");
+		String name = b.getPersonList().get(0).getFName();
+		System.out.println(name);
+		save(b);
+		
+		BankController b2;
+		b2 = load();
+		String name2 = b2.getPersonList().get(0).getFName();
+		System.out.println(name2);
+ */
 

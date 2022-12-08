@@ -1,7 +1,8 @@
 package src.program.server;
+import java.io.Serializable;
 import java.lang.String;
 
-public class Address {
+public class Address  implements Serializable{
 	private String streetName;
 	private int streetNum;
 	private String postalCode;

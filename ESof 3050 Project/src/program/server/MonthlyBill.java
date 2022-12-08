@@ -1,6 +1,8 @@
 package src.program.server;
 
-public class MonthlyBill {
+import java.io.Serializable;
+
+public class MonthlyBill  implements Serializable{
 
 	private double amount;
 	private String receivingParty;

@@ -1,9 +1,10 @@
 package src.program.server;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class LineOfCreditAccount extends Account {
+public class LineOfCreditAccount extends Account  implements Serializable{
 
 	private double interestRate;
 	private double creditLimit; 

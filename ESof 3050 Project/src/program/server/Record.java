@@ -1,7 +1,8 @@
 package src.program.server;
+import java.io.Serializable;
 import java.time.LocalDate;
 
-public abstract class Record {
+public abstract class Record implements Serializable{
 	private LocalDate recordDate;
 	private Teller teller;
 	private String action;

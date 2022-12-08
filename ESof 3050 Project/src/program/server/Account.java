@@ -1,8 +1,9 @@
 package src.program.server;
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
-public class Account {
+public class Account  implements Serializable {
 	private double balance;
 	private int accountNum;
 	private LocalDate dateOpened;

@@ -1,7 +1,8 @@
 package src.program.server;
+import java.io.Serializable;
 import java.time.LocalDate;
 
-public class TransactionRecord {
+public class TransactionRecord implements Serializable{
 	private Account recepient;
 	private LocalDate date;
 	private String transactionType;

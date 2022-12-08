@@ -1,6 +1,8 @@
 package src.program.server;
 
-public class ChequingAccount extends Account {
+import java.io.Serializable;
+
+public class ChequingAccount extends Account  implements Serializable {
 
 	//Constructor
 	public ChequingAccount(int accountNum, AccountHolder holder) {

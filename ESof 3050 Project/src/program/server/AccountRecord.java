@@ -1,6 +1,8 @@
 package src.program.server;
 
-public class AccountRecord extends Record{
+import java.io.Serializable;
+
+public class AccountRecord extends Record  implements Serializable{
 
 	Account account;
 	public AccountRecord(Teller teller, String x, Account a) {

@@ -1,6 +1,8 @@
 package src.program.server;
 
-public class LoginAttempt {
+import java.io.Serializable;
+
+public class LoginAttempt  implements Serializable{
 	int failCount;
 	int success;
 	AccountHolder accountHolder;
