@@ -1,5 +1,6 @@
 //--------------------------------------------------------------
 //Brief description of this file:
+//		This class stores all information on an account holder (a customer in the banking system)
 //
 //Related Documents:
 //		Specifications Document
@@ -9,7 +10,10 @@
 //File approved by Connor McNally and Mathew Camire
 //
 //List of Important variable names and their brief description:
-//
+//		pin: the accountHolders pin used to login
+//		cardNum: the account holder unique card number (used as unique key)
+//		email: the email of the account holder
+//		accountList: a list of all the account holders open account (of any type)
 //----------------------------------------------------------------
 package src.program.server;
 import java.io.Serializable;

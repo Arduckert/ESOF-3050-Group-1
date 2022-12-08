@@ -1,5 +1,7 @@
 //--------------------------------------------------------------
 //Brief description of this file:
+//		this class stores all important information for an account in the banking system
+//		this class is inherited by specific types of accounts
 //
 //Related Documents:
 //		Specifications Document
@@ -9,7 +11,11 @@
 //File approved by Connor McNally and Mathew Camire
 //
 //List of Important variable names and their brief description:
-//
+//		balance: the balance of an account (this can mean different things for mortgage and LOC accounts)
+//		accountNum: a unique number for the account used in searching and transferring
+//		dateOpened: the date the account was created
+//		accountHolder: the owner of the account
+//		accountHistory: a list of all transactions the account was involved in
 //----------------------------------------------------------------
 package src.program.server;
 import java.io.Serializable;

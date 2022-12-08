@@ -1,7 +1,7 @@
 //--------------------------------------------------------------
 //Brief description of this file:
 //		this class stores all information on an account holder attempting to login
-//		it allows for the 
+//		it allows for the login ability to become locked after a certain number of failed attempts
 //
 //Related Documents:
 //		Specifications Document
@@ -11,7 +11,9 @@
 //File approved by Connor McNally and Mathew Camire
 //
 //List of Important variable names and their brief description:
-//
+//		failCont: the amount of failed attempts the user has had
+//		success: is set to 1 if the login was a success 0 if it was a fail
+//		accountHolder: the account holder that is attempting the login
 //----------------------------------------------------------------
 package src.program.server;
 

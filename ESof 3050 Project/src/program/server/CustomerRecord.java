@@ -1,5 +1,6 @@
 //--------------------------------------------------------------
 //Brief description of this file:
+//		this is a specific record corresponding to a customer creation or deletion
 //
 //Related Documents:
 //		Specifications Document
@@ -9,7 +10,7 @@
 //File approved by Connor McNally and Mathew Camire
 //
 //List of Important variable names and their brief description:
-//
+//		accountHolder: the account holder that was created or deleted
 //----------------------------------------------------------------
 package src.program.server;
 

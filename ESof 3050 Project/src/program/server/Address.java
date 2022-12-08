@@ -1,5 +1,6 @@
 //--------------------------------------------------------------
 //Brief description of this file:
+//		this class stores all information about an address
 //
 //Related Documents:
 //		Specifications Document
@@ -9,7 +10,11 @@
 //File approved by Connor McNally and Mathew Camire
 //
 //List of Important variable names and their brief description:
-//
+//		streetName: the name of the street
+//		streetNum: the street number
+//		postal code: the postal code
+//		province: the province the address is located in
+//		country: the country the address is located in
 //----------------------------------------------------------------
 package src.program.server;
 import java.io.Serializable;

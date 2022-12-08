@@ -1,6 +1,7 @@
 //--------------------------------------------------------------
 //Brief description of this file:
-//
+//		The line of credit account class stores all information for accounts of the type line of credit
+//		
 //Related Documents:
 //		Specifications Document
 //		Design Document
@@ -9,7 +10,9 @@
 //File approved by Connor McNally and Mathew Camire
 //
 //List of Important variable names and their brief description:
-//
+//		interestRate: the interest rate the account holder is charged every time increment
+//		creditLimit: the maximum amount of unpaid debt able to be had at one time
+//		bills: a list of bills that are added every increment
 //----------------------------------------------------------------
 package src.program.server;
 

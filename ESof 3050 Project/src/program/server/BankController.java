@@ -1,5 +1,7 @@
 //--------------------------------------------------------------
 //Brief description of this file:
+//		this is the main Controller. it has functions that are invoked by the server
+//		This is where all the saved data comes and all server action methods are here.
 //
 //Related Documents:
 //		Specifications Document
@@ -9,6 +11,8 @@
 //File approved by Connor McNally and Mathew Camire
 //
 //List of Important variable names and their brief description:
+//		generalInterestRate: the interest rate that all savings accounts have at this bank
+//		This controller stores a list of all: people, teller, account holder, accounts, and records
 //
 //----------------------------------------------------------------
 

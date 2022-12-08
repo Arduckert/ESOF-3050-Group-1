@@ -1,5 +1,6 @@
 //--------------------------------------------------------------
 //Brief description of this file:
+//		This stores information corresponding to an account of type chequing
 //
 //Related Documents:
 //		Specifications Document
