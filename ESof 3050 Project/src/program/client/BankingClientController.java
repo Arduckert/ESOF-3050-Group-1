@@ -1,3 +1,15 @@
+/**
+ * Brief description of this file:
+ * Contains the handlers for user interaction of the GUI
+ * Performs the required function calls in response to a user input
+ * and alters the GUI according to server response
+ * 
+ * File created by Matthew Camire
+ * File approved by Connor McNally and Aric Duckert
+ * 
+ */
+
+
 package src.program.client;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -32,15 +44,6 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
-
-
-/**
- * @author Matthew
- *
- * Contains the handlers for user interaction of the GUI
- * Performs the required function calls in response to a user input
- * and alters the GUI according to server response
- */
 public class BankingClientController extends Application implements IBankingClientController {
 	//create instance of BankingClient to pass messages to server
 	//ip4v and port of server
@@ -721,8 +724,12 @@ public class BankingClientController extends Application implements IBankingClie
     			receivingAccount=ReceivingAccountChoiceBox.getValue().accountNumber;
     			sendingAccount=SendingAccountChoiceBox.getValue().accountNumber;
     			amount=TransferAmountTextField.getText();
+    			if(!receivingAccount.equals(sendingAccount))
     			transfer(TransferType.TRANSFER, sendingAccount,
     					receivingAccount, amount);
+    			else
+    				ErrorTextArea.setText("Same account in both fields");
+    				
     		}
     		else
     			ErrorTextArea.setText("Empty field");
@@ -748,8 +755,13 @@ public class BankingClientController extends Application implements IBankingClie
     			receivingAccount=ReceivingAccountTextField.getText();
     			sendingAccount=SendingAccountChoiceBox.getValue().accountNumber;
     			amount=TransferAmountTextField.getText();
-    			transfer(TransferType.TRANSFER, sendingAccount,
-    					receivingAccount, amount);
+    			System.out.println(receivingAccount);
+    			System.out.println(sendingAccount);
+    			if(!receivingAccount.equals(sendingAccount))
+        			transfer(TransferType.TRANSFER, sendingAccount,
+        					receivingAccount, amount);
+        			else
+        				ErrorTextArea.setText("Same account in both fields");
     		}
     		else
     			ErrorTextArea.setText("Empty field");
