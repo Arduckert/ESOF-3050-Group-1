@@ -25,10 +25,16 @@ public class TransactionRecord implements Serializable{
 		return amount + "";
 	}
 	public String getRecepient() {
+		if(recepient == null) {
+			return null;
+		}
 		int recepientAccNum = this.recepient.getAccountNum();
 		return recepientAccNum + "";
 	}
 	public String getSender() {
+		if(sender == null) {
+			return null;
+		}
 		int sendingAccNum = this.sender.getAccountNum();
 		return sendingAccNum + "";
 	}
