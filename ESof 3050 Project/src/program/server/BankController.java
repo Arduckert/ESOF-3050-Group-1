@@ -581,7 +581,7 @@ public class BankController implements IBankController, Serializable
 	public ArrayList<TransactionInfo> getTransactionHistory(String accountNumber) {
 		int num = stringToInt(accountNumber);
 		Account account = searchAccount(num);
-		ArrayList<TransactionInfo> infoList = null; //transactionInfo(date,rec,type,amount)
+		ArrayList<TransactionInfo> infoList = new ArrayList<TransactionInfo>(); //transactionInfo(date,rec,type,amount)
 		
 		if(account == null) {
 			return null; //account not found

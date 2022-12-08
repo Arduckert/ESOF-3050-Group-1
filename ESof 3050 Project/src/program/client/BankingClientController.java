@@ -51,10 +51,11 @@ public class BankingClientController extends Application implements IBankingClie
 	//methods called by BankingClient can't access GUI components without these
 	private static ActionEvent ae;
 	private static TextArea ta;
-	private static ListView<AccountHolderInfo>ahilv;
-	private static ListView<AccountInfo>ailv;
+	private static ListView<AccountHolderInfo> ahilv;
+	private static ListView<AccountInfo> ailv;
 	private static ChoiceBox<AccountInfo> rcb;
 	private static ChoiceBox<AccountInfo> scb;
+	private static ListView<TransactionInfo> hlv;
 	
 	//5 parameters for account holder + pin and card number
 	private static String firstName;
@@ -96,6 +97,10 @@ public class BankingClientController extends Application implements IBankingClie
 	private static String amount;
 	
 	private static String newAccount;
+	
+	private static ObservableList<TransactionInfo> historyList=FXCollections.observableArrayList();
+	
+	private static AccountInfo selectedAccount;
 	
 	
 	
@@ -460,12 +465,17 @@ public class BankingClientController extends Application implements IBankingClie
     void NewAccountNextButtonPressed(ActionEvent event) throws Exception{
     	if(offline)
     		switchToNewAccountHolderAddressScreen(event);
-    	
-    	if(monthTextField.getText().length()==2&&dayTextField.getText().length()==2&&yearTextField.getText().length()==4) {
-			dob=monthTextField.getText()+"/"+dayTextField.getText()+"/"+yearTextField.getText();
-		}
-		else
-			CreateAccountHolderErrorTextArea.setText("Date of birth invalid");
+    	try {
+    		Integer.valueOf(monthTextField.getText());
+    		Integer.valueOf(dayTextField.getText());
+    		Integer.valueOf(yearTextField.getText());
+    		if(monthTextField.getText().length()==2&&dayTextField.getText().length()==2&&yearTextField.getText().length()==4)
+    			dob=monthTextField.getText()+"/"+dayTextField.getText()+"/"+yearTextField.getText();
+    		else
+    			CreateAccountHolderErrorTextArea.setText("Date of birth invalid");
+    	}
+    	catch(Exception e) {CreateAccountHolderErrorTextArea.setText("Date of birth invalid");}
+		
     	if(!FirstNameTextField.getText().equals(""))
     		firstName=FirstNameTextField.getText();
     	else
@@ -575,19 +585,23 @@ public class BankingClientController extends Application implements IBankingClie
   	
   	@FXML
   	void PinDoneButtonPressed(ActionEvent event) throws Exception{
-  		if(NewPinTextField.getText().length()==4) {
-  			pin=NewPinTextField.getText();
-  			ae=event;
-  			ta=PinErrorTextArea;
-  			createNewPerson(firstName,lastName,sin,dob);
-  			createNewAccountHolder(email,pin,sin);
-  			for(int i=0;i<streetNameList.size();i++) {
-  				addAddress(streetNameList.get(i),streetNumberList.get(i),
+  		try {
+  			Integer.valueOf(NewPinTextField.getText());
+  			if(NewPinTextField.getText().length()==4) {
+  				pin=NewPinTextField.getText();
+  				ae=event;
+  				ta=PinErrorTextArea;
+  				createNewPerson(firstName,lastName,sin,dob);
+  				createNewAccountHolder(email,pin,sin);
+  				for(int i=0;i<streetNameList.size();i++) {
+  					addAddress(streetNameList.get(i),streetNumberList.get(i),
   						postalCodeList.get(i),provinceList.get(i), countryList.get(i),sin);
+  				}
   			}
+  			else
+  				PinErrorTextArea.setText("Invalid pin");
   		}
-  		else
-  			PinErrorTextArea.setText("Invalid pin");
+  		catch(Exception e) {PinErrorTextArea.setText("Invalid pin");}
   	}
   	
   	//*******************************************************************
@@ -676,6 +690,7 @@ public class BankingClientController extends Application implements IBankingClie
     
     @FXML
     void ViewAccountsButtonPressed(ActionEvent event) throws Exception {
+    	historyList.clear();
     	switchToAccountViewerScreen(event);
     }
     
@@ -856,7 +871,11 @@ public class BankingClientController extends Application implements IBankingClie
 
     @FXML
     void ViewAccountHistoryButtonPressed(ActionEvent event) throws Exception {
-    	switchToAccountHistoryScreen(event);
+    	ae=event;
+    	if(AccountNumberListView.getSelectionModel().getSelectedItem()!=null) {
+    		selectedAccount=AccountNumberListView.getSelectionModel().getSelectedItem();
+    		getTransactions(AccountNumberListView.getSelectionModel().getSelectedItem().accountNumber);
+    	}
     }
     
     //**********************************************************
@@ -865,7 +884,7 @@ public class BankingClientController extends Application implements IBankingClie
     //GUI components for account history screen
     
     @FXML
-    private ListView<?> AccountHistoryListView;
+    private ListView<TransactionInfo> AccountHistoryListView;
 
     @FXML
     private TextField AccountHistoryNumberTextField;
@@ -1221,6 +1240,26 @@ public class BankingClientController extends Application implements IBankingClie
     	
     	if(AccountNumberConfirmationTextField!=null)
     		AccountNumberConfirmationTextField.setText(newAccount);
+    	
+    	if(AccountHistoryListView!=null) {
+    		AccountHistoryListView.getItems().addAll(historyList);
+    		hlv=AccountHistoryListView;
+    		AccountHistoryListView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<TransactionInfo>() {
+    			@Override
+    			public void changed(ObservableValue<? extends TransactionInfo> ov, TransactionInfo oldValue, TransactionInfo newValue) {
+    				if(TransferHistoryDateTextField!=null)
+    					TransferHistoryDateTextField.setText(newValue.date);
+    				if(TransferHistorySenderTextField!=null)
+    					TransferHistorySenderTextField.setText(newValue.recipient);
+    				if(TransferHistoryAmountTextField!=null)
+    					TransferHistoryAmountTextField.setText(newValue.amount);
+    				if(TransferHistoryReceiverTextField!=null)
+    					TransferHistoryReceiverTextField.setText(newValue.transactionType);
+    			}});
+    	}
+    	
+    	if(AccountHistoryNumberTextField!=null)
+    		AccountHistoryNumberTextField.setText(selectedAccount.accountNumber);
     }
     
     //Start function
@@ -2070,13 +2109,34 @@ public class BankingClientController extends Application implements IBankingClie
 
 	@Override
 	public void getTransactions(String accountNumber) {
-		// TODO Auto-generated method stub
+		try {
+			bc.getTransactions(accountNumber);
+		}
+		catch (IOException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 	}
 
 	@Override
 	public void handleTransactions(ArrayList<TransactionInfo> transactions) {
-		// TODO Auto-generated method stub
+		if(transactions!=null) {
+			historyList.addAll(transactions);
+			Platform.runLater(new Runnable() {
+				@Override
+				public void run() {
+					try {
+						switchToAccountHistoryScreen(ae);
+					}
+					catch(Exception e) {e.printStackTrace();}
+				}
+			});
+		}
+		else {
+			
+		}
 		
 	}
 
