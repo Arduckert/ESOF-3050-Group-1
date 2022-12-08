@@ -32,7 +32,15 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
-// *** TODO: IMPLEMENT INTERFACE *** //
+
+
+/**
+ * @author Matthew
+ *
+ * Contains the handlers for user interaction of the GUI
+ * Performs the required function calls in response to a user input
+ * and alters the GUI according to server response
+ */
 public class BankingClientController extends Application implements IBankingClientController {
 	//create instance of BankingClient to pass messages to server
 	//ip4v and port of server
@@ -52,10 +60,6 @@ public class BankingClientController extends Application implements IBankingClie
 	private static ActionEvent ae;
 	private static TextArea ta;
 	private static ListView<AccountHolderInfo> ahilv;
-	private static ListView<AccountInfo> ailv;
-	private static ChoiceBox<AccountInfo> rcb;
-	private static ChoiceBox<AccountInfo> scb;
-	private static ListView<TransactionInfo> hlv;
 	
 	//5 parameters for account holder + pin and card number
 	private static String firstName;
@@ -81,8 +85,6 @@ public class BankingClientController extends Application implements IBankingClie
 	private static String searchParameter;
 	private static String searchValue;
 	private static ObservableList<AccountHolderInfo> searchList=FXCollections.observableArrayList();
-	
-	private static AccountHolderInfo ahi;
 	
 	private static String accountType;
 	
@@ -901,6 +903,9 @@ public class BankingClientController extends Application implements IBankingClie
     @FXML
     private TextField TransferHistorySenderTextField;
     
+    @FXML
+    private TextField TransferHistoryTypeTextField;
+    
     //**********************************************************
     
     //********************************************************
@@ -1196,7 +1201,6 @@ public class BankingClientController extends Application implements IBankingClie
     	
     	if(AccountNumberListView!=null) {
     		AccountNumberListView.getItems().addAll(accountList);
-    		ailv=AccountNumberListView;
     		AccountNumberListView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<AccountInfo>() {
     			@Override
     			public void changed(ObservableValue<? extends AccountInfo> ov, AccountInfo oldValue, AccountInfo newValue) {
@@ -1243,18 +1247,19 @@ public class BankingClientController extends Application implements IBankingClie
     	
     	if(AccountHistoryListView!=null) {
     		AccountHistoryListView.getItems().addAll(historyList);
-    		hlv=AccountHistoryListView;
     		AccountHistoryListView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<TransactionInfo>() {
     			@Override
     			public void changed(ObservableValue<? extends TransactionInfo> ov, TransactionInfo oldValue, TransactionInfo newValue) {
     				if(TransferHistoryDateTextField!=null)
     					TransferHistoryDateTextField.setText(newValue.date);
     				if(TransferHistorySenderTextField!=null)
-    					TransferHistorySenderTextField.setText(newValue.recipient);
+    					TransferHistorySenderTextField.setText(newValue.sender);
     				if(TransferHistoryAmountTextField!=null)
     					TransferHistoryAmountTextField.setText(newValue.amount);
     				if(TransferHistoryReceiverTextField!=null)
-    					TransferHistoryReceiverTextField.setText(newValue.transactionType);
+    					TransferHistoryReceiverTextField.setText(newValue.recipient);
+    				if(TransferHistoryTypeTextField!=null)
+    					TransferHistoryTypeTextField.setText(newValue.transactionType);
     			}});
     	}
     	
