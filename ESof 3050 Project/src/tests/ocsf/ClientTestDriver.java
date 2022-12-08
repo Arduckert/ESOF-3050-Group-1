@@ -921,14 +921,17 @@ public class ClientTestDriver implements IBankingClientController
 				&& transactions.get(0).recipient.equals(TestVariables.transaction1.recipient)
 				&& transactions.get(0).transactionType.equals(TestVariables.transaction1.transactionType)
 				&& transactions.get(0).amount.equals(TestVariables.transaction1.amount)
+				&& transactions.get(0).sender.equals(TestVariables.transaction1.sender)
 				&& transactions.get(1).date.equals(TestVariables.transaction2.date)
 				&& transactions.get(1).recipient.equals(TestVariables.transaction2.recipient)
 				&& transactions.get(1).transactionType.equals(TestVariables.transaction2.transactionType)
 				&& transactions.get(1).amount.equals(TestVariables.transaction2.amount)
+				&& transactions.get(1).sender.equals(TestVariables.transaction2.sender)
 				&& transactions.get(2).date.equals(TestVariables.transaction3.date)
 				&& transactions.get(2).recipient.equals(TestVariables.transaction3.recipient)
 				&& transactions.get(2).transactionType.equals(TestVariables.transaction3.transactionType)
-				&& transactions.get(2).amount.equals(TestVariables.transaction3.amount))
+				&& transactions.get(2).amount.equals(TestVariables.transaction3.amount)
+				&& transactions.get(2).sender.equals(TestVariables.transaction3.sender))
 		{
 			System.out.println("GET TRANSACTIONS TEST PASSED");
 		}
